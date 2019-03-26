@@ -24,17 +24,17 @@ class Process
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="processes")
      */
-    private $CaseWorker;
+    private $caseWorker;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $CaseNumber;
+    private $caseNumber;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $ClientCPR;
+    private $clientCPR;
 
     public function getId(): ?int
     {
@@ -43,36 +43,36 @@ class Process
 
     public function getCaseWorker(): ?User
     {
-        return $this->CaseWorker;
+        return $this->caseWorker;
     }
 
-    public function setCaseWorker(?User $CaseWorker): self
+    public function setCaseWorker(?User $caseWorker): self
     {
-        $this->CaseWorker = $CaseWorker;
+        $this->caseWorker = $caseWorker;
 
         return $this;
     }
 
     public function getCaseNumber(): ?string
     {
-        return $this->CaseNumber;
+        return $this->caseNumber;
     }
 
-    public function setCaseNumber(string $CaseNumber): self
+    public function setCaseNumber(string $caseNumber): self
     {
-        $this->CaseNumber = $CaseNumber;
+        $this->caseNumber = $caseNumber;
 
         return $this;
     }
 
     public function getClientCPR(): ?string
     {
-        return $this->ClientCPR;
+        return $this->clientCPR;
     }
 
-    public function setClientCPR(string $ClientCPR): self
+    public function setClientCPR(string $clientCPR): self
     {
-        $this->ClientCPR = $ClientCPR;
+        $this->clientCPR = $clientCPR;
 
         return $this;
     }

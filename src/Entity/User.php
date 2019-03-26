@@ -21,7 +21,7 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Process", mappedBy="CaseWorker")
+     * @ORM\OneToMany(targetEntity="App\Entity\Process", mappedBy="caseWorker")
      */
     private $processes;
 

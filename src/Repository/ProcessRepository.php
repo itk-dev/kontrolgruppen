@@ -19,14 +19,14 @@ class ProcessRepository extends ServiceEntityRepository
         parent::__construct($registry, Process::class);
     }
 
-    public function getFromYear($year)
+    public function findAllFromYear($year)
     {
         $from = new \DateTime($year."-01-01 00:00:00");
         $to   = new \DateTime($year."-12-31 23:59:59");
 
         $qb = $this->createQueryBuilder("e");
         $qb
-            ->andWhere('e.date BETWEEN :from AND :to')
+            ->andWhere('e.createdAt BETWEEN :from AND :to')
             ->setParameter('from', $from )
             ->setParameter('to', $to)
         ;

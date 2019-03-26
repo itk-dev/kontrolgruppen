@@ -12,7 +12,8 @@ class ProcessType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('CaseWorker')
+            ->add('caseWorker')
+            ->add('clientCPR')
         ;
     }
 

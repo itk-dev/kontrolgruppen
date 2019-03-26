@@ -15,16 +15,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ProcessController extends AbstractController
 {
-    private function getNewCaseNumber()
-    {
-        $year = date('y');
-        $casesInYear = $this->getDoctrine()->getRepository(Process::class)->findBy([]);
-
-        $caseNumber = str_pad(count($casesInYear), 4, "0", STR_PAD_LEFT);
-
-        return printf("%s-%s", $year, $caseNumber);
-    }
-
     /**
      * @Route("/", name="process_index", methods={"GET"})
      */
@@ -108,5 +98,20 @@ class ProcessController extends AbstractController
         }
 
         return $this->redirectToRoute('process_index');
+    }
+
+    /**
+     * Generate a new case number.
+     *
+     * @TODO: Move to service.
+     *
+     * @return string Case number of format YY-XXXX where YY is the year and XXXX an increasing counter.
+     */
+    private function getNewCaseNumber()
+    {
+        $casesInYear = $this->getDoctrine()->getRepository(Process::class)->findAllFromYear(date('Y'));
+        $caseNumber = str_pad(count($casesInYear) + 1, 5, "0", STR_PAD_LEFT);
+
+        return date('y').'-'.$caseNumber;
     }
 }
