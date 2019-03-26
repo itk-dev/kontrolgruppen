@@ -1,0 +1,37 @@
+{% extends 'main/index.html.twig' %}
+
+{% block title %}Process index{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col">
+      <h1 class="h2">{{ 'process.index.title' }}</h1>
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Id</th>
+          <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for process in processes %}
+          <tr>
+            <td>{{ process.id }}</td>
+            <td>
+              <a href="{{ path('process_show', {'id': process.id}) }}">show</a>
+              <a href="{{ path('process_edit', {'id': process.id}) }}">edit</a>
+            </td>
+          </tr>
+        {% else %}
+          <tr>
+            <td colspan="2">no records found</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+
+      <a href="{{ path('process_new') }}">Create new</a>
+
+    </div>
+  </div>
+{% endblock %}
