@@ -1,5 +1,12 @@
 # Kontrolgruppen
 
+## Encore
+
+The project uses Symfony Encore to handle js and scss. Run the following to 
+```sh
+yarn run encore dev --watch
+```
+
 ## Starting the show
 
 ```sh

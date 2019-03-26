@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d2022f67f796336afa15b0d4ffd3380e",
+    "content-hash": "174531a794f78fc12aad115e7bc9c216",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/annotations.git",
-                "reference": "d1f9756e7f0fdf2f9dc1704450857a8b6e29ce09"
+                "reference": "3f3525529066549f3991dd33192e063c2e89b530"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/annotations/zipball/d1f9756e7f0fdf2f9dc1704450857a8b6e29ce09",
-                "reference": "d1f9756e7f0fdf2f9dc1704450857a8b6e29ce09",
+                "url": "https://api.github.com/repos/doctrine/annotations/zipball/3f3525529066549f3991dd33192e063c2e89b530",
+                "reference": "3f3525529066549f3991dd33192e063c2e89b530",
                 "shasum": ""
             },
             "require": {
@@ -72,7 +72,7 @@
                 "docblock",
                 "parser"
             ],
-            "time": "2019-02-26T17:20:11+00:00"
+            "time": "2019-03-25T19:17:05+00:00"
         },
         {
             "name": "doctrine/cache",
@@ -163,12 +163,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/collections.git",
-                "reference": "6453eecfb30205a6bbe24fc26c83937f3fdf3d78"
+                "reference": "77af88e5cb420745fc048b9bd4df52b593f44057"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/collections/zipball/6453eecfb30205a6bbe24fc26c83937f3fdf3d78",
-                "reference": "6453eecfb30205a6bbe24fc26c83937f3fdf3d78",
+                "url": "https://api.github.com/repos/doctrine/collections/zipball/77af88e5cb420745fc048b9bd4df52b593f44057",
+                "reference": "77af88e5cb420745fc048b9bd4df52b593f44057",
                 "shasum": ""
             },
             "require": {
@@ -226,7 +226,7 @@
                 "iterators",
                 "php"
             ],
-            "time": "2019-03-25T12:45:02+00:00"
+            "time": "2019-03-25T19:16:36+00:00"
         },
         {
             "name": "doctrine/common",
@@ -1934,12 +1934,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sensiolabs/SensioFrameworkExtraBundle.git",
-                "reference": "1fdf591c4b388e62dbb2579de89c1560b33f865d"
+                "reference": "ce81fe559550fab76dc961ede9b02ee2452639ff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sensiolabs/SensioFrameworkExtraBundle/zipball/1fdf591c4b388e62dbb2579de89c1560b33f865d",
-                "reference": "1fdf591c4b388e62dbb2579de89c1560b33f865d",
+                "url": "https://api.github.com/repos/sensiolabs/SensioFrameworkExtraBundle/zipball/ce81fe559550fab76dc961ede9b02ee2452639ff",
+                "reference": "ce81fe559550fab76dc961ede9b02ee2452639ff",
                 "shasum": ""
             },
             "require": {
@@ -1997,7 +1997,7 @@
                 "annotations",
                 "controllers"
             ],
-            "time": "2018-12-11T16:59:23+00:00"
+            "time": "2019-03-26T07:03:00+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -5207,6 +5207,60 @@
             "time": "2019-01-16T20:31:39+00:00"
         },
         {
+            "name": "symfony/webpack-encore-bundle",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/webpack-encore-bundle.git",
+                "reference": "cabb53f92162ca383c6ad78b89605ea021645039"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/webpack-encore-bundle/zipball/cabb53f92162ca383c6ad78b89605ea021645039",
+                "reference": "cabb53f92162ca383c6ad78b89605ea021645039",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3",
+                "symfony/asset": "^3.4 || ^4.0",
+                "symfony/config": "^3.4 || ^4.0",
+                "symfony/contracts": "^1.0",
+                "symfony/dependency-injection": "^3.4 || ^4.0",
+                "symfony/http-kernel": "^3.4 || ^4.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^2.14",
+                "symfony/framework-bundle": "^3.4 || ^4.0",
+                "symfony/phpunit-bridge": "^3.4 || ^4.1",
+                "symfony/twig-bundle": "^3.4 || ^4.0",
+                "twig/twig": "^1.35 || ^2.0"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "thanks": {
+                    "name": "symfony/webpack-encore",
+                    "url": "https://github.com/symfony/webpack-encore"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\WebpackEncoreBundle\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Integration with your Symfony app & Webpack Encore!",
+            "time": "2019-03-26T00:35:40+00:00"
+        },
+        {
             "name": "symfony/yaml",
             "version": "4.2.x-dev",
             "source": {
@@ -6723,6 +6777,7 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "symfony/orm-pack": 20,
+        "symfony/webpack-encore-bundle": 20,
         "symfony/maker-bundle": 20
     },
     "prefer-stable": false,
