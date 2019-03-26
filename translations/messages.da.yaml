@@ -1,3 +1,6 @@
+base:
+    title: Kontrolgruppen
+
 navigation:
     main:
         search: Søg

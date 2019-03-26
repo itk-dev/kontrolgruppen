@@ -1,3 +1,6 @@
+base:
+    title: 'Supervision Group'
+
 navigation:
     main:
         search: Search
