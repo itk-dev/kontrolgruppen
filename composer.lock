@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ae0cca05e352751dc374e8617353adb4",
+    "content-hash": "99c50d5ad6cc180c1681c7ddf4644f2b",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1563,11 +1563,10 @@
             "dist": {
                 "type": "path",
                 "url": "packages/kontrolgruppen/core-bundle",
-                "reference": "4f8f1e13229ebdf89cc35161e15399cbb7c62a4a"
+                "reference": "9a9eaa2a71dfb3b4e75929cb8501111cb06ae8c9"
             },
             "require": {
                 "friendsofsymfony/user-bundle": "^2.1",
-                "sensio/framework-extra-bundle": "^5.1",
                 "stof/doctrine-extensions-bundle": "^1.3",
                 "symfony/orm-pack": "~1.0"
             },
