@@ -1,5 +1,13 @@
 # Kontrolgruppen
 
+## Setup for development
+
+```sh
+./install.sh
+composer install
+bin/console doctrine:migrations:migrate
+```
+
 ## Encore
 
 The project uses Symfony Encore to handle js and scss. Run the following to 
