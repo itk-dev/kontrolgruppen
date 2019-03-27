@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "99c50d5ad6cc180c1681c7ddf4644f2b",
+    "content-hash": "fc38b56ce55beb316010640aba517584",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1560,10 +1560,16 @@
         {
             "name": "kontrolgruppen/core-bundle",
             "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aakb/kontrolgruppen-core-bundle.git",
+                "reference": "eaa346c960d36016732e6a5be0dd4942b4365760"
+            },
             "dist": {
-                "type": "path",
-                "url": "packages/kontrolgruppen/core-bundle",
-                "reference": "9a9eaa2a71dfb3b4e75929cb8501111cb06ae8c9"
+                "type": "zip",
+                "url": "https://api.github.com/repos/aakb/kontrolgruppen-core-bundle/zipball/eaa346c960d36016732e6a5be0dd4942b4365760",
+                "reference": "eaa346c960d36016732e6a5be0dd4942b4365760",
+                "shasum": ""
             },
             "require": {
                 "friendsofsymfony/user-bundle": "^2.1",
@@ -1602,9 +1608,11 @@
                 ]
             },
             "description": "Kontrolgruppen core bundle",
-            "transport-options": {
-                "symlink": true
-            }
+            "support": {
+                "source": "https://github.com/aakb/kontrolgruppen-core-bundle/tree/develop",
+                "issues": "https://github.com/aakb/kontrolgruppen-core-bundle/issues"
+            },
+            "time": "2019-03-27T13:24:24+00:00"
         },
         {
             "name": "monolog/monolog",

@@ -3,10 +3,20 @@
 ## Setup for development
 
 ```sh
-./install.sh
-composer install
+# Get the kontrolgruppen bundles to packages/.
+/scripts/install.sh
+
+# Create composer-dev.json and install the local kontrolgruppen/* bundles.
+/scripts/develop.sh
+
 bin/console doctrine:migrations:migrate
 ```
+
+## Requiring new bundles
+
+Should be required in the `kontrolgruppen/core-bundle` bundle instead.
+
+See [https://github.com/aakb/kontrolgruppen-core-bundle](https://github.com/aakb/kontrolgruppen-core-bundle).
 
 ## Encore
 

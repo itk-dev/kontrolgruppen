@@ -39,15 +39,12 @@
         "symfony/test-pack": "*",
         "symfony/web-server-bundle": "4.2.*"
     },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "packages/kontrolgruppen/core-bundle",
-            "options": {
-                "symlink": true
-            }
+    "repositories": {
+        "kontrolgruppen/core-bundle": {
+            "type": "vcs",
+            "url": "https://github.com/aakb/kontrolgruppen-core-bundle"
         }
-    ],
+    },
     "config": {
         "preferred-install": {
             "*": "dist"
