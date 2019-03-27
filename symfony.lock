@@ -132,6 +132,9 @@
     "jdorn/sql-formatter": {
         "version": "1.3.x-dev"
     },
+    "kontrolgruppen/core-bundle": {
+        "version": "dev-develop"
+    },
     "monolog/monolog": {
         "version": "1.x-dev"
     },
