@@ -9,7 +9,8 @@ doctrine:
     dbal:
         # configure these for your database server
         driver: 'pdo_mysql'
-        server_version: '5.7'
+        # See https://marenkay.com/2018/06/12/symfony-doctrine-mariadb/
+        server_version: '%env(resolve:DATABASE_SERVER_VERSION)%'
         charset: utf8mb4
         default_table_options:
             charset: utf8mb4
