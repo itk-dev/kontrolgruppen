@@ -3,6 +3,7 @@
 ## Setup for development
 
 ```sh
+# Install dependencies.
 composer install
 
 # Get the kontrolgruppen bundles to packages/.
@@ -11,7 +12,11 @@ composer install
 # Create composer-dev.json and install the local kontrolgruppen/* bundles.
 ./scripts/develop/develop.sh
 
+# Migrate database.
 bin/console doctrine:migrations:migrate
+
+# Create super admin user.
+bin/console fos:user:create --super-admin
 ```
 
 ## Encore
