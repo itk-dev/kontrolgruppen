@@ -3,6 +3,8 @@
 ## Setup for development
 
 ```sh
+composer install
+
 # Get the kontrolgruppen bundles to packages/.
 ./scripts/develop/install.sh
 
