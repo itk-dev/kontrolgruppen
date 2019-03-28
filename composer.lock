@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fc38b56ce55beb316010640aba517584",
+    "content-hash": "075d90d7ac02df4ce0e3df90c651a2f4",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1559,16 +1559,16 @@
         },
         {
             "name": "kontrolgruppen/core-bundle",
-            "version": "dev-develop",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aakb/kontrolgruppen-core-bundle.git",
-                "reference": "eaa346c960d36016732e6a5be0dd4942b4365760"
+                "reference": "50cdc12f2e54b70645d5e0937502840625bbd854"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aakb/kontrolgruppen-core-bundle/zipball/eaa346c960d36016732e6a5be0dd4942b4365760",
-                "reference": "eaa346c960d36016732e6a5be0dd4942b4365760",
+                "url": "https://api.github.com/repos/aakb/kontrolgruppen-core-bundle/zipball/50cdc12f2e54b70645d5e0937502840625bbd854",
+                "reference": "50cdc12f2e54b70645d5e0937502840625bbd854",
                 "shasum": ""
             },
             "require": {
@@ -1609,10 +1609,10 @@
             },
             "description": "Kontrolgruppen core bundle",
             "support": {
-                "source": "https://github.com/aakb/kontrolgruppen-core-bundle/tree/develop",
+                "source": "https://github.com/aakb/kontrolgruppen-core-bundle/tree/master",
                 "issues": "https://github.com/aakb/kontrolgruppen-core-bundle/issues"
             },
-            "time": "2019-03-27T13:24:24+00:00"
+            "time": "2019-03-28T06:48:13+00:00"
         },
         {
             "name": "monolog/monolog",
