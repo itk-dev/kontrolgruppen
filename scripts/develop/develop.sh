@@ -2,8 +2,8 @@
 bold=$(tput bold)
 normal=$(tput sgr0)
 
-packages_dir=$(cd $(dirname "${BASH_SOURCE[0]}")/../packages/ && pwd)
-dir=$(cd $(dirname "${BASH_SOURCE[0]}")/../ && pwd)
+packages_dir=$(cd $(dirname "${BASH_SOURCE[0]}")/../../packages/ && pwd)
+dir=$(cd $(dirname "${BASH_SOURCE[0]}")/../../ && pwd)
 
 # Copying composer.json to composer-dev.json
 composer_dev=composer-dev.json
@@ -33,11 +33,11 @@ for vendor_dir in $packages_dir/*/ ; do
         rm -rf $dir/vendor/$vendor/$package
 
         COMPOSER=$dir/composer-dev.json php -d memory_limit=-1 $COMPOSER_PATH config repositories.$vendor/$package '{"type": "path", "url": "packages/'$vendor'/'$package'", "options": {"symlink": true}}'
+        COMPOSER=$dir/composer-dev.json php -d memory_limit=-1 $COMPOSER_PATH require $vendor/$package:dev-develop
     done
 done
 
 # Install packages.
 cd $dir
 COMPOSER=$dir/composer-dev.json php -d memory_limit=-1 $COMPOSER_PATH install
-bin/console assets:install --symlink --relative
 cd ../..

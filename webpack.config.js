@@ -17,6 +17,8 @@ Encore
      * Each entry will result in one JavaScript file (e.g. app.js)
      * and one CSS file (e.g. app.css) if you JavaScript imports CSS.
      */
+
+    // @TODO: Fix encore setup with regards for core-bundle.
     .addEntry('core', './vendor/kontrolgruppen/core-bundle/assets/js/app.js')
     .addEntry('core_login', './vendor/kontrolgruppen/core-bundle/assets/css/login.css')
 
