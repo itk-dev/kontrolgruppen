@@ -1,12 +1,14 @@
 {
-    "type": "kontrolgruppen",
+    "name":"kontrolgruppen/main",
+    "type": "project",
     "license": "MIT",
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
+    "prefer-stable":true,
     "require": {
         "php": "^7.1.3",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "friendsofsymfony/user-bundle": "^2.1",
+        "kontrolgruppen/core-bundle": "dev-master",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/asset": "4.2.*",
         "symfony/console": "4.2.*",
@@ -16,7 +18,6 @@
         "symfony/form": "4.2.*",
         "symfony/framework-bundle": "4.2.*",
         "symfony/monolog-bundle": "^3.1",
-        "symfony/orm-pack": "~1.0",
         "symfony/process": "4.2.*",
         "symfony/security-bundle": "4.2.*",
         "symfony/serializer-pack": "*",
@@ -25,7 +26,6 @@
         "symfony/twig-bundle": "4.2.*",
         "symfony/validator": "4.2.*",
         "symfony/web-link": "4.2.*",
-        "symfony/webpack-encore-bundle": "~1.0",
         "symfony/yaml": "4.2.*"
     },
     "require-dev": {
@@ -37,6 +37,12 @@
         "symfony/profiler-pack": "*",
         "symfony/test-pack": "*",
         "symfony/web-server-bundle": "4.2.*"
+    },
+    "repositories": {
+        "kontrolgruppen/core-bundle": {
+            "type": "vcs",
+            "url": "https://github.com/aakb/kontrolgruppen-core-bundle"
+        }
     },
     "config": {
         "preferred-install": {

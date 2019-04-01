@@ -1,2 +1,2 @@
-fos_user:
-    resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+kontrolgruppen_core:
+    resource: "@KontrolgruppenCoreBundle/Resources/config/routing.yaml"
