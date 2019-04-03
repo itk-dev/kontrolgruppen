@@ -1,24 +1,5 @@
 # Kontrolgruppen development setup
 
-## Setup for development
-
-```sh
-# Install dependencies.
-composer install
-
-# Get the kontrolgruppen bundles to packages/.
-./scripts/develop/install.sh
-
-# Create composer-dev.json and install the local kontrolgruppen/* bundles.
-./scripts/develop/develop.sh
-
-# Migrate database.
-bin/console doctrine:migrations:migrate
-
-# Create super admin user.
-bin/console fos:user:create --super-admin
-```
-
 ## Starting the show
 
 ```sh
@@ -30,6 +11,26 @@ Open the site in your default browser:
 
 ```sh
 open http://$(docker-compose port nginx 80)
+```
+
+## Setup for development
+
+```sh
+# Install dependencies.
+composer install
+
+# Get the kontrolgruppen bundles to packages/.
+./scripts/develop/install.sh
+
+# Create composer-dev.json and install the local kontrolgruppen/* bundles.
+docker-compose exec phpfpm /app/scripts/develop/develop.sh
+
+# Migrate database.
+# If using docker these bin/console commands should be run from inside the phpfpm container.
+docker-compose exec phpfpm /app/bin/console doctrine:migrations:migrate
+
+# Create super admin user.
+docker-compose exec phpfpm /app/bin/console fos:user:create --super-admin
 ```
 
 ## Coding standards
