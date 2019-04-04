@@ -11,18 +11,23 @@ pipeline {
                 }
             }
             stages {
-                stage('Composer') {
-                    steps {
-                        sh 'composer install'
-                    }
-                }
-                stage('Deployment develop') {
+                stage('Install develop bundel') {
                     when {
-                        branch 'develop'
+                        not { 
+                            branch 'release'
+                        }
+                        not {
+                            branch 'master'
+                        }
                     }
                     steps {
                         sh 'scripts/develop/install.sh'
                         sh 'scripts/develop/develop.sh'
+                    }
+                }
+                stage('Composer') {
+                    steps {
+                        sh 'composer install'
                     }
                 }
                 stage('PHP7 compatibility') {
