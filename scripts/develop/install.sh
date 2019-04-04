@@ -4,7 +4,7 @@ normal=$(tput sgr0)
 
 dir=$(cd $(dirname "${BASH_SOURCE[0]}")/../../ && pwd)
 
-mkdir -p $dir/packages/kontrolgruppen
+mkdir -p $dir/packages/kontrolgruppen || exit
 
 git clone --branch=develop https://github.com/aakb/kontrolgruppen-core-bundle.git $dir/packages/kontrolgruppen/core-bundle
 
