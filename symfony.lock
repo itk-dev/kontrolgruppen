@@ -108,6 +108,9 @@
     "facebook/webdriver": {
         "version": "1.6.0"
     },
+    "felixfbecker/advanced-json-rpc": {
+        "version": "v3.0.3"
+    },
     "fig/link-util": {
         "version": "1.0.x-dev"
     },
@@ -135,8 +138,14 @@
     "kontrolgruppen/core-bundle": {
         "version": "dev-develop"
     },
+    "microsoft/tolerant-php-parser": {
+        "version": "v0.0.17"
+    },
     "monolog/monolog": {
         "version": "1.x-dev"
+    },
+    "netresearch/jsonmapper": {
+        "version": "v1.4.0"
     },
     "nikic/php-parser": {
         "version": "4.2-dev"
@@ -146,6 +155,9 @@
     },
     "ocramius/proxy-manager": {
         "version": "2.2.x-dev"
+    },
+    "phan/phan": {
+        "version": "1.2.7"
     },
     "php-cs-fixer/diff": {
         "version": "v1.3.0"
@@ -176,6 +188,9 @@
     },
     "psr/simple-cache": {
         "version": "1.0.1"
+    },
+    "sabre/event": {
+        "version": "5.0.3"
     },
     "sensio/framework-extra-bundle": {
         "version": "5.2",
