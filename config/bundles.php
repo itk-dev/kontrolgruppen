@@ -19,4 +19,5 @@ return [
     Kontrolgruppen\CoreBundle\KontrolgruppenCoreBundle::class => ['all' => true],
     Fresh\DoctrineEnumBundle\FreshDoctrineEnumBundle::class => ['all' => true],
     FOS\CKEditorBundle\FOSCKEditorBundle::class => ['all' => true],
+    Lexik\Bundle\FormFilterBundle\LexikFormFilterBundle::class => ['all' => true],
 ];
