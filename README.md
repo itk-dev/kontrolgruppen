@@ -13,6 +13,8 @@ bin/console doctrine:migrations:migrate
 php bin/console ckeditor:install
 ```
 
+See `https://ckeditor.com/latest/samples/toolbarconfigurator/index.html#advanced` for editor tools.
+
 ## Development
 
 See [README-develop.md](README-develop.md) for information on setting up for development.

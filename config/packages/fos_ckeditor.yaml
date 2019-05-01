@@ -18,7 +18,3 @@ fos_ck_editor:
                 - ['Bold', 'Italic', 'Underline', 'StrikeThrough']
                 - ['BulletedList', 'NumberedList']
                 - ['Outdent', 'Indent', 'TextColor']
-    plugins:
-        colorbutton:
-            path:     "/bundles/kontrolgruppencore/ckeditor/colorbutton/"
-            filename: "plugin.js"
