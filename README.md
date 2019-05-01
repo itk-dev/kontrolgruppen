@@ -7,6 +7,12 @@ composer install --no-dev -o
 bin/console doctrine:migrations:migrate
 ```
 
+### Install CKEditor
+
+```sh
+php bin/console ckeditor:install
+```
+
 ## Development
 
 See [README-develop.md](README-develop.md) for information on setting up for development.

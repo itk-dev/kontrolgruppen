@@ -8,9 +8,17 @@ fos_ck_editor:
     configs:
         editor:
             toolbar: editor
+            extraPlugins: 'colorbutton'
+            colorButton_colors: 'ff0000'
+            colorButton_enableMore: false
+            colorButton_enableAutomatic: true
     toolbars:
         configs:
             editor:
                 - ['Bold', 'Italic', 'Underline', 'StrikeThrough']
                 - ['BulletedList', 'NumberedList']
-                - ['Outdent', 'Indent']
+                - ['Outdent', 'Indent', 'TextColor']
+    plugins:
+        colorbutton:
+            path:     "/bundles/kontrolgruppencore/ckeditor/colorbutton/"
+            filename: "plugin.js"
