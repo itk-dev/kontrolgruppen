@@ -12,8 +12,10 @@ namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
+use Kontrolgruppen\CoreBundle\DBAL\Types\JournalEntryEnumType;
 use Kontrolgruppen\CoreBundle\Entity\BaseConclusion;
 use Kontrolgruppen\CoreBundle\Entity\Client;
+use Kontrolgruppen\CoreBundle\Entity\JournalEntry;
 use Kontrolgruppen\CoreBundle\Entity\ProcessStatus;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\QuickLink;
@@ -21,9 +23,21 @@ use Kontrolgruppen\CoreBundle\Entity\Service;
 use Kontrolgruppen\CoreBundle\Entity\ProcessType;
 use Kontrolgruppen\CoreBundle\Entity\WeightedConclusion;
 use Kontrolgruppen\CoreBundle\Entity\Channel;
+use Kontrolgruppen\CoreBundle\Service\ProcessManager;
 
 class AppFixtures extends Fixture
 {
+    private $processManager;
+
+    /**
+     * AppFixtures constructor.
+     * @param $processManager
+     */
+    public function __construct(ProcessManager $processManager)
+    {
+        $this->processManager = $processManager;
+    }
+
     public function load(ObjectManager $manager)
     {
         // @TODO: Insert correct values.
@@ -73,21 +87,24 @@ class AppFixtures extends Fixture
         $quickLink->setName('Motorregisteret');
         $manager->persist($quickLink);
 
-        $process = new Process();
-        $process->setProcessType($processTypes[0]);
+        $process = $this->processManager->newProcess(null, $processTypes[0]);
         $process->setProcessStatus($processStatuses[0]);
         $process->setChannel($channels[0]);
-        $process->setConclusion(new WeightedConclusion());
-        $process->setClient(new Client());
         $process->setClientCPR('111111-1111');
         $manager->persist($process);
 
-        $process = new Process();
-        $process->setProcessType($processTypes[1]);
+        $journalEntry = new JournalEntry();
+        $journalEntry->setProcess($process);
+        $journalEntry->setTitle('Test notat');
+        $journalEntry->setType(JournalEntryEnumType::NOTE);
+        $journalEntry->setBody('Tekst feltet');
+        $manager->persist($journalEntry);
+
+        $manager->flush();
+
+        $process = $this->processManager->newProcess(null, $processTypes[1]);
         $process->setProcessStatus($processStatuses[0]);
         $process->setChannel($channels[1]);
-        $process->setConclusion(new BaseConclusion());
-        $process->setClient(new Client());
         $process->setClientCPR('222222-2222');
         $manager->persist($process);
 
