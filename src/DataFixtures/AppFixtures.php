@@ -14,10 +14,8 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 use Kontrolgruppen\CoreBundle\DBAL\Types\JournalEntryEnumType;
 use Kontrolgruppen\CoreBundle\Entity\BaseConclusion;
-use Kontrolgruppen\CoreBundle\Entity\Client;
 use Kontrolgruppen\CoreBundle\Entity\JournalEntry;
 use Kontrolgruppen\CoreBundle\Entity\ProcessStatus;
-use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\QuickLink;
 use Kontrolgruppen\CoreBundle\Entity\Service;
 use Kontrolgruppen\CoreBundle\Entity\ProcessType;
@@ -31,6 +29,7 @@ class AppFixtures extends Fixture
 
     /**
      * AppFixtures constructor.
+     *
      * @param $processManager
      */
     public function __construct(ProcessManager $processManager)
@@ -74,9 +73,9 @@ class AppFixtures extends Fixture
         $processTypeNames = ['Enlig forhold', 'Udlandsforhold', 'Bopælsforhold'];
         $i = 0;
         foreach ($processTypeNames as $name) {
-            $i++;
+            ++$i;
             $entityProcessType = new ProcessType();
-            $entityProcessType->setConclusionClass($i % 2 == 0 ? WeightedConclusion::class : BaseConclusion::class);
+            $entityProcessType->setConclusionClass(0 === $i % 2 ? WeightedConclusion::class : BaseConclusion::class);
             $entityProcessType->setName($name);
             $manager->persist($entityProcessType);
             $processTypes[] = $entityProcessType;
