@@ -1,0 +1,2 @@
+kontrolgruppen_core:
+    resource: "@KontrolgruppenCoreBundle/Resources/config/routing.yaml"
