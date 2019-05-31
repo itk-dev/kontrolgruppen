@@ -56,7 +56,7 @@
             "type": "path",
             "url": "bundles/kontrolgruppen-core-bundle",
             "options": {
-                "symlink": false
+                "symlink": true
             }
         }
     },
