@@ -1,6 +1,6 @@
 # Kontrolgruppen development setup
 
-## Checkout submodules
+## Getting the submodules
 ```sh
 git submodule update --init --recursive --remote
 ```
@@ -31,6 +31,15 @@ docker-compose exec phpfpm /app/bin/console doctrine:migrations:migrate
 # Create super admin user.
 docker-compose exec phpfpm /app/bin/console fos:user:create --super-admin
 ```
+
+## Note about working with git submodules
+When checking out submodules with the git submodule update command, the checked
+out branch will be to a detached head pointing to the submodule commit latest pushed in the supermodule.
+For example if the submodule is on a feature branch, and that change is tracked and pushed in the supermodule, next
+time someone checks out the supermodule and updates the submodule, the submodule will point to that feature branch.
+
+So make sure that the submodule is pointing to the right branch, when tracking and pushing in the supermodule. Finish
+changes in the submodule before tracking and pushing in the supermodule!
 
 ## Coding standards
 
