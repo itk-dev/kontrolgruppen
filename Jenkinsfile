@@ -21,8 +21,9 @@ pipeline {
                         }
                     }
                     steps {
-                        sh 'scripts/develop/install.sh'
-                        sh 'scripts/develop/develop.sh'
+                        // sh 'scripts/develop/install.sh'
+                        // sh 'scripts/develop/develop.sh'
+                        sh 'composer install'
                     }
                 }
                 stage('Composer') {
