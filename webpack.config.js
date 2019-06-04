@@ -23,6 +23,7 @@ Encore
      */
     .addEntry('core', './bundles/kontrolgruppen-core-bundle/Resources/assets/js/core.js')
     .addEntry('login', './bundles/kontrolgruppen-core-bundle/Resources/assets/js/login.js')
+    .addEntry('inputCPR', './bundles/kontrolgruppen-core-bundle/Resources/assets/js/inputCPR.js')
     .addEntry('reminderLatest', './bundles/kontrolgruppen-core-bundle/Resources/assets/js/reminderLatest.js')
     .addEntry('sortSubmit', './bundles/kontrolgruppen-core-bundle/Resources/assets/js/sortSubmit.js')
     .addEntry('journalQuickview', './bundles/kontrolgruppen-core-bundle/Resources/assets/js/journalQuickview.js')
