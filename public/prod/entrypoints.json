@@ -1,23 +1,29 @@
 {
   "entrypoints": {
+    "journalQuickview": {
+      "js": [
+        "/prod/runtime.9c9472c8.js",
+        "/prod/0.1e72c650.js",
+        "/prod/1.e432e826.js",
+        "/prod/journalQuickview.864e037f.js"
+      ]
+    },
     "core": {
       "js": [
         "/prod/runtime.9c9472c8.js",
         "/prod/0.1e72c650.js",
         "/prod/3.de2884ca.js",
-        "/prod/core.f5b7e5b1.js"
+        "/prod/core.58d55b93.js"
       ],
       "css": [
         "/prod/core.4e6bceb0.css"
       ]
     },
-    "login": {
+    "inputCPR": {
       "js": [
         "/prod/runtime.9c9472c8.js",
-        "/prod/login.50c45eef.js"
-      ],
-      "css": [
-        "/prod/login.7789668d.css"
+        "/prod/0.1e72c650.js",
+        "/prod/inputCPR.cb237f7d.js"
       ]
     },
     "reminderLatest": {
@@ -35,12 +41,13 @@
         "/prod/sortSubmit.3e617043.js"
       ]
     },
-    "journalQuickview": {
+    "login": {
       "js": [
         "/prod/runtime.9c9472c8.js",
-        "/prod/0.1e72c650.js",
-        "/prod/1.e432e826.js",
-        "/prod/journalQuickview.864e037f.js"
+        "/prod/login.50c45eef.js"
+      ],
+      "css": [
+        "/prod/login.7789668d.css"
       ]
     },
     "processFilters": {
@@ -84,15 +91,16 @@
   "integrity": {
     "/prod/runtime.9c9472c8.js": "sha384-r7TFMbwHzPzWuz5ibS3MezKTLIK64G8sG5bkVHoRJO/sWUqzIOLPJ5/GYKqPzyYn",
     "/prod/0.1e72c650.js": "sha384-uLVbBPOqItsNc0cDJ/iCnmd/Q5A/ksTs9H9nrYoOHFHc9yfHNMz+2Fyg/cKG+nu3",
-    "/prod/3.de2884ca.js": "sha384-FS4aYLlOWqfe7yM2MrtSvB8T8axY1o1OAbG5HIvhDnYMTZZXTnY8ddOStl1pT7bG",
-    "/prod/core.f5b7e5b1.js": "sha384-ZJUC5fs1MfEmpY2VOjWtUfPiWm9IooIvV1pd+v4IzJ2i/DQ8b3AhqRkfIbg3/Xf9",
-    "/prod/core.4e6bceb0.css": "sha384-m6P3PVCynXzI7YyB20JVxJbZypmEUdbyCgNUu77sDcb7OEWpncCe4O2UxoUBGvgL",
-    "/prod/login.50c45eef.js": "sha384-7dCUxLChcfIyUAaJv+v3j41fdk3eHENxfNFuyIwic2qeHA6XAjhlgigA34ABE95P",
-    "/prod/login.7789668d.css": "sha384-V0G4PCV7jR5qO2PzlzjfK6+W86m4pV6l4xz7edsREC44wmtMR8wKJj+egXUSuykn",
     "/prod/1.e432e826.js": "sha384-fufY8rGZyJlMxVehAQl2mlhMxpccHGqE396CXJk2WkncLL/zl163UzeFT596DNlF",
+    "/prod/journalQuickview.864e037f.js": "sha384-PL/YgxoeEFN30EpoKhf5wSHJf1SriAQ4/fse1pm4zxfqhLdWjsw7lKUgCqGuLI2v",
+    "/prod/3.de2884ca.js": "sha384-FS4aYLlOWqfe7yM2MrtSvB8T8axY1o1OAbG5HIvhDnYMTZZXTnY8ddOStl1pT7bG",
+    "/prod/core.58d55b93.js": "sha384-AOT9BGRyo8YixgMniQoEbFJTO8mN5eRgXEnw2bHrarg4vVog+RsPEVJpfVHxtoeu",
+    "/prod/core.4e6bceb0.css": "sha384-m6P3PVCynXzI7YyB20JVxJbZypmEUdbyCgNUu77sDcb7OEWpncCe4O2UxoUBGvgL",
+    "/prod/inputCPR.cb237f7d.js": "sha384-ORuV/N6UKb6/1kEy10mXZ19DIf7eo+ffLPhkedCT5UEYWWWHCU3dO+TeZCrmBsb1",
     "/prod/reminderLatest.ab1934cc.js": "sha384-KOwMOXwKGnpyFyNw3tM2pZuN8jkNeYZSv50a/X0AigqSjXqVnLBu3pcl+fPqO9zm",
     "/prod/sortSubmit.3e617043.js": "sha384-o6wQnOf4na2N0gdz1k7LHFIb00IuV8VrUGEI/aLQINHQ6+16vri5IjVuumQGsokd",
-    "/prod/journalQuickview.864e037f.js": "sha384-PL/YgxoeEFN30EpoKhf5wSHJf1SriAQ4/fse1pm4zxfqhLdWjsw7lKUgCqGuLI2v",
+    "/prod/login.50c45eef.js": "sha384-7dCUxLChcfIyUAaJv+v3j41fdk3eHENxfNFuyIwic2qeHA6XAjhlgigA34ABE95P",
+    "/prod/login.7789668d.css": "sha384-V0G4PCV7jR5qO2PzlzjfK6+W86m4pV6l4xz7edsREC44wmtMR8wKJj+egXUSuykn",
     "/prod/processFilters.7d827258.js": "sha384-dD3fWEP6mQ753RopqDTvXTjaYUkXjqEEw/5x3NN99+fbr4u5CMIy0P9BBuLkzttO",
     "/prod/processStatusForm.1e3e72cf.js": "sha384-AS01CqvWW0nhYBl65JCj9GIl7CE8qzblSEaw4dPoN2z5GAk9TQo4BYBqH8GAZ9FM",
     "/prod/2.88e6dad8.js": "sha384-ZQXUdtm36dEqO4m7siIijG5i1fLuGVNeJZ/7BiHenmZzZMunSQJuc/TXXZ+BXNqF",
