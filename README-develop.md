@@ -1,5 +1,10 @@
 # Kontrolgruppen development setup
 
+## Checkout submodules
+```sh
+git submodule update --init --recursive --remote
+```
+
 ## Starting the show
 
 ```sh
@@ -18,12 +23,6 @@ open http://$(docker-compose port nginx 80)
 ```sh
 # Install dependencies.
 composer install
-
-# Get the kontrolgruppen bundles to packages/.
-./scripts/develop/install.sh
-
-# Create composer-dev.json and install the local kontrolgruppen/* bundles.
-docker-compose exec phpfpm /app/scripts/develop/develop.sh
 
 # Migrate database.
 # If using docker these bin/console commands should be run from inside the phpfpm container.
