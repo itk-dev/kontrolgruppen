@@ -2,6 +2,12 @@
 
 ## Install
 
+### Check out submodules
+````sh
+git submodule update --init --recursive
+````
+
+### Build
 ```sh
 composer install --no-dev -o
 bin/console doctrine:migrations:migrate
