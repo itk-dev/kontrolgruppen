@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["processFilters"],{fSCI:function(s,n,e){(function(s){s(document).ready(function(){s("form select").on("change",function(){s(".js-process-table-results").hide(),s("#js-process-spinner").show(),s(this).closest("form").submit()})})}).call(this,e("swar"))}},[["fSCI","runtime",0]]]);

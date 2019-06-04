@@ -35,3 +35,15 @@ run when --no-dev is not present when running composer install.
 
 This will replace the initializing and updating of submodules when deploying to production, because the required kontrolgruppen 
 package will be fetched from vcs instead.
+
+## Release prodedure.
+
+Build production assets. They will be added to public/prod.
+
+```sh
+yarn build
+```
+
+Commit the built files to git.
+
+Tag the release.

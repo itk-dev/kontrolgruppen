@@ -32,6 +32,13 @@ docker-compose exec phpfpm /app/bin/console doctrine:migrations:migrate
 docker-compose exec phpfpm /app/bin/console fos:user:create --super-admin
 ```
 
+## Building js assets
+
+Watch for changes in js and css files and build development version:
+```
+yarn watch
+```
+
 ## Note about working with git submodules
 When checking out submodules with the git submodule update command, the checked
 out branch will be to a detached head pointing to the submodule commit latest pushed in the supermodule.
