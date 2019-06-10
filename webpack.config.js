@@ -28,6 +28,7 @@ Encore
     .addEntry('sortSubmit', './bundles/kontrolgruppen-core-bundle/Resources/assets/js/sortSubmit.js')
     .addEntry('journalQuickview', './bundles/kontrolgruppen-core-bundle/Resources/assets/js/journalQuickview.js')
     .addEntry('processFilters', './bundles/kontrolgruppen-core-bundle/Resources/assets/js/processFilters.js')
+    .addEntry('processForm', './bundles/kontrolgruppen-core-bundle/Resources/assets/js/processForm.js')
     .addEntry('processStatusForm', './bundles/kontrolgruppen-core-bundle/Resources/assets/js/processStatusForm.js')
     .addEntry('globalSearch', './bundles/kontrolgruppen-core-bundle/Resources/assets/js/globalSearch.js')
     .addEntry('searchPage', './bundles/kontrolgruppen-core-bundle/Resources/assets/js/searchPage.js')
