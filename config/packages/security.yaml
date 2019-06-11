@@ -8,12 +8,14 @@ security:
 
     providers:
         fos_userbundle:
-            id: fos_user.user_provider.username
+            # id: fos_user.user_provider.username
+            id: Kontrolgruppen\CoreBundle\Security\SAMLUserProvider
 
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
+
         main:
             pattern: ^/
             user_checker: security.user_checker
@@ -23,7 +25,14 @@ security:
             logout:       true
             anonymous:    true
 
+            guard:
+                authenticators:
+                    - Kontrolgruppen\CoreBundle\Security\SAMLAuthenticator
+                    - Kontrolgruppen\CoreBundle\Security\CliLoginTokenAuthenticator
+                entry_point: Kontrolgruppen\CoreBundle\Security\SAMLAuthenticator
+
     access_control:
+        - { path: ^/saml, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
