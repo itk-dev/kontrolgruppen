@@ -32,6 +32,16 @@ docker-compose exec phpfpm /app/bin/console doctrine:migrations:migrate
 docker-compose exec phpfpm /app/bin/console fos:user:create --super-admin
 ```
 
+## Use maker bundle
+
+To use MakerBundle in Kontrolgruppen\CoreBundle, use the following environment variable:
+
+```
+MAKER_NAMESPACE=Kontrolgruppen\\CoreBundle php bin/console make:entity
+```
+
+This will place the files in the correct location.
+
 ## Building js assets
 
 Watch for changes in js and css files and build development version:
