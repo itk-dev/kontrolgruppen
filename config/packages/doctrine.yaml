@@ -19,6 +19,7 @@ doctrine:
         url: '%env(resolve:DATABASE_URL)%'
         types:
             JournalEntryEnumType: Kontrolgruppen\CoreBundle\DBAL\Types\JournalEntryEnumType
+            ProcessLogEntryLevelEnumType: Kontrolgruppen\CoreBundle\DBAL\Types\ProcessLogEntryLevelEnumType
 
     orm:
         auto_generate_proxy_classes: true

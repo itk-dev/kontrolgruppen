@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([["searchPage"],{Redn:function(e,n,a){"use strict";a.r(n),function(e){var n=a("9oKU"),r=a.n(n);e(document).ready(function(){var n=document.querySelector(".js-search-result-rows");new r.a(n).mark(e(".js-search-text").data("search"))})}.call(this,a("swar"))}},[["Redn","runtime",0,4]]]);
