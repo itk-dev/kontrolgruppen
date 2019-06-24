@@ -65,4 +65,10 @@ Encore
     .autoProvidejQuery()
 ;
 
-module.exports = Encore.getWebpackConfig();
+let config = Encore.getWebpackConfig();
+
+config.resolve.alias = {
+    jquery: __dirname + '/node_modules/jquery/dist/jquery'
+};
+
+module.exports = config;
