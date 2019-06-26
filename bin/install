@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+set -o errexit -o errtrace -o noclobber -o nounset -o pipefail
+IFS=$'\n\t'
+
+script_dir=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
+bin_dir=$(cd $(dirname "${BASH_SOURCE[0]}")/../bin/ && pwd)
+bold=$(tput bold)
+normal=$(tput sgr0)
+
+symfony_env=dev
+
+for arg in "$@"; do
+  case $arg in
+    --env=*)
+      symfony_env=${arg#--env=}
+      ;;
+    --help)
+      cat <<EOF
+Usage: $0 [--env=dev|prod|test]
+EOF
+      exit 0
+      ;;
+    --*)
+      (>&2 echo "Invalid option $arg")
+      exit 1
+      ;;
+  esac
+done
+
+echo "${bold}Symfony environment: $symfony_env${normal}"
+
+if [ "prod" == "$symfony_env" ]; then
+  APP_ENV=$symfony_env composer install --no-dev --optimize-autoloader
+else
+  APP_ENV=$symfony_env composer install
+fi
+
+APP_ENV=$symfony_env $bin_dir/console doctrine:migrations:migrate --no-interaction
