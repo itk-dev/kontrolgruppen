@@ -31,6 +31,7 @@ composer-dev.*
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
 /public/build/
+/public/prod/
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
