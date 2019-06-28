@@ -88,7 +88,7 @@
     "scripts": {
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
-            "ckeditor:install --release=basic --tag=4.11.4 --clear=drop --exclude=samples": "symfony-cmd",
+            "ckeditor:install --release=full --tag=4.11.4 --clear=drop --exclude=samples": "symfony-cmd",
             "assets:install %PUBLIC_DIR% --symlink --relative": "symfony-cmd"
         },
         "post-install-cmd": [
