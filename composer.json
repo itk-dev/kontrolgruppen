@@ -8,12 +8,13 @@
         "php": "^7.1.3",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "cweagans/composer-patches": "^1.6",
+        "kontrolgruppen/core-bundle": "@dev",
         "symfony/console": "4.3.*",
         "symfony/dotenv": "4.3.*",
         "symfony/flex": "^1.3.1",
         "symfony/framework-bundle": "4.3.*",
-        "symfony/yaml": "4.3.*",
-        "kontrolgruppen/core-bundle": "@dev"
+        "symfony/yaml": "4.3.*"
     },
     "require-dev": {
         "allocine/twigcs": "^3.1",
@@ -67,6 +68,11 @@
         "symfony": {
             "allow-contrib": false,
             "require": "4.3.*"
+        },
+        "patches": {
+            "doctrine/dbal": {
+                "Encrypted table": "bundles/kontrolgruppen-core-bundle/patches/doctrine/dbal/encrypted-table.patch"
+            }
         }
     },
     "scripts": {
