@@ -77,6 +77,7 @@ class AppFixtures extends Fixture
             $entityProcessType = new ProcessType();
             $entityProcessType->setConclusionClass(0 === $i % 2 ? WeightedConclusion::class : BaseConclusion::class);
             $entityProcessType->setName($name);
+            $entityProcessType->setNetDefaultValue(.7);
             $manager->persist($entityProcessType);
             $processTypes[] = $entityProcessType;
         }
