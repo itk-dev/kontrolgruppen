@@ -81,3 +81,31 @@ Check Twig templates using [Twigcs](https://github.com/allocine/twigcs):
 ```sh
 composer check-coding-standards/twigcs
 ```
+
+### JavaScript
+
+Check JavaScript files using [eslint](https://eslint.org/):
+
+```sh
+yarn check-coding-standards-js
+```
+
+Apply coding standards:
+
+```sh
+yarn apply-coding-standards-js
+```
+
+### SCSS
+
+Check SCSS files using [stylelint](https://stylelint.io/):
+
+```sh
+yarn check-coding-standards-scss
+```
+
+Apply coding standards:
+
+```sh
+yarn apply-coding-standards-scss
+```
