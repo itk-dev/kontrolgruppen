@@ -1,0 +1,18 @@
+-
+    # Define reference
+    '@id': process-type:enlig-forhold
+    name: Enlig forhold
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    netDefaultValue: 0.7
+
+-
+    '@id': process-type:udlandsforhold
+    name: Udlandsforhold
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\WeightedConclusion
+    netDefaultValue: 0.7
+
+-
+    '@id': process-type:bopælsforhold
+    name: Bopælsforhold
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    netDefaultValue: 0.7
