@@ -1,0 +1,7 @@
+-
+    '@id': process-status:opstartet
+    name: Opstartet
+
+-
+    '@id': process-type:afsluttet
+    name: Afsluttet
