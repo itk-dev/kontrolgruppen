@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20190702124255 extends AbstractMigration
+final class Version20190703063402 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -22,8 +22,7 @@ final class Version20190702124255 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('CREATE TABLE car (id INT AUTO_INCREMENT NOT NULL, process_id INT NOT NULL, registration_number VARCHAR(255) NOT NULL, shared_ownership TINYINT(1) DEFAULT NULL, notes LONGTEXT DEFAULT NULL, INDEX IDX_773DE69D7EC2F574 (process_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ENGINE = InnoDB ENCRYPTED = YES');
-        $this->addSql('ALTER TABLE car ADD CONSTRAINT FK_773DE69D7EC2F574 FOREIGN KEY (process_id) REFERENCES process (id)');
+        $this->addSql('ALTER TABLE client DROP car_registration_number');
     }
 
     public function down(Schema $schema) : void
@@ -31,6 +30,6 @@ final class Version20190702124255 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('DROP TABLE car');
+        $this->addSql('ALTER TABLE client ADD car_registration_number VARCHAR(255) DEFAULT NULL COLLATE utf8mb4_unicode_ci');
     }
 }

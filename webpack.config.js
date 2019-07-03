@@ -33,6 +33,7 @@ Encore
     .addEntry('globalSearch', './bundles/kontrolgruppen-core-bundle/Resources/assets/js/globalSearch.js')
     .addEntry('searchPage', './bundles/kontrolgruppen-core-bundle/Resources/assets/js/searchPage.js')
     .addEntry('journalRevisionToggle', './bundles/kontrolgruppen-core-bundle/Resources/assets/js/journalRevisionToggle.js')
+    .addEntry('cars', './bundles/kontrolgruppen-core-bundle/Resources/assets/js/cars.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
