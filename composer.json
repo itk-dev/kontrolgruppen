@@ -9,7 +9,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "cweagans/composer-patches": "^1.6",
-        "kontrolgruppen/core-bundle": "dev-feature/KON-133-adfs-authentication/guard",
+        "kontrolgruppen/core-bundle": "dev-feature/KON-133-adfs-authentication",
         "symfony/console": "4.3.*",
         "symfony/dotenv": "4.3.*",
         "symfony/flex": "^1.3.1",

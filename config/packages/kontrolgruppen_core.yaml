@@ -4,8 +4,8 @@ parameters:
   env(SAML_SP_KEY_FILE): '%kernel.project_dir%/saml/sp/sp.key'
   env(SAML_IDP_CONFIG_FILE): ~
   env(SAML_IDP_CRT_FILE): '%kernel.project_dir%/saml/idp/idp.crt'
-  saml_sp_crt: '%env(resolve:file:SAML_SP_CRT_FILE)%'
-  saml_sp_key: '%env(resolve:file:SAML_SP_KEY_FILE)%'
+  saml_sp_crt: '%env(file:resolve:SAML_SP_CRT_FILE)%'
+  saml_sp_key: '%env(file:resolve:SAML_SP_KEY_FILE)%'
   saml_idp_config_file: '%env(resolve:SAML_IDP_CONFIG_FILE)%'
   saml_idp_entity_id: 'https://simplesamlphp.srvitkhulk.itkdev.dk/simplesaml/saml2/idp/metadata.php'
   saml_idp_single_sign_on_service_url: 'https://simplesamlphp.srvitkhulk.itkdev.dk/simplesaml/saml2/idp/SSOService.php'
