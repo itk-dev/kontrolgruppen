@@ -1,4 +1,4 @@
 -
     '@id': user:1
     username: super-admin@example.com
-    password: password
+    roles: [ROLE_SUPER_ADMIN]
