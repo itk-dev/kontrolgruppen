@@ -1,6 +1,57 @@
 -
-    '@id': service:1
+    '@id': service:kontanthjalp
     name: Kontanthjælp
 -
-    '@id': service:2
+    '@id': service:sygedagpenge
+    name: Sygedagpenge
+-
+    '@id': service:integrationsydelse
+    name: Integrationsydelse
+-
+    '@id': service:ledighedsydelse
+    name: Ledighedsydelse
+-
+    '@id': service:ressourceforlobsydelse
+    name: Ressourceforløbsydelse
+-
+    '@id': service:las
+    name: Alt under lov am aktiv socialpolitik (LAS)
+-
+    '@id': service:fleksjobsydelse
+    name: Fleksjobsydelse
+-
+    '@id': service:fortidspension
+    name: Førtidspension
+-
+    '@id': service:pension
+    name: Pension
+-
+    '@id': service:boligstotte
+    name: Boligstøtte
+-
+    '@id': service:lab
+    name: Alt under lov om aktiv beskæftigelsesindsats (LAB)
+-
+    '@id': service:sel
+    name: Alt under lov om socialservices (SEL)
+-
+    '@id': service:okonomisk_friplads
     name: Økonomisk friplads
+-
+    '@id': service:andet
+    name: Andet
+
+# - '@service:kontanthjalp'
+# - '@service:sygedagpenge'
+# - '@service:integrationsydelse'
+# - '@service:ledighedsydelse'
+# - '@service:ressourceforlobsydelse'
+# - '@service:las'
+# - '@service:fleksjobsydelse'
+# - '@service:fortidspension'
+# - '@service:pension'
+# - '@service:boligstotte'
+# - '@service:lab'
+# - '@service:sel'
+# - '@service:okonomisk_friplads'
+# - '@service:andet'
