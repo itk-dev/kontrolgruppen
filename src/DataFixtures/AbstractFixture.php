@@ -90,7 +90,7 @@ abstract class AbstractFixture extends Fixture
             try {
                 $this->accessor->setValue($entity, $propertyPath, $value);
             } catch (\Exception $exception) {
-                throw new \RuntimeException(sprintf('Cannot set property %s.%s', \get_class($entity), $propertyPath));
+                throw new \RuntimeException(sprintf('Cannot set property %s.%s on entity %s', \get_class($entity), $propertyPath, $entity));
             }
         }
 

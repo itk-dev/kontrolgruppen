@@ -10,17 +10,9 @@
 
 namespace App\DataFixtures;
 
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Kontrolgruppen\CoreBundle\Entity\Service;
 
-class ServiceFixture extends AbstractFixture implements DependentFixtureInterface
+class ServiceFixture extends AbstractFixture
 {
     protected $class = Service::class;
-
-    public function getDependencies()
-    {
-        return [
-            ProcessTypeFixture::class,
-        ];
-    }
 }

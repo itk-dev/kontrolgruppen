@@ -1,14 +1,9 @@
 -
     '@id': service:kontanthjalp
     name: Kontanthjælp
-    processTypes:
-        - '@process-type:udrejse'
-        - '@process-type:paragraf_11'
 -
     '@id': service:sygedagpenge
     name: Sygedagpenge
-    processTypes:
-        - '@process-type:okonomisk_friplads'
 -
     '@id': service:integrationsydelse
     name: Integrationsydelse
@@ -28,6 +23,12 @@
     '@id': service:fortidspension
     name: Førtidspension
 -
+    '@id': service:pension
+    name: Pension
+-
+    '@id': service:boligstotte
+    name: Boligstøtte
+-
     '@id': service:lab
     name: Alt under lov om aktiv beskæftigelsesindsats (LAB)
 -
@@ -39,3 +40,18 @@
 -
     '@id': service:andet
     name: Andet
+
+# - '@service:kontanthjalp'
+# - '@service:sygedagpenge'
+# - '@service:integrationsydelse'
+# - '@service:ledighedsydelse'
+# - '@service:ressourceforlobsydelse'
+# - '@service:las'
+# - '@service:fleksjobsydelse'
+# - '@service:fortidspension'
+# - '@service:pension'
+# - '@service:boligstotte'
+# - '@service:lab'
+# - '@service:sel'
+# - '@service:okonomisk_friplads'
+# - '@service:andet'

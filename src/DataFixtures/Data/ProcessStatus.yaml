@@ -19,3 +19,27 @@
 -
     '@id': process-status:afsluttet
     name: Afsluttet
+-
+    '@id': process-status:afventer_sagsbehandler
+    name: Afventer tildeling af sagsbehandler
+-
+    '@id': process-status:ringebrev
+    name: Ringebrev
+-
+    '@id': process-status:virksomhedskontrol
+    name: Virksomhedskontrol
+-
+    '@id': process-status:indkaldelse_til_samtale
+    name: Indkaldelse til samtale
+
+# - '@process-status:oprettet'
+# - '@process-status:forespg_dfd_udland'
+# - '@process-status:agterskrivelse'
+# - '@process-status:partshoring'
+# - '@process-status:afgorelse'
+# - '@process-status:ved_ankestyrelse'
+# - '@process-status:afsluttet'
+# - '@process-status:afventer_sagsbehandler'
+# - '@process-status:ringebrev'
+# - '@process-status:virksomhedskontrol'
+# - '@process-status:indkaldelse_til_samtale'
