@@ -1,7 +1,21 @@
 -
-    '@id': process-status:opstartet
-    name: Opstartet
-
+    '@id': process-status:oprettet
+    name: Oprettet
 -
-    '@id': process-type:afsluttet
+    '@id': process-status:forespg_dfd_udland
+    name: Forespørgsel DFD Udland
+-
+    '@id': process-status:agterskrivelse
+    name: Agterskrivelse
+-
+    '@id': process-status:partshoring
+    name: Partshøring
+-
+    '@id': process-status:afgorelse
+    name: Afgørelse
+-
+    '@id': process-status:ved_ankestyrelse
+    name: Ved Ankestyrelse
+-
+    '@id': process-status:afsluttet
     name: Afsluttet

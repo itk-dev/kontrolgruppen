@@ -1,18 +1,103 @@
 -
-    # Define reference
-    '@id': process-type:enlig-forhold
-    name: Enlig forhold
+    '@id': process-type:udrejse
+    name: Udrejse
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
-
+#    processStatuses:
+#        - '@process-status:oprettet'
+#        - '@process-status:forespg_dfd_udland'
+#        - '@process-status:agterskrivelse'
+#        - '@process-status:partshoring'
+#        - '@process-status:afgorelse'
+#        - '@process-status:ved_ankestyrelse'
+#        - '@process-status:afsluttet'
 -
-    '@id': process-type:udlandsforhold
-    name: Udlandsforhold
-    conclusionClass: Kontrolgruppen\CoreBundle\Entity\WeightedConclusion
+    '@id': process-type:udrejse_registersamkoring
+    name: 'Udrejse - Registersamkøring'
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
-
 -
-    '@id': process-type:bopælsforhold
-    name: Bopælsforhold
+    '@id': process-type:dobbelt_foresorgelse
+    name: 'Dobbelt forsørgelse (løn eller SU)'
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    netDefaultValue: 0.7
+-
+    '@id': process-type:dobbelt_foresorgelse_registersamkoring
+    name: 'Dobbelt forsørgelse (løn eller SU) - Registersamkøring'
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    netDefaultValue: 0.7
+-
+    '@id': process-type:okonomisk_friplads
+    name: 'Økonomisk friplads'
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    netDefaultValue: 0.7
+-
+    '@id': process-type:okonomisk_friplads_registersamkoring
+    name: 'Økonomisk friplads - Registersamkøring'
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    netDefaultValue: 0.7
+-
+    '@id': process-type:sygedagpenge
+    name: 'Sygedagpenge'
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    netDefaultValue: 0.7
+-
+    '@id': process-type:sygedagpenges_registersamkoring
+    name: 'Sygedagpenge - Registersamkøring'
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    netDefaultValue: 0.7
+-
+    '@id': process-type:fleksjob
+    name: 'Fleksjob'
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    netDefaultValue: 0.7
+-
+    '@id': process-type:formue
+    name: 'Formue'
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    netDefaultValue: 0.7
+-
+    '@id': process-type:formue_registersamkoring
+    name: 'Formue - Registersamkøring'
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    netDefaultValue: 0.7
+-
+    '@id': process-type:uoplyst_indtagt
+    name: 'Uoplyst indtægt (sort arbejde)'
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    netDefaultValue: 0.7
+-
+    '@id': process-type:uoplyst_arbejde
+    name: 'Uoplyst arbejde'
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    netDefaultValue: 0.7
+-
+    '@id': process-type:egen_virksomhed
+    name: 'Egen virksomhed'
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    netDefaultValue: 0.7
+-
+    '@id': process-type:hjemmeboende
+    name: 'Hjemmeboende på udeboendesats'
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    netDefaultValue: 0.7
+-
+    '@id': process-type:hjemmeboende_registersamkoring
+    name: 'Hjemmeboende på udeboendesats - Registersamkøring'
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    netDefaultValue: 0.7
+-
+    '@id': process-type:paragraf_9
+    name: '§9 - Orientering UDK'
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    netDefaultValue: 0.7
+-
+    '@id': process-type:paragraf_10
+    name: '§10 – Udveksling af oplysninger m. UDK'
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    netDefaultValue: 0.7
+-
+    '@id': process-type:paragraf_11
+    name: '§11 - Sagsoplysning pva. UDK'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
