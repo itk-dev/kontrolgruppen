@@ -1,8 +1,11 @@
 -
-    '@id': process:1
+    '@id': 'process:1'
     caseNumber: 19-00001
     # Get reference
     processType: '@process-type:udrejse'
     processStatus: '@process-status:oprettet'
     channel: '@channel:anonym_anmelder'
     clientCpr: 111111-1111
+    service: '@service:kontanthjalp'
+    caseWorker: '@user:1'
+    policeReport: true
