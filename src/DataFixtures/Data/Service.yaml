@@ -1,9 +1,14 @@
 -
     '@id': service:kontanthjalp
     name: Kontanthjælp
+    processTypes:
+        - '@process-type:udrejse'
+        - '@process-type:paragraf_11'
 -
     '@id': service:sygedagpenge
     name: Sygedagpenge
+    processTypes:
+        - '@process-type:okonomisk_friplads'
 -
     '@id': service:integrationsydelse
     name: Integrationsydelse

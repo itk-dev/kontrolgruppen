@@ -72,18 +72,44 @@ abstract class AbstractFixture extends Fixture
     protected function buildEntity(array $data, $index)
     {
         $entity = new $this->class();
+        $metadata = $this->getMetadata($entity);
         foreach ($data as $propertyPath => $value) {
             if (0 === strpos($propertyPath, '@')) {
                 continue;
             }
-            if (0 === strpos($value, '@')) {
-                $value = $this->getReference(substr($value, 1));
+
+            // Convert references to actual entities for associations.
+            if ($metadata->hasAssociation($propertyPath)) {
+                if ($metadata->isCollectionValuedAssociation($propertyPath) && \is_array($value)) {
+                    $value = array_map([$this, 'getEntityReference'], $value);
+                } else {
+                    $value = $this->getEntityReference($value);
+                }
             }
-            if ($this->accessor->isWritable($entity, $propertyPath)) {
+
+            try {
                 $this->accessor->setValue($entity, $propertyPath, $value);
+            } catch (\Exception $exception) {
+                throw new \RuntimeException(sprintf('Cannot set property %s.%s', \get_class($entity), $propertyPath));
             }
         }
 
         return $entity;
+    }
+
+    protected function getMetadata($entity)
+    {
+        return $this->referenceRepository->getManager()->getClassMetadata(\get_class($entity));
+    }
+
+    protected function getEntityReference($reference)
+    {
+        if (0 === strpos($reference, '@')) {
+            return $this->getReference(substr($reference, 1));
+        }
+        throw new \RuntimeException(sprintf(
+            'Invalid reference: %s',
+            $reference
+        ));
     }
 }
