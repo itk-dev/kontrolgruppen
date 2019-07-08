@@ -1,3 +1,6 @@
 kontrolgruppen_core:
     # Default value for ProcessType.netDefaultValue
     net_default_value: .7
+
+    exports:
+        - Kontrolgruppen\CoreBundle\Export\KL\Export
