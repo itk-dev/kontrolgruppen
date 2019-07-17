@@ -98,14 +98,10 @@ kontrolgruppen_core:
                     url: https://kontrolgruppen.example.com
 
             user_roles:
-                attribute: http://schemas.xmlsoap.org/claims/Group
+                attribute: http://schemas.microsoft.com/ws/2008/06/identity/claims/role
                 # Map from ADFS stuff to Symfony roles
                 fields:
                     # Common Name
                     CN:
-                        # Value: Role(s)
-                        GG-Rolle-Kontrolsystem-Admin: ROLE_ADMIN
-                        GG-Rolle-Kontrolsystem-Sagsbehandler: ROLE_SAGSBEHANDLER
-
-                        # DG-Right-Kontrolsystem-Admin: ROLE_ADMIN
-                        # DG-Right-Kontrolsystem-Sagsbehandler: ROLE_SAGSBEHANDLER
+                        DG-Right-Kontrolsystem-Admin: ROLE_ADMIN
+                        DG-Right-Kontrolsystem-Sagsbehandler: ROLE_SAGSBEHANDLER
