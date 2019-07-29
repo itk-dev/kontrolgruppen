@@ -16,6 +16,7 @@
 -
     '@id': process-status:ved_ankestyrelse
     name: Ved Ankestyrelse
+    isForwardToAnotherAuthority: true
 -
     '@id': process-status:afsluttet
     name: Afsluttet

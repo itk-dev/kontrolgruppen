@@ -85,6 +85,8 @@ abstract class AbstractFixture extends Fixture
                 } else {
                     $value = $this->getEntityReference($value);
                 }
+            } elseif (isset($metadata->fieldMappings[$propertyPath]['type'])) {
+                $value = $this->convert($value, $metadata->fieldMappings[$propertyPath]['type']);
             }
 
             try {
@@ -111,5 +113,23 @@ abstract class AbstractFixture extends Fixture
             'Invalid reference: %s',
             $reference
         ));
+    }
+
+    /**
+     * Convert a scalar value to the requested type.
+     *
+     * @param $value
+     * @param $type
+     *
+     * @return mixed
+     */
+    protected function convert($value, $type)
+    {
+        switch ($type) {
+            case 'datetime':
+                return new \DateTime($value);
+        }
+
+        return $value;
     }
 }
