@@ -11,9 +11,9 @@ pipeline {
                 }
             }
             stages {
-                stage('Install develop bundel') {
+                stage('Install develop bundle') {
                     when {
-                        not { 
+                        not {
                             branch 'release'
                         }
                         not {
@@ -32,7 +32,6 @@ pipeline {
                 stage('PHP7 compatibility') {
                     steps {
                         sh 'vendor/bin/phan --allow-polyfill-parser'
-                        
                     }
                 }
                 stage('Coding standards') {
@@ -41,7 +40,7 @@ pipeline {
                         sh 'vendor/bin/php-cs-fixer --config=.php_cs.dist fix --dry-run --verbose'
                         sh 'vendor/bin/twigcs lint templates'
                     }
-                }   
+                }
             }
         }
         stage('Deployment develop') {
