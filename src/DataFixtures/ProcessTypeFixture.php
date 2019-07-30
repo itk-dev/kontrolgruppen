@@ -10,9 +10,18 @@
 
 namespace App\DataFixtures;
 
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Kontrolgruppen\CoreBundle\Entity\ProcessType;
 
-class ProcessTypeFixture extends AbstractFixture
+class ProcessTypeFixture extends AbstractFixture implements DependentFixtureInterface
 {
     protected $class = ProcessType::class;
+
+    public function getDependencies()
+    {
+        return [
+            ProcessStatusFixture::class,
+            ServiceFixture::class,
+        ];
+    }
 }
