@@ -4,6 +4,6 @@ twig:
     strict_variables: '%kernel.debug%'
     form_themes:
         - 'bootstrap_4_layout.html.twig'
-        - 'LexikFormFilterBundle:Form:form_div_layout.html.twig'
+        - '@LexikFormFilter/Form/form_div_layout.html.twig'
     globals:
         display_no_sensitive_information_warning: '%env(DISPLAY_NO_SENSITIVE_INFORMATION_WARNING)%'

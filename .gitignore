@@ -35,3 +35,6 @@ composer-dev.*
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
+
+# SAML keys and stuff
+saml/
