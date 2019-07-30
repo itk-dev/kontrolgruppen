@@ -162,9 +162,6 @@
             "ref": "8eb1cd0962ded6a6d6e1e5a9b6d3e888f9f94ff6"
         }
     },
-    "friendsofsymfony/user-bundle": {
-        "version": "v2.1.2"
-    },
     "friendsoftwig/twigcs": {
         "version": "v3.1.3"
     },
@@ -558,9 +555,6 @@
             "config/packages/swiftmailer.yaml",
             "config/packages/test/swiftmailer.yaml"
         ]
-    },
-    "symfony/templating": {
-        "version": "v4.3.2"
     },
     "symfony/test-pack": {
         "version": "v1.0.6"
