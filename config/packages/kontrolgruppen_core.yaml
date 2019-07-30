@@ -2,16 +2,11 @@
 parameters:
   env(SAML_SP_CRT_FILE): '%kernel.project_dir%/saml/sp/sp.crt'
   env(SAML_SP_KEY_FILE): '%kernel.project_dir%/saml/sp/sp.key'
-  env(SAML_IDP_CONFIG_FILE): ~
-  env(SAML_IDP_CRT_FILE): '%kernel.project_dir%/saml/idp/idp.crt'
-  saml_sp_crt: '%env(file:resolve:SAML_SP_CRT_FILE)%'
-  saml_sp_key: '%env(file:resolve:SAML_SP_KEY_FILE)%'
-  saml_idp_config_file: '%env(resolve:SAML_IDP_CONFIG_FILE)%'
-  saml_idp_entity_id: 'https://simplesamlphp.srvitkhulk.itkdev.dk/simplesaml/saml2/idp/metadata.php'
-  saml_idp_single_sign_on_service_url: 'https://simplesamlphp.srvitkhulk.itkdev.dk/simplesaml/saml2/idp/SSOService.php'
-  saml_idp_single_logout_service_url: 'https://simplesamlphp.srvitkhulk.itkdev.dk/simplesaml/saml2/idp/SingleLogoutService.php'
-  saml_idp_crt: '%env(file:resolve:SAML_IDP_CRT_FILE)%'
-
+  env(SAML_IDP_CONFIG_FILE): '%kernel.project_dir%/saml/idp/idp.xml'
+  saml_empty: ''
+  saml_sp_crt: '%env(default:saml_empty:file:resolve:SAML_SP_CRT_FILE)%'
+  saml_sp_key: '%env(default:saml_empty:file:resolve:SAML_SP_KEY_FILE)%'
+  saml_idp_config_file: '%env(default:saml_empty:resolve:SAML_IDP_CONFIG_FILE)%'
 
 kontrolgruppen_core:
     # Default value for ProcessType.netDefaultValue
@@ -27,46 +22,25 @@ kontrolgruppen_core:
             # https://github.com/onelogin/php-saml#settings
             strict:              true
             debug:               true
-            # baseurl:             '%base_url%'
             sp:
                 entityId: '%base_url%'
                 assertionConsumerService:
-                    url:                 '%base_url%/saml/acs'
-                    binding:             'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST'
-                # attributeConsumingService:
-                #     serviceName:         SP test
-                #     serviceDescription:  Test Service
-                #     requestedAttributes:
-                #         -
-                #             name:
-                #             isRequired:
-                #             nameFormat:
-                #             friendlyName:
-                #             attributeValue:
+                    url: '%base_url%/saml/acs'
+                    binding: 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST'
                 singleLogoutService:
-                    url:                 '%base_url%/saml/sls'
-                    binding:             'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'
-                NameIDFormat:        'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress'
+                    url: '%base_url%/saml/sls'
+                    binding: 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'
+                NameIDFormat: 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress'
                 x509cert: '%saml_sp_crt%'
                 privateKey: '%saml_sp_key%'
 
-            _idp:
-                entityId: '%saml_idp_entity_id%'
-                singleSignOnService:
-                    url:                 '%saml_idp_single_sign_on_service_url'
-                    binding:             'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'
-                singleLogoutService:
-                    url: '%saml_idp_single_logout_service_url%'
-                    responseUrl:         ''
-                    binding:             'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'
-                x509cert: '%saml_idp_crt%'
-
+            # Read IdP configuration from a file.
             idp: '%saml_idp_config_file%'
 
             # Advanced settings (https://github.com/onelogin/php-saml#settings)
             compress:
-                requests:            true
-                responses:           true
+                requests: true
+                responses: true
             security:
                 nameIdEncrypted: false
                 authnRequestsSigned: false
@@ -76,13 +50,13 @@ kontrolgruppen_core:
                 wantMessagesSigned: false
                 wantAssertionsEncrypted: false
                 wantAssertionsSigned: false
-                wantNameId:          true
+                wantNameId: true
                 wantNameIdEncrypted: false
                 requestedAuthnContext: true
-                wantXMLValidation:   true
+                wantXMLValidation: true
                 relaxDestinationValidation: false
-                signatureAlgorithm:  http://www.w3.org/2001/04/xmldsig-more#rsa-sha256
-                digestAlgorithm:     http://www.w3.org/2001/04/xmlenc#sha256
+                signatureAlgorithm: http://www.w3.org/2001/04/xmldsig-more#rsa-sha256
+                digestAlgorithm: http://www.w3.org/2001/04/xmlenc#sha256
                 lowercaseUrlencoding: false
             contactPerson:
                 technical:

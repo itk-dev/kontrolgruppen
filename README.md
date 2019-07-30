@@ -50,3 +50,30 @@ yarn build
 Commit the built files to git.
 
 Tag the release.
+
+
+## SAML
+
+Create key and certificate (change `--subj` to match your actual setup):
+
+```sh
+mkdir -p saml/{idp,sp}
+openssl req -x509 -sha256 -nodes -days 1460 -newkey rsa:2048 -keyout saml/sp/sp.key -out saml/sp/sp.crt \
+	-subj "/C=DK/L=Aarhus/O=Kontrolgruppen/CN=kontrolgruppen.example.com/emailAddress=info@kontrolgruppen.example.com"
+```
+
+Download metadata from your identitity provider (IdP) to `saml/idp/ids.xml`.
+
+The actual locations of the key, certificate and IdP configuration files are controlled by three environment variables:
+
+```yaml
+env(SAML_SP_CRT_FILE): '%kernel.project_dir%/saml/sp/sp.crt'
+env(SAML_SP_KEY_FILE): '%kernel.project_dir%/saml/sp/sp.key'
+env(SAML_IDP_CONFIG_FILE): '%kernel.project_dir%/saml/idp/idp.xml'
+```
+
+To change these, edit `.env.«env».local`, e.g.:
+
+```sh
+SAML_IDP_CONFIG_FILE='%kernel.project_dir%/saml/idp/my_idp.xml'
+```
