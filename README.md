@@ -62,7 +62,7 @@ openssl req -x509 -sha256 -nodes -days 1460 -newkey rsa:2048 -keyout saml/sp/sp.
 	-subj "/C=DK/L=Aarhus/O=Kontrolgruppen/CN=kontrolgruppen.example.com/emailAddress=info@kontrolgruppen.example.com"
 ```
 
-Download metadata from your identitity provider (IdP) to `saml/idp/ids.xml`.
+Download metadata from your identitity provider (IdP) to `saml/idp/idp.xml`.
 
 The actual locations of the key, certificate and IdP configuration files are controlled by three environment variables:
 
