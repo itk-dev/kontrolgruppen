@@ -3,6 +3,22 @@
     name: Udrejse
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
+    channels:
+        - '@channel:anonym_anmelder'
+        - '@channel:navngiven_anmelder'
+        - '@channel:internt_i_kommunen'
+        - '@channel:politi'
+        - '@channel:skattestyrelsen'
+        - '@channel:star'
+        - '@channel:egen_drift'
+        - '@channel:anden_kommune'
+        - '@channel:kampagne'
+        - '@channel:udbetaling_danmark'
+        - '@channel:projekter'
+        - '@channel:boligforeninger'
+        - '@channel:udlændingestyrelsen'
+        - '@channel:su'
+        - '@channel:andet'
     processStatuses:
         - '@process-status:oprettet'
         - '@process-status:forespg_dfd_udland'
@@ -25,6 +41,8 @@
     name: 'Udrejse - Registersamkøring'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
+    channels:
+        - '@channel:dfd'
     processStatuses:
         - '@process-status:oprettet'
         - '@process-status:forespg_dfd_udland'
@@ -47,6 +65,22 @@
     name: 'Dobbelt forsørgelse (løn eller SU)'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
+    channels:
+        - '@channel:anonym_anmelder'
+        - '@channel:navngiven_anmelder'
+        - '@channel:internt_i_kommunen'
+        - '@channel:politi'
+        - '@channel:skattestyrelsen'
+        - '@channel:star'
+        - '@channel:egen_drift'
+        - '@channel:anden_kommune'
+        - '@channel:kampagne'
+        - '@channel:udbetaling_danmark'
+        - '@channel:projekter'
+        - '@channel:boligforeninger'
+        - '@channel:udlændingestyrelsen'
+        - '@channel:su'
+        - '@channel:andet'
     processStatuses:
         - '@process-status:oprettet'
         - '@process-status:agterskrivelse'
@@ -63,6 +97,8 @@
     name: 'Dobbelt forsørgelse (løn eller SU) - Registersamkøring'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
+    channels:
+        - '@channel:dfd'
     processStatuses:
         - '@process-status:oprettet'
         - '@process-status:agterskrivelse'
@@ -83,6 +119,22 @@
     name: 'Økonomisk friplads'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
+    channels:
+        - '@channel:anonym_anmelder'
+        - '@channel:navngiven_anmelder'
+        - '@channel:internt_i_kommunen'
+        - '@channel:politi'
+        - '@channel:skattestyrelsen'
+        - '@channel:star'
+        - '@channel:egen_drift'
+        - '@channel:anden_kommune'
+        - '@channel:kampagne'
+        - '@channel:udbetaling_danmark'
+        - '@channel:projekter'
+        - '@channel:boligforeninger'
+        - '@channel:udlændingestyrelsen'
+        - '@channel:su'
+        - '@channel:andet'
     processStatuses:
         - '@process-status:oprettet'
         - '@process-status:afventer_sagsbehandler'
@@ -99,6 +151,8 @@
     name: 'Økonomisk friplads - Registersamkøring'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
+    channels:
+        - '@channel:dfd'
     processStatuses:
         - '@process-status:oprettet'
         - '@process-status:afventer_sagsbehandler'
@@ -115,6 +169,22 @@
     name: 'Sygedagpenge'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
+    channels:
+        - '@channel:anonym_anmelder'
+        - '@channel:navngiven_anmelder'
+        - '@channel:internt_i_kommunen'
+        - '@channel:politi'
+        - '@channel:skattestyrelsen'
+        - '@channel:star'
+        - '@channel:egen_drift'
+        - '@channel:anden_kommune'
+        - '@channel:kampagne'
+        - '@channel:udbetaling_danmark'
+        - '@channel:projekter'
+        - '@channel:boligforeninger'
+        - '@channel:udlændingestyrelsen'
+        - '@channel:su'
+        - '@channel:andet'
     processStatuses:
         - '@process-status:oprettet'
         - '@process-status:ringebrev'
@@ -131,6 +201,8 @@
     name: 'Sygedagpenge - Registersamkøring'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
+    channels:
+        - '@channel:dfd'
     processStatuses:
         - '@process-status:oprettet'
         - '@process-status:ringebrev'
@@ -148,6 +220,22 @@
     name: 'Fleksjob'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
+    channels:
+        - '@channel:anonym_anmelder'
+        - '@channel:navngiven_anmelder'
+        - '@channel:internt_i_kommunen'
+        - '@channel:politi'
+        - '@channel:skattestyrelsen'
+        - '@channel:star'
+        - '@channel:egen_drift'
+        - '@channel:anden_kommune'
+        - '@channel:kampagne'
+        - '@channel:udbetaling_danmark'
+        - '@channel:projekter'
+        - '@channel:boligforeninger'
+        - '@channel:udlændingestyrelsen'
+        - '@channel:su'
+        - '@channel:andet'
     processStatuses:
         - '@process-status:oprettet'
         - '@process-status:ringebrev'
@@ -168,6 +256,22 @@
     name: 'Formue'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
+    channels:
+        - '@channel:anonym_anmelder'
+        - '@channel:navngiven_anmelder'
+        - '@channel:internt_i_kommunen'
+        - '@channel:politi'
+        - '@channel:skattestyrelsen'
+        - '@channel:star'
+        - '@channel:egen_drift'
+        - '@channel:anden_kommune'
+        - '@channel:kampagne'
+        - '@channel:udbetaling_danmark'
+        - '@channel:projekter'
+        - '@channel:boligforeninger'
+        - '@channel:udlændingestyrelsen'
+        - '@channel:su'
+        - '@channel:andet'
     processStatuses:
         - '@process-status:oprettet'
         - '@process-status:agterskrivelse'
@@ -185,6 +289,8 @@
     name: 'Formue - Registersamkøring'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
+    channels:
+        - '@channel:dfd'
     processStatuses:
         - '@process-status:oprettet'
         - '@process-status:agterskrivelse'
@@ -201,6 +307,22 @@
     name: 'Uoplyst indtægt (sort arbejde)'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
+    channels:
+        - '@channel:anonym_anmelder'
+        - '@channel:navngiven_anmelder'
+        - '@channel:internt_i_kommunen'
+        - '@channel:politi'
+        - '@channel:skattestyrelsen'
+        - '@channel:star'
+        - '@channel:egen_drift'
+        - '@channel:anden_kommune'
+        - '@channel:kampagne'
+        - '@channel:udbetaling_danmark'
+        - '@channel:projekter'
+        - '@channel:boligforeninger'
+        - '@channel:udlændingestyrelsen'
+        - '@channel:su'
+        - '@channel:andet'
     processStatuses:
         - '@process-status:oprettet'
         - '@process-status:virksomhedskontrol'
@@ -226,6 +348,22 @@
     name: 'Uoplyst arbejde'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
+    channels:
+        - '@channel:anonym_anmelder'
+        - '@channel:navngiven_anmelder'
+        - '@channel:internt_i_kommunen'
+        - '@channel:politi'
+        - '@channel:skattestyrelsen'
+        - '@channel:star'
+        - '@channel:egen_drift'
+        - '@channel:anden_kommune'
+        - '@channel:kampagne'
+        - '@channel:udbetaling_danmark'
+        - '@channel:projekter'
+        - '@channel:boligforeninger'
+        - '@channel:udlændingestyrelsen'
+        - '@channel:su'
+        - '@channel:andet'
     processStatuses:
         - '@process-status:oprettet'
         - '@process-status:virksomhedskontrol'
@@ -251,6 +389,23 @@
     name: 'Egen virksomhed'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
+    channels:
+        - '@channel:anonym_anmelder'
+        - '@channel:navngiven_anmelder'
+        - '@channel:internt_i_kommunen'
+        - '@channel:dfd'
+        - '@channel:politi'
+        - '@channel:skattestyrelsen'
+        - '@channel:star'
+        - '@channel:egen_drift'
+        - '@channel:anden_kommune'
+        - '@channel:kampagne'
+        - '@channel:udbetaling_danmark'
+        - '@channel:projekter'
+        - '@channel:boligforeninger'
+        - '@channel:udlændingestyrelsen'
+        - '@channel:su'
+        - '@channel:andet'
     processStatuses:
         - '@process-status:oprettet'
         - '@process-status:virksomhedskontrol'
@@ -276,6 +431,22 @@
     name: 'Hjemmeboende på udeboendesats'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
+    channels:
+        - '@channel:anonym_anmelder'
+        - '@channel:navngiven_anmelder'
+        - '@channel:internt_i_kommunen'
+        - '@channel:politi'
+        - '@channel:skattestyrelsen'
+        - '@channel:star'
+        - '@channel:egen_drift'
+        - '@channel:anden_kommune'
+        - '@channel:kampagne'
+        - '@channel:udbetaling_danmark'
+        - '@channel:projekter'
+        - '@channel:boligforeninger'
+        - '@channel:udlændingestyrelsen'
+        - '@channel:su'
+        - '@channel:andet'
     processStatuses:
         - '@process-status:oprettet'
         - '@process-status:virksomhedskontrol'
@@ -292,6 +463,8 @@
     name: 'Hjemmeboende på udeboendesats - Registersamkøring'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
+    channels:
+        - '@channel:dfd'
     processStatuses:
         - '@process-status:oprettet'
         - '@process-status:virksomhedskontrol'
@@ -308,6 +481,23 @@
     name: '§9 - Orientering UDK'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
+    channels:
+        - '@channel:anonym_anmelder'
+        - '@channel:navngiven_anmelder'
+        - '@channel:internt_i_kommunen'
+        - '@channel:dfd'
+        - '@channel:politi'
+        - '@channel:skattestyrelsen'
+        - '@channel:star'
+        - '@channel:egen_drift'
+        - '@channel:anden_kommune'
+        - '@channel:kampagne'
+        - '@channel:udbetaling_danmark'
+        - '@channel:projekter'
+        - '@channel:boligforeninger'
+        - '@channel:udlændingestyrelsen'
+        - '@channel:su'
+        - '@channel:andet'
     processStatuses:
         - '@process-status:oprettet'
         - '@process-status:afsluttet'
@@ -322,6 +512,8 @@
     name: '§10 – Udveksling af oplysninger m. UDK'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
+    channels:
+        - '@channel:udbetaling_danmark'
     processStatuses:
         - '@process-status:oprettet'
         - '@process-status:afsluttet'
@@ -336,6 +528,8 @@
     name: '§11 - Sagsoplysning pva. UDK'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
+    channels:
+        - '@channel:udbetaling_danmark'
     processStatuses:
         - '@process-status:oprettet'
         - '@process-status:indkaldelse_til_samtale'
