@@ -1,0 +1,26 @@
+-
+    '@id': client:1
+    process: '@process:1'
+    firstName: Klient
+    lastName: Klientsen
+    address: Klientvej 1
+    postalCode: 1000
+    city: Klientby
+
+-
+    '@id': client:2
+    process: '@process:2'
+    firstName: Tneilk
+    lastName: Tneilksen
+    address: Tneilkvej 1
+    postalCode: 2000
+    city: Tneilkby
+
+-
+    '@id': client:3
+    process: '@process:3'
+    firstName: Tneilk2
+    lastName: Tneilksen2
+    address: Tneilkvej 2
+    postalCode: 3000
+    city: Tneilkby2

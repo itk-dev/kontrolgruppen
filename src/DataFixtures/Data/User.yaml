@@ -2,3 +2,8 @@
     '@id': user:1
     username: super-admin@example.com
     roles: [ROLE_SUPER_ADMIN]
+
+-
+    '@id': user:2
+    username: test-user@example.com
+    roles: [ROLE_USER]
