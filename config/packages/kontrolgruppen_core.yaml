@@ -16,6 +16,7 @@ kontrolgruppen_core:
     exports:
         - Kontrolgruppen\CoreBundle\Export\KL\Export
         - Kontrolgruppen\CoreBundle\Export\Reports\RevenueExport
+        - Kontrolgruppen\CoreBundle\Export\Reports\HitRateExport
 
     # SAML configuration.
     saml:
