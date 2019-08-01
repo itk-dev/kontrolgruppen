@@ -9,15 +9,16 @@ parameters:
   saml_idp_config_file: '%env(default:saml_empty:resolve:SAML_IDP_CONFIG_FILE)%'
 
 kontrolgruppen_core:
-    # Default value for ProcessType.netDefaultValue
+    # Default value for ProcessType.netDefaultValue.
     net_default_value: .7
 
-
+    # Available exports.
     exports:
         - Kontrolgruppen\CoreBundle\Export\KL\Export
+        - Kontrolgruppen\CoreBundle\Export\Reports\RevenueExport
 
+    # SAML configuration.
     saml:
-
         php_saml_settings:
             # https://github.com/onelogin/php-saml#settings
             strict:              true
