@@ -5,9 +5,6 @@
     "behat/transliterator": {
         "version": "v1.2.0"
     },
-    "box/spout": {
-        "version": "v3.0.1"
-    },
     "composer/semver": {
         "version": "1.5.0"
     },
@@ -183,6 +180,12 @@
     "lexik/form-filter-bundle": {
         "version": "v5.0.10"
     },
+    "markbaker/complex": {
+        "version": "1.4.7"
+    },
+    "markbaker/matrix": {
+        "version": "1.1.4"
+    },
     "microsoft/tolerant-php-parser": {
         "version": "v0.0.17"
     },
@@ -225,6 +228,9 @@
     "phpdocumentor/type-resolver": {
         "version": "0.4.0"
     },
+    "phpoffice/phpspreadsheet": {
+        "version": "1.8.2"
+    },
     "pimple/pimple": {
         "version": "v3.2.3"
     },
@@ -239,6 +245,9 @@
     },
     "psr/log": {
         "version": "1.1.0"
+    },
+    "psr/simple-cache": {
+        "version": "1.0.1"
     },
     "robrichards/xmlseclibs": {
         "version": "3.0.3"
