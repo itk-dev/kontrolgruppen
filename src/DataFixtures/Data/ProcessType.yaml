@@ -3,6 +3,8 @@
     name: Udrejse
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
     channels:
         - '@channel:anonym_anmelder'
         - '@channel:navngiven_anmelder'
@@ -41,6 +43,8 @@
     name: 'Udrejse - Registersamkøring'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
     channels:
         - '@channel:dfd'
     processStatuses:
@@ -65,6 +69,8 @@
     name: 'Dobbelt forsørgelse (løn eller SU)'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
     channels:
         - '@channel:anonym_anmelder'
         - '@channel:navngiven_anmelder'
@@ -97,6 +103,8 @@
     name: 'Dobbelt forsørgelse (løn eller SU) - Registersamkøring'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
     channels:
         - '@channel:dfd'
     processStatuses:
@@ -119,6 +127,8 @@
     name: 'Økonomisk friplads'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
     channels:
         - '@channel:anonym_anmelder'
         - '@channel:navngiven_anmelder'
@@ -151,6 +161,8 @@
     name: 'Økonomisk friplads - Registersamkøring'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
     channels:
         - '@channel:dfd'
     processStatuses:
@@ -169,6 +181,8 @@
     name: 'Sygedagpenge'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
     channels:
         - '@channel:anonym_anmelder'
         - '@channel:navngiven_anmelder'
@@ -201,6 +215,8 @@
     name: 'Sygedagpenge - Registersamkøring'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
     channels:
         - '@channel:dfd'
     processStatuses:
@@ -220,6 +236,8 @@
     name: 'Fleksjob'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
     channels:
         - '@channel:anonym_anmelder'
         - '@channel:navngiven_anmelder'
@@ -256,6 +274,8 @@
     name: 'Formue'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
     channels:
         - '@channel:anonym_anmelder'
         - '@channel:navngiven_anmelder'
@@ -289,6 +309,8 @@
     name: 'Formue - Registersamkøring'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
     channels:
         - '@channel:dfd'
     processStatuses:
@@ -307,6 +329,8 @@
     name: 'Uoplyst indtægt (sort arbejde)'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
     channels:
         - '@channel:anonym_anmelder'
         - '@channel:navngiven_anmelder'
@@ -348,6 +372,8 @@
     name: 'Uoplyst arbejde'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
     channels:
         - '@channel:anonym_anmelder'
         - '@channel:navngiven_anmelder'
@@ -389,6 +415,8 @@
     name: 'Egen virksomhed'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
     channels:
         - '@channel:anonym_anmelder'
         - '@channel:navngiven_anmelder'
@@ -431,6 +459,8 @@
     name: 'Hjemmeboende på udeboendesats'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
     channels:
         - '@channel:anonym_anmelder'
         - '@channel:navngiven_anmelder'
@@ -463,6 +493,8 @@
     name: 'Hjemmeboende på udeboendesats - Registersamkøring'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
     channels:
         - '@channel:dfd'
     processStatuses:
@@ -481,6 +513,8 @@
     name: '§9 - Orientering UDK'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
     channels:
         - '@channel:anonym_anmelder'
         - '@channel:navngiven_anmelder'
@@ -512,6 +546,8 @@
     name: '§10 – Udveksling af oplysninger m. UDK'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
     channels:
         - '@channel:udbetaling_danmark'
     processStatuses:
@@ -528,6 +564,8 @@
     name: '§11 - Sagsoplysning pva. UDK'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     netDefaultValue: 0.7
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
     channels:
         - '@channel:udbetaling_danmark'
     processStatuses:
