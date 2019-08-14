@@ -36,6 +36,7 @@ Encore
     .addEntry('cars', './bundles/kontrolgruppen-core-bundle/Resources/assets/js/cars.js')
     .addEntry('processReport', './bundles/kontrolgruppen-core-bundle/Resources/assets/js/processReport.js')
     .addEntry('export', './bundles/kontrolgruppen-core-bundle/Resources/assets/js/export.js')
+    .addEntry('processStatusChangeToggle', './bundles/kontrolgruppen-core-bundle/Resources/assets/js/processStatusChangeToggle.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
