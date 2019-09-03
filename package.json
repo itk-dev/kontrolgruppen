@@ -31,7 +31,9 @@
         "mini-css-extract-plugin": "^0.5.0",
         "node-sass": "^4.12.0",
         "optimize-css-assets-webpack-plugin": "^5.0.1",
+        "patch-package": "^6.1.2",
         "popper.js": "^1.14.7",
+        "postinstall-prepare": "^1.0.1",
         "sass-loader": "^7.0.1",
         "select2": "^4.0.7",
         "standard": "^12.0.1",
@@ -60,7 +62,8 @@
         "apply-coding-standards-scss": "yarn run apply-coding-standards-stylelint",
         "apply-coding-standards-eslint": "eslint --config .eslintrc.js 'bundles/kontrolgruppen-core-bundle/Resources/assets/**/*.js' --fix",
         "apply-coding-standards-js": "yarn run apply-coding-standards-eslint",
-        "apply-coding-standards": "yarn run apply-coding-standards-scss; yarn run apply-coding-standards-js"
+        "apply-coding-standards": "yarn run apply-coding-standards-scss; yarn run apply-coding-standards-js",
+        "prepare": "patch-package"
     },
     "engines": {
         "node": "10.x",
