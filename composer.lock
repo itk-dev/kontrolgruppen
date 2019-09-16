@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "be405c9789d864c3269d1a520a408dfc",
+    "content-hash": "12a20a1b9bca481213cc561d0c5bad6b",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -1887,7 +1887,7 @@
         },
         {
             "name": "kontrolgruppen/core-bundle",
-            "version": "dev-feature/kon-150-various-reports",
+            "version": "dev-feature/KON-22-cli-export",
             "dist": {
                 "type": "path",
                 "url": "bundles/kontrolgruppen-core-bundle",

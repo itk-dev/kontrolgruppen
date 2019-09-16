@@ -18,6 +18,8 @@ kontrolgruppen_core:
         - Kontrolgruppen\CoreBundle\Export\Reports\RevenueExport
         - Kontrolgruppen\CoreBundle\Export\Reports\HitRateExport
 
+    export_directory: '%export_directory%'
+
     # SAML configuration.
     saml:
         php_saml_settings:
