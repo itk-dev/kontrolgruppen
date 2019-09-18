@@ -73,6 +73,9 @@ kontrolgruppen_core:
                     displayname: Kontrolgruppen
                     url: https://kontrolgruppen.example.com
 
+            # Use az-ident as username.
+            username_attribute_name: 'urn:oid:2.5.4.3'
+
             user_roles:
                 attribute: http://schemas.microsoft.com/ws/2008/06/identity/claims/role
                 # Map from ADFS stuff to Symfony roles
