@@ -1,7 +1,8 @@
 security:
     role_hierarchy:
+        ROLE_BI:          ROLE_USER
         ROLE_ADMIN:       ROLE_USER
-        ROLE_SUPER_ADMIN: ROLE_ADMIN
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_BI]
 
     providers:
         saml:
@@ -23,4 +24,5 @@ security:
 
     access_control:
         - { path: ^/saml, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/bi/, role: ROLE_BI }
         - { path: ^/, role: ROLE_USER }
