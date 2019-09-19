@@ -14,6 +14,7 @@ kontrolgruppen_core:
 
     # Available exports.
     exports:
+        - Kontrolgruppen\CoreBundle\Export\BI\Export
         - Kontrolgruppen\CoreBundle\Export\KL\Export
         - Kontrolgruppen\CoreBundle\Export\Reports\RevenueExport
         - Kontrolgruppen\CoreBundle\Export\Reports\HitRateExport
