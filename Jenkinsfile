@@ -4,6 +4,7 @@ pipeline {
     agent any
     stages {
         stage('Build and test') {
+
           parallel {
               stage('PHP') {
                 agent {
@@ -13,27 +14,17 @@ pipeline {
                     }
                 }
                 stages {
-                    stage('Install develop bundle') {
-                        when {
-                            not {
-                                branch 'release'
-                            }
-                            not {
-                                branch 'master'
-                            }
-                        }
+                    stage('Build') {
                         steps {
-                            sh 'composer install'
-                        }
-                    }
-                    stage('Composer') {
-                        steps {
+                            sh 'git submodule init'
+                            sh 'git submodule update'
                             sh 'composer install'
                         }
                     }
                     stage('PHP7 compatibility') {
                         steps {
                             sh 'vendor/bin/phan --allow-polyfill-parser'
+
                         }
                     }
                     stage('Coding standards') {
