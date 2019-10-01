@@ -3,8 +3,13 @@
 pipeline {
     agent any
     stages {
+        stage('Submodule init and update') {
+          steps {
+              sh 'git submodule init'
+              sh 'git submodule update'
+          }
+        }
         stage('Build and test') {
-
           parallel {
               stage('PHP') {
                 agent {
@@ -16,8 +21,6 @@ pipeline {
                 stages {
                     stage('Build') {
                         steps {
-                            sh 'git submodule init'
-                            sh 'git submodule update'
                             sh 'composer install'
                         }
                     }
