@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "555a888600a2e4d9734243de150fa82b",
+    "content-hash": "81ad9e65de1ee5921653bc19d8bbedff",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -482,9 +482,7 @@
                     "dev-master": "2.9.x-dev",
                     "dev-develop": "3.0.x-dev"
                 },
-                "patches_applied": {
-                    "Encrypted table": "bundles/kontrolgruppen-core-bundle/patches/doctrine/dbal/encrypted-table.patch"
-                }
+                "patches_applied": []
             },
             "autoload": {
                 "psr-4": {
@@ -1888,10 +1886,16 @@
         {
             "name": "kontrolgruppen/core-bundle",
             "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aakb/kontrolgruppen-core-bundle.git",
+                "reference": "8deb2eadc31cccb964316e13c55a0a1f56555486"
+            },
             "dist": {
-                "type": "path",
-                "url": "bundles/kontrolgruppen-core-bundle",
-                "reference": "92fde19342430353192b061297961b01f0de5401"
+                "type": "zip",
+                "url": "https://api.github.com/repos/aakb/kontrolgruppen-core-bundle/zipball/8deb2eadc31cccb964316e13c55a0a1f56555486",
+                "reference": "8deb2eadc31cccb964316e13c55a0a1f56555486",
+                "shasum": ""
             },
             "require": {
                 "beberlei/doctrineextensions": "^1.2",
@@ -1972,9 +1976,10 @@
                 ]
             },
             "description": "Kontrolgruppen core bundle",
-            "transport-options": {
-                "symlink": true
-            }
+            "support": {
+                "source": "https://github.com/aakb/kontrolgruppen-core-bundle/tree/develop"
+            },
+            "time": "2019-09-30T18:11:16+00:00"
         },
         {
             "name": "lexik/form-filter-bundle",
