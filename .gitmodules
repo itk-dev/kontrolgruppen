@@ -1,4 +1,0 @@
-[submodule "bundles/kontrolgruppen-core-bundle"]
-	path = bundles/kontrolgruppen-core-bundle
-	url = https://github.com/aakb/kontrolgruppen-core-bundle.git
-	branch = develop
