@@ -29,7 +29,7 @@ Just make sure you don't commit theese changes, as they only are for the local s
 "repositories": {
     "kontrolgruppen/core-bundle": {
         "type": "path",
-        "url": "bundles/kontrolgruppen-core-bundle",
+        "url": "bundles/core-bundle",
         "options": {
             "symlink": true
         }
