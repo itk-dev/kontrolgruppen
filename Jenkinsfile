@@ -16,8 +16,6 @@ pipeline {
                 stages {
                     stage('Build') {
                         steps {
-                            sh 'git submodule init'
-                            sh 'git submodule update'
                             sh 'composer install'
                         }
                     }
