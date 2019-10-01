@@ -64,9 +64,5 @@
         "apply-coding-standards-js": "yarn run apply-coding-standards-eslint",
         "apply-coding-standards": "yarn run apply-coding-standards-scss; yarn run apply-coding-standards-js",
         "prepare": "patch-package"
-    },
-    "engines": {
-        "node": "10.x",
-        "yarn": "1.16.0"
     }
 }
