@@ -18,7 +18,6 @@ pipeline {
             }
         }
         stage('Build and test') {
-
           parallel {
               stage('PHP') {
                 agent {
