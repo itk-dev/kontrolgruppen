@@ -15,6 +15,27 @@ open http://$(docker-compose port nginx 80)
 
 ## Setup for development
 
+Add core-bundle to the project:
+```sh
+git clone git@github.com:aakb/kontrolgruppen-core-bundle.git bundles/core-bundle
+```
+
+Change configuration in composer.json to use the local copy of the core-bundle: (make sure that the version constraint of the package is set to the current branch your local clone of the core bundle)
+```json
+"require": {
+	"kontrolgruppen/core-bundle": "dev-develop",
+},
+"repositories": {
+    "kontrolgruppen/core-bundle": {
+        "type": "path",
+        "url": "bundles/kontrolgruppen-core-bundle",
+        "options": {
+            "symlink": true
+        }
+    }
+},
+```
+
 ```sh
 # Install dependencies.
 composer install
@@ -25,15 +46,6 @@ docker-compose exec phpfpm /app/bin/console doctrine:migrations:migrate
 
 # Create super admin user.
 docker-compose exec phpfpm /app/bin/console fos:user:create --super-admin
-```
-
-## Adding core-bundle for development
-
-```sh
-git clone git@github.com:aakb/kontrolgruppen-core-bundle.git bundles/core-bundle
-
-rm -rf vendor/kontrolgruppen/core-bundle
-ln -s ${PWD}/bundles/core-bundle vendor/kontrolgruppen/core-bundle
 ```
 
 ## Use maker bundle
