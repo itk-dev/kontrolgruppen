@@ -1,10 +1,5 @@
 # Kontrolgruppen development setup
 
-## Getting the submodules
-```sh
-git submodule update --init --recursive --remote
-```
-
 ## Starting the show
 
 ```sh
@@ -32,6 +27,15 @@ docker-compose exec phpfpm /app/bin/console doctrine:migrations:migrate
 docker-compose exec phpfpm /app/bin/console fos:user:create --super-admin
 ```
 
+## Adding core-bundle for development
+
+```sh
+git clone git@github.com:aakb/kontrolgruppen-core-bundle.git bundles/core-bundle
+
+rm -rf vendor/kontrolgruppen/core-bundle
+ln -s ${PWD}/bundles/core-bundle vendor/kontrolgruppen/core-bundle
+```
+
 ## Use maker bundle
 
 To use MakerBundle in Kontrolgruppen\CoreBundle, use the following environment variable:
@@ -48,15 +52,6 @@ Watch for changes in js and css files and build development version:
 ```
 yarn watch
 ```
-
-## Note about working with git submodules
-When checking out submodules with the git submodule update command, the checked
-out branch will be to a detached head pointing to the submodule commit latest pushed in the supermodule.
-For example if the submodule is on a feature branch, and that change is tracked and pushed in the supermodule, next
-time someone checks out the supermodule and updates the submodule, the submodule will point to that feature branch.
-
-So make sure that the submodule is pointing to the right branch, when tracking and pushing in the supermodule. Finish
-changes in the submodule before tracking and pushing in the supermodule!
 
 ## Coding standards
 
