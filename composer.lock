@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "93dd048674c8589c5bfe952e1fe35351",
+    "content-hash": "e3e97df65435a31a9a0e3c3e0789e676",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -1887,16 +1887,16 @@
         },
         {
             "name": "kontrolgruppen/core-bundle",
-            "version": "dev-develop",
+            "version": "0.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aakb/kontrolgruppen-core-bundle.git",
-                "reference": "8deb2eadc31cccb964316e13c55a0a1f56555486"
+                "reference": "37e871a5661f5f35e1477be455e453fd93f5fb3f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aakb/kontrolgruppen-core-bundle/zipball/8deb2eadc31cccb964316e13c55a0a1f56555486",
-                "reference": "8deb2eadc31cccb964316e13c55a0a1f56555486",
+                "url": "https://api.github.com/repos/aakb/kontrolgruppen-core-bundle/zipball/37e871a5661f5f35e1477be455e453fd93f5fb3f",
+                "reference": "37e871a5661f5f35e1477be455e453fd93f5fb3f",
                 "shasum": ""
             },
             "require": {
@@ -1979,9 +1979,9 @@
             },
             "description": "Kontrolgruppen core bundle",
             "support": {
-                "source": "https://github.com/aakb/kontrolgruppen-core-bundle/tree/develop"
+                "source": "https://github.com/aakb/kontrolgruppen-core-bundle/tree/0.3.5"
             },
-            "time": "2019-09-30T18:11:16+00:00"
+            "time": "2019-10-01T11:13:01+00:00"
         },
         {
             "name": "lexik/form-filter-bundle",
@@ -8719,7 +8719,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "kontrolgruppen/core-bundle": 20,
         "symfony/maker-bundle": 20
     },
     "prefer-stable": true,
