@@ -30,6 +30,8 @@ See [README-develop.md](README-develop.md) for information on setting up for dev
 
 ## Release procedure.
 
+Make sure that the composer.json is using the correct version constraint for the core-bundle, and that the repository for the core-bundle is set to the vcs-type and the url is the git repository.
+
 Build production assets. They will be added to public/prod.
 
 ```sh
