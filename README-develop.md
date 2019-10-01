@@ -18,23 +18,10 @@ open http://$(docker-compose port nginx 80)
 Add core-bundle to the project:
 ```sh
 git clone git@github.com:aakb/kontrolgruppen-core-bundle.git bundles/core-bundle
-```
 
-Change configuration in composer.json to use the local copy of the core-bundle: (make sure that the version constraint of the package is set to the current branch your local clone of the core bundle)
-Just make sure you don't commit theese changes, as they only are for the local setup.
-```json
-"require": {
-	"kontrolgruppen/core-bundle": "dev-develop",
-},
-"repositories": {
-    "kontrolgruppen/core-bundle": {
-        "type": "path",
-        "url": "bundles/core-bundle",
-        "options": {
-            "symlink": true
-        }
-    }
-},
+# Use the recently checked out bundle in the composer setup:
+composer config repositories.kontrolgruppen/core-bundle path bundles/core-bundle
+composer require 'kontrolgruppen/core-bundle:dev-develop'
 ```
 
 ```sh

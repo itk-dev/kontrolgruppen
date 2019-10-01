@@ -30,7 +30,11 @@ See [README-develop.md](README-develop.md) for information on setting up for dev
 
 ## Release procedure.
 
-Make sure that the composer.json is using the correct version constraint for the core-bundle, and that the repository for the core-bundle is set to the vcs-type and the url is the git repository.
+Make sure that the right repository is used for the core bundle, and that the right version of the bundle is used:
+```sh
+composer config repositories.kontrolgruppen/core-bundle vcs git@github.com:aakb/kontrolgruppen-core-bundle.git
+composer require 'kontrolgruppen/core-bundle:«some branch name»
+```
 
 Build production assets. They will be added to public/prod.
 
