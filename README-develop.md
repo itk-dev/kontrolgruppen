@@ -24,6 +24,8 @@ composer config repositories.kontrolgruppen/core-bundle path bundles/core-bundle
 composer require 'kontrolgruppen/core-bundle:dev-develop'
 ```
 
+It's very important that you don't commit the changed composer.json and composer.lock file, as they now are in a development version.
+
 ```sh
 # Install dependencies.
 composer install
