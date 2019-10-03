@@ -10,12 +10,6 @@ Run
 
 to install in production.
 
-
-### Check out submodules
-````sh
-git submodule update --init --recursive
-````
-
 ### Build
 ```sh
 composer install --no-dev -o
