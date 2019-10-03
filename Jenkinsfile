@@ -3,11 +3,19 @@
 pipeline {
     agent any
     stages {
-        stage('Submodule init and update') {
-          steps {
-              sh 'git submodule init'
-              sh 'git submodule update'
-          }
+        stage ('Install') {
+            parallel {
+                stage('Composer') {
+                    steps {
+                        sh 'docker run -v $WORKSPACE:/app -v /var/lib/jenkins/.composer-cache:/.composer:rw itkdev/php7.2-fpm:latest composer install'
+                    }
+                }
+                stage('Yarn') {
+                    steps {
+                        sh 'docker run -v $WORKSPACE:/app -v /var/lib/jenkins/.yarn-cache:/usr/local/share/.cache/yarn:rw itkdev/yarn:latest install'
+                    }
+                }
+            }
         }
         stage('Build and test') {
           parallel {
@@ -19,11 +27,6 @@ pipeline {
                     }
                 }
                 stages {
-                    stage('Build') {
-                        steps {
-                            sh 'composer install'
-                        }
-                    }
                     stage('PHP7 compatibility') {
                         steps {
                             sh 'vendor/bin/phan --allow-polyfill-parser'
@@ -41,11 +44,6 @@ pipeline {
             }
             stage('Yarn - encore') {
                     stages {
-                        stage('Install') {
-                            steps {
-                                sh 'docker run -v $WORKSPACE:/app -v /var/lib/jenkins/.yarn-cache:/usr/local/share/.cache/yarn:rw itkdev/yarn:latest install'
-                            }
-                        }
                         stage('Coding standards') {
                             steps {
                                 sh 'docker run -v $WORKSPACE:/app -v /var/lib/jenkins/.yarn-cache:/usr/local/share/.cache/yarn:rw itkdev/yarn:latest check-coding-standards'

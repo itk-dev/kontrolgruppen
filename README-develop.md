@@ -1,10 +1,5 @@
 # Kontrolgruppen development setup
 
-## Getting the submodules
-```sh
-git submodule update --init --recursive --remote
-```
-
 ## Starting the show
 
 ```sh
@@ -19,6 +14,17 @@ open http://$(docker-compose port nginx 80)
 ```
 
 ## Setup for development
+
+Add core-bundle to the project:
+```sh
+git clone git@github.com:aakb/kontrolgruppen-core-bundle.git bundles/core-bundle
+
+# Use the recently checked out bundle in the composer setup:
+composer config repositories.kontrolgruppen/core-bundle path bundles/core-bundle
+composer require 'kontrolgruppen/core-bundle:dev-develop'
+```
+
+It's very important that you don't commit the changed composer.json and composer.lock file, as they now are in a development version.
 
 ```sh
 # Install dependencies.
@@ -48,15 +54,6 @@ Watch for changes in js and css files and build development version:
 ```
 yarn watch
 ```
-
-## Note about working with git submodules
-When checking out submodules with the git submodule update command, the checked
-out branch will be to a detached head pointing to the submodule commit latest pushed in the supermodule.
-For example if the submodule is on a feature branch, and that change is tracked and pushed in the supermodule, next
-time someone checks out the supermodule and updates the submodule, the submodule will point to that feature branch.
-
-So make sure that the submodule is pointing to the right branch, when tracking and pushing in the supermodule. Finish
-changes in the submodule before tracking and pushing in the supermodule!
 
 ## Coding standards
 

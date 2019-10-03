@@ -5,6 +5,7 @@
 /public/bundles/
 /var/
 /vendor/
+/bundles/
 ###< symfony/framework-bundle ###
 
 ###> friendsofphp/php-cs-fixer ###
