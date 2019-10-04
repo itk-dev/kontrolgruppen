@@ -4,8 +4,14 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
+    env(ROUTER_REQUEST_CONTEXT_BASE_URL): ''
     locale: 'da'
-    mailer_user: env(MAILER_FROM)
+    mailer_user: '%env(MAILER_FROM)%'
+    router.request_context.scheme: '%env(ROUTER_REQUEST_CONTEXT_SCHEME)%'
+    router.request_context.host: '%env(ROUTER_REQUEST_CONTEXT_HOST)%'
+    router.request_context.base_url: '%env(ROUTER_REQUEST_CONTEXT_BASE_URL)%'
+    base_url: '%router.request_context.scheme%://%router.request_context.host%%router.request_context.base_url%'
+    export_directory: '%env(resolve:EXPORT_DIRECTORY)%'
 
 services:
     # default configuration for services in *this* file

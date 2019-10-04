@@ -3,58 +3,36 @@
     "type": "project",
     "license": "MIT",
     "minimum-stability": "dev",
-    "prefer-stable":true,
+    "prefer-stable": true,
     "require": {
         "php": "^7.1.3",
         "ext-ctype": "*",
+        "ext-dom": "*",
         "ext-iconv": "*",
-        "beberlei/DoctrineExtensions": "^1.2",
-        "fresh/doctrine-enum-bundle": "^6.3",
-        "friendsofsymfony/ckeditor-bundle": "^2.0",
-        "friendsofsymfony/user-bundle": "^2.1",
-        "knplabs/knp-paginator-bundle": "^3.0",
-        "kontrolgruppen/core-bundle": "@dev",
-        "lexik/form-filter-bundle": "^5.0",
-        "sensio/framework-extra-bundle": "^5.1",
-        "stof/doctrine-extensions-bundle": "^1.3",
-        "symfony/apache-pack": "^1.0",
-        "symfony/asset": "4.2.*",
-        "symfony/config": "4.2.*",
-        "symfony/console": "4.2.*",
-        "symfony/dotenv": "4.2.*",
-        "symfony/expression-language": "4.2.*",
-        "symfony/flex": "^1.1",
-        "symfony/form": "4.2.*",
-        "symfony/framework-bundle": "4.2.*",
-        "symfony/monolog-bundle": "^3.1",
-        "symfony/orm-pack": "~1.0",
-        "symfony/process": "4.2.*",
-        "symfony/security-bundle": "4.2.*",
-        "symfony/serializer-pack": "*",
-        "symfony/swiftmailer-bundle": "^3.1",
-        "symfony/translation": "4.2.*",
-        "symfony/twig-bundle": "4.2.*",
-        "symfony/validator": "4.2.*",
-        "symfony/web-link": "4.2.*",
-        "symfony/yaml": "4.2.*",
-        "twig/extensions": "^1.5"
+        "cweagans/composer-patches": "^1.6",
+        "kontrolgruppen/core-bundle": "0.4.0",
+        "symfony/console": "4.3.*",
+        "symfony/dotenv": "4.3.*",
+        "symfony/flex": "^1.3.1",
+        "symfony/framework-bundle": "4.3.*",
+        "symfony/yaml": "4.3.*"
     },
     "require-dev": {
-        "allocine/twigcs": "^3.1",
         "doctrine/doctrine-fixtures-bundle": "^3.1",
         "friendsofphp/php-cs-fixer": "^2.14",
+        "friendsoftwig/twigcs": "^3.1",
         "phan/phan": "^1.2",
         "squizlabs/php_codesniffer": "^3.4",
         "symfony/debug-pack": "*",
         "symfony/maker-bundle": "^1.0@dev",
         "symfony/profiler-pack": "*",
         "symfony/test-pack": "*",
-        "symfony/web-server-bundle": "4.2.*"
+        "symfony/web-server-bundle": "4.3.*"
     },
     "repositories": {
         "kontrolgruppen/core-bundle": {
             "type": "vcs",
-            "url": "https://github.com/aakb/kontrolgruppen-core-bundle"
+            "url": "git@github.com:aakb/kontrolgruppen-core-bundle.git"
         }
     },
     "config": {
@@ -81,9 +59,24 @@
         "symfony/polyfill-php70": "*",
         "symfony/polyfill-php56": "*"
     },
+    "conflict": {
+        "symfony/symfony": "*"
+    },
+    "extra": {
+        "symfony": {
+            "allow-contrib": false,
+            "require": "4.3.*"
+        },
+        "patches": {
+            "doctrine/dbal": {
+                "Encrypted table": "vendor/kontrolgruppen/core-bundle/patches/doctrine/dbal/encrypted-table.patch"
+            }
+        }
+    },
     "scripts": {
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
+            "ckeditor:install --release=full --tag=4.11.4 --clear=drop --exclude=samples": "symfony-cmd",
             "assets:install %PUBLIC_DIR% --symlink --relative": "symfony-cmd"
         },
         "post-install-cmd": [
@@ -115,14 +108,5 @@
             "@apply-coding-standards/php-cs-fixer",
             "@apply-coding-standards/phpcs"
         ]
-    },
-    "conflict": {
-        "symfony/symfony": "*"
-    },
-    "extra": {
-        "symfony": {
-            "allow-contrib": false,
-            "require": "4.2.*"
-        }
     }
 }

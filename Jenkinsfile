@@ -3,46 +3,59 @@
 pipeline {
     agent any
     stages {
-        stage('Build and test') {
-            agent {
-                docker {
-                    image 'itkdev/php7.2-fpm:latest' /* 7.2 is used as phan only runs with this version */
-                    args '-v /var/lib/jenkins/.composer-cache:/.composer:rw'
-                }
-            }
-            stages {
-                stage('Install develop bundel') {
-                    when {
-                        not { 
-                            branch 'release'
-                        }
-                        not {
-                            branch 'master'
-                        }
-                    }
-                    steps {
-                        sh 'scripts/develop/install.sh'
-                        sh 'scripts/develop/develop.sh'
-                    }
-                }
+        stage ('Install') {
+            parallel {
                 stage('Composer') {
                     steps {
-                        sh 'composer install'
+                        sh 'docker run -v $WORKSPACE:/app -v /var/lib/jenkins/.composer-cache:/.composer:rw itkdev/php7.2-fpm:latest composer install'
                     }
                 }
-                stage('PHP7 compatibility') {
+                stage('Yarn') {
                     steps {
-                        sh 'vendor/bin/phan --allow-polyfill-parser'
-                        
+                        sh 'docker run -v $WORKSPACE:/app -v /var/lib/jenkins/.yarn-cache:/usr/local/share/.cache/yarn:rw itkdev/yarn:latest install'
                     }
                 }
-                stage('Coding standards') {
-                    steps {
-                        sh 'vendor/bin/phpcs --standard=phpcs.xml.dist'
-                        sh 'vendor/bin/php-cs-fixer --config=.php_cs.dist fix --dry-run --verbose'
-                        sh 'vendor/bin/twigcs lint templates'
+            }
+        }
+        stage('Build and test') {
+          parallel {
+              stage('PHP') {
+                agent {
+                    docker {
+                        image 'itkdev/php7.2-fpm:latest' /* 7.2 is used as phan only runs with this version */
+                        args '-v /var/lib/jenkins/.composer-cache:/.composer:rw'
                     }
-                }   
+                }
+                stages {
+                    stage('PHP7 compatibility') {
+                        steps {
+                            sh 'vendor/bin/phan --allow-polyfill-parser'
+
+                        }
+                    }
+                    stage('Coding standards') {
+                        steps {
+                            sh 'vendor/bin/phpcs --standard=phpcs.xml.dist'
+                            sh 'vendor/bin/php-cs-fixer --config=.php_cs.dist fix --dry-run --verbose'
+                            sh 'vendor/bin/twigcs lint templates'
+                        }
+                    }
+                }
+            }
+            stage('Yarn - encore') {
+                    stages {
+                        stage('Coding standards') {
+                            steps {
+                                sh 'docker run -v $WORKSPACE:/app -v /var/lib/jenkins/.yarn-cache:/usr/local/share/.cache/yarn:rw itkdev/yarn:latest check-coding-standards'
+                            }
+                        }
+                        stage('Build') {
+                            steps {
+                                sh 'docker run -v $WORKSPACE:/app -v /var/lib/jenkins/.yarn-cache:/usr/local/share/.cache/yarn:rw itkdev/yarn:latest build'
+                            }
+                        }
+                    }
+                }
             }
         }
         stage('Deployment develop') {
@@ -58,7 +71,20 @@ pipeline {
                 branch 'release'
             }
             steps {
-                sh 'echo "DEPLOY"'
+                // Update git repos.
+                sh "ansible admwebitk01 -m shell -a 'cd /data/www/stg_kontrolgruppen_itkdev_dk/htdocs; git clean -d --force'"
+                sh "ansible admwebitk01 -m shell -a 'cd /data/www/stg_kontrolgruppen_itkdev_dk/htdocs; git checkout ${BRANCH_NAME}'"
+                sh "ansible admwebitk01 -m shell -a 'cd /data/www/stg_kontrolgruppen_itkdev_dk/htdocs; git fetch'"
+                sh "ansible admwebitk01 -m shell -a 'cd /data/www/stg_kontrolgruppen_itkdev_dk/htdocs; git reset origin/${BRANCH_NAME} --hard'"
+
+                // Run composer.
+                sh "ansible admwebitk01 -m shell -a 'cd /data/www/stg_kontrolgruppen_itkdev_dk/htdocs; APP_ENV=prod composer install --no-dev -o'"
+
+                // Run migrations.
+                sh "ansible admwebitk01 -m shell -a 'cd /data/www/stg_kontrolgruppen_itkdev_dk/htdocs; APP_ENV=prod php bin/console doctrine:migrations:migrate --no-interaction'"
+
+                // Copy encore assets.
+                sh "ansible admwebitk01 -m synchronize -a 'src=${WORKSPACE}/public/build/ dest=/data/www/stg_kontrolgruppen_itkdev_dk/htdocs/public/build'"
             }
         }
         stage('Deployment production') {

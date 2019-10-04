@@ -1,0 +1,562 @@
+-
+    '@id': process-type:udrejse
+    name: Udrejse
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
+    channels:
+        - '@channel:anonym_anmelder'
+        - '@channel:navngiven_anmelder'
+        - '@channel:internt_i_kommunen'
+        - '@channel:politi'
+        - '@channel:skattestyrelsen'
+        - '@channel:star'
+        - '@channel:egen_drift'
+        - '@channel:anden_kommune'
+        - '@channel:kampagne'
+        - '@channel:udbetaling_danmark'
+        - '@channel:projekter'
+        - '@channel:boligforeninger'
+        - '@channel:udlændingestyrelsen'
+        - '@channel:su'
+        - '@channel:andet'
+    processStatuses:
+        - '@process-status:oprettet'
+        - '@process-status:forespg_dfd_udland'
+        - '@process-status:agterskrivelse'
+        - '@process-status:partshoring'
+        - '@process-status:afgorelse'
+        - '@process-status:ved_ankestyrelse'
+        - '@process-status:afsluttet'
+    services:
+        - '@service:kontanthjalp'
+        - '@service:sygedagpenge'
+        - '@service:integrationsydelse'
+        - '@service:ledighedsydelse'
+        - '@service:ressourceforlobsydelse'
+        - '@service:las'
+        - '@service:fortidspension'
+        - '@service:andet'
+-
+    '@id': process-type:udrejse_registersamkoring
+    name: 'Udrejse - Registersamkøring'
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
+    channels:
+        - '@channel:dfd'
+    processStatuses:
+        - '@process-status:oprettet'
+        - '@process-status:forespg_dfd_udland'
+        - '@process-status:agterskrivelse'
+        - '@process-status:partshoring'
+        - '@process-status:afgorelse'
+        - '@process-status:ved_ankestyrelse'
+        - '@process-status:afsluttet'
+    services:
+        - '@service:kontanthjalp'
+        - '@service:sygedagpenge'
+        - '@service:integrationsydelse'
+        - '@service:ledighedsydelse'
+        - '@service:ressourceforlobsydelse'
+        - '@service:las'
+        - '@service:fortidspension'
+        - '@service:andet'
+-
+    '@id': process-type:dobbelt_foresorgelse
+    name: 'Dobbelt forsørgelse (løn eller SU)'
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
+    channels:
+        - '@channel:anonym_anmelder'
+        - '@channel:navngiven_anmelder'
+        - '@channel:internt_i_kommunen'
+        - '@channel:politi'
+        - '@channel:skattestyrelsen'
+        - '@channel:star'
+        - '@channel:egen_drift'
+        - '@channel:anden_kommune'
+        - '@channel:kampagne'
+        - '@channel:udbetaling_danmark'
+        - '@channel:projekter'
+        - '@channel:boligforeninger'
+        - '@channel:udlændingestyrelsen'
+        - '@channel:su'
+        - '@channel:andet'
+    processStatuses:
+        - '@process-status:oprettet'
+        - '@process-status:agterskrivelse'
+        - '@process-status:partshoring'
+        - '@process-status:afgorelse'
+        - '@process-status:ved_ankestyrelse'
+        - '@process-status:afsluttet'
+    services:
+        - '@service:kontanthjalp'
+        - '@service:integrationsydelse'
+        - '@service:andet'
+-
+    '@id': process-type:dobbelt_foresorgelse_registersamkoring
+    name: 'Dobbelt forsørgelse (løn eller SU) - Registersamkøring'
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
+    channels:
+        - '@channel:dfd'
+    processStatuses:
+        - '@process-status:oprettet'
+        - '@process-status:agterskrivelse'
+        - '@process-status:partshoring'
+        - '@process-status:afgorelse'
+        - '@process-status:ved_ankestyrelse'
+        - '@process-status:afsluttet'
+    services:
+        - '@service:kontanthjalp'
+        - '@service:sygedagpenge'
+        - '@service:integrationsydelse'
+        - '@service:ledighedsydelse'
+        - '@service:ressourceforlobsydelse'
+        - '@service:las'
+        - '@service:andet'
+-
+    '@id': process-type:okonomisk_friplads
+    name: 'Økonomisk friplads'
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
+    channels:
+        - '@channel:anonym_anmelder'
+        - '@channel:navngiven_anmelder'
+        - '@channel:internt_i_kommunen'
+        - '@channel:politi'
+        - '@channel:skattestyrelsen'
+        - '@channel:star'
+        - '@channel:egen_drift'
+        - '@channel:anden_kommune'
+        - '@channel:kampagne'
+        - '@channel:udbetaling_danmark'
+        - '@channel:projekter'
+        - '@channel:boligforeninger'
+        - '@channel:udlændingestyrelsen'
+        - '@channel:su'
+        - '@channel:andet'
+    processStatuses:
+        - '@process-status:oprettet'
+        - '@process-status:afventer_sagsbehandler'
+        - '@process-status:agterskrivelse'
+        - '@process-status:partshoring'
+        - '@process-status:afgorelse'
+        - '@process-status:ved_ankestyrelse'
+        - '@process-status:afsluttet'
+    services:
+        - '@service:okonomisk_friplads'
+        - '@service:andet'
+-
+    '@id': process-type:okonomisk_friplads_registersamkoring
+    name: 'Økonomisk friplads - Registersamkøring'
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
+    channels:
+        - '@channel:dfd'
+    processStatuses:
+        - '@process-status:oprettet'
+        - '@process-status:afventer_sagsbehandler'
+        - '@process-status:agterskrivelse'
+        - '@process-status:partshoring'
+        - '@process-status:afgorelse'
+        - '@process-status:ved_ankestyrelse'
+        - '@process-status:afsluttet'
+    services:
+        - '@service:okonomisk_friplads'
+        - '@service:andet'
+-
+    '@id': process-type:sygedagpenge
+    name: 'Sygedagpenge'
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
+    channels:
+        - '@channel:anonym_anmelder'
+        - '@channel:navngiven_anmelder'
+        - '@channel:internt_i_kommunen'
+        - '@channel:politi'
+        - '@channel:skattestyrelsen'
+        - '@channel:star'
+        - '@channel:egen_drift'
+        - '@channel:anden_kommune'
+        - '@channel:kampagne'
+        - '@channel:udbetaling_danmark'
+        - '@channel:projekter'
+        - '@channel:boligforeninger'
+        - '@channel:udlændingestyrelsen'
+        - '@channel:su'
+        - '@channel:andet'
+    processStatuses:
+        - '@process-status:oprettet'
+        - '@process-status:ringebrev'
+        - '@process-status:virksomhedskontrol'
+        - '@process-status:agterskrivelse'
+        - '@process-status:partshoring'
+        - '@process-status:afgorelse'
+        - '@process-status:ved_ankestyrelse'
+        - '@process-status:afsluttet'
+    services:
+        - '@service:sygedagpenge'
+-
+    '@id': process-type:sygedagpenges_registersamkoring
+    name: 'Sygedagpenge - Registersamkøring'
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
+    channels:
+        - '@channel:dfd'
+    processStatuses:
+        - '@process-status:oprettet'
+        - '@process-status:ringebrev'
+        - '@process-status:virksomhedskontrol'
+        - '@process-status:agterskrivelse'
+        - '@process-status:partshoring'
+        - '@process-status:afgorelse'
+        - '@process-status:ved_ankestyrelse'
+        - '@process-status:afsluttet'
+    services:
+        - '@service:sygedagpenge'
+        - '@service:andet'
+-
+    '@id': process-type:fleksjob
+    name: 'Fleksjob'
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
+    channels:
+        - '@channel:anonym_anmelder'
+        - '@channel:navngiven_anmelder'
+        - '@channel:internt_i_kommunen'
+        - '@channel:politi'
+        - '@channel:skattestyrelsen'
+        - '@channel:star'
+        - '@channel:egen_drift'
+        - '@channel:anden_kommune'
+        - '@channel:kampagne'
+        - '@channel:udbetaling_danmark'
+        - '@channel:projekter'
+        - '@channel:boligforeninger'
+        - '@channel:udlændingestyrelsen'
+        - '@channel:su'
+        - '@channel:andet'
+    processStatuses:
+        - '@process-status:oprettet'
+        - '@process-status:ringebrev'
+        - '@process-status:virksomhedskontrol'
+        - '@process-status:agterskrivelse'
+        - '@process-status:partshoring'
+        - '@process-status:afgorelse'
+        - '@process-status:ved_ankestyrelse'
+        - '@process-status:afsluttet'
+    services:
+        - '@service:ledighedsydelse'
+        - '@service:ressourceforlobsydelse'
+        - '@service:las'
+        - '@service:fleksjobsydelse'
+        - '@service:andet'
+-
+    '@id': process-type:formue
+    name: 'Formue'
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
+    channels:
+        - '@channel:anonym_anmelder'
+        - '@channel:navngiven_anmelder'
+        - '@channel:internt_i_kommunen'
+        - '@channel:politi'
+        - '@channel:skattestyrelsen'
+        - '@channel:star'
+        - '@channel:egen_drift'
+        - '@channel:anden_kommune'
+        - '@channel:kampagne'
+        - '@channel:udbetaling_danmark'
+        - '@channel:projekter'
+        - '@channel:boligforeninger'
+        - '@channel:udlændingestyrelsen'
+        - '@channel:su'
+        - '@channel:andet'
+    processStatuses:
+        - '@process-status:oprettet'
+        - '@process-status:agterskrivelse'
+        - '@process-status:partshoring'
+        - '@process-status:afgorelse'
+        - '@process-status:ved_ankestyrelse'
+        - '@process-status:afsluttet'
+    services:
+        - '@service:kontanthjalp'
+        - '@service:integrationsydelse'
+        - '@service:las'
+        - '@service:andet'
+-
+    '@id': process-type:formue_registersamkoring
+    name: 'Formue - Registersamkøring'
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
+    channels:
+        - '@channel:dfd'
+    processStatuses:
+        - '@process-status:oprettet'
+        - '@process-status:agterskrivelse'
+        - '@process-status:partshoring'
+        - '@process-status:afgorelse'
+        - '@process-status:ved_ankestyrelse'
+        - '@process-status:afsluttet'
+    services:
+        - '@service:kontanthjalp'
+        - '@service:integrationsydelse'
+        - '@service:andet'
+-
+    '@id': process-type:uoplyst_indtagt
+    name: 'Uoplyst indtægt (sort arbejde)'
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
+    channels:
+        - '@channel:anonym_anmelder'
+        - '@channel:navngiven_anmelder'
+        - '@channel:internt_i_kommunen'
+        - '@channel:politi'
+        - '@channel:skattestyrelsen'
+        - '@channel:star'
+        - '@channel:egen_drift'
+        - '@channel:anden_kommune'
+        - '@channel:kampagne'
+        - '@channel:udbetaling_danmark'
+        - '@channel:projekter'
+        - '@channel:boligforeninger'
+        - '@channel:udlændingestyrelsen'
+        - '@channel:su'
+        - '@channel:andet'
+    processStatuses:
+        - '@process-status:oprettet'
+        - '@process-status:virksomhedskontrol'
+        - '@process-status:agterskrivelse'
+        - '@process-status:partshoring'
+        - '@process-status:afgorelse'
+        - '@process-status:ved_ankestyrelse'
+        - '@process-status:afsluttet'
+    services:
+        - '@service:kontanthjalp'
+        - '@service:sygedagpenge'
+        - '@service:integrationsydelse'
+        - '@service:ledighedsydelse'
+        - '@service:ressourceforlobsydelse'
+        - '@service:las'
+        - '@service:fleksjobsydelse'
+        - '@service:fortidspension'
+        - '@service:lab'
+        - '@service:sel'
+        - '@service:andet'
+-
+    '@id': process-type:uoplyst_arbejde
+    name: 'Uoplyst arbejde'
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
+    channels:
+        - '@channel:anonym_anmelder'
+        - '@channel:navngiven_anmelder'
+        - '@channel:internt_i_kommunen'
+        - '@channel:politi'
+        - '@channel:skattestyrelsen'
+        - '@channel:star'
+        - '@channel:egen_drift'
+        - '@channel:anden_kommune'
+        - '@channel:kampagne'
+        - '@channel:udbetaling_danmark'
+        - '@channel:projekter'
+        - '@channel:boligforeninger'
+        - '@channel:udlændingestyrelsen'
+        - '@channel:su'
+        - '@channel:andet'
+    processStatuses:
+        - '@process-status:oprettet'
+        - '@process-status:virksomhedskontrol'
+        - '@process-status:agterskrivelse'
+        - '@process-status:partshoring'
+        - '@process-status:afgorelse'
+        - '@process-status:ved_ankestyrelse'
+        - '@process-status:afsluttet'
+    services:
+        - '@service:kontanthjalp'
+        - '@service:sygedagpenge'
+        - '@service:integrationsydelse'
+        - '@service:ledighedsydelse'
+        - '@service:ressourceforlobsydelse'
+        - '@service:las'
+        - '@service:fleksjobsydelse'
+        - '@service:fortidspension'
+        - '@service:lab'
+        - '@service:sel'
+        - '@service:andet'
+-
+    '@id': process-type:egen_virksomhed
+    name: 'Egen virksomhed'
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
+    channels:
+        - '@channel:anonym_anmelder'
+        - '@channel:navngiven_anmelder'
+        - '@channel:internt_i_kommunen'
+        - '@channel:dfd'
+        - '@channel:politi'
+        - '@channel:skattestyrelsen'
+        - '@channel:star'
+        - '@channel:egen_drift'
+        - '@channel:anden_kommune'
+        - '@channel:kampagne'
+        - '@channel:udbetaling_danmark'
+        - '@channel:projekter'
+        - '@channel:boligforeninger'
+        - '@channel:udlændingestyrelsen'
+        - '@channel:su'
+        - '@channel:andet'
+    processStatuses:
+        - '@process-status:oprettet'
+        - '@process-status:virksomhedskontrol'
+        - '@process-status:agterskrivelse'
+        - '@process-status:partshoring'
+        - '@process-status:afgorelse'
+        - '@process-status:ved_ankestyrelse'
+        - '@process-status:afsluttet'
+    services:
+        - '@service:kontanthjalp'
+        - '@service:sygedagpenge'
+        - '@service:integrationsydelse'
+        - '@service:ledighedsydelse'
+        - '@service:ressourceforlobsydelse'
+        - '@service:las'
+        - '@service:fleksjobsydelse'
+        - '@service:fortidspension'
+        - '@service:lab'
+        - '@service:sel'
+        - '@service:andet'
+-
+    '@id': process-type:hjemmeboende
+    name: 'Hjemmeboende på udeboendesats'
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
+    channels:
+        - '@channel:anonym_anmelder'
+        - '@channel:navngiven_anmelder'
+        - '@channel:internt_i_kommunen'
+        - '@channel:politi'
+        - '@channel:skattestyrelsen'
+        - '@channel:star'
+        - '@channel:egen_drift'
+        - '@channel:anden_kommune'
+        - '@channel:kampagne'
+        - '@channel:udbetaling_danmark'
+        - '@channel:projekter'
+        - '@channel:boligforeninger'
+        - '@channel:udlændingestyrelsen'
+        - '@channel:su'
+        - '@channel:andet'
+    processStatuses:
+        - '@process-status:oprettet'
+        - '@process-status:virksomhedskontrol'
+        - '@process-status:agterskrivelse'
+        - '@process-status:partshoring'
+        - '@process-status:afgorelse'
+        - '@process-status:ved_ankestyrelse'
+        - '@process-status:afsluttet'
+    services:
+        - '@service:kontanthjalp'
+        - '@service:andet'
+-
+    '@id': process-type:hjemmeboende_registersamkoring
+    name: 'Hjemmeboende på udeboendesats - Registersamkøring'
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
+    channels:
+        - '@channel:dfd'
+    processStatuses:
+        - '@process-status:oprettet'
+        - '@process-status:virksomhedskontrol'
+        - '@process-status:agterskrivelse'
+        - '@process-status:partshoring'
+        - '@process-status:afgorelse'
+        - '@process-status:ved_ankestyrelse'
+        - '@process-status:afsluttet'
+    services:
+        - '@service:kontanthjalp'
+        - '@service:andet'
+-
+    '@id': process-type:paragraf_9
+    name: '§9 - Orientering UDK'
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
+    channels:
+        - '@channel:anonym_anmelder'
+        - '@channel:navngiven_anmelder'
+        - '@channel:internt_i_kommunen'
+        - '@channel:dfd'
+        - '@channel:politi'
+        - '@channel:skattestyrelsen'
+        - '@channel:star'
+        - '@channel:egen_drift'
+        - '@channel:anden_kommune'
+        - '@channel:kampagne'
+        - '@channel:udbetaling_danmark'
+        - '@channel:projekter'
+        - '@channel:boligforeninger'
+        - '@channel:udlændingestyrelsen'
+        - '@channel:su'
+        - '@channel:andet'
+    processStatuses:
+        - '@process-status:oprettet'
+        - '@process-status:afsluttet'
+    services:
+        - '@service:las'
+        - '@service:fortidspension'
+        - '@service:pension'
+        - '@service:boligstotte'
+        - '@service:andet'
+-
+    '@id': process-type:paragraf_10
+    name: '§10 – Udveksling af oplysninger m. UDK'
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
+    channels:
+        - '@channel:udbetaling_danmark'
+    processStatuses:
+        - '@process-status:oprettet'
+        - '@process-status:afsluttet'
+    services:
+        - '@service:las'
+        - '@service:fortidspension'
+        - '@service:pension'
+        - '@service:boligstotte'
+        - '@service:andet'
+-
+    '@id': process-type:paragraf_11
+    name: '§11 - Sagsoplysning pva. UDK'
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
+    channels:
+        - '@channel:udbetaling_danmark'
+    processStatuses:
+        - '@process-status:oprettet'
+        - '@process-status:indkaldelse_til_samtale'
+        - '@process-status:virksomhedskontrol'
+        - '@process-status:afsluttet'
+    services:
+        - '@service:las'
+        - '@service:fortidspension'
+        - '@service:pension'
+        - '@service:boligstotte'
+        - '@service:andet'

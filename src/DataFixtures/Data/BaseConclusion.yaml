@@ -1,0 +1,12 @@
+-
+    '@id': base_conclusion:1
+    process: '@process:1'
+    conclusion: 'Konklusion...'
+-
+    '@id': base_conclusion:2
+    process: '@process:2'
+    conclusion: 'Konklusion...'
+-
+    '@id': base_conclusion:3
+    process: '@process:3'
+    conclusion: 'Konklusion...'

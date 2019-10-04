@@ -1,0 +1,71 @@
+-
+    '@id': service:kontanthjalp
+    name: Kontanthjælp
+    net_default_value: 0.7
+-
+    '@id': service:sygedagpenge
+    name: Sygedagpenge
+    net_default_value: 0.7
+-
+    '@id': service:integrationsydelse
+    name: Integrationsydelse
+    net_default_value: 0.7
+-
+    '@id': service:ledighedsydelse
+    name: Ledighedsydelse
+    net_default_value: 0.7
+-
+    '@id': service:ressourceforlobsydelse
+    name: Ressourceforløbsydelse
+    net_default_value: 0.7
+-
+    '@id': service:las
+    name: Alt under lov am aktiv socialpolitik (LAS)
+    net_default_value: 0.7
+-
+    '@id': service:fleksjobsydelse
+    name: Fleksjobsydelse
+    net_default_value: 0.7
+-
+    '@id': service:fortidspension
+    name: Førtidspension
+    net_default_value: 0.7
+-
+    '@id': service:pension
+    name: Pension
+    net_default_value: 0.7
+-
+    '@id': service:boligstotte
+    name: Boligstøtte
+    net_default_value: 0.7
+-
+    '@id': service:lab
+    name: Alt under lov om aktiv beskæftigelsesindsats (LAB)
+    net_default_value: 0.7
+-
+    '@id': service:sel
+    name: Alt under lov om socialservices (SEL)
+    net_default_value: 0.7
+-
+    '@id': service:okonomisk_friplads
+    name: Økonomisk friplads
+    net_default_value: 0.7
+-
+    '@id': service:andet
+    name: Andet
+    net_default_value: 0.7
+
+# - '@service:kontanthjalp'
+# - '@service:sygedagpenge'
+# - '@service:integrationsydelse'
+# - '@service:ledighedsydelse'
+# - '@service:ressourceforlobsydelse'
+# - '@service:las'
+# - '@service:fleksjobsydelse'
+# - '@service:fortidspension'
+# - '@service:pension'
+# - '@service:boligstotte'
+# - '@service:lab'
+# - '@service:sel'
+# - '@service:okonomisk_friplads'
+# - '@service:andet'

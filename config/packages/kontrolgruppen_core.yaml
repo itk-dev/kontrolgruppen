@@ -1,0 +1,89 @@
+# @see https://symfony.com/doc/current/configuration/environment_variables.html#environment-variable-processors
+parameters:
+  env(SAML_SP_CRT_FILE): '%kernel.project_dir%/saml/sp/sp.crt'
+  env(SAML_SP_KEY_FILE): '%kernel.project_dir%/saml/sp/sp.key'
+  env(SAML_IDP_CONFIG_FILE): '%kernel.project_dir%/saml/idp/idp.xml'
+  saml_empty: ''
+  saml_sp_crt: '%env(default:saml_empty:file:resolve:SAML_SP_CRT_FILE)%'
+  saml_sp_key: '%env(default:saml_empty:file:resolve:SAML_SP_KEY_FILE)%'
+  saml_idp_config_file: '%env(default:saml_empty:resolve:SAML_IDP_CONFIG_FILE)%'
+
+kontrolgruppen_core:
+    # Default value for ProcessType.netDefaultValue.
+    net_default_value: .7
+
+    # Available exports.
+    exports:
+        - Kontrolgruppen\CoreBundle\Export\BI\Export
+        - Kontrolgruppen\CoreBundle\Export\KL\Export
+        - Kontrolgruppen\CoreBundle\Export\Reports\RevenueExport
+        - Kontrolgruppen\CoreBundle\Export\Reports\HitRateExport
+
+    export_directory: '%export_directory%'
+
+    # SAML configuration.
+    saml:
+        php_saml_settings:
+            # https://github.com/onelogin/php-saml#settings
+            strict:              true
+            debug:               true
+            sp:
+                entityId: '%base_url%'
+                assertionConsumerService:
+                    url: '%base_url%/saml/acs'
+                    binding: 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST'
+                singleLogoutService:
+                    url: '%base_url%/saml/sls'
+                    binding: 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect'
+                NameIDFormat: 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress'
+                x509cert: '%saml_sp_crt%'
+                privateKey: '%saml_sp_key%'
+
+            # Read IdP configuration from a file.
+            idp: '%saml_idp_config_file%'
+
+            # Advanced settings (https://github.com/onelogin/php-saml#settings)
+            compress:
+                requests: true
+                responses: true
+            security:
+                nameIdEncrypted: false
+                authnRequestsSigned: false
+                logoutRequestSigned: false
+                logoutResponseSigned: false
+                signMetadata: false
+                wantMessagesSigned: false
+                wantAssertionsEncrypted: false
+                wantAssertionsSigned: false
+                wantNameId: true
+                wantNameIdEncrypted: false
+                requestedAuthnContext: true
+                wantXMLValidation: true
+                relaxDestinationValidation: false
+                signatureAlgorithm: http://www.w3.org/2001/04/xmldsig-more#rsa-sha256
+                digestAlgorithm: http://www.w3.org/2001/04/xmlenc#sha256
+                lowercaseUrlencoding: false
+            contactPerson:
+                technical:
+                    givenName: ITK Development
+                    emailAddress: itk-dev@aarhus.dk
+                support:
+                    givenName: ITK Development
+                    emailAddress: itk-dev@aarhus.dk
+            organization:
+                en-US:
+                    name: Kontrolgruppen
+                    displayname: Kontrolgruppen
+                    url: https://kontrolgruppen.example.com
+
+            # Use az-ident as username.
+            username_attribute_name: 'urn:oid:2.5.4.3'
+
+            user_roles:
+                attribute: http://schemas.microsoft.com/ws/2008/06/identity/claims/role
+                # Map from ADFS stuff to Symfony roles
+                fields:
+                    # Common Name
+                    CN:
+                        DG-Right-Kontrolsystem-Admin: ROLE_ADMIN
+                        DG-Right-Kontrolsystem-Sagsbehandler: ROLE_SAGSBEHANDLER

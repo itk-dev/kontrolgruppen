@@ -1,0 +1,10 @@
+-
+    process: '@process:1'
+    title: Test notat 1
+    type: NOTE
+    body: Tekst feltet 1
+-
+    process: '@process:1'
+    title: Test notat 2
+    type: INTERNAL_NOTE
+    body: Tekst feltet 2
