@@ -108,7 +108,7 @@ pipeline {
                 sh "ansible srvappkongruppe -m shell -a 'cd /data/www/kontrolgruppen_itkdev_dk/htdocs; APP_ENV=prod php bin/console doctrine:migrations:migrate --no-interaction'"
 
                 // Copy encore assets.
-                sh "ansible srvappkongruppe -m synchronize -a 'src=${WORKSPACE}/public/build/ dest=/data/www/kontrolgruppen_itkdev_dk/htdocs/public/build'"
+                sh "ansible srvappkongruppe -m synchronize -a 'src=${WORKSPACE}/public/prod dest=/data/www/kontrolgruppen_itkdev_dk/htdocs/public/'"
             }
         }
     }
