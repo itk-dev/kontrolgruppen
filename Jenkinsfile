@@ -95,7 +95,20 @@ pipeline {
                 timeout(time: 30, unit: 'MINUTES') {
                     input 'Should the site be deployed?'
                 }
-                sh 'echo "DEPLOY"'
+                // Update git repos.
+                sh "ansible srvappkongruppe -m shell -a 'cd /data/www/kontrolgruppen_itkdev_dk/htdocs; git clean -d --force'"
+                sh "ansible srvappkongruppe -m shell -a 'cd /data/www/kontrolgruppen_itkdev_dk/htdocs; git checkout ${BRANCH_NAME}'"
+                sh "ansible srvappkongruppe -m shell -a 'cd /data/www/kontrolgruppen_itkdev_dk/htdocs; git fetch'"
+                sh "ansible srvappkongruppe -m shell -a 'cd /data/www/kontrolgruppen_itkdev_dk/htdocs; git reset origin/${BRANCH_NAME} --hard'"
+
+                // Run composer.
+                sh "ansible srvappkongruppe -m shell -a 'cd /data/www/kontrolgruppen_itkdev_dk/htdocs; APP_ENV=prod composer install --no-dev -o'"
+
+                // Run migrations.
+                sh "ansible srvappkongruppe -m shell -a 'cd /data/www/kontrolgruppen_itkdev_dk/htdocs; APP_ENV=prod php bin/console doctrine:migrations:migrate --no-interaction'"
+
+                // Copy encore assets.
+                sh "ansible srvappkongruppe -m synchronize -a 'src=${WORKSPACE}/public/build/ dest=/data/www/kontrolgruppen_itkdev_dk/htdocs/public/build'"
             }
         }
     }
