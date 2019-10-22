@@ -20,24 +20,17 @@ pipeline {
         stage('Build and test') {
           parallel {
               stage('PHP') {
-                agent {
-                    docker {
-                        image 'itkdev/php7.2-fpm:latest' /* 7.2 is used as phan only runs with this version */
-                        args '-v /var/lib/jenkins/.composer-cache:/.composer:rw'
-                    }
-                }
                 stages {
                     stage('PHP7 compatibility') {
                         steps {
-                            sh 'vendor/bin/phan --allow-polyfill-parser'
-
+                            sh 'docker run -v $WORKSPACE:/app -v /var/lib/jenkins/.composer-cache:/.composer:rw itkdev/php7.2-fpm:latest vendor/bin/phan --allow-polyfill-parser'
                         }
                     }
                     stage('Coding standards') {
                         steps {
-                            sh 'vendor/bin/phpcs --standard=phpcs.xml.dist'
-                            sh 'vendor/bin/php-cs-fixer --config=.php_cs.dist fix --dry-run --verbose'
-                            sh 'vendor/bin/twigcs lint templates'
+                            sh 'docker run -v $WORKSPACE:/app -v /var/lib/jenkins/.composer-cache:/.composer:rw itkdev/php7.2-fpm:latest vendor/bin/phpcs --standard=phpcs.xml.dist'
+                            sh 'docker run -v $WORKSPACE:/app -v /var/lib/jenkins/.composer-cache:/.composer:rw itkdev/php7.2-fpm:latest vendor/bin/php-cs-fixer --config=.php_cs.dist fix --dry-run --verbose'
+                            sh 'docker run -v $WORKSPACE:/app -v /var/lib/jenkins/.composer-cache:/.composer:rw itkdev/php7.2-fpm:latest vendor/bin/twigcs lint templates'
                         }
                     }
                 }
