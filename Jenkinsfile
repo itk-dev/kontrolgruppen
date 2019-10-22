@@ -1,4 +1,4 @@
-≥@Library('jenkins-pipeline')_
+@Library('jenkins-pipeline')_
 
 pipeline {
     agent any
@@ -30,7 +30,7 @@ pipeline {
                         steps {
                             sh 'docker run -v $WORKSPACE:/app -v /var/lib/jenkins/.composer-cache:/.composer:rw itkdev/php7.2-fpm:latest vendor/bin/phpcs --standard=phpcs.xml.dist'
                             sh 'docker run -v $WORKSPACE:/app -v /var/lib/jenkins/.composer-cache:/.composer:rw itkdev/php7.2-fpm:latest vendor/bin/php-cs-fixer --config=.php_cs.dist fix --dry-run --verbose'
-                            sh 'docker run -v $WORKSPACE:/app -v /var/lib/jenkins/.composer-cache:/.composer:rw itkdev/php7.2-fpm:latest vendor/bin/twigcs lint templates'
+                            sh 'docker run -v $WORKSPACE:/app -v /var/lib/jenkins/.composer-cache:/.composer:rw itkdev/php7.2-fpm:latestvendor/bin/twigcs lint templates'
                         }
                     }
                 }
