@@ -20,24 +20,17 @@ pipeline {
         stage('Build and test') {
           parallel {
               stage('PHP') {
-                agent {
-                    docker {
-                        image 'itkdev/php7.2-fpm:latest' /* 7.2 is used as phan only runs with this version */
-                        args '-v /var/lib/jenkins/.composer-cache:/.composer:rw'
-                    }
-                }
                 stages {
                     stage('PHP7 compatibility') {
                         steps {
-                            sh 'vendor/bin/phan --allow-polyfill-parser'
-
+                            sh 'docker run -v $WORKSPACE:/app -v /var/lib/jenkins/.composer-cache:/.composer:rw itkdev/php7.2-fpm:latest vendor/bin/phan --allow-polyfill-parser'
                         }
                     }
                     stage('Coding standards') {
                         steps {
-                            sh 'vendor/bin/phpcs --standard=phpcs.xml.dist'
-                            sh 'vendor/bin/php-cs-fixer --config=.php_cs.dist fix --dry-run --verbose'
-                            sh 'vendor/bin/twigcs lint templates'
+                            sh 'docker run -v $WORKSPACE:/app -v /var/lib/jenkins/.composer-cache:/.composer:rw itkdev/php7.2-fpm:latest vendor/bin/phpcs --standard=phpcs.xml.dist'
+                            sh 'docker run -v $WORKSPACE:/app -v /var/lib/jenkins/.composer-cache:/.composer:rw itkdev/php7.2-fpm:latest vendor/bin/php-cs-fixer --config=.php_cs.dist fix --dry-run --verbose'
+                            sh 'docker run -v $WORKSPACE:/app -v /var/lib/jenkins/.composer-cache:/.composer:rw itkdev/php7.2-fpm:latest vendor/bin/twigcs lint templates'
                         }
                     }
                 }
@@ -96,19 +89,19 @@ pipeline {
                     input 'Should the site be deployed?'
                 }
                 // Update git repos.
-                sh "ansible srvappkongruppe -m shell -a 'cd /data/www/kontrolgruppen_itkdev_dk/htdocs; git clean -d --force'"
-                sh "ansible srvappkongruppe -m shell -a 'cd /data/www/kontrolgruppen_itkdev_dk/htdocs; git checkout ${BRANCH_NAME}'"
-                sh "ansible srvappkongruppe -m shell -a 'cd /data/www/kontrolgruppen_itkdev_dk/htdocs; git fetch'"
-                sh "ansible srvappkongruppe -m shell -a 'cd /data/www/kontrolgruppen_itkdev_dk/htdocs; git reset origin/${BRANCH_NAME} --hard'"
+                sh "ansible srvappkongruppe -m shell -a 'cd /data/www/tjek1_aarhuskommune_dk/htdocs; git clean -d --force'"
+                sh "ansible srvappkongruppe -m shell -a 'cd /data/www/tjek1_aarhuskommune_dk/htdocs; git checkout ${BRANCH_NAME}'"
+                sh "ansible srvappkongruppe -m shell -a 'cd /data/www/tjek1_aarhuskommune_dk/htdocs; git fetch'"
+                sh "ansible srvappkongruppe -m shell -a 'cd /data/www/tjek1_aarhuskommune_dk/htdocs; git reset origin/${BRANCH_NAME} --hard'"
 
                 // Run composer.
-                sh "ansible srvappkongruppe -m shell -a 'cd /data/www/kontrolgruppen_itkdev_dk/htdocs; APP_ENV=prod composer install --no-dev -o'"
+                sh "ansible srvappkongruppe -m shell -a 'cd /data/www/tjek1_aarhuskommune_dk/htdocs; APP_ENV=prod composer install --no-dev -o'"
 
                 // Run migrations.
-                sh "ansible srvappkongruppe -m shell -a 'cd /data/www/kontrolgruppen_itkdev_dk/htdocs; APP_ENV=prod php bin/console doctrine:migrations:migrate --no-interaction'"
+                sh "ansible srvappkongruppe -m shell -a 'cd /data/www/tjek1_aarhuskommune_dk/htdocs; APP_ENV=prod php bin/console doctrine:migrations:migrate --no-interaction'"
 
                 // Copy encore assets.
-                sh "ansible srvappkongruppe -m synchronize -a 'src=${WORKSPACE}/public/prod dest=/data/www/kontrolgruppen_itkdev_dk/htdocs/public/'"
+                sh "ansible srvappkongruppe -m synchronize -a 'src=${WORKSPACE}/public/prod dest=/data/www/tjek1_aarhuskommune_dk/htdocs/public/'"
             }
         }
     }

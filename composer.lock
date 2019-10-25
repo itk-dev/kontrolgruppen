@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cc78e13846d209b96bc5b0b8cb044ee6",
+    "content-hash": "63b7a1936f3e43145bd8d6893513a57a",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -1887,16 +1887,16 @@
         },
         {
             "name": "kontrolgruppen/core-bundle",
-            "version": "0.4.0",
+            "version": "0.4.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aakb/kontrolgruppen-core-bundle.git",
-                "reference": "75d80b1d977ffb4f194f87e6c3c5be63d5b86837"
+                "reference": "fb91cc35da2e6f1d25015fe0cd365b4a0c460334"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aakb/kontrolgruppen-core-bundle/zipball/75d80b1d977ffb4f194f87e6c3c5be63d5b86837",
-                "reference": "75d80b1d977ffb4f194f87e6c3c5be63d5b86837",
+                "url": "https://api.github.com/repos/aakb/kontrolgruppen-core-bundle/zipball/fb91cc35da2e6f1d25015fe0cd365b4a0c460334",
+                "reference": "fb91cc35da2e6f1d25015fe0cd365b4a0c460334",
                 "shasum": ""
             },
             "require": {
@@ -1979,9 +1979,9 @@
             },
             "description": "Kontrolgruppen core bundle",
             "support": {
-                "source": "https://github.com/aakb/kontrolgruppen-core-bundle/tree/0.4.0"
+                "source": "https://github.com/aakb/kontrolgruppen-core-bundle/tree/0.4.5"
             },
-            "time": "2019-10-04T11:39:25+00:00"
+            "time": "2019-10-25T07:03:36+00:00"
         },
         {
             "name": "lexik/form-filter-bundle",
@@ -8727,7 +8727,8 @@
         "php": "^7.1.3",
         "ext-ctype": "*",
         "ext-dom": "*",
-        "ext-iconv": "*"
+        "ext-iconv": "*",
+        "ext-json": "*"
     },
     "platform-dev": []
 }
