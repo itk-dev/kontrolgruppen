@@ -3,6 +3,7 @@ parameters:
   env(SAML_SP_CRT_FILE): '%kernel.project_dir%/saml/sp/sp.crt'
   env(SAML_SP_KEY_FILE): '%kernel.project_dir%/saml/sp/sp.key'
   env(SAML_IDP_CONFIG_FILE): '%kernel.project_dir%/saml/idp/idp.xml'
+  env(SAML_DEBUG): false
   saml_empty: ''
   saml_sp_crt: '%env(default:saml_empty:file:resolve:SAML_SP_CRT_FILE)%'
   saml_sp_key: '%env(default:saml_empty:file:resolve:SAML_SP_KEY_FILE)%'
@@ -26,7 +27,7 @@ kontrolgruppen_core:
         php_saml_settings:
             # https://github.com/onelogin/php-saml#settings
             strict:              true
-            debug:               true
+            debug:               '%env(bool:SAML_DEBUG)%'
             sp:
                 entityId: '%base_url%'
                 assertionConsumerService:
