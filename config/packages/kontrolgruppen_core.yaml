@@ -3,6 +3,16 @@ parameters:
   env(SAML_SP_CRT_FILE): '%kernel.project_dir%/saml/sp/sp.crt'
   env(SAML_SP_KEY_FILE): '%kernel.project_dir%/saml/sp/sp.key'
   env(SAML_IDP_CONFIG_FILE): '%kernel.project_dir%/saml/idp/idp.xml'
+  env(SAML_DEBUG): false
+  # Fallback values; real values should be defined in .env.local
+  env(SAML_CONTACT_PERSON_TECHNICAL_GIVEN_NAME): 'ITK Development'
+  env(SAML_CONTACT_PERSON_TECHNICAL_EMAIL_ADDRESS): 'itkdev@mkb.aarhus.dk'
+  env(SAML_CONTACT_PERSON_SUPPORT_GIVEN_NAME): 'ITK Development'
+  env(SAML_CONTACT_PERSON_SUPPORT_EMAIL_ADDRESS): 'itkdev@mkb.aarhus.dk'
+  env(SAML_ORGANIZATION_NAME): 'Kontrolgruppen'
+  env(SAML_ORGANIZATION_DISPLAY_NAME): 'Kontrolgruppen'
+  env(SAML_ORGANIZATION_URL): 'http://kontrolgruppen.local.computer'
+
   saml_empty: ''
   saml_sp_crt: '%env(default:saml_empty:file:resolve:SAML_SP_CRT_FILE)%'
   saml_sp_key: '%env(default:saml_empty:file:resolve:SAML_SP_KEY_FILE)%'
@@ -26,7 +36,7 @@ kontrolgruppen_core:
         php_saml_settings:
             # https://github.com/onelogin/php-saml#settings
             strict:              true
-            debug:               true
+            debug:               '%env(bool:SAML_DEBUG)%'
             sp:
                 entityId: '%base_url%'
                 assertionConsumerService:
@@ -65,16 +75,17 @@ kontrolgruppen_core:
                 lowercaseUrlencoding: false
             contactPerson:
                 technical:
-                    givenName: ITK Development
-                    emailAddress: itk-dev@aarhus.dk
+                    givenName: '%env(SAML_CONTACT_PERSON_TECHNICAL_GIVEN_NAME)%'
+                    emailAddress: '%env(SAML_CONTACT_PERSON_TECHNICAL_EMAIL_ADDRESS)%'
                 support:
-                    givenName: ITK Development
-                    emailAddress: itk-dev@aarhus.dk
+                    givenName: '%env(SAML_CONTACT_PERSON_SUPPORT_GIVEN_NAME)%'
+                    emailAddress: '%env(SAML_CONTACT_PERSON_SUPPORT_EMAIL_ADDRESS)%'
+
             organization:
                 en-US:
-                    name: Kontrolgruppen
-                    displayname: Kontrolgruppen
-                    url: https://kontrolgruppen.example.com
+                    name: '%env(SAML_ORGANIZATION_NAME)%'
+                    displayname: '%env(SAML_ORGANIZATION_DISPLAY_NAME)%'
+                    url: '%env(SAML_ORGANIZATION_URL)%'
 
             # Use az-ident as username.
             username_attribute_name: 'urn:oid:2.5.4.3'
