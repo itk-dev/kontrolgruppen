@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6f341b82c42d0ecdf9179ed5cd530ad7",
+    "content-hash": "671656fc430976ff55adb02a303f7c66",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -1887,16 +1887,16 @@
         },
         {
             "name": "kontrolgruppen/core-bundle",
-            "version": "1.0.2",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aakb/kontrolgruppen-core-bundle.git",
-                "reference": "b09e60814bde67021365e8d2ea9bd51d2b4e6dae"
+                "reference": "1dcde1a979ee57aab808e6ab591d8b2655c14616"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aakb/kontrolgruppen-core-bundle/zipball/b09e60814bde67021365e8d2ea9bd51d2b4e6dae",
-                "reference": "b09e60814bde67021365e8d2ea9bd51d2b4e6dae",
+                "url": "https://api.github.com/repos/aakb/kontrolgruppen-core-bundle/zipball/1dcde1a979ee57aab808e6ab591d8b2655c14616",
+                "reference": "1dcde1a979ee57aab808e6ab591d8b2655c14616",
                 "shasum": ""
             },
             "require": {
@@ -1979,9 +1979,9 @@
             },
             "description": "Kontrolgruppen core bundle",
             "support": {
-                "source": "https://github.com/aakb/kontrolgruppen-core-bundle/tree/1.0.2"
+                "source": "https://github.com/aakb/kontrolgruppen-core-bundle/tree/1.0.3"
             },
-            "time": "2019-11-12T08:26:10+00:00"
+            "time": "2019-11-12T11:14:05+00:00"
         },
         {
             "name": "lexik/form-filter-bundle",
