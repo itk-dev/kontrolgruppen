@@ -78,6 +78,9 @@ pipeline {
 
                 // Copy encore assets.
                 sh "ansible admwebitk01 -m synchronize -a 'src=${WORKSPACE}/public/build/ dest=/data/www/stg_kontrolgruppen_itkdev_dk/htdocs/public/build'"
+
+		// Clear cache
+		sh "ansible admwebitk01 -m shell -a 'cd /data/www/stg_kontrolgruppen_itkdev_dk/htdocs; APP_ENV=prod php bin/console cache:clear'"
             }
         }
         stage('Deployment production') {
@@ -102,6 +105,9 @@ pipeline {
 
                 // Copy encore assets.
                 sh "ansible srvappkongruppe -m synchronize -a 'src=${WORKSPACE}/public/prod dest=/data/www/tjek1_aarhuskommune_dk/htdocs/public/'"
+
+		// Clear cache
+		sh "ansible srvappkongruppe -m shell -a 'cd /data/www/tjek1_aarhuskommune_dk/htdocs; APP_ENV=prod php bin/console cache:clear'"
             }
         }
     }
