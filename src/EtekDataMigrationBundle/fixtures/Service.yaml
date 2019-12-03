@@ -1,0 +1,71 @@
+Kontrolgruppen\CoreBundle\Entity\Service:
+    'service:kontanthjalp':
+        name: Kontanthjælp
+        net_default_value: 0.7
+
+    'service:sygedagpenge':
+        name: Sygedagpenge
+        net_default_value: 0.7
+
+    'service:integrationsydelse':
+        name: Integrationsydelse
+        net_default_value: 0.7
+
+    'service:ledighedsydelse':
+        name: Ledighedsydelse
+        net_default_value: 0.7
+
+    'service:ressourceforlobsydelse':
+        name: Ressourceforløbsydelse
+        net_default_value: 0.7
+
+    'service:las':
+        name: Alt under lov am aktiv socialpolitik (LAS)
+        net_default_value: 0.7
+
+    'service:fleksjobsydelse':
+        name: Fleksjobsydelse
+        net_default_value: 0.7
+
+    'service:fortidspension':
+        name: Førtidspension
+        net_default_value: 0.7
+
+    'service:pension':
+        name: Pension
+        net_default_value: 0.7
+
+    'service:boligstotte':
+        name: Boligstøtte
+        net_default_value: 0.7
+
+    'service:lab':
+        name: Alt under lov om aktiv beskæftigelsesindsats (LAB)
+        net_default_value: 0.7
+
+    'service:sel':
+        name: Alt under lov om socialservices (SEL)
+        net_default_value: 0.7
+
+    'service:okonomisk_friplads':
+        name: Økonomisk friplads
+        net_default_value: 0.7
+
+    'service:andet':
+        name: Andet
+        net_default_value: 0.7
+
+    # 'service:kontanthjalp':
+    # 'service:sygedagpenge':
+    # 'service:integrationsydelse':
+    # 'service:ledighedsydelse':
+    # 'service:ressourceforlobsydelse':
+    # 'service:las':
+    # 'service:fleksjobsydelse':
+    # 'service:fortidspension':
+    # 'service:pension':
+    # 'service:boligstotte':
+    # 'service:lab':
+    # 'service:sel':
+    # 'service:okonomisk_friplads':
+    # 'service:andet':

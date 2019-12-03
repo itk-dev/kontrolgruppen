@@ -1,0 +1,48 @@
+Kontrolgruppen\CoreBundle\Entity\Channel:
+    'channel:anonym_anmelder':
+        name: Anonym anmelder
+
+    'channel:navngiven_anmelder':
+        name: Navngiven anmelder
+
+    'channel:internt_i_kommunen':
+        name: Internt i kommunen
+
+    'channel:dfd':
+        name: Den fælles Dataenhed (DFD)
+
+    'channel:politi':
+        name: Politi
+
+    'channel:skattestyrelsen':
+        name: Skattestyrelsen
+
+    'channel:star':
+        name: STAR
+
+    'channel:egen_drift':
+        name: Egen drift (internt i Kontrolteam)
+
+    'channel:anden_kommune':
+        name: Anden kommune
+
+    'channel:kampagne':
+        name: Kampagne
+
+    'channel:udbetaling_danmark':
+        name: Udbetaling Danmark
+
+    'channel:projekter':
+        name: Projekter
+
+    'channel:boligforeninger':
+        name: Boligforeninger
+
+    'channel:udlændingestyrelsen':
+        name: Udlændingestyrelsen
+
+    'channel:su':
+        name: SU
+
+    'channel:andet':
+        name: Andet

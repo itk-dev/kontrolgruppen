@@ -1,0 +1,40 @@
+Kontrolgruppen\CoreBundle\Entity\ProcessStatus:
+    'process-status:oprettet':
+        name: Oprettet
+
+    'process-status:indkaldelse_til_samtale':
+        name: Indkaldelse til samtale
+
+    'process-status:afventer_svar':
+        name: Afventer svar
+
+    'process-status:partshoering':
+        name: Partshøring
+
+    'process-status:afsluttet':
+        name: Afsluttet
+
+    'process-status:afventer_sagsbehandler':
+        name: Afventer tildeling af sagsbehandler
+
+    'process-status:uanmeldt_besoeg':
+        name: Uanmeldt besøg
+
+    'process-status:projekt':
+        name: Projekt
+
+    'process-status:forespg_dfd_udland':
+        name: Forespørgsel DFD Udland
+
+    'process-status:agterskrivelse':
+        name: Agterskrivelse
+
+    'process-status:afgorelse':
+        name: Afgørelse
+
+    'process-status:ved_ankestyrelse':
+        name: Ved Ankestyrelse
+        isForwardToAnotherAuthority: true
+
+    'process-status:virksomhedskontrol':
+        name: Virksomhedskontrol

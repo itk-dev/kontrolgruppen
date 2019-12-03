@@ -1,0 +1,33 @@
+Kontrolgruppen\CoreBundle\Entity\ProcessType:
+    'process-type:okonomisk_friplads':
+        name: 'Økonomisk friplads'
+        conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+        defaultProcessStatus: '@process-status:oprettet'
+        defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
+        channels:
+            - '@channel:anonym_anmelder'
+            - '@channel:navngiven_anmelder'
+            - '@channel:internt_i_kommunen'
+            - '@channel:politi'
+            - '@channel:skattestyrelsen'
+            - '@channel:star'
+            - '@channel:egen_drift'
+            - '@channel:anden_kommune'
+            - '@channel:kampagne'
+            - '@channel:udbetaling_danmark'
+            - '@channel:projekter'
+            - '@channel:boligforeninger'
+            - '@channel:udlændingestyrelsen'
+            - '@channel:su'
+            - '@channel:andet'
+        processStatuses:
+            - '@process-status:oprettet'
+            - '@process-status:afventer_sagsbehandler'
+            - '@process-status:agterskrivelse'
+            - '@process-status:partshoering'
+            - '@process-status:afgorelse'
+            - '@process-status:ved_ankestyrelse'
+            - '@process-status:afsluttet'
+        services:
+            - '@service:okonomisk_friplads'
+            - '@service:andet'
