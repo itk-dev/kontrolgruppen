@@ -12,10 +12,12 @@ namespace App\EtekDataMigrationBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Kontrolgruppen\CoreBundle\DBAL\Types\JournalEntryEnumType;
+use Kontrolgruppen\CoreBundle\Entity\BaseConclusion;
 use Kontrolgruppen\CoreBundle\Entity\Client;
 use Kontrolgruppen\CoreBundle\Entity\JournalEntry;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\User;
+use Kontrolgruppen\CoreBundle\Entity\WeightedConclusion;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
@@ -41,8 +43,14 @@ class FixturesGenerateCommand extends Command
         'CaseWorker' => User::class,
         'Client' => Client::class,
         'FinancialSupport' => null,
-         'FinancialSupportType' => null,
-         'Status' => null,
+        'FinancialSupportType' => null,
+        'Status' => null,
+    ];
+
+    private $additionalObjects = [
+        // class => data name
+        BaseConclusion::class => 'CaseNotes',
+        WeightedConclusion::class => 'CaseNotes',
     ];
 
     /** @var array */
@@ -114,6 +122,14 @@ class FixturesGenerateCommand extends Command
             }
         }
 
+        foreach ($this->additionalObjects as $class => $dataName) {
+            $name = (new \ReflectionClass($class))->getShortName();
+            $fixtureFilename = $fixturesDirectory.'/'.$name.'.yaml';
+            if ($this->generateAdditionalFixture($class, $dataName, $fixtureFilename)) {
+                $output->writeln(sprintf('Fixture for %s written to file %s', $name, $fixtureFilename));
+            }
+        }
+
         $question = new ConfirmationQuestion('Import fixtures? ', true);
         if ($io->askQuestion($question)) {
             $this->importFixtures($output);
@@ -172,6 +188,25 @@ class FixturesGenerateCommand extends Command
         return false;
     }
 
+    private function generateAdditionalFixture($class, $dataName, $fixtureFilename)
+    {
+        $data = $this->getData($dataName);
+        $name = (new \ReflectionClass($class))->getShortName();
+        $fixture = $this->{'buildFixture'.$name}($data);
+
+        $this->filesystem->dumpFile($fixtureFilename, $this->serializer->encode(
+            [
+                $class => $fixture,
+            ],
+            'yaml',
+            [
+                'yaml_inline' => 87,
+            ]
+        ));
+
+        return true;
+    }
+
     private function loadData($name, $filename): array
     {
         $contents = file_get_contents($filename);
@@ -216,8 +251,8 @@ class FixturesGenerateCommand extends Command
             $client = $this->getData('Client', $item['ClientId']);
 
             $items[$id] = [
-                'caseNumber' => 'TODO Gammel sag-'.$item['CaseId'],
-                'caseWorker' => '@CaseWorker_'.$item['CaseWorkerId'],
+                'caseNumber' => $item['CaseId'],
+                'caseWorker' => '@CaseWorker_'.$item['CurrentCaseWorkerId'],
                 'clientCpr' => $client['PrimaryCPR'],
                 'client' => '@Client_'.$item['ClientId'],
                 'processType' => '@process-type:okonomisk_friplads',
@@ -243,6 +278,71 @@ class FixturesGenerateCommand extends Command
         return $items;
     }
 
+    private function isConclusion(array $item)
+    {
+        return !empty(trim($item['Conclusion']));
+    }
+
+    private function isBaseConclusion(array $item)
+    {
+        return $this->isConclusion($item)
+            && empty(trim($item['ArgumentsAgainstCohabitation']))
+            && empty(trim($item['ArgumentsForCohabitation']));
+    }
+
+    private function isWeightedConclusion(array $item)
+    {
+        return $this->isConclusion($item) && !$this->isBaseConclusion($item);
+    }
+
+    private function buildFixtureBaseConclusion(array $data)
+    {
+        $items = [];
+        $cases = array_column($this->getData('Case'), null, 'CaseNotesId');
+
+        foreach ($data as $index => $item) {
+            if ($this->isBaseConclusion($item)) {
+                $id = 'BaseConclusion_'.$item['CaseNotesId'];
+                if (!isset($cases[$item['CaseNotesId']]['CaseId'])) {
+                    throw new RuntimeException(sprintf('Cannot get case id for case notes id %s', $item['CaseNotesId']));
+                }
+
+                $items[$id] = [
+                    'process' => '@Case_'.$cases[$item['CaseNotesId']]['CaseId'],
+
+                    'conclusion' => self::escapeHtml($item['Conclusion']),
+                ];
+            }
+        }
+
+        return $items;
+    }
+
+    private function buildFixtureWeightedConclusion(array $data)
+    {
+        $items = [];
+        $cases = array_column($this->getData('Case'), null, 'CaseNotesId');
+
+        foreach ($data as $index => $item) {
+            if ($this->isWeightedConclusion($item)) {
+                $id = 'WeightedConclusion_'.$item['CaseNotesId'];
+                if (!isset($cases[$item['CaseNotesId']]['CaseId'])) {
+                    throw new RuntimeException(sprintf('Cannot get case id for case notes id %s', $item['CaseNotesId']));
+                }
+
+                $items[$id] = [
+                    'process' => '@Case_'.$cases[$item['CaseNotesId']]['CaseId'],
+
+                    'conclusion' => self::escapeHtml($item['Conclusion']),
+                    'argumentsFor' => self::escapeHtml($item['ArgumentsForCohabitation']),
+                    'argumentsAgainst' => self::escapeHtml($item['ArgumentsAgainstCohabitation']),
+                ];
+            }
+        }
+
+        return $items;
+    }
+
     private function buildFixtureCaseWorker(array $data)
     {
         $items = [];
@@ -251,7 +351,7 @@ class FixturesGenerateCommand extends Command
 
             $items[$id] = [
                 'username' => $item['UserName'],
-                'roles' => ['ROLE_USER'],
+                'roles' => $item['roles'] ?? ['ROLE_USER'],
             ];
         }
 
@@ -324,7 +424,7 @@ class FixturesGenerateCommand extends Command
                     'type' => JournalEntryEnumType::INTERNAL_NOTE,
                 ],
                 'Economics' => [
-                    'title' => 'Finaniselle oplysninger',
+                    'title' => 'Finansielle oplysninger',
                     'type' => JournalEntryEnumType::NOTE,
                 ],
                 'InternalNotes' => [
@@ -403,6 +503,44 @@ class FixturesGenerateCommand extends Command
                 $status = 'decoded';
             }
             $output->writeln(sprintf('#%s: %s [%s]', $journalEntry->getId(), $journalEntry->getTitle(), $status));
+        }
+        $this->entityManager->flush();
+
+        $baseConclusions = $this->entityManager->getRepository(BaseConclusion::class)
+            ->findAll();
+
+        $output->writeln('Decoding content in base conclusion');
+
+        foreach ($baseConclusions as $baseConclusion) {
+            $conclusion = $baseConclusion->getConclusion();
+            $status = 'ok';
+            if (false !== strpos($conclusion, htmlspecialchars('<'))) {
+                $baseConclusion->setConclusion(self::unescapeHtml($conclusion));
+                $this->entityManager->persist($baseConclusion);
+                $status = 'decoded';
+            }
+            $output->writeln(sprintf('#%s: %s [%s]', $baseConclusion->getId(), $baseConclusion->getProcess()->getId(), $status));
+        }
+        $this->entityManager->flush();
+
+        $weightedConclusions = $this->entityManager->getRepository(WeightedConclusion::class)
+            ->findAll();
+
+        $output->writeln('Decoding content in weighted conclusion');
+
+        foreach ($weightedConclusions as $weightedConclusion) {
+            $status = 'ok';
+            $fields = ['conclusion', 'argumentsAgainst', 'argumentsFor'];
+            foreach ($fields as $field) {
+                $value = $weightedConclusion->{'get'.ucfirst($field)}();
+                if (false !== strpos($value, htmlspecialchars('<'))) {
+                    $weightedConclusion->{'set'.ucfirst($field)}(self::unescapeHtml($value));
+                    $this->entityManager->persist($weightedConclusion);
+                    $status = 'decoded';
+                }
+            }
+
+            $output->writeln(sprintf('#%s: %s [%s]', $weightedConclusion->getId(), $weightedConclusion->getProcess()->getId(), $status));
         }
         $this->entityManager->flush();
 
