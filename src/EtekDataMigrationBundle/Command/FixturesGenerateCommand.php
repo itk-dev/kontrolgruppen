@@ -42,7 +42,7 @@ class FixturesGenerateCommand extends Command
         'CaseNotes' => JournalEntry::class,
         'CaseWorker' => User::class,
         'Client' => Client::class,
-        'FinancialSupport' => null,
+        'FinancialSupport' => JournalEntry::class,
         'FinancialSupportType' => null,
         'Status' => null,
     ];
@@ -51,6 +51,13 @@ class FixturesGenerateCommand extends Command
         // class => data name
         BaseConclusion::class => 'CaseNotes',
         WeightedConclusion::class => 'CaseNotes',
+    ];
+
+    private $otherStuff = [
+        'SharedEconomy' => [
+            'data' => 'Client',
+            'class' => JournalEntry::class,
+        ],
     ];
 
     /** @var array */
@@ -130,6 +137,15 @@ class FixturesGenerateCommand extends Command
             }
         }
 
+        foreach ($this->otherStuff as $name => $info) {
+            $dataName = $info['data'];
+            $class = $info['class'];
+            $fixtureFilename = $fixturesDirectory.'/'.$name.'.yaml';
+            if ($this->generateAdditionalFixture($class, $dataName, $fixtureFilename, $name)) {
+                $output->writeln(sprintf('Fixture for %s written to file %s', $name, $fixtureFilename));
+            }
+        }
+
         $question = new ConfirmationQuestion('Import fixtures? ', true);
         if ($io->askQuestion($question)) {
             $this->importFixtures($output);
@@ -145,6 +161,13 @@ class FixturesGenerateCommand extends Command
                 'after loading fixtures to fix journal entry content.',
             ]);
         }
+
+        $io->text([
+            'Please execute the following SQL statements to clear the logs:',
+            '  SET FOREIGN_KEY_CHECKS = 0;',
+            '  TRUNCATE process_log_entry;',
+            '  TRUNCATE ext_log_entries;',
+        ]);
 
         return 0;
     }
@@ -188,10 +211,10 @@ class FixturesGenerateCommand extends Command
         return false;
     }
 
-    private function generateAdditionalFixture($class, $dataName, $fixtureFilename)
+    private function generateAdditionalFixture($class, $dataName, $fixtureFilename, $name = null)
     {
         $data = $this->getData($dataName);
-        $name = (new \ReflectionClass($class))->getShortName();
+        $name = $name ?? (new \ReflectionClass($class))->getShortName();
         $fixture = $this->{'buildFixture'.$name}($data);
 
         $this->filesystem->dumpFile($fixtureFilename, $this->serializer->encode(
@@ -240,7 +263,7 @@ class FixturesGenerateCommand extends Command
 
     private function dateTimeValue(string $value)
     {
-        return sprintf('<datetime(%s)>', $value);
+        return sprintf('<identity(new \DateTime("%s"))>', $value);
     }
 
     private function buildFixtureCase(array $data)
@@ -251,13 +274,14 @@ class FixturesGenerateCommand extends Command
             $client = $this->getData('Client', $item['ClientId']);
 
             $items[$id] = [
-                'caseNumber' => $item['CaseId'],
+                'caseNumber' => 'ETEK-'.$item['CaseId'],
                 'caseWorker' => '@CaseWorker_'.$item['CurrentCaseWorkerId'],
                 'clientCpr' => $client['PrimaryCPR'],
                 'client' => '@Client_'.$item['ClientId'],
                 'processType' => '@process-type:okonomisk_friplads',
                 'createdAt' => $this->dateTimeValue($item['CreatedDate']),
                 'updatedAt' => $this->dateTimeValue($item['LastEdited']),
+                'createdBy' => '@CaseWorker_'.$item['CurrentCaseWorkerId'],
                 'processStatus' => [
                     2 => '@process-status:oprettet', // Igangværende sag => Oprettet
                     3 => '@process-status:indkaldelse_til_samtale', // Afklarende samtale => Indkaldelse til samtale
@@ -306,11 +330,13 @@ class FixturesGenerateCommand extends Command
                 if (!isset($cases[$item['CaseNotesId']]['CaseId'])) {
                     throw new RuntimeException(sprintf('Cannot get case id for case notes id %s', $item['CaseNotesId']));
                 }
+                $case = $cases[$item['CaseNotesId']];
 
                 $items[$id] = [
-                    'process' => '@Case_'.$cases[$item['CaseNotesId']]['CaseId'],
-
+                    'process' => '@Case_'.$case['CaseId'],
                     'conclusion' => self::escapeHtml($item['Conclusion']),
+                    'createdAt' => $this->dateTimeValue($case['CreatedDate']),
+                    'createdBy' => '@CaseWorker_'.$case['CurrentCaseWorkerId'],
                 ];
             }
         }
@@ -329,13 +355,15 @@ class FixturesGenerateCommand extends Command
                 if (!isset($cases[$item['CaseNotesId']]['CaseId'])) {
                     throw new RuntimeException(sprintf('Cannot get case id for case notes id %s', $item['CaseNotesId']));
                 }
+                $case = $cases[$item['CaseNotesId']];
 
                 $items[$id] = [
-                    'process' => '@Case_'.$cases[$item['CaseNotesId']]['CaseId'],
-
+                    'process' => '@Case_'.$case['CaseId'],
                     'conclusion' => self::escapeHtml($item['Conclusion']),
                     'argumentsFor' => self::escapeHtml($item['ArgumentsForCohabitation']),
                     'argumentsAgainst' => self::escapeHtml($item['ArgumentsAgainstCohabitation']),
+                    'createdAt' => $this->dateTimeValue($case['CreatedDate']),
+                    'createdBy' => '@CaseWorker_'.$case['CurrentCaseWorkerId'],
                 ];
             }
         }
@@ -369,11 +397,12 @@ class FixturesGenerateCommand extends Command
             if (!isset($cases[$item['ClientId']]['CaseId'])) {
                 throw new RuntimeException(sprintf('Cannot get case id for client id %s', $item['ClientId']));
             }
+            $case = $cases[$item['ClientId']];
 
             $items[$id] = [
                 'firstName' => $item['PrimaryFirstName'],
                 'lastName' => $item['PrimarySurName'],
-                'process' => '@Case_'.$cases[$item['ClientId']]['CaseId'],
+                'process' => '@Case_'.$case['CaseId'],
                 'address' => $item['PrimaryAddress'],
                 'postalCode' => $item['PrimaryZip'],
                 'telephone' => $item['PrimaryTelephone'],
@@ -392,6 +421,90 @@ class FixturesGenerateCommand extends Command
                 // '' =>     $item['NumberOfChildren'],
                 // '' =>     $item['HasCommonBankAccount'],
                 // '' =>     $item['HasCommonDebt'],
+                'createdAt' => $this->dateTimeValue($case['CreatedDate']),
+                'createdBy' => '@CaseWorker_'.$case['CurrentCaseWorkerId'],
+            ];
+        }
+
+        return $items;
+    }
+
+    private function buildFixtureFinancialSupport(array $data)
+    {
+        $items = [];
+        $cases = array_column($this->getData('Case'), null, 'ClientId');
+        $financialSupportTypes = array_column($this->getData('FinancialSupportType'), null, 'FinancialSupportTypeId');
+
+        foreach ($data as $item) {
+            $clientId = $item['ClientId'];
+            $id = 'FinancialSupport_'.$clientId;
+            if (!isset($items[$id])) {
+                if (!isset($cases[$clientId])) {
+                    throw new RuntimeException(sprintf('Cannot get case id for financial support id %s', $item['CaseNotesId']));
+                }
+                $case = $cases[$clientId];
+
+                $lines = array_filter($this->getData('FinancialSupport'), function ($item) use ($clientId) {
+                    return $item['ClientId'] === $clientId;
+                });
+
+                foreach ($lines as &$line) {
+                    $line += $financialSupportTypes[$line['FinancialSupportTypeId']];
+                }
+
+                $body = '';
+                foreach ($lines as $line) {
+                    if (!empty($line['RepaymentAmount'])
+                        || !empty($line['SupportStopAmount'])) {
+                        $body .= '<p>'.implode('; ', [
+                            $line['Type'],
+                            $line['RepaymentAmount'],
+                            $line['SupportStopAmount'],
+                        ]).'</p>';
+                    }
+                }
+
+                if (!empty($body)) {
+                    $items[$id] = [
+                        'title' => 'Økonomi (indkomst)',
+                        'body' => self::escapeHtml($body),
+                        'process' => '@Case_'.$case['CaseId'],
+                        'type' => JournalEntryEnumType::NOTE,
+                        'createdAt' => $this->dateTimeValue($case['CreatedDate']),
+                        'createdBy' => '@CaseWorker_'.$case['CurrentCaseWorkerId'],
+                    ];
+                }
+            }
+        }
+
+        return $items;
+    }
+
+    private function buildFixtureSharedEconomy(array $data)
+    {
+        $items = [];
+        $cases = array_column($this->getData('Case'), null, 'ClientId');
+        $financialSupportTypes = array_column($this->getData('FinancialSupportType'), null, 'FinancialSupportTypeId');
+
+        foreach ($data as $item) {
+            $clientId = $item['ClientId'];
+            $id = 'SharedEconomy_'.$clientId;
+            if (!isset($cases[$clientId])) {
+                throw new RuntimeException(sprintf('Cannot get case id for financial support id %s', $item['CaseNotesId']));
+            }
+            $case = $cases[$clientId];
+
+            $body = implode('', [
+                sprintf('<p>Fælles gæld: %s</p>', $item['HasCommonDebt'] ? 'ja' : 'nej'),
+                sprintf('<p>Fælles konti: %s</p>', $item['HasCommonBankAccount'] ? 'ja' : 'nej'),
+            ]);
+            $items[$id] = [
+                'title' => 'Økonomi (indkomst) – afkrydsning',
+                'body' => self::escapeHtml($body),
+                'process' => '@Case_'.$case['CaseId'],
+                'type' => JournalEntryEnumType::NOTE,
+                'createdAt' => $this->dateTimeValue($case['CreatedDate']),
+                'createdBy' => '@CaseWorker_'.$case['CurrentCaseWorkerId'],
             ];
         }
 
@@ -409,16 +522,17 @@ class FixturesGenerateCommand extends Command
             if (!isset($cases[$item['CaseNotesId']]['CaseId'])) {
                 throw new RuntimeException(sprintf('Cannot get case id for case notes id %s', $item['CaseNotesId']));
             }
+            $case = $cases[$item['CaseNotesId']];
 
             foreach ([
                 'Description' => [
                     'title' => 'Beskrivelse',
                     'type' => JournalEntryEnumType::INTERNAL_NOTE,
                 ],
-                // 'ArgumentsAgainstCohabitation',
-                // 'ArgumentsForCohabitation',
-                // 'Conclusion', // @TODO Map to Kontrolgruppen\CoreBundle\Entity\BaseConclusion
-                // 'Conditions',
+                'Conditions' => [
+                    'title' => 'Bopælsforhold',
+                    'type' => JournalEntryEnumType::NOTE,
+                ],
                 'Diary' => [
                     'title' => 'Dagbog',
                     'type' => JournalEntryEnumType::INTERNAL_NOTE,
@@ -460,8 +574,10 @@ class FixturesGenerateCommand extends Command
                         'title' => $metadata['title'],
                         // @see https://github.com/nelmio/alice/issues/840
                         'body' => self::escapeHtml($body),
-                        'process' => '@Case_'.$cases[$item['CaseNotesId']]['CaseId'],
+                        'process' => '@Case_'.$case['CaseId'],
                         'type' => $metadata['type'] ?? JournalEntryEnumType::NOTE,
+                        'createdAt' => $this->dateTimeValue($case['CreatedDate']),
+                        'createdBy' => '@CaseWorker_'.$case['CurrentCaseWorkerId'],
                     ];
                 }
             }
