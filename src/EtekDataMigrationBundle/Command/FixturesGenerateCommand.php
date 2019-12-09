@@ -8,6 +8,14 @@
  * This source file is subject to the MIT license.
  */
 
+/*
+ * This file is part of aakb/kontrolgruppen.
+ *
+ * (c) 2019 ITK Development
+ *
+ * This source file is subject to the MIT license.
+ */
+
 namespace App\EtekDataMigrationBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -150,24 +158,23 @@ class FixturesGenerateCommand extends Command
         if ($io->askQuestion($question)) {
             $this->importFixtures($output);
             $this->unescapeContent($output);
+            $this->cleanLogs($output);
         } else {
             $io->text([
                 'Load the generated fixtures by running.',
                 '  bin/console hautelook:fixtures:load --bundle=EtekDataMigrationBundle',
             ]);
             $io->note([
-                'Note: Remember to run ',
+                'Remember to run ',
                 '  bin/console '.self::$defaultName.' --unescape-content',
                 'after loading fixtures to fix journal entry content.',
             ]);
+            $io->note([
+                'Please execute',
+                '  bin/console doctrine:query:sql \'SET FOREIGN_KEY_CHECKS = 0; TRUNCATE process_log_entry; TRUNCATE ext_log_entries;\'',
+                'to clear the logs.',
+            ]);
         }
-
-        $io->text([
-            'Please execute the following SQL statements to clear the logs:',
-            '  SET FOREIGN_KEY_CHECKS = 0;',
-            '  TRUNCATE process_log_entry;',
-            '  TRUNCATE ext_log_entries;',
-        ]);
 
         return 0;
     }
@@ -182,6 +189,19 @@ class FixturesGenerateCommand extends Command
             '--bundle' => ['EtekDataMigrationBundle'],
             '--no-interaction' => true,
             '--purge-with-truncate' => true,
+        ]);
+
+        $application->run($input, $output);
+    }
+
+    private function cleanLogs(OutputInterface $output)
+    {
+        $application = new Application($this->kernel);
+        $application->setAutoExit(false);
+
+        $input = new ArrayInput([
+            'command' => 'doctrine:query:sql',
+            'sql' => 'SET FOREIGN_KEY_CHECKS = 0; TRUNCATE process_log_entry; TRUNCATE ext_log_entries;',
         ]);
 
         $application->run($input, $output);
@@ -279,9 +299,10 @@ class FixturesGenerateCommand extends Command
                 'clientCpr' => $client['PrimaryCPR'],
                 'client' => '@Client_'.$item['ClientId'],
                 'processType' => '@process-type:okonomisk_friplads',
-                'createdAt' => $this->dateTimeValue($item['CreatedDate']),
-                'updatedAt' => $this->dateTimeValue($item['LastEdited']),
                 'createdBy' => '@CaseWorker_'.$item['CurrentCaseWorkerId'],
+                'createdAt' => $this->dateTimeValue($item['CreatedDate']),
+                'updatedBy' => '@CaseWorker_'.$item['CurrentCaseWorkerId'],
+                'updatedAt' => $this->dateTimeValue($item['LastEdited']),
                 'processStatus' => [
                     2 => '@process-status:oprettet', // Igangværende sag => Oprettet
                     3 => '@process-status:indkaldelse_til_samtale', // Afklarende samtale => Indkaldelse til samtale
@@ -452,19 +473,36 @@ class FixturesGenerateCommand extends Command
                     $line += $financialSupportTypes[$line['FinancialSupportTypeId']];
                 }
 
-                $body = '';
+                $rows = [];
                 foreach ($lines as $line) {
                     if (!empty($line['RepaymentAmount'])
                         || !empty($line['SupportStopAmount'])) {
-                        $body .= '<p>'.implode('; ', [
-                            $line['Type'],
-                            $line['RepaymentAmount'],
-                            $line['SupportStopAmount'],
-                        ]).'</p>';
+                        $rows[] =
+                            '<tr>'
+                            .'<td>'.$line['Type'].'</td>'
+                            .'<td>'.$line['RepaymentAmount'].'</td>'
+                            .'<td>'.(new \DateTime($line['RepaymentDate']))->format('d/m/Y').'</td>'
+                            .'<td>'.$line['SupportStopAmount'].'</td>'
+                            .'<td>'.(new \DateTime($line['SupportStopDate']))->format('d/m/Y').'</td>'
+                            .'<td>'.$line['Frequency'].'</td>'
+                            .'</tr>';
                     }
                 }
 
-                if (!empty($body)) {
+                if (!empty($rows)) {
+                    $body =
+                        '<table>'
+                        .'<thead><tr>'
+                        .'<th></th>'
+                        .'<th>RepaymentAmount</th>'
+                        .'<th>RepaymentDate</th>'
+                        .'<th>SupportStopAmount</th>'
+                        .'<th>SupportStopDate</th>'
+                        .'<th></th>'
+                        .'</tr></thead>'
+                        .'<tbody>'.implode('', $rows).'</tbody>'
+                        .'</table>';
+
                     $items[$id] = [
                         'title' => 'Økonomi (indkomst)',
                         'body' => self::escapeHtml($body),
@@ -570,6 +608,13 @@ class FixturesGenerateCommand extends Command
             ] as $field => $metadata) {
                 $body = $item[$field];
                 if (!empty($body)) {
+                    $createdAt = new \DateTime($case['CreatedDate']);
+                    $createdAt->setTime(12, 0, 0);
+                    // "Description" must be first entry.
+                    if ('Description' === $field) {
+                        $createdAt->setTime(0, 0, 0);
+                    }
+
                     $items[$id.'_'.$field] = [
                         'title' => $metadata['title'],
                         // @see https://github.com/nelmio/alice/issues/840

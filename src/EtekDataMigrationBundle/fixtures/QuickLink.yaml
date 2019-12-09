@@ -1,0 +1,4 @@
+Kontrolgruppen\CoreBundle\Entity\QuickLink:
+    'quicklink:motorregisteret':
+        name: 'Motorregisteret'
+        href: 'https://motorregister.skat.dk'

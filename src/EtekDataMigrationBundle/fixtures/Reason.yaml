@@ -1,0 +1,42 @@
+Kontrolgruppen\CoreBundle\Entity\Reason:
+    'reason:adressesager':
+        name: 'Adressesager'
+
+    'reason:soeik':
+        name: 'SØIK'
+
+    'reason:afsoning':
+        name: 'Afsoning'
+
+    'reason:andet':
+        name: 'Andet'
+
+    'reason:bistand-support':
+        name: 'Bistand/support'
+
+    'reason:samliv':
+        name: 'Samliv'
+
+    'reason:sort-arbejde':
+        name: 'Sort arbejde'
+
+    'reason:udk-10':
+        name: 'UDK 10'
+
+    'reason:udk-9':
+        name: 'UDK 9'
+
+    'reason:udk-11':
+        name: 'UDK 11'
+
+    'reason:udrejse':
+        name: 'Udrejse'
+
+    'reason:ledighedsydelse':
+        name: 'Ledighedsydelse'
+
+    'reason:fleksjob':
+        name: 'Fleksjob'
+
+    'reason:sygdom':
+        name: 'Sygdom'

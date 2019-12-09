@@ -9,8 +9,6 @@ to actually do this is a closely guarded secret.
 
 ```shell script
 bin/console etek:fixtures:generate _misc/legacy/data
-bin/console hautelook:fixtures:load --bundle=EtekDataMigrationBundle
-bin/console etek:fixtures:generate --unescape-content
 ```
 
 To generate and import fixtures in one go, use
