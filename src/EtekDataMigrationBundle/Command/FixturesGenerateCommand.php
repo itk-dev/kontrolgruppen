@@ -52,7 +52,6 @@ class FixturesGenerateCommand extends Command
         'Client' => Client::class,
         'FinancialSupport' => JournalEntry::class,
         'FinancialSupportType' => null,
-        'Status' => null,
     ];
 
     private $additionalObjects = [
@@ -314,6 +313,9 @@ class FixturesGenerateCommand extends Command
                     10 => '@process-status:uanmeldt_besoeg', // Uanmeldt besøg => Uanmeldt besøg
                     12 => '@process-status:projekt', // Projekt => Projekt
                     13 => '@process-status:afsluttet', // Projekt afsluttet => Afsluttet
+
+                    1 => '@process-status:afsluttet', // Projekt afsluttet => Afsluttet
+                    11 => '@process-status:afsluttet', // Projekt afsluttet => Afsluttet
                 ][$item['StatusId']],
                 // @TODO "ClosedDate"?
                 // @TODO "OpenedDate"?
@@ -472,43 +474,55 @@ class FixturesGenerateCommand extends Command
                 foreach ($lines as &$line) {
                     $line += $financialSupportTypes[$line['FinancialSupportTypeId']];
                 }
+                unset($line);
 
                 $rows = [];
                 foreach ($lines as $line) {
-                    if (!empty($line['RepaymentAmount'])
-                        || !empty($line['SupportStopAmount'])) {
-                        $rows[] =
+                    // if (!empty($line['RepaymentAmount']) || !empty($line['SupportStopAmount']))
+
+                    $repaymentAmount = $line['RepaymentAmount'];
+                    $repaymentDate = ($line['RepaymentAmount'] && $line['RepaymentDate']) ? (new \DateTime($line['RepaymentDate']))->format('d-m-Y') : '';
+                    $supportStopAmount = $line['SupportStopAmount'];
+                    $supportStopDate = ($line['SupportStopAmount'] && $line['SupportStopDate']) ? (new \DateTime($line['SupportStopDate']))->format('d-m-Y') : '';
+                    $rows[] =
                             '<tr>'
                             .'<td>'.$line['Type'].'</td>'
-                            .'<td>'.$line['RepaymentAmount'].'</td>'
-                            .'<td>'.(new \DateTime($line['RepaymentDate']))->format('d/m/Y').'</td>'
-                            .'<td>'.$line['SupportStopAmount'].'</td>'
-                            .'<td>'.(new \DateTime($line['SupportStopDate']))->format('d/m/Y').'</td>'
+                            .'<td>'.$repaymentAmount.'</td>'
+                            .'<td>'.$repaymentDate.'</td>'
+                            .'<td>'.$supportStopAmount.'</td>'
+                            .'<td>'.$supportStopDate.'</td>'
                             .'<td>'.$line['Frequency'].'</td>'
                             .'</tr>';
-                    }
                 }
+                unset($line);
 
                 if (!empty($rows)) {
                     $body =
-                        '<table>'
-                        .'<thead><tr>'
-                        .'<th></th>'
-                        .'<th>RepaymentAmount</th>'
-                        .'<th>RepaymentDate</th>'
-                        .'<th>SupportStopAmount</th>'
-                        .'<th>SupportStopDate</th>'
-                        .'<th></th>'
-                        .'</tr></thead>'
+                        '<table class="table">'
+                        .'<thead>'
+                        .'<tr>'
+                        .'<td></td>'
+                        .'<th colspan="2">Tilbagebetaling</th>'
+                        .'<th colspan="2">Stoppet</th>'
+                        .'</tr>'
+                        .'<tr>'
+                        .'<td></td>'
+                        .'<td>Beløb</td><td>Dato</td>'
+                        .'<td>Beløb</td><td>Dato</td>'
+                        .'</tr>'
+                        .'</thead>'
                         .'<tbody>'.implode('', $rows).'</tbody>'
                         .'</table>';
+
+                    $createdAt = new \DateTime($case['CreatedDate']);
+                    $createdAt->setTime(12, 0, 0);
 
                     $items[$id] = [
                         'title' => 'Økonomi (indkomst)',
                         'body' => self::escapeHtml($body),
                         'process' => '@Case_'.$case['CaseId'],
                         'type' => JournalEntryEnumType::NOTE,
-                        'createdAt' => $this->dateTimeValue($case['CreatedDate']),
+                        'createdAt' => $this->dateTimeValue($createdAt->format(\DateTime::ATOM)),
                         'createdBy' => '@CaseWorker_'.$case['CurrentCaseWorkerId'],
                     ];
                 }
@@ -536,12 +550,16 @@ class FixturesGenerateCommand extends Command
                 sprintf('<p>Fælles gæld: %s</p>', $item['HasCommonDebt'] ? 'ja' : 'nej'),
                 sprintf('<p>Fælles konti: %s</p>', $item['HasCommonBankAccount'] ? 'ja' : 'nej'),
             ]);
+
+            $createdAt = new \DateTime($case['CreatedDate']);
+            $createdAt->setTime(12, 0, 0);
+
             $items[$id] = [
                 'title' => 'Økonomi (indkomst) – afkrydsning',
                 'body' => self::escapeHtml($body),
                 'process' => '@Case_'.$case['CaseId'],
                 'type' => JournalEntryEnumType::NOTE,
-                'createdAt' => $this->dateTimeValue($case['CreatedDate']),
+                'createdAt' => $this->dateTimeValue($createdAt->format(\DateTime::ATOM)),
                 'createdBy' => '@CaseWorker_'.$case['CurrentCaseWorkerId'],
             ];
         }
@@ -621,7 +639,7 @@ class FixturesGenerateCommand extends Command
                         'body' => self::escapeHtml($body),
                         'process' => '@Case_'.$case['CaseId'],
                         'type' => $metadata['type'] ?? JournalEntryEnumType::NOTE,
-                        'createdAt' => $this->dateTimeValue($case['CreatedDate']),
+                        'createdAt' => $this->dateTimeValue($createdAt->format(\DateTime::ATOM)),
                         'createdBy' => '@CaseWorker_'.$case['CurrentCaseWorkerId'],
                     ];
                 }

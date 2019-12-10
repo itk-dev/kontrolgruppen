@@ -1,0 +1,8 @@
+*
+!.gitignore
+!Channel.yaml
+!ProcessStatus.yaml
+!ProcessType.yaml
+!QuickLink.yaml
+!Reason.yaml
+!Service.yaml
