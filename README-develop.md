@@ -38,6 +38,19 @@ docker-compose exec phpfpm /app/bin/console doctrine:migrations:migrate
 docker-compose exec phpfpm /app/bin/console fos:user:create --super-admin
 ```
 
+### CPR Service
+```sh
+# Make sure that the database is created
+docker-compose exec borgerdata node createdb.js
+
+# Migrate database
+docker-compose exec borgerdata yarn knex migrate:latest
+
+# Seed the database
+docker-compose exec borgerdata yarn knex seed:run
+```
+
+
 ## Use maker bundle
 
 To use MakerBundle in Kontrolgruppen\CoreBundle, use the following environment variable:
