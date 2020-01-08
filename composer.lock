@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9726e1771353d99170deeb22621d8095",
+    "content-hash": "f6e57588f211249b67bec5768c81b280",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -1887,16 +1887,16 @@
         },
         {
             "name": "kontrolgruppen/core-bundle",
-            "version": "1.1.5",
+            "version": "1.1.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aakb/kontrolgruppen-core-bundle.git",
-                "reference": "2dcdf225fd3ee5ab87a507979791d09c4072f166"
+                "reference": "199d91ded4356871f06cbfd886617bb94a5e82d1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aakb/kontrolgruppen-core-bundle/zipball/2dcdf225fd3ee5ab87a507979791d09c4072f166",
-                "reference": "2dcdf225fd3ee5ab87a507979791d09c4072f166",
+                "url": "https://api.github.com/repos/aakb/kontrolgruppen-core-bundle/zipball/199d91ded4356871f06cbfd886617bb94a5e82d1",
+                "reference": "199d91ded4356871f06cbfd886617bb94a5e82d1",
                 "shasum": ""
             },
             "require": {
@@ -1980,9 +1980,9 @@
             },
             "description": "Kontrolgruppen core bundle",
             "support": {
-                "source": "https://github.com/aakb/kontrolgruppen-core-bundle/tree/1.1.5"
+                "source": "https://github.com/aakb/kontrolgruppen-core-bundle/tree/1.1.6"
             },
-            "time": "2019-12-19T08:55:05+00:00"
+            "time": "2020-01-08T15:18:33+00:00"
         },
         {
             "name": "lexik/form-filter-bundle",
@@ -7243,6 +7243,7 @@
                 "code",
                 "zf"
             ],
+            "abandoned": "laminas/laminas-code",
             "time": "2019-08-31T14:14:34+00:00"
         },
         {
@@ -7297,6 +7298,7 @@
                 "events",
                 "zf2"
             ],
+            "abandoned": "laminas/laminas-eventmanager",
             "time": "2018-04-25T15:33:34+00:00"
         }
     ],
