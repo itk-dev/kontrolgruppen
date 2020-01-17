@@ -24,3 +24,12 @@
     address: Tneilkvej 2
     postalCode: 3000
     city: Tneilkby2
+
+-
+    '@id': client:4
+    process: '@process:4'
+    firstName: Klient
+    lastName: Klientsen
+    address: Klientvej 1
+    postalCode: 1000
+    city: Klientby

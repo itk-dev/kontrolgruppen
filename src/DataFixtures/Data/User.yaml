@@ -6,4 +6,8 @@
 -
     '@id': user:2
     username: test-user@example.com
-    roles: [ROLE_USER]
+    roles: [ROLE_SAGSBEHANDLER]
+-
+    '@id': user:3
+    username: external-user@example.com
+    roles: [ROLE_PROCESS_VIEW]
