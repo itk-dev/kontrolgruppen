@@ -1,8 +1,10 @@
 security:
     role_hierarchy:
-        ROLE_BI:          ROLE_USER
-        ROLE_ADMIN:       ROLE_USER
-        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_BI]
+        ROLE_PROCESS_VIEW:  ROLE_USER
+        ROLE_SAGSBEHANDLER: ROLE_USER
+        ROLE_BI:            ROLE_USER
+        ROLE_ADMIN:         [ROLE_USER, ROLE_SAGSBEHANDLER, ROLE_PROCESS_VIEW]
+        ROLE_SUPER_ADMIN:   [ROLE_ADMIN, ROLE_BI]
 
     providers:
         saml:
