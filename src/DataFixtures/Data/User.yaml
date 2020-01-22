@@ -1,13 +1,16 @@
 -
     '@id': user:1
     username: super-admin@example.com
+    name: Super Admin
     roles: [ROLE_SUPER_ADMIN]
 
 -
     '@id': user:2
     username: test-user@example.com
+    name: Test User
     roles: [ROLE_SAGSBEHANDLER]
 -
     '@id': user:3
     username: external-user@example.com
+    name: External User
     roles: [ROLE_PROCESS_VIEW]
