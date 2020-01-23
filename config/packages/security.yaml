@@ -25,6 +25,7 @@ security:
                 entry_point: Kontrolgruppen\CoreBundle\Security\SAMLAuthenticator
 
     access_control:
+        - { path: ^/admin, role: ROLE_ADMIN }
         - { path: ^/saml, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/bi/, role: ROLE_BI }
         - { path: ^/, role: ROLE_USER }
