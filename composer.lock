@@ -1891,12 +1891,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/aakb/kontrolgruppen-core-bundle.git",
-                "reference": "ca04cb3b2ad56aa692ecaae300665abe65d4b01a"
+                "reference": "e765bad1e07f46f7c59582abdf3007bcecb0141d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aakb/kontrolgruppen-core-bundle/zipball/ca04cb3b2ad56aa692ecaae300665abe65d4b01a",
-                "reference": "ca04cb3b2ad56aa692ecaae300665abe65d4b01a",
+                "url": "https://api.github.com/repos/aakb/kontrolgruppen-core-bundle/zipball/e765bad1e07f46f7c59582abdf3007bcecb0141d",
+                "reference": "e765bad1e07f46f7c59582abdf3007bcecb0141d",
                 "shasum": ""
             },
             "require": {
@@ -1982,7 +1982,7 @@
             "support": {
                 "source": "https://github.com/aakb/kontrolgruppen-core-bundle/tree/release/1.2.0"
             },
-            "time": "2020-01-17T13:06:26+00:00"
+            "time": "2020-01-22T12:21:18+00:00"
         },
         {
             "name": "lexik/form-filter-bundle",
