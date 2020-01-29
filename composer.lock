@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ec43d44bbcb8b0701ae9c390d02fc2b0",
+    "content-hash": "f5dee6736458587ababc011a37dda196",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -1777,16 +1777,16 @@
         },
         {
             "name": "kontrolgruppen/core-bundle",
-            "version": "dev-feature/upgrade-symfony",
+            "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aakb/kontrolgruppen-core-bundle.git",
-                "reference": "e74df31aaac9a1423a96d5235e0ad4db3c65909a"
+                "reference": "db873b60196690dff415ef3b04599e0958494b9d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aakb/kontrolgruppen-core-bundle/zipball/e74df31aaac9a1423a96d5235e0ad4db3c65909a",
-                "reference": "e74df31aaac9a1423a96d5235e0ad4db3c65909a",
+                "url": "https://api.github.com/repos/aakb/kontrolgruppen-core-bundle/zipball/db873b60196690dff415ef3b04599e0958494b9d",
+                "reference": "db873b60196690dff415ef3b04599e0958494b9d",
                 "shasum": ""
             },
             "require": {
@@ -1888,9 +1888,9 @@
             },
             "description": "Kontrolgruppen core bundle",
             "support": {
-                "source": "https://github.com/aakb/kontrolgruppen-core-bundle/tree/feature/upgrade-symfony"
+                "source": "https://github.com/aakb/kontrolgruppen-core-bundle/tree/develop"
             },
-            "time": "2020-01-29T08:07:53+00:00"
+            "time": "2020-01-29T11:44:42+00:00"
         },
         {
             "name": "lexik/form-filter-bundle",

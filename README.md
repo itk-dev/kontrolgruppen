@@ -66,3 +66,11 @@ To change these, edit `.env.«env».local`, e.g.:
 ```sh
 SAML_IDP_CONFIG_FILE='%kernel.project_dir%/saml/idp/my_idp.xml'
 ```
+
+## BI exports
+
+Run BI exports at regular intervals using `cron` or similar tools, e.g in `crontab`:
+
+```sh
+0 2 1 * * bin/console kontrolgruppen:report:export export@example.com 'Kontrolgruppen\CoreBundle\Export\BI\Export' --save
+```
