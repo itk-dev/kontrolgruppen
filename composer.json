@@ -1,5 +1,6 @@
 {
     "name":"kontrolgruppen/main",
+    "description": "Kontrolgruppen project",
     "type": "project",
     "license": "MIT",
     "minimum-stability": "dev",
