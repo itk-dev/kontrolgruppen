@@ -1781,12 +1781,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/aakb/kontrolgruppen-core-bundle.git",
-                "reference": "d30d119dbd037623b6fba6ef7687b54b4c6dabb3"
+                "reference": "e74df31aaac9a1423a96d5235e0ad4db3c65909a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aakb/kontrolgruppen-core-bundle/zipball/d30d119dbd037623b6fba6ef7687b54b4c6dabb3",
-                "reference": "d30d119dbd037623b6fba6ef7687b54b4c6dabb3",
+                "url": "https://api.github.com/repos/aakb/kontrolgruppen-core-bundle/zipball/e74df31aaac9a1423a96d5235e0ad4db3c65909a",
+                "reference": "e74df31aaac9a1423a96d5235e0ad4db3c65909a",
                 "shasum": ""
             },
             "require": {
@@ -1890,7 +1890,7 @@
             "support": {
                 "source": "https://github.com/aakb/kontrolgruppen-core-bundle/tree/feature/upgrade-symfony"
             },
-            "time": "2020-01-28T14:27:05+00:00"
+            "time": "2020-01-29T08:07:53+00:00"
         },
         {
             "name": "lexik/form-filter-bundle",
