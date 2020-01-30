@@ -11,10 +11,8 @@
     <arg name="colors"/>
     <arg name="extensions" value="php"/>
 
-    <exclude-pattern>Resources/*</exclude-pattern>
-    <exclude-pattern>vendor/*</exclude-pattern>
-    <exclude-pattern>node_modules/*</exclude-pattern>
-    <exclude-pattern>./webpack.config.js</exclude-pattern>
+    <!-- Ignore since migrations are auto-generated -->
+    <exclude-pattern>src/Migrations/*</exclude-pattern>
 
     <!-- Do not print warnings -->
     <arg value="n"/>
