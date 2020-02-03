@@ -97,4 +97,5 @@ kontrolgruppen_core:
                     # Common Name
                     CN:
                         DG-Right-Kontrolsystem-Admin: ROLE_ADMIN
+                        DG-Right-Kontrolsystem-BI: ROLE_BI
                         DG-Right-Kontrolsystem-Sagsbehandler: ROLE_SAGSBEHANDLER
