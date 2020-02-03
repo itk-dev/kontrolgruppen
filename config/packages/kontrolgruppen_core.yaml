@@ -99,3 +99,4 @@ kontrolgruppen_core:
                         DG-Right-Kontrolsystem-Admin: ROLE_ADMIN
                         DG-Right-Kontrolsystem-BI: ROLE_BI
                         DG-Right-Kontrolsystem-Sagsbehandler: ROLE_SAGSBEHANDLER
+                        DG-Right-Kontrolsystem-Read: ROLE_PROCESS_VIEW
