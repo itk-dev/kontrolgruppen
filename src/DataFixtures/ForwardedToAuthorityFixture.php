@@ -13,7 +13,7 @@ namespace App\DataFixtures;
 use Kontrolgruppen\CoreBundle\Entity\ForwardedToAuthority;
 
 /**
- * Class ForwardedToAuthorityFixture
+ * Class ForwardedToAuthorityFixture.
  */
 class ForwardedToAuthorityFixture extends AbstractFixture
 {
