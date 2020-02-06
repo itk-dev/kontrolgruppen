@@ -14,12 +14,15 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Kontrolgruppen\CoreBundle\Entity\RevenueEntry;
 
 /**
- * Class RevenueEntryFixture
+ * Class RevenueEntryFixture.
  */
 class RevenueEntryFixture extends AbstractFixture implements DependentFixtureInterface
 {
     protected $class = RevenueEntry::class;
 
+    /**
+     * {@inheritdoc}
+     */
     public function getDependencies()
     {
         return [

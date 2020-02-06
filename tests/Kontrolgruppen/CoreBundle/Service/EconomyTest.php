@@ -1,15 +1,18 @@
 <?php
 
+/*
+ * This file is part of aakb/kontrolgruppen.
+ *
+ * (c) 2019 ITK Development
+ *
+ * This source file is subject to the MIT license.
+ */
 
 namespace App\Tests\Kontrolgruppen\CoreBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Kontrolgruppen\CoreBundle\DBAL\Types\RevenueTypeEnumType;
-use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\RevenueEntry;
-use Kontrolgruppen\CoreBundle\Entity\Service;
-use Kontrolgruppen\CoreBundle\Repository\EconomyEntryRepository;
-use Kontrolgruppen\CoreBundle\Repository\LockedNetValueRepository;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 use Kontrolgruppen\CoreBundle\Repository\RevenueEntryRepository;
 use Kontrolgruppen\CoreBundle\Repository\ServiceRepository;
@@ -29,7 +32,14 @@ class EconomyTest extends KernelTestCase
         self::bootKernel();
     }
 
-    public function testCalculateFunction() {
+    /**
+     * Test calculate function.
+     *
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
+     */
+    public function testCalculateFunction()
+    {
         // Get special container that allows fetching private services
         $container = self::$container;
 
@@ -62,7 +72,7 @@ class EconomyTest extends KernelTestCase
                 ],
             ],
             'netRepaymentSum' => 1470.0,
-            'futureSavingsSum' =>  11900.0,
+            'futureSavingsSum' => 11900.0,
             'futureSavingsSums' => [
                 'Kontanthjælp' => [
                     'netPercentage' => 70.0,
