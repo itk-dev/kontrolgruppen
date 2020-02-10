@@ -37,6 +37,16 @@
         - '@service:las'
         - '@service:fortidspension'
         - '@service:andet'
+    forwardedToAuthorities:
+        - '@forwarded_to_authority:udbetaling_dk'
+        - '@forwarded_to_authority:su'
+        - '@forwarded_to_authority:skat'
+        - '@forwarded_to_authority:star'
+        - '@forwarded_to_authority:politi'
+        - '@forwarded_to_authority:soeik'
+        - '@forwarded_to_authority:anden_myndighed'
+        - '@forwarded_to_authority:anden_kommune'
+        - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
 -
     '@id': process-type:udrejse_registersamkoring
     name: 'Udrejse - Registersamkøring'
@@ -62,6 +72,16 @@
         - '@service:las'
         - '@service:fortidspension'
         - '@service:andet'
+    forwardedToAuthorities:
+        - '@forwarded_to_authority:udbetaling_dk'
+        - '@forwarded_to_authority:su'
+        - '@forwarded_to_authority:skat'
+        - '@forwarded_to_authority:star'
+        - '@forwarded_to_authority:politi'
+        - '@forwarded_to_authority:soeik'
+        - '@forwarded_to_authority:anden_myndighed'
+        - '@forwarded_to_authority:anden_kommune'
+        - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
 -
     '@id': process-type:dobbelt_foresorgelse
     name: 'Dobbelt forsørgelse (løn eller SU)'
@@ -95,6 +115,16 @@
         - '@service:kontanthjalp'
         - '@service:integrationsydelse'
         - '@service:andet'
+    forwardedToAuthorities:
+        - '@forwarded_to_authority:udbetaling_dk'
+        - '@forwarded_to_authority:su'
+        - '@forwarded_to_authority:skat'
+        - '@forwarded_to_authority:star'
+        - '@forwarded_to_authority:politi'
+        - '@forwarded_to_authority:soeik'
+        - '@forwarded_to_authority:anden_myndighed'
+        - '@forwarded_to_authority:anden_kommune'
+        - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
 -
     '@id': process-type:dobbelt_foresorgelse_registersamkoring
     name: 'Dobbelt forsørgelse (løn eller SU) - Registersamkøring'
@@ -118,6 +148,16 @@
         - '@service:ressourceforlobsydelse'
         - '@service:las'
         - '@service:andet'
+    forwardedToAuthorities:
+        - '@forwarded_to_authority:udbetaling_dk'
+        - '@forwarded_to_authority:su'
+        - '@forwarded_to_authority:skat'
+        - '@forwarded_to_authority:star'
+        - '@forwarded_to_authority:politi'
+        - '@forwarded_to_authority:soeik'
+        - '@forwarded_to_authority:anden_myndighed'
+        - '@forwarded_to_authority:anden_kommune'
+        - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
 -
     '@id': process-type:okonomisk_friplads
     name: 'Økonomisk friplads'
@@ -151,6 +191,16 @@
     services:
         - '@service:okonomisk_friplads'
         - '@service:andet'
+    forwardedToAuthorities:
+        - '@forwarded_to_authority:udbetaling_dk'
+        - '@forwarded_to_authority:su'
+        - '@forwarded_to_authority:skat'
+        - '@forwarded_to_authority:star'
+        - '@forwarded_to_authority:politi'
+        - '@forwarded_to_authority:soeik'
+        - '@forwarded_to_authority:anden_myndighed'
+        - '@forwarded_to_authority:anden_kommune'
+        - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
 -
     '@id': process-type:okonomisk_friplads_registersamkoring
     name: 'Økonomisk friplads - Registersamkøring'
@@ -170,6 +220,16 @@
     services:
         - '@service:okonomisk_friplads'
         - '@service:andet'
+    forwardedToAuthorities:
+        - '@forwarded_to_authority:udbetaling_dk'
+        - '@forwarded_to_authority:su'
+        - '@forwarded_to_authority:skat'
+        - '@forwarded_to_authority:star'
+        - '@forwarded_to_authority:politi'
+        - '@forwarded_to_authority:soeik'
+        - '@forwarded_to_authority:anden_myndighed'
+        - '@forwarded_to_authority:anden_kommune'
+        - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
 -
     '@id': process-type:sygedagpenge
     name: 'Sygedagpenge'
@@ -203,6 +263,16 @@
         - '@process-status:afsluttet'
     services:
         - '@service:sygedagpenge'
+    forwardedToAuthorities:
+        - '@forwarded_to_authority:udbetaling_dk'
+        - '@forwarded_to_authority:su'
+        - '@forwarded_to_authority:skat'
+        - '@forwarded_to_authority:star'
+        - '@forwarded_to_authority:politi'
+        - '@forwarded_to_authority:soeik'
+        - '@forwarded_to_authority:anden_myndighed'
+        - '@forwarded_to_authority:anden_kommune'
+        - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
 -
     '@id': process-type:sygedagpenges_registersamkoring
     name: 'Sygedagpenge - Registersamkøring'
@@ -223,6 +293,16 @@
     services:
         - '@service:sygedagpenge'
         - '@service:andet'
+    forwardedToAuthorities:
+        - '@forwarded_to_authority:udbetaling_dk'
+        - '@forwarded_to_authority:su'
+        - '@forwarded_to_authority:skat'
+        - '@forwarded_to_authority:star'
+        - '@forwarded_to_authority:politi'
+        - '@forwarded_to_authority:soeik'
+        - '@forwarded_to_authority:anden_myndighed'
+        - '@forwarded_to_authority:anden_kommune'
+        - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
 -
     '@id': process-type:fleksjob
     name: 'Fleksjob'
@@ -260,6 +340,16 @@
         - '@service:las'
         - '@service:fleksjobsydelse'
         - '@service:andet'
+    forwardedToAuthorities:
+        - '@forwarded_to_authority:udbetaling_dk'
+        - '@forwarded_to_authority:su'
+        - '@forwarded_to_authority:skat'
+        - '@forwarded_to_authority:star'
+        - '@forwarded_to_authority:politi'
+        - '@forwarded_to_authority:soeik'
+        - '@forwarded_to_authority:anden_myndighed'
+        - '@forwarded_to_authority:anden_kommune'
+        - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
 -
     '@id': process-type:formue
     name: 'Formue'
@@ -294,6 +384,16 @@
         - '@service:integrationsydelse'
         - '@service:las'
         - '@service:andet'
+    forwardedToAuthorities:
+        - '@forwarded_to_authority:udbetaling_dk'
+        - '@forwarded_to_authority:su'
+        - '@forwarded_to_authority:skat'
+        - '@forwarded_to_authority:star'
+        - '@forwarded_to_authority:politi'
+        - '@forwarded_to_authority:soeik'
+        - '@forwarded_to_authority:anden_myndighed'
+        - '@forwarded_to_authority:anden_kommune'
+        - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
 -
     '@id': process-type:formue_registersamkoring
     name: 'Formue - Registersamkøring'
@@ -313,6 +413,16 @@
         - '@service:kontanthjalp'
         - '@service:integrationsydelse'
         - '@service:andet'
+    forwardedToAuthorities:
+        - '@forwarded_to_authority:udbetaling_dk'
+        - '@forwarded_to_authority:su'
+        - '@forwarded_to_authority:skat'
+        - '@forwarded_to_authority:star'
+        - '@forwarded_to_authority:politi'
+        - '@forwarded_to_authority:soeik'
+        - '@forwarded_to_authority:anden_myndighed'
+        - '@forwarded_to_authority:anden_kommune'
+        - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
 -
     '@id': process-type:uoplyst_indtagt
     name: 'Uoplyst indtægt (sort arbejde)'
@@ -355,6 +465,16 @@
         - '@service:lab'
         - '@service:sel'
         - '@service:andet'
+    forwardedToAuthorities:
+        - '@forwarded_to_authority:udbetaling_dk'
+        - '@forwarded_to_authority:su'
+        - '@forwarded_to_authority:skat'
+        - '@forwarded_to_authority:star'
+        - '@forwarded_to_authority:politi'
+        - '@forwarded_to_authority:soeik'
+        - '@forwarded_to_authority:anden_myndighed'
+        - '@forwarded_to_authority:anden_kommune'
+        - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
 -
     '@id': process-type:uoplyst_arbejde
     name: 'Uoplyst arbejde'
@@ -397,6 +517,16 @@
         - '@service:lab'
         - '@service:sel'
         - '@service:andet'
+    forwardedToAuthorities:
+        - '@forwarded_to_authority:udbetaling_dk'
+        - '@forwarded_to_authority:su'
+        - '@forwarded_to_authority:skat'
+        - '@forwarded_to_authority:star'
+        - '@forwarded_to_authority:politi'
+        - '@forwarded_to_authority:soeik'
+        - '@forwarded_to_authority:anden_myndighed'
+        - '@forwarded_to_authority:anden_kommune'
+        - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
 -
     '@id': process-type:egen_virksomhed
     name: 'Egen virksomhed'
@@ -440,6 +570,16 @@
         - '@service:lab'
         - '@service:sel'
         - '@service:andet'
+    forwardedToAuthorities:
+        - '@forwarded_to_authority:udbetaling_dk'
+        - '@forwarded_to_authority:su'
+        - '@forwarded_to_authority:skat'
+        - '@forwarded_to_authority:star'
+        - '@forwarded_to_authority:politi'
+        - '@forwarded_to_authority:soeik'
+        - '@forwarded_to_authority:anden_myndighed'
+        - '@forwarded_to_authority:anden_kommune'
+        - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
 -
     '@id': process-type:hjemmeboende
     name: 'Hjemmeboende på udeboendesats'
@@ -473,6 +613,16 @@
     services:
         - '@service:kontanthjalp'
         - '@service:andet'
+    forwardedToAuthorities:
+        - '@forwarded_to_authority:udbetaling_dk'
+        - '@forwarded_to_authority:su'
+        - '@forwarded_to_authority:skat'
+        - '@forwarded_to_authority:star'
+        - '@forwarded_to_authority:politi'
+        - '@forwarded_to_authority:soeik'
+        - '@forwarded_to_authority:anden_myndighed'
+        - '@forwarded_to_authority:anden_kommune'
+        - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
 -
     '@id': process-type:hjemmeboende_registersamkoring
     name: 'Hjemmeboende på udeboendesats - Registersamkøring'
@@ -492,6 +642,16 @@
     services:
         - '@service:kontanthjalp'
         - '@service:andet'
+    forwardedToAuthorities:
+        - '@forwarded_to_authority:udbetaling_dk'
+        - '@forwarded_to_authority:su'
+        - '@forwarded_to_authority:skat'
+        - '@forwarded_to_authority:star'
+        - '@forwarded_to_authority:politi'
+        - '@forwarded_to_authority:soeik'
+        - '@forwarded_to_authority:anden_myndighed'
+        - '@forwarded_to_authority:anden_kommune'
+        - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
 -
     '@id': process-type:paragraf_9
     name: '§9 - Orientering UDK'
@@ -524,6 +684,16 @@
         - '@service:pension'
         - '@service:boligstotte'
         - '@service:andet'
+    forwardedToAuthorities:
+        - '@forwarded_to_authority:udbetaling_dk'
+        - '@forwarded_to_authority:su'
+        - '@forwarded_to_authority:skat'
+        - '@forwarded_to_authority:star'
+        - '@forwarded_to_authority:politi'
+        - '@forwarded_to_authority:soeik'
+        - '@forwarded_to_authority:anden_myndighed'
+        - '@forwarded_to_authority:anden_kommune'
+        - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
 -
     '@id': process-type:paragraf_10
     name: '§10 – Udveksling af oplysninger m. UDK'
@@ -541,6 +711,16 @@
         - '@service:pension'
         - '@service:boligstotte'
         - '@service:andet'
+    forwardedToAuthorities:
+        - '@forwarded_to_authority:udbetaling_dk'
+        - '@forwarded_to_authority:su'
+        - '@forwarded_to_authority:skat'
+        - '@forwarded_to_authority:star'
+        - '@forwarded_to_authority:politi'
+        - '@forwarded_to_authority:soeik'
+        - '@forwarded_to_authority:anden_myndighed'
+        - '@forwarded_to_authority:anden_kommune'
+        - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
 -
     '@id': process-type:paragraf_11
     name: '§11 - Sagsoplysning pva. UDK'
@@ -560,3 +740,13 @@
         - '@service:pension'
         - '@service:boligstotte'
         - '@service:andet'
+    forwardedToAuthorities:
+        - '@forwarded_to_authority:udbetaling_dk'
+        - '@forwarded_to_authority:su'
+        - '@forwarded_to_authority:skat'
+        - '@forwarded_to_authority:star'
+        - '@forwarded_to_authority:politi'
+        - '@forwarded_to_authority:soeik'
+        - '@forwarded_to_authority:anden_myndighed'
+        - '@forwarded_to_authority:anden_kommune'
+        - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'

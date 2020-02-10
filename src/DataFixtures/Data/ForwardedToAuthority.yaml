@@ -1,0 +1,37 @@
+-
+    '@id': forwarded_to_authority:udbetaling_dk
+    name: Udbetaling Danmark
+-
+    '@id': forwarded_to_authority:su
+    name: SU
+-
+    '@id': forwarded_to_authority:skat
+    name: SKAT
+-
+    '@id': forwarded_to_authority:star
+    name: STAR
+-
+    '@id': forwarded_to_authority:politi
+    name: Politi
+-
+    '@id': forwarded_to_authority:soeik
+    name: SØIK
+-
+    '@id': forwarded_to_authority:anden_myndighed
+    name: Anden myndighed
+-
+    '@id': forwarded_to_authority:anden_kommune
+    name: Anden kommune
+-
+    '@id': forwarded_to_authority:anden_kommune_virksomhedskontrol
+    name: Anden kommune [Virksomhedskontrol]
+
+# - '@forwarded_to_authority:udbetaling_dk'
+# - '@forwarded_to_authority:su'
+# - '@forwarded_to_authority:skat'
+# - '@forwarded_to_authority:star'
+# - '@forwarded_to_authority:politi'
+# - '@forwarded_to_authority:soeik'
+# - '@forwarded_to_authority:anden_myndighed'
+# - '@forwarded_to_authority:anden_kommune'
+# - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
