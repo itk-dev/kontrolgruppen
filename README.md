@@ -74,3 +74,12 @@ Run BI exports at regular intervals using `cron` or similar tools, e.g in `cront
 ```sh
 0 2 1 * * bin/console kontrolgruppen:report:export export@example.com 'Kontrolgruppen\CoreBundle\Export\BI\Export' --save
 ```
+
+## Removal of expired completed Processes
+
+Run the removal command at regular intervals using `cron` or similar tools, e.g in `crontab`:
+
+```sh
+# Run the command every day at midnight
+0 0 * * * bin/console kontrolgruppen:process:delete-completed-since
+```
