@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "554811ea086f6cb0a8fa1803f9bbd682",
+    "content-hash": "1815eebea3157006d9910434ac19ca96",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -1777,16 +1777,16 @@
         },
         {
             "name": "kontrolgruppen/core-bundle",
-            "version": "1.4.0",
+            "version": "dev-release/1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aakb/kontrolgruppen-core-bundle.git",
-                "reference": "6fbf34bf8645859e28af2fb1d863f5694695fffa"
+                "reference": "b2f286dd245f31147f0855d7588850fdc8fb4540"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aakb/kontrolgruppen-core-bundle/zipball/6fbf34bf8645859e28af2fb1d863f5694695fffa",
-                "reference": "6fbf34bf8645859e28af2fb1d863f5694695fffa",
+                "url": "https://api.github.com/repos/aakb/kontrolgruppen-core-bundle/zipball/b2f286dd245f31147f0855d7588850fdc8fb4540",
+                "reference": "b2f286dd245f31147f0855d7588850fdc8fb4540",
                 "shasum": ""
             },
             "require": {
@@ -1888,9 +1888,9 @@
             },
             "description": "Kontrolgruppen core bundle",
             "support": {
-                "source": "https://github.com/aakb/kontrolgruppen-core-bundle/tree/1.4.0"
+                "source": "https://github.com/aakb/kontrolgruppen-core-bundle/tree/develop"
             },
-            "time": "2020-02-10T07:17:08+00:00"
+            "time": "2020-02-13T09:03:51+00:00"
         },
         {
             "name": "lexik/form-filter-bundle",
@@ -9120,6 +9120,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "kontrolgruppen/core-bundle": 20,
         "symfony/maker-bundle": 20
     },
     "prefer-stable": true,
