@@ -38,10 +38,8 @@ Encore
     .addEntry('export', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/export.js')
     .addEntry('processStatusChangeToggle', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/processStatusChangeToggle.js')
     .addEntry('addEconomyEntry', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/addEconomyEntry.js')
-    .addEntry('prepareRevenueCalculation', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/prepareRevenueCalculation.js')
+    .addEntry('revenueForm', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/revenueForm.js')
     .addEntry('dashboard', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/dashboard.js')
-
-
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
