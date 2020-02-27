@@ -20,6 +20,8 @@ doctrine:
             JournalEntryEnumType: Kontrolgruppen\CoreBundle\DBAL\Types\JournalEntryEnumType
             ProcessLogEntryLevelEnumType: Kontrolgruppen\CoreBundle\DBAL\Types\ProcessLogEntryLevelEnumType
             EconomyEntryEnumType: Kontrolgruppen\CoreBundle\DBAL\Types\EconomyEntryEnumType
+            RevenueTypeEnumType: Kontrolgruppen\CoreBundle\DBAL\Types\RevenueTypeEnumType
+            RevenueFutureTypeEnumType: Kontrolgruppen\CoreBundle\DBAL\Types\RevenueFutureTypeEnumType
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore
