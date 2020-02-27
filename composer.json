@@ -20,6 +20,7 @@
         "symfony/yaml": "4.4.*"
     },
     "require-dev": {
+        "dama/doctrine-test-bundle": "^6.3",
         "doctrine/doctrine-fixtures-bundle": "^3.1",
         "drenso/phan-extensions": "^2.5",
         "escapestudios/symfony2-coding-standard": "^3.11",
@@ -117,6 +118,19 @@
             "@apply-coding-standards/php-cs-fixer",
             "@apply-coding-standards/phpcs"
         ],
+        "test-setup": [
+            "cp tests/empty.sqlite tests/db_test.sqlite",
+            "./bin/console doctrine:schema:update --env=test --force",
+            "./bin/console doctrine:fixtures:load --env=test"
+        ],
+        "phpunit": [
+            "@test-setup",
+            "./bin/phpunit"
+        ],
+        "phpunit-coverage": [
+            "@test-setup",
+            "./bin/phpunit --coverage-text=coverage/report.txt"
+        ],
         "phan": [
             "phan --allow-polyfill-parser"
         ],
@@ -134,6 +148,9 @@
         ],
         "actions/phan": [
             "phan --no-progress-bar --allow-polyfill-parser"
+        ],
+        "actions/tests": [
+            "@phpunit"
         ]
     }
 }

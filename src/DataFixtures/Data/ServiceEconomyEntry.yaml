@@ -1,0 +1,18 @@
+-
+    '@id': service_economy_entry:1
+    process: '@process:1'
+    service: '@service:kontanthjalp'
+    periodFrom: '2020-02-01 00:00:00'
+    periodTo: '2020-02-29 00:00:00'
+    amount: 1000
+    amount_period: 1
+    type: SERVICE
+-
+    '@id': service_economy_entry:2
+    process: '@process:1'
+    service: '@service:sygedagpenge'
+    periodFrom: '2020-02-02 00:00:00'
+    periodTo: '2020-02-20 00:00:00'
+    amount: 1500
+    amount_period: 1
+    type: SERVICE

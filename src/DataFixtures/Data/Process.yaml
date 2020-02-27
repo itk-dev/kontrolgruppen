@@ -9,6 +9,7 @@
     service: '@service:kontanthjalp'
     caseWorker: '@user:1'
     policeReport: true
+    courtDecision: false
 
 -
     '@id': 'process:2'
@@ -20,7 +21,7 @@
     service: '@service:kontanthjalp'
     caseWorker: '@user:1'
     policeReport: false
-    courtDecision: true
+    courtDecision: null
     createdAt: '2019-01-01'
     completedAt: '2019-07-22'
 
@@ -34,7 +35,7 @@
     service: '@service:kontanthjalp'
     caseWorker: '@user:1'
     policeReport: true
-    courtDecision: false
+    courtDecision: true
     createdAt: '2019-05-01'
     completedAt: '2019-05-23'
 
@@ -49,3 +50,4 @@
     service: '@service:kontanthjalp'
     caseWorker: '@user:1'
     policeReport: true
+    courtDecision: false
