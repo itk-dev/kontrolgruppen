@@ -47,7 +47,7 @@ pipeline {
                 sh "ansible admwebitk01 -m shell -a 'cd /data/www/stg_kontrolgruppen_itkdev_dk/htdocs; APP_ENV=prod php bin/console doctrine:migrations:migrate --no-interaction'"
 
                 // Copy encore assets.
-                sh "ansible admwebitk01 -m synchronize -a 'src=${WORKSPACE}/public/build/ dest=/data/www/stg_kontrolgruppen_itkdev_dk/htdocs/public/build'"
+                sh "ansible admwebitk01 -m synchronize -a 'src=${WORKSPACE}/public/prod dest=/data/www/stg_kontrolgruppen_itkdev_dk/htdocs/public/'"
 
                 // Clear cache
                 sh "ansible admwebitk01 -m shell -a 'cd /data/www/stg_kontrolgruppen_itkdev_dk/htdocs; APP_ENV=prod php bin/console cache:clear'"
