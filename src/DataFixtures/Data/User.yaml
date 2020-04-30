@@ -7,6 +7,7 @@
 -
     '@id': user:admin
     username: admin@example.com
+    name: Admin
     roles: [ROLE_ADMIN]
 
 -
@@ -24,4 +25,5 @@
 -
     '@id': user:bi
     username: bi@example.com
+    name: BI User
     roles: [ROLE_BI]
