@@ -4,6 +4,9 @@ pipeline {
     agent any
     stages {
         stage ('Install') {
+            when {
+                expression { BRANCH_NAME ==~ /(release|master)/ }
+            }
             parallel {
                 stage('Composer') {
                     steps {
@@ -17,46 +20,13 @@ pipeline {
                 }
             }
         }
-        stage('Build and test') {
-          parallel {
-              stage('PHP') {
-                stages {
-                    stage('PHP7 compatibility') {
-                        steps {
-                            sh 'docker run -v $WORKSPACE:/app -v /var/lib/jenkins/.composer-cache:/.composer:rw itkdev/php7.2-fpm:latest vendor/bin/phan --allow-polyfill-parser'
-                        }
-                    }
-                    stage('Coding standards') {
-                        steps {
-                            sh 'docker run -v $WORKSPACE:/app -v /var/lib/jenkins/.composer-cache:/.composer:rw itkdev/php7.2-fpm:latest vendor/bin/phpcs --standard=phpcs.xml.dist'
-                            sh 'docker run -v $WORKSPACE:/app -v /var/lib/jenkins/.composer-cache:/.composer:rw itkdev/php7.2-fpm:latest vendor/bin/php-cs-fixer --config=.php_cs.dist fix --dry-run --verbose'
-                            sh 'docker run -v $WORKSPACE:/app -v /var/lib/jenkins/.composer-cache:/.composer:rw itkdev/php7.2-fpm:latest vendor/bin/twigcs lint templates'
-                        }
-                    }
-                }
-            }
-            stage('Yarn - encore') {
-                    stages {
-                        stage('Coding standards') {
-                            steps {
-                                sh 'docker run -v $WORKSPACE:/app -v /var/lib/jenkins/.yarn-cache:/usr/local/share/.cache/yarn:rw itkdev/yarn:latest check-coding-standards'
-                            }
-                        }
-                        stage('Build') {
-                            steps {
-                                sh 'docker run -v $WORKSPACE:/app -v /var/lib/jenkins/.yarn-cache:/usr/local/share/.cache/yarn:rw itkdev/yarn:latest build'
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        stage('Deployment develop') {
+        stage('Build encore assets') {
             when {
-                branch 'develop'
+                expression { BRANCH_NAME ==~ /(release|master)/ }
             }
             steps {
-                sh 'echo "DEPLOY"'
+                // Build encore assets
+                sh 'docker run -v $WORKSPACE:/app -v /var/lib/jenkins/.yarn-cache:/usr/local/share/.cache/yarn:rw itkdev/yarn:latest build'
             }
         }
         stage('Deployment staging') {
@@ -79,8 +49,8 @@ pipeline {
                 // Copy encore assets.
                 sh "ansible admwebitk01 -m synchronize -a 'src=${WORKSPACE}/public/build/ dest=/data/www/stg_kontrolgruppen_itkdev_dk/htdocs/public/build'"
 
-		// Clear cache
-		sh "ansible admwebitk01 -m shell -a 'cd /data/www/stg_kontrolgruppen_itkdev_dk/htdocs; APP_ENV=prod php bin/console cache:clear'"
+                // Clear cache
+                sh "ansible admwebitk01 -m shell -a 'cd /data/www/stg_kontrolgruppen_itkdev_dk/htdocs; APP_ENV=prod php bin/console cache:clear'"
             }
         }
         stage('Deployment production') {
@@ -106,8 +76,8 @@ pipeline {
                 // Copy encore assets.
                 sh "ansible srvappkongruppe -m synchronize -a 'src=${WORKSPACE}/public/prod dest=/data/www/tjek1_aarhuskommune_dk/htdocs/public/'"
 
-		// Clear cache
-		sh "ansible srvappkongruppe -m shell -a 'cd /data/www/tjek1_aarhuskommune_dk/htdocs; APP_ENV=prod php bin/console cache:clear'"
+                // Clear cache
+                sh "ansible srvappkongruppe -m shell -a 'cd /data/www/tjek1_aarhuskommune_dk/htdocs; APP_ENV=prod php bin/console cache:clear'"
             }
         }
     }

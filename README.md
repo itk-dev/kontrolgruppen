@@ -26,7 +26,7 @@ See [README-develop.md](README-develop.md) for information on setting up for dev
 
 Make sure that the right repository is used for the core bundle, and that the right version of the bundle is used:
 ```sh
-composer config repositories.kontrolgruppen/core-bundle vcs git@github.com:aakb/kontrolgruppen-core-bundle.git
+composer config repositories.kontrolgruppen/core-bundle vcs https://github.com/aakb/kontrolgruppen-core-bundle
 composer require 'kontrolgruppen/core-bundle:«some branch name»
 ```
 
@@ -65,4 +65,21 @@ To change these, edit `.env.«env».local`, e.g.:
 
 ```sh
 SAML_IDP_CONFIG_FILE='%kernel.project_dir%/saml/idp/my_idp.xml'
+```
+
+## BI exports
+
+Run BI exports at regular intervals using `cron` or similar tools, e.g in `crontab`:
+
+```sh
+0 2 1 * * bin/console kontrolgruppen:report:export export@example.com 'Kontrolgruppen\CoreBundle\Export\BI\Export' --save
+```
+
+## Removal of expired completed Processes
+
+Run the removal command at regular intervals using `cron` or similar tools, e.g in `crontab`:
+
+```sh
+# Run the command every day at midnight
+0 0 * * * bin/console kontrolgruppen:process:delete-completed-since
 ```

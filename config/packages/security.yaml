@@ -1,7 +1,7 @@
 security:
     role_hierarchy:
-        ROLE_PROCESS_VIEW:  ROLE_USER
-        ROLE_SAGSBEHANDLER: ROLE_USER
+        ROLE_PROCESS_VIEW:  [ROLE_USER, ROLE_SEARCH]
+        ROLE_SAGSBEHANDLER: [ROLE_USER, ROLE_SEARCH]
         ROLE_BI:            ROLE_USER
         ROLE_ADMIN:         [ROLE_USER, ROLE_SAGSBEHANDLER, ROLE_PROCESS_VIEW]
         ROLE_SUPER_ADMIN:   [ROLE_ADMIN, ROLE_BI]
@@ -25,6 +25,7 @@ security:
                 entry_point: Kontrolgruppen\CoreBundle\Security\SAMLAuthenticator
 
     access_control:
+        - { path: ^/admin, role: ROLE_ADMIN }
         - { path: ^/saml, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/bi/, role: ROLE_BI }
         - { path: ^/, role: ROLE_USER }

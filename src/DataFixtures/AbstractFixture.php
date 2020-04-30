@@ -27,9 +27,13 @@ abstract class AbstractFixture extends Fixture
     protected $accessor;
 
     /**
-     * @param string|null $fixtureName
+     * Load a fixture.
+     *
+     * @param string|null $fixtureName The fixture name
      *
      * @return mixed
+     *
+     * @throws \ReflectionException
      */
     protected function loadFixture(string $fixtureName = null)
     {
@@ -109,10 +113,7 @@ abstract class AbstractFixture extends Fixture
         if (0 === strpos($reference, '@')) {
             return $this->getReference(substr($reference, 1));
         }
-        throw new \RuntimeException(sprintf(
-            'Invalid reference: %s',
-            $reference
-        ));
+        throw new \RuntimeException(sprintf('Invalid reference: %s', $reference));
     }
 
     /**
