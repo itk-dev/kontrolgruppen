@@ -25,6 +25,7 @@
         "eslint-plugin-standard": "^4.0.0",
         "expose-loader": "^0.7.5",
         "extract-text-webpack-plugin": "^4.0.0-beta.0",
+        "flatpickr": "^4.6.3",
         "jquery": "^3.3.1",
         "jquery-confirm": "^3.3.4",
         "mark.js": "^8.11.1",
@@ -41,7 +42,6 @@
         "stylelint": "^10.1.0",
         "stylelint-config-recommended-scss": "^3.3.0",
         "stylelint-scss": "^3.8.0",
-        "tempusdominus-bootstrap-4": "^5.1.2",
         "uglifyjs-webpack-plugin": "^2.1.2",
         "url-parse": "^1.4.6",
         "webpack-cli": "^3.3.0",
@@ -62,7 +62,6 @@
         "apply-coding-standards-scss": "yarn run apply-coding-standards-stylelint",
         "apply-coding-standards-eslint": "eslint --config .eslintrc.js 'vendor/kontrolgruppen/core-bundle/Resources/assets/**/*.js' --fix",
         "apply-coding-standards-js": "yarn run apply-coding-standards-eslint",
-        "apply-coding-standards": "yarn run apply-coding-standards-scss; yarn run apply-coding-standards-js",
-        "prepare": "patch-package"
+        "apply-coding-standards": "yarn run apply-coding-standards-scss; yarn run apply-coding-standards-js"
     }
 }

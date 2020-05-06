@@ -89,6 +89,7 @@ kontrolgruppen_core:
 
             # Use az-ident as username.
             username_attribute_name: 'urn:oid:2.5.4.3'
+            display_name_attribute_name: 'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/displayname'
 
             user_roles:
                 attribute: http://schemas.microsoft.com/ws/2008/06/identity/claims/role
