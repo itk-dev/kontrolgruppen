@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b7dca4d57abd593fcba65dfd1b5a657e",
+    "content-hash": "ee3c3f7efefc622bb7f7ca889ff083d9",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -1777,16 +1777,16 @@
         },
         {
             "name": "kontrolgruppen/core-bundle",
-            "version": "1.6.2",
+            "version": "1.6.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aakb/kontrolgruppen-core-bundle.git",
-                "reference": "176e6c4a94d062663db7817c67ab12207bfd9437"
+                "reference": "fabd78e7b5ecd82e36b02b2f9b23b0458616a65e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aakb/kontrolgruppen-core-bundle/zipball/176e6c4a94d062663db7817c67ab12207bfd9437",
-                "reference": "176e6c4a94d062663db7817c67ab12207bfd9437",
+                "url": "https://api.github.com/repos/aakb/kontrolgruppen-core-bundle/zipball/fabd78e7b5ecd82e36b02b2f9b23b0458616a65e",
+                "reference": "fabd78e7b5ecd82e36b02b2f9b23b0458616a65e",
                 "shasum": ""
             },
             "require": {
@@ -1888,9 +1888,9 @@
             },
             "description": "Kontrolgruppen core bundle",
             "support": {
-                "source": "https://github.com/aakb/kontrolgruppen-core-bundle/tree/1.6.2"
+                "source": "https://github.com/aakb/kontrolgruppen-core-bundle/tree/1.6.4"
             },
-            "time": "2020-03-30T17:36:47+00:00"
+            "time": "2020-05-13T10:20:10+00:00"
         },
         {
             "name": "lexik/form-filter-bundle",
@@ -7821,6 +7821,7 @@
                 "monolog",
                 "productivity"
             ],
+            "abandoned": true,
             "time": "2019-10-24T07:13:31+00:00"
         },
         {
