@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.6.5] - 2020-05-20
 ### Changed
-- Required version 1.6.5 of bundle.
+- Required version 1.6.6 of bundle.
 
 ## [1.6.4] - 2020-05-19
 ### Added
