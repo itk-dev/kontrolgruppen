@@ -108,7 +108,7 @@ jobs:
             uses: shivammathur/setup-php@v2
             with:
                 php-version: 7.3
-                extensions: ctype, dom, iconv, json, zip, gd
+                extensions: ctype, dom, iconv, json, zip, gd, sqlite3, pdo
                 coverage: none
           - name: Install Dependencies
             run: |
