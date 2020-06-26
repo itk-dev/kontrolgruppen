@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [1.6.8] - 2020-06-26
 ### Added
 - [KON-330](https://jira.itkdev.dk/browse/KON-330): Mark statuses for use when completing processes
 - [KON-364](https://jira.itkdev.dk/browse/KON-364): Preventing double submissions when creating new journal entry
