@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.6.9] - 2020-06-29
+### Added
+- [KON-288](https://jira.itkdev.dk/browse/KON-288): Added links between processes
+- [KON-356](https://jira.itkdev.dk/browse/KON-356): Added weekly choice when entering future savings revenue entries
+
+### Changed
+- Required version 1.6.9 of bundle
+
 ## [1.6.8] - 2020-06-26
 ### Added
 - [KON-330](https://jira.itkdev.dk/browse/KON-330): Mark statuses for use when completing processes
