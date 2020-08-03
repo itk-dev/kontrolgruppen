@@ -42,6 +42,7 @@ Encore
     .addEntry('dashboard', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/dashboard.js')
     .addEntry('journalEntryPreventDoubleSubmission', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/journalEntryPreventDoubleSubmission.js')
     .addEntry('processGroupForm', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/processGroupForm.js')
+    .addEntry('processFormCprSearch', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/processFormCprSearch.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
