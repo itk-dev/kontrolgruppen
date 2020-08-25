@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.7.1] - 2020-08-25
+### Changed
+- [KON-395](https://jira.itkdev.dk/browse/KON-395): Required version 1.7.1 og bundle
+
 ## [1.7.0] - 2020-08-03
 ### Added
 - [KON-288](https://jira.itkdev.dk/browse/KON-288): Added links between processes
