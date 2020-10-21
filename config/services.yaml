@@ -12,6 +12,18 @@ parameters:
     router.request_context.base_url: '%env(ROUTER_REQUEST_CONTEXT_BASE_URL)%'
     base_url: '%router.request_context.scheme%://%router.request_context.host%%router.request_context.base_url%'
     export_directory: '%env(resolve:EXPORT_DIRECTORY)%'
+    azure_tenant_id: '%env(AZURE_TENANT_ID)%'
+    azure_application_id: '%env(AZURE_APPLICATION_ID)%'
+    azure_client_secret: '%env(AZURE_CLIENT_SECRET)%'
+    azure_key_vault_name: '%env(AZURE_KEY_VAULT_NAME)%'
+    azure_key_vault_secret: '%env(AZURE_KEY_VAULT_SECRET)%'
+    azure_key_vault_secret_version: '%env(AZURE_KEY_VAULT_SECRET_VERSION)%'
+    serviceplatformen_service_agreement_uuid: '%env(SERVICEPLATFORMEN_SERVICE_AGREEMENT_UUID)%'
+    serviceplatformen_user_system_uuid: '%env(SERVICEPLATFORMEN_USER_SYSTEM_UUID)%'
+    serviceplatformen_user_uuid: '%env(SERVICEPLATFORMEN_USER_UUID)%'
+    person_base_data_extended_service_contract: '%kernel.project_dir%/%env(PERSON_BASE_DATA_EXTENDED_SERVICE_CONTRACT)%'
+    person_base_data_extended_service_endpoint: '%env(PERSON_BASE_DATA_EXTENDED_SERVICE_ENDPOINT)%'
+    person_base_data_extended_service_uuid: '%env(PERSON_BASE_DATA_EXTENDED_SERVICE_UUID)%'
 
 services:
     # default configuration for services in *this* file
