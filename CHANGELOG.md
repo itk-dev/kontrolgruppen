@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.7.3] - 2020-10-21
+### Changed
+- Disabled Serviceplatformen. Enabled internal CPR service.
+
 ## [1.7.2] - 2020-10-01
 ### Changed
 - Required version 1.7.2 of core bundle.
