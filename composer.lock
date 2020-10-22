@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1c8382ac65ea3608ab6077b3561ca2ca",
+    "content-hash": "fc6a551b7a821fda3ba174a6c4695c3a",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -2121,16 +2121,16 @@
         },
         {
             "name": "kontrolgruppen/core-bundle",
-            "version": "dev-hotfix/1.7.3",
+            "version": "1.7.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aakb/kontrolgruppen-core-bundle.git",
-                "reference": "532c2c75bd0e45e9d2a83742a7b425419d9513e6"
+                "reference": "40022ab331abc96477ced28a58e200cd321b8252"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aakb/kontrolgruppen-core-bundle/zipball/532c2c75bd0e45e9d2a83742a7b425419d9513e6",
-                "reference": "532c2c75bd0e45e9d2a83742a7b425419d9513e6",
+                "url": "https://api.github.com/repos/aakb/kontrolgruppen-core-bundle/zipball/40022ab331abc96477ced28a58e200cd321b8252",
+                "reference": "40022ab331abc96477ced28a58e200cd321b8252",
                 "shasum": ""
             },
             "require": {
@@ -2233,9 +2233,9 @@
             },
             "description": "Kontrolgruppen core bundle",
             "support": {
-                "source": "https://github.com/aakb/kontrolgruppen-core-bundle/tree/hotfix/1.7.3"
+                "source": "https://github.com/aakb/kontrolgruppen-core-bundle/tree/1.7.3"
             },
-            "time": "2020-10-21T12:58:31+00:00"
+            "time": "2020-10-22T07:16:45+00:00"
         },
         {
             "name": "lexik/form-filter-bundle",
@@ -9663,7 +9663,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "kontrolgruppen/core-bundle": 20,
         "symfony/maker-bundle": 20
     },
     "prefer-stable": true,
