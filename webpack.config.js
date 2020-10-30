@@ -43,6 +43,7 @@ Encore
     .addEntry('journalEntryPreventDoubleSubmission', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/journalEntryPreventDoubleSubmission.js')
     .addEntry('processGroupForm', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/processGroupForm.js')
     .addEntry('processFormCprSearch', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/processFormCprSearch.js')
+    .addEntry('companies', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/companies.js')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
@@ -71,7 +72,7 @@ Encore
     })
 
     .enableSassLoader()
-    .enableIntegrityHashes()
+    .enableIntegrityHashes(Encore.isProduction())
     .autoProvidejQuery()
 ;
 
