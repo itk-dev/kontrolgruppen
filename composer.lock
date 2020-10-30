@@ -2125,7 +2125,7 @@
             "dist": {
                 "type": "path",
                 "url": "bundles/core-bundle",
-                "reference": "7c68351f9f7d5d9d4ff50dcde1ac9c6d3d6e805d"
+                "reference": "8d7a8e70f9a10b1221aea6de852377957cb58457"
             },
             "require": {
                 "beberlei/doctrineextensions": "^1.2",
