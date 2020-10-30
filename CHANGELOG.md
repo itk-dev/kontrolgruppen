@@ -6,6 +6,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.7.5] - 2020-10-29
+### Changed
+- Required version 1.7.5 of core bundle.
+
+## [1.7.4] - 2020-10-29
+### Changed
+- Required version 1.7.4 of core bundle.
+
+## [1.7.3] - 2020-10-21
+### Changed
+- Disabled Serviceplatformen. Enabled internal CPR service.
+
+## [1.7.2] - 2020-10-01
+### Changed
+- Required version 1.7.2 of core bundle.
+
 ## [1.7.1] - 2020-09-17
 ### Changed
 - [KON-395](https://jira.itkdev.dk/browse/KON-395): Required version 1.7.1 of core bundle
