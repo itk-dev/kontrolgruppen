@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b9f65746efaee91394574ff95aa7cafb",
+    "content-hash": "addbca92a4bfe325a249e4cf19eca456",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -1292,6 +1292,7 @@
                 "reflection",
                 "static"
             ],
+            "abandoned": "roave/better-reflection",
             "time": "2020-01-08T19:53:19+00:00"
         },
         {
@@ -2121,16 +2122,16 @@
         },
         {
             "name": "kontrolgruppen/core-bundle",
-            "version": "1.7.4",
+            "version": "1.7.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aakb/kontrolgruppen-core-bundle.git",
-                "reference": "f68565c6f4ff7f9df61f4ba2df1ebc7447364309"
+                "reference": "b6c828d1f94caf9803b589f005d9b83833b126d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aakb/kontrolgruppen-core-bundle/zipball/f68565c6f4ff7f9df61f4ba2df1ebc7447364309",
-                "reference": "f68565c6f4ff7f9df61f4ba2df1ebc7447364309",
+                "url": "https://api.github.com/repos/aakb/kontrolgruppen-core-bundle/zipball/b6c828d1f94caf9803b589f005d9b83833b126d2",
+                "reference": "b6c828d1f94caf9803b589f005d9b83833b126d2",
                 "shasum": ""
             },
             "require": {
@@ -2233,9 +2234,9 @@
             },
             "description": "Kontrolgruppen core bundle",
             "support": {
-                "source": "https://github.com/aakb/kontrolgruppen-core-bundle/tree/1.7.4"
+                "source": "https://github.com/aakb/kontrolgruppen-core-bundle/tree/1.7.5"
             },
-            "time": "2020-10-29T13:05:04+00:00"
+            "time": "2020-11-16T14:03:32+00:00"
         },
         {
             "name": "lexik/form-filter-bundle",
