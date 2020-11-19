@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ca008a9eedbae6e00d8a231fe372e797",
+    "content-hash": "14009af8772013c7172de6c1a77febe1",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -2122,7 +2122,7 @@
         },
         {
             "name": "kontrolgruppen/core-bundle",
-            "version": "dev-release-1.7.5",
+            "version": "dev-release-1.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aakb/kontrolgruppen-core-bundle.git",
