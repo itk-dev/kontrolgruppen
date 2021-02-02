@@ -55,6 +55,22 @@ docker-compose exec phpfpm /app/bin/console doctrine:migrations:migrate
 docker-compose exec phpfpm /app/bin/console fos:user:create --super-admin
 ```
 
+## Fixtures
+
+You can load fixtures by running the command
+
+```sh
+docker-compose exec phpfpm bin/console doctrine:fixtures:load
+```
+
+and then use
+
+```sh
+docker-compose exec phpfpm bin/console kontrolgruppen:user:login admin@example.com
+```
+
+to get a one-time sign in url.
+
 ### CPR Service
 ```sh
 # Make sure that the database is created
