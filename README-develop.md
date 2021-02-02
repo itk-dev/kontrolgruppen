@@ -2,6 +2,23 @@
 
 ## Starting the show
 
+The `docker-compose` setup uses a custom image hosted on GitHub, and you have to
+sign in to download this image.
+
+Go to <https://github.com/settings/tokens/new> and create a new personal access
+token with `read:packages` checked. Save the token in a file, e.g.
+`~/github-docker-read-token.txt`.
+
+Run this command to sign in using your token before pulling docker images
+(replace `USERNAME` with your actual GitHub username):
+
+```sh
+cat ~/github-docker-read-token.txt | docker login https://docker.pkg.github.com -u USERNAME --password-stdin
+```
+
+to sign in (cf.
+<https://docs.github.com/en/packages/guides/configuring-docker-for-use-with-github-packages#authenticating-with-a-personal-access-token>).
+
 ```sh
 docker-compose pull
 docker-compose up -d
