@@ -2,6 +2,23 @@
 
 ## Starting the show
 
+The `docker-compose` setup uses a custom image hosted on GitHub, and you have to
+sign in to download this image.
+
+Go to <https://github.com/settings/tokens/new> and create a new personal access
+token with `read:packages` checked. Save the token in a file, e.g.
+`~/github-docker-read-token.txt`.
+
+Run this command to sign in using your token before pulling docker images
+(replace `USERNAME` with your actual GitHub username):
+
+```sh
+cat ~/github-docker-read-token.txt | docker login https://docker.pkg.github.com -u USERNAME --password-stdin
+```
+
+to sign in (cf.
+<https://docs.github.com/en/packages/guides/configuring-docker-for-use-with-github-packages#authenticating-with-a-personal-access-token>).
+
 ```sh
 docker-compose pull
 docker-compose up -d
@@ -37,6 +54,22 @@ docker-compose exec phpfpm /app/bin/console doctrine:migrations:migrate
 # Create super admin user.
 docker-compose exec phpfpm /app/bin/console fos:user:create --super-admin
 ```
+
+## Fixtures
+
+You can load fixtures by running the command
+
+```sh
+docker-compose exec phpfpm bin/console doctrine:fixtures:load
+```
+
+and then use
+
+```sh
+docker-compose exec phpfpm bin/console kontrolgruppen:user:login admin@example.com
+```
+
+to get a one-time sign in url.
 
 ### CPR Service
 ```sh
