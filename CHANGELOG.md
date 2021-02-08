@@ -5,6 +5,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Added
+- [SUPP0RT-62](https://jira.itkdev.dk/browse/SUPP0RT-62): Added documentation on fixtures and docker image.
+- [SUPP0RT-62](https://jira.itkdev.dk/browse/SUPP0RT-62): Added missing environment variables
 
 ## [1.9.0] - 2021-01-04
 ### Changed
