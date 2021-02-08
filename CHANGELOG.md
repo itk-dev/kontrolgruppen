@@ -6,7 +6,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.9.0] - 2020-12-18
+## [1.10.0] - 2021-02-08
+### Changed
+- Required Core Bundle version 1.10.0.
+
+### Added
+- [SUPP0RT-62](https://jira.itkdev.dk/browse/SUPP0RT-62): Added documentation on fixtures and docker image.
+- [SUPP0RT-62](https://jira.itkdev.dk/browse/SUPP0RT-62): Added missing environment variables
+
+## [1.9.0] - 2021-01-04
 ### Changed
 - Required version 1.9.0 of core bundle.
 
