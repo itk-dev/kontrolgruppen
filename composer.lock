@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1ae2604d20ccbef8071a9d09b9ca7337",
+    "content-hash": "888acc48e0b954b6c4c759e0a8bb17a4",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -2122,16 +2122,16 @@
         },
         {
             "name": "kontrolgruppen/core-bundle",
-            "version": "1.9.0",
+            "version": "1.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aakb/kontrolgruppen-core-bundle.git",
-                "reference": "4dbf718e1d4dcbe2e417087dbb39c8f3ac8808ca"
+                "reference": "2526e8e3c375041da6894c00ecda6e3e53e02587"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aakb/kontrolgruppen-core-bundle/zipball/4dbf718e1d4dcbe2e417087dbb39c8f3ac8808ca",
-                "reference": "4dbf718e1d4dcbe2e417087dbb39c8f3ac8808ca",
+                "url": "https://api.github.com/repos/aakb/kontrolgruppen-core-bundle/zipball/2526e8e3c375041da6894c00ecda6e3e53e02587",
+                "reference": "2526e8e3c375041da6894c00ecda6e3e53e02587",
                 "shasum": ""
             },
             "require": {
@@ -2234,9 +2234,9 @@
             },
             "description": "Kontrolgruppen core bundle",
             "support": {
-                "source": "https://github.com/aakb/kontrolgruppen-core-bundle/tree/1.9.0"
+                "source": "https://github.com/aakb/kontrolgruppen-core-bundle/tree/1.10.0"
             },
-            "time": "2021-01-04T12:21:32+00:00"
+            "time": "2021-02-15T07:16:42+00:00"
         },
         {
             "name": "lexik/form-filter-bundle",
@@ -7764,12 +7764,12 @@
             "version": "1.6.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/webmozart/assert.git",
+                "url": "https://github.com/webmozarts/assert.git",
                 "reference": "573381c0a64f155a0d9a23f4b0c797194805b925"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozart/assert/zipball/573381c0a64f155a0d9a23f4b0c797194805b925",
+                "url": "https://api.github.com/repos/webmozarts/assert/zipball/573381c0a64f155a0d9a23f4b0c797194805b925",
                 "reference": "573381c0a64f155a0d9a23f4b0c797194805b925",
                 "shasum": ""
             },
