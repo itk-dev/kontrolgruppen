@@ -29,3 +29,7 @@ security:
         - { path: ^/saml, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/bi/, role: ROLE_BI }
         - { path: ^/, role: ROLE_USER }
+
+    access_decision_manager:
+        strategy: unanimous
+        allow_if_all_abstain: false
