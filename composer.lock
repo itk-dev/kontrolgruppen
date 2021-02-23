@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5e343d1b6dc1be6d333a5e7c19392093",
+    "content-hash": "8c2bb8920c077d0de6d9838f5d807145",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -2122,16 +2122,16 @@
         },
         {
             "name": "kontrolgruppen/core-bundle",
-            "version": "dev-develop",
+            "version": "dev-feature/kon-404-provenu-duplicates",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aakb/kontrolgruppen-core-bundle.git",
-                "reference": "4846fb143054b395b8bc9963206b00316185738a"
+                "reference": "d0e75d1985a50d591e6df85c5a44ab11999dfc36"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aakb/kontrolgruppen-core-bundle/zipball/4846fb143054b395b8bc9963206b00316185738a",
-                "reference": "4846fb143054b395b8bc9963206b00316185738a",
+                "url": "https://api.github.com/repos/aakb/kontrolgruppen-core-bundle/zipball/d0e75d1985a50d591e6df85c5a44ab11999dfc36",
+                "reference": "d0e75d1985a50d591e6df85c5a44ab11999dfc36",
                 "shasum": ""
             },
             "require": {
@@ -2234,9 +2234,9 @@
             },
             "description": "Kontrolgruppen core bundle",
             "support": {
-                "source": "https://github.com/aakb/kontrolgruppen-core-bundle/tree/develop"
+                "source": "https://github.com/aakb/kontrolgruppen-core-bundle/tree/feature/kon-404-provenu-duplicates"
             },
-            "time": "2021-02-15T07:16:49+00:00"
+            "time": "2021-02-23T10:08:19+00:00"
         },
         {
             "name": "lexik/form-filter-bundle",
