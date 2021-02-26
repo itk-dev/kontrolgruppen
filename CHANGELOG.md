@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Required Core Bundle version 1.11.0.
 
+### Fixed
+- [KON-436](https://jira.itkdev.dk/browse/KON-436): Removing failing slack notification from Jenkinsfile.
+
 ## [1.10.0] - 2021-02-15
 ### Changed
 - Required Core Bundle version 1.10.0.
