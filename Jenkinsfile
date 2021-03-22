@@ -10,7 +10,7 @@ pipeline {
             parallel {
                 stage('Composer') {
                     steps {
-                        sh 'docker run -v $WORKSPACE:/app -v /var/lib/jenkins/.composer-cache:/.composer:rw itkdev/php7.2-fpm:latest composer install'
+                        sh 'docker run -v $WORKSPACE:/app -v /var/lib/jenkins/.composer-cache:/.composer:rw --env COMPOSER_VERSION=1 itkdev/php7.4-fpm:latest composer install'
                     }
                 }
                 stage('Yarn') {
