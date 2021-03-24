@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e7a15a641d26de4c8f16b4abc51d59c2",
+    "content-hash": "5e343d1b6dc1be6d333a5e7c19392093",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -2122,16 +2122,16 @@
         },
         {
             "name": "kontrolgruppen/core-bundle",
-            "version": "1.11.2",
+            "version": "dev-develop",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aakb/kontrolgruppen-core-bundle.git",
-                "reference": "3c57be2852f6943c1634ac7dfc18d2cbc7bee9a5"
+                "reference": "4344425b006c1579f8eeb689ad3d5deb789b7016"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aakb/kontrolgruppen-core-bundle/zipball/3c57be2852f6943c1634ac7dfc18d2cbc7bee9a5",
-                "reference": "3c57be2852f6943c1634ac7dfc18d2cbc7bee9a5",
+                "url": "https://api.github.com/repos/aakb/kontrolgruppen-core-bundle/zipball/4344425b006c1579f8eeb689ad3d5deb789b7016",
+                "reference": "4344425b006c1579f8eeb689ad3d5deb789b7016",
                 "shasum": ""
             },
             "require": {
@@ -2235,9 +2235,9 @@
             },
             "description": "Kontrolgruppen core bundle",
             "support": {
-                "source": "https://github.com/aakb/kontrolgruppen-core-bundle/tree/1.11.2"
+                "source": "https://github.com/aakb/kontrolgruppen-core-bundle/tree/develop"
             },
-            "time": "2021-03-24T14:26:14+00:00"
+            "time": "2021-03-24T14:26:18+00:00"
         },
         {
             "name": "lexik/form-filter-bundle",
@@ -9720,6 +9720,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "kontrolgruppen/core-bundle": 20,
         "symfony/maker-bundle": 20
     },
     "prefer-stable": true,
