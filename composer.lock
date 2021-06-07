@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e7b8f69b05bf3f4231bc5f99ee270f81",
+    "content-hash": "85abd91af9c32aa79d51c54d079bfc43",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -2122,16 +2122,16 @@
         },
         {
             "name": "kontrolgruppen/core-bundle",
-            "version": "1.11.3",
+            "version": "1.11.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/aakb/kontrolgruppen-core-bundle.git",
-                "reference": "4686f46e77bec7fd519dc795708babac5268ef51"
+                "url": "https://github.com/itk-dev/kontrolgruppen-core-bundle.git",
+                "reference": "1cffb0ba9b6c4f2c3c5d4e0dc232a235551c3759"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aakb/kontrolgruppen-core-bundle/zipball/4686f46e77bec7fd519dc795708babac5268ef51",
-                "reference": "4686f46e77bec7fd519dc795708babac5268ef51",
+                "url": "https://api.github.com/repos/itk-dev/kontrolgruppen-core-bundle/zipball/1cffb0ba9b6c4f2c3c5d4e0dc232a235551c3759",
+                "reference": "1cffb0ba9b6c4f2c3c5d4e0dc232a235551c3759",
                 "shasum": ""
             },
             "require": {
@@ -2235,9 +2235,9 @@
             },
             "description": "Kontrolgruppen core bundle",
             "support": {
-                "source": "https://github.com/aakb/kontrolgruppen-core-bundle/tree/1.11.3"
+                "source": "https://github.com/itk-dev/kontrolgruppen-core-bundle/tree/1.11.4"
             },
-            "time": "2021-04-08T10:40:42+00:00"
+            "time": "2021-06-07T10:08:45+00:00"
         },
         {
             "name": "lexik/form-filter-bundle",
@@ -5371,6 +5371,7 @@
                 "symfony",
                 "words"
             ],
+            "abandoned": "use `EnglishInflector` from the String component instead",
             "time": "2020-01-04T13:00:46+00:00"
         },
         {
