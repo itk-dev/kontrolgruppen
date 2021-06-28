@@ -33,7 +33,8 @@ composer require 'kontrolgruppen/core-bundle:«some branch name»
 Build production assets. They will be added to public/prod.
 
 ```sh
-yarn build
+docker run --volume ${PWD}:/app --workdir /app node:10 yarn install
+docker run --volume ${PWD}:/app --workdir /app node:10 yarn build
 ```
 
 Commit the built files to git.
@@ -48,7 +49,7 @@ Create key and certificate (change `--subj` to match your actual setup):
 ```sh
 mkdir -p saml/{idp,sp}
 openssl req -x509 -sha256 -nodes -days 1460 -newkey rsa:2048 -keyout saml/sp/sp.key -out saml/sp/sp.crt \
-	-subj "/C=DK/L=Aarhus/O=Kontrolgruppen/CN=kontrolgruppen.example.com/emailAddress=info@kontrolgruppen.example.com"
+    -subj "/C=DK/L=Aarhus/O=Kontrolgruppen/CN=kontrolgruppen.example.com/emailAddress=info@kontrolgruppen.example.com"
 ```
 
 Download metadata from your identity provider (IdP) to `saml/idp/idp.xml`.

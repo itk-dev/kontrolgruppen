@@ -11,7 +11,6 @@
 namespace App\DataFixtures;
 
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Kontrolgruppen\CoreBundle\Entity\Client;
 use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 
 class ProcessClientPersonFixture extends AbstractFixture implements DependentFixtureInterface

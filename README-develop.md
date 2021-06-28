@@ -97,8 +97,10 @@ This will place the files in the correct location.
 ## Building js assets
 
 Watch for changes in js and css files and build development version:
-```
-yarn watch
+
+```sh
+docker run --volume ${PWD}:/app --workdir /app node:10 yarn install
+docker run --interactive --tty --volume ${PWD}:/app --workdir /app node:10 yarn watch
 ```
 
 ## Coding standards
