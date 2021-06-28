@@ -1,0 +1,18 @@
+diff --git a/Service/ProcessManager.php b/Service/ProcessManager.php
+index 196956d..24f155f 100644
+--- a/Service/ProcessManager.php
++++ b/Service/ProcessManager.php
+@@ -209,9 +209,11 @@ class ProcessManager
+      *
+      * @param Process $process
+      */
+-    public function completeProcess(Process $process)
++    public function completeProcess(Process $process, \DateTimeInterface $completedAt = null)
+     {
+-        $completedAt = new \DateTime();
++        if (null === $completedAt) {
++            $completedAt = new \DateTime();
++        }
+ 
+         // If it's the first time the process is completed,
+         // we set the originally completed date.

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0f2481d3cde6685b37bb9d93ff975843",
+    "content-hash": "da06f5a065d79552e5d4b9e43be9e273",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -2181,6 +2181,11 @@
                 "squizlabs/php_codesniffer": "^3.4"
             },
             "type": "symfony-bundle",
+            "extra": {
+                "patches_applied": {
+                    "Set completedAt date": "patches/core-KON-425.patch"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "Kontrolgruppen\\CoreBundle\\": ""
