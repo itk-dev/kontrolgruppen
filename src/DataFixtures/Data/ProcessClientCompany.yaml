@@ -1,0 +1,17 @@
+-
+    '@id': client-company:1
+    process: '@process:3'
+    address: Tneilkvej 2
+    postalCode: 3000
+    city: Tneilkby2
+    cvr: 1234567890
+    name: Tneilk2
+
+-
+    '@id': client-company:2
+    process: '@process:4'
+    address: Klientvej 1
+    postalCode: 1000
+    city: Klientby
+    cvr: 9876543210
+    name: Ajax
