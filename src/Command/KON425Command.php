@@ -13,10 +13,8 @@ namespace App\Command;
 use Doctrine\ORM\EntityManagerInterface;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
-use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 use Kontrolgruppen\CoreBundle\Service\ProcessManager;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -42,17 +40,24 @@ class KON425Command extends Command
         $this->entityManager = $entityManager;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function configure()
     {
         $this
-            ->setDescription('Add a short description for your command')
-            ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
-            ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
+            ->setDescription('Set missing completed at on ETEK processes')
+            ->addOption('--force', null, InputOption::VALUE_NONE, 'Do stuff')
         ;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $force = $input->getOption('force');
+
         $processRepository = $this->entityManager->getRepository(Process::class);
         $processLogEntryRepository = $this->entityManager->getRepository(ProcessLogEntry::class);
         $qb = $processRepository->createQueryBuilder('p');
@@ -63,9 +68,7 @@ class KON425Command extends Command
             ->getQuery()->execute();
 
         foreach ($processes as $process) {
-            $output->writeln([
-                $process->getId(),
-            ]);
+            $output->writeln(sprintf('%s (#%d)', $process->getCaseNumber(), $process->getId()));
 
             /** @var ProcessLogEntry[] $logEntries */
             $logEntries = $processLogEntryRepository->getAllLogEntries($process);
@@ -78,29 +81,35 @@ class KON425Command extends Command
                 }
             }
 
+            $output->writeln($completedAt ? sprintf('Logged completed at %s', $completedAt->format(\DateTimeInterface::ATOM)) : 'Not completed');
+
             if (null !== $completedAt) {
                 continue;
             }
 
-            $output->writeln(json_encode(['completedAt' => $completedAt], JSON_PRETTY_PRINT));
-
-            if (null === $process->getOriginallyCompletedAt() && null !== $process->getCompletedAt())
-            {
+            if (null === $process->getOriginallyCompletedAt() && null !== $process->getCompletedAt()) {
                 $output->writeln(json_encode([
-                    '#logEntries' => count($logEntries),
+                    '#logEntries' => \count($logEntries),
                     'process id' => $process->getId(),
                     'completed at' => $process->getCompletedAt()->format(DateTimeInterface::ATOM),
                 ], JSON_PRETTY_PRINT));
 
                 $completedAt = $process->getCompletedAt();
 
-                $this->processManager->completeProcess($process, $completedAt);
+                $output->writeln(sprintf(
+                    'Completing process %s (#%d) at %s',
+                    $process->getCaseNumber(),
+                    $process->getId(),
+                    $completedAt->format(\DateTimeInterface::ATOM)
+                ));
+                if ($force) {
+                    $this->processManager->completeProcess($process, $completedAt);
 
-                $logEntries = $processLogEntryRepository->getAllLogEntries($process);
-                $lastLogEntry = array_shift($logEntries)->getLogEntry();
-                $data = $lastLogEntry->getData();
+                    $logEntries = $processLogEntryRepository->getAllLogEntries($process);
+                    $lastLogEntry = array_shift($logEntries)->getLogEntry();
+                    $data = $lastLogEntry->getData();
 
-                var_export(['data' => $data]);
+                    var_export(['data' => $data]);
 
 //                $data['completedAt'] = $completedAt;
 //                $lastLogEntry->setData($data);
@@ -110,7 +119,7 @@ class KON425Command extends Command
 //                $data = $lastLogEntry->getData();
 //
 //                var_export(['data' => $data]);
-
+                }
             }
         }
 

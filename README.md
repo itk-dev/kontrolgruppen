@@ -1,3 +1,24 @@
+--------------------------------------------------------------------------------
+# KON-425
+
+```sh
+git checkout -b feature/KON-425
+composer install
+bin/console app:KON-425
+```
+
+## During development and testing
+
+```sh
+bin/console doctrine:database:drop --force --no-interaction --quiet
+bin/console doctrine:database:create --quiet
+bin/console doctrine:migrations:migrate --no-interaction --quiet
+bin/console doctrine:fixtures:load --no-interaction --quiet
+bin/console app:KON-425
+```
+
+--------------------------------------------------------------------------------
+
 # Kontrolgruppen
 
 ## Install
