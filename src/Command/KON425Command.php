@@ -18,7 +18,11 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
+/**
+ * Class KON425Command (cf. https://jira.itkdev.dk/browse/KON-425).
+ */
 class KON425Command extends Command
 {
     protected static $defaultName = 'app:KON-425';
@@ -33,6 +37,12 @@ class KON425Command extends Command
      */
     private $entityManager;
 
+    /**
+     * KON425Command constructor.
+     *
+     * @param ProcessManager         $processManager the process manager
+     * @param EntityManagerInterface $entityManager  the entity manager
+     */
     public function __construct(ProcessManager $processManager, EntityManagerInterface $entityManager)
     {
         parent::__construct();
@@ -56,6 +66,8 @@ class KON425Command extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        $io = new SymfonyStyle($input, $output);
+
         $force = $input->getOption('force');
 
         $processRepository = $this->entityManager->getRepository(Process::class);
@@ -63,64 +75,68 @@ class KON425Command extends Command
         $qb = $processRepository->createQueryBuilder('p');
         /** @var Process[] $processes */
         $processes = $qb
-//            ->where($qb->expr()->like('p.caseNumber', ':etek'))
-//            ->setParameter('etek', 'ETEK-%')
+            ->where($qb->expr()->like('p.caseNumber', ':etek'))
+            ->setParameter('etek', 'ETEK-%')
             ->getQuery()->execute();
 
+        $counter = 0;
         foreach ($processes as $process) {
-            $output->writeln(sprintf('%s (#%d)', $process->getCaseNumber(), $process->getId()));
+            $io->section(sprintf(
+                '% 6d/%d: %s (#%d)',
+                ++$counter,
+                \count($processes),
+                $process->getCaseNumber(),
+                $process->getId()
+            ));
 
+            // Dig for first time completedAt has been set on process.
             /** @var ProcessLogEntry[] $logEntries */
             $logEntries = $processLogEntryRepository->getAllLogEntries($process);
-            $completedAt = null;
+            // If the log entries don't tell otherwise, we use the case's completed at date.
+            $completedAt = $process->getCompletedAt();
             foreach ($logEntries as $logEntry) {
                 $data = $logEntry->getLogEntry()->getData();
                 if (isset($data['completedAt'])) {
                     $completedAt = $data['completedAt'];
-                    break;
                 }
             }
 
-            $output->writeln($completedAt ? sprintf('Logged completed at %s', $completedAt->format(\DateTimeInterface::ATOM)) : 'Not completed');
-
-            if (null !== $completedAt) {
+            if (null === $completedAt) {
+                $output->writeln(sprintf(
+                    'Cannot find completed at for process %s (#%d)',
+                    $process->getCaseNumber(),
+                    $process->getId()
+                ));
                 continue;
             }
 
-            if (null === $process->getOriginallyCompletedAt() && null !== $process->getCompletedAt()) {
-                $output->writeln(json_encode([
-                    '#logEntries' => \count($logEntries),
-                    'process id' => $process->getId(),
-                    'completed at' => $process->getCompletedAt()->format(DateTimeInterface::ATOM),
-                ], JSON_PRETTY_PRINT));
+            $io->writeln(sprintf('Completed at %s', $completedAt->format(\DateTimeInterface::ATOM)));
 
-                $completedAt = $process->getCompletedAt();
-
-                $output->writeln(sprintf(
-                    'Completing process %s (#%d) at %s',
-                    $process->getCaseNumber(),
-                    $process->getId(),
-                    $completedAt->format(\DateTimeInterface::ATOM)
+            if (null !== $process->getOriginallyCompletedAt()) {
+                $io->warning(sprintf(
+                    'Originally completed at %s. Skipping.',
+                    $process->getOriginallyCompletedAt()->format(\DateTimeInterface::ATOM)
                 ));
-                if ($force) {
+            } else {
+                if (!$force) {
+                    $io->warning(sprintf(
+                        'Not completing process %s (#%d) at %s (use `--force` to make it happen).',
+                        $process->getCaseNumber(),
+                        $process->getId(),
+                        $completedAt->format(\DateTimeInterface::ATOM)
+                    ));
+                } else {
+                    $io->success(sprintf(
+                        'Completing process %s (#%d) at %s',
+                        $process->getCaseNumber(),
+                        $process->getId(),
+                        $completedAt->format(\DateTimeInterface::ATOM)
+                    ));
                     $this->processManager->completeProcess($process, $completedAt);
-
-                    $logEntries = $processLogEntryRepository->getAllLogEntries($process);
-                    $lastLogEntry = array_shift($logEntries)->getLogEntry();
-                    $data = $lastLogEntry->getData();
-
-                    var_export(['data' => $data]);
-
-//                $data['completedAt'] = $completedAt;
-//                $lastLogEntry->setData($data);
-//                $this->entityManager->persist($lastLogEntry);
-//                $this->entityManager->flush();
-//
-//                $data = $lastLogEntry->getData();
-//
-//                var_export(['data' => $data]);
                 }
             }
+
+            $io->newLine();
         }
 
         return 0;

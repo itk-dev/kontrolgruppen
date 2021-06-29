@@ -51,3 +51,31 @@
     caseWorker: '@user:1'
     policeReport: true
     courtDecision: false
+
+-
+    '@id': 'process:etek-42'
+    caseNumber: ETEK-42
+    # Get reference
+    processType: '@process-type:udrejse'
+    processStatus: '@process-status:oprettet'
+    channel: '@channel:anonym_anmelder'
+    clientCpr: 111111-1111
+    service: '@service:kontanthjalp'
+    caseWorker: '@user:1'
+    policeReport: true
+    courtDecision: false
+    completedAt: '2021-06-29'
+
+-
+    '@id': 'process:etek-87'
+    caseNumber: ETEK-87
+    # Get reference
+    processType: '@process-type:udrejse'
+    processStatus: '@process-status:oprettet'
+    channel: '@channel:anonym_anmelder'
+    clientCpr: 111111-1111
+    service: '@service:kontanthjalp'
+    caseWorker: '@user:1'
+    policeReport: true
+    courtDecision: false
+    completedAt: '1975-05-23'
