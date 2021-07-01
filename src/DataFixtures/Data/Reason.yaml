@@ -1,2 +1,16 @@
-[]
-# TODO - add reasons
+-
+    '@id': reason:reason-001
+    clientTypes: [person]
+    name: Årsag 1
+-
+    '@id': reason:reason-002
+    clientTypes: [company]
+    name: Årsag 2
+-
+    '@id': reason:reason-003
+    clientTypes: ~
+    name: Årsag 3
+-
+    '@id': reason:reason-004
+    clientTypes: [person, company]
+    name: Årsag 4

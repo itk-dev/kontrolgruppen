@@ -1,48 +1,64 @@
 -
     '@id': channel:anonym_anmelder
+    clientTypes: [person]
     name: Anonym anmelder
 -
     '@id': channel:navngiven_anmelder
+    clientTypes: [person]
     name: Navngiven anmelder
 -
     '@id': channel:internt_i_kommunen
+    clientTypes: [person]
     name: Internt i kommunen
 -
     '@id': channel:dfd
+    clientTypes: [person]
     name: Den fælles Dataenhed (DFD)
 -
     '@id': channel:politi
+    clientTypes: [person]
     name: Politi
 -
     '@id': channel:skattestyrelsen
+    clientTypes: [person]
     name: Skattestyrelsen
 -
     '@id': channel:star
+    clientTypes: [person]
     name: STAR
 -
     '@id': channel:egen_drift
+    clientTypes: [person]
     name: Egen drift (internt i Kontrolteam)
 -
     '@id': channel:anden_kommune
+    clientTypes: [person]
     name: Anden kommune
 -
     '@id': channel:kampagne
+    clientTypes: [person]
     name: Kampagne
 -
     '@id': channel:udbetaling_danmark
+    clientTypes: [person]
     name: Udbetaling Danmark
 -
     '@id': channel:projekter
+    clientTypes: [person]
     name: Projekter
 -
     '@id': channel:boligforeninger
+    clientTypes: [person]
     name: Boligforeninger
 -
     '@id': channel:udlændingestyrelsen
+    clientTypes: [person]
     name: Udlændingestyrelsen
 -
     '@id': channel:su
+    clientTypes: [person]
     name: SU
 -
     '@id': channel:andet
+    clientTypes: [person]
     name: Andet
