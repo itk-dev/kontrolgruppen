@@ -30,6 +30,8 @@ final class Version20210703092838 extends AbstractMigration
         $this->addSql('ALTER TABLE car DROP client_id');
         $this->addSql('DROP TABLE client');
         $this->addSql('ALTER TABLE process DROP client_cpr');
+        // Delete user settings referencing process client cpr
+        $this->addSql('DELETE FROM user_settings WHERE settings_value LIKE \'%clientCPR%\'');
     }
 
     public function down(Schema $schema) : void
