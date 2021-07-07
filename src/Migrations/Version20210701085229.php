@@ -39,6 +39,16 @@ final class Version20210701085229 extends AbstractMigration
         $this->addSql('ALTER TABLE quick_link ADD client_types LONGTEXT DEFAULT NULL COMMENT \'(DC2Type:json)\', DROP client_type');
         $this->addSql('ALTER TABLE reason ADD client_types LONGTEXT DEFAULT NULL COMMENT \'(DC2Type:json)\', DROP client_type');
         $this->addSql('ALTER TABLE service ADD client_types LONGTEXT DEFAULT NULL COMMENT \'(DC2Type:json)\', DROP client_type');
+
+        $this->addSql('UPDATE income_type SET client_types = \'["person"]\'');
+        $this->addSql('UPDATE account SET client_types = \'["person"]\'');
+        $this->addSql('UPDATE channel SET client_types = \'["person"]\'');
+        $this->addSql('UPDATE forwarded_to_authority SET client_types = \'["person"]\'');
+        $this->addSql('UPDATE process_status SET client_types = \'["person"]\'');
+        $this->addSql('UPDATE process_type SET client_types = \'["person"]\'');
+        $this->addSql('UPDATE quick_link SET client_types = \'["person"]\'');
+        $this->addSql('UPDATE reason SET client_types = \'["person"]\'');
+        $this->addSql('UPDATE service SET client_types = \'["person"]\'');
     }
 
     public function down(Schema $schema): void
@@ -55,5 +65,15 @@ final class Version20210701085229 extends AbstractMigration
         $this->addSql('ALTER TABLE quick_link ADD client_type VARCHAR(255) CHARACTER SET utf8mb4 DEFAULT NULL COLLATE `utf8mb4_unicode_ci`, DROP client_types');
         $this->addSql('ALTER TABLE reason ADD client_type VARCHAR(255) CHARACTER SET utf8mb4 DEFAULT NULL COLLATE `utf8mb4_unicode_ci`, DROP client_types');
         $this->addSql('ALTER TABLE service ADD client_type VARCHAR(255) CHARACTER SET utf8mb4 DEFAULT NULL COLLATE `utf8mb4_unicode_ci`, DROP client_types');
+
+        $this->addSql('UPDATE income_type SET client_type = \'person\'');
+        $this->addSql('UPDATE account SET client_type = \'person\'');
+        $this->addSql('UPDATE channel SET client_type = \'person\'');
+        $this->addSql('UPDATE forwarded_to_authority SET client_type = \'person\'');
+        $this->addSql('UPDATE process_status SET client_type = \'person\'');
+        $this->addSql('UPDATE process_type SET client_type = \'person\'');
+        $this->addSql('UPDATE quick_link SET client_type = \'person\'');
+        $this->addSql('UPDATE reason SET client_type = \'person\'');
+        $this->addSql('UPDATE service SET client_type = \'person\'');
     }
 }
