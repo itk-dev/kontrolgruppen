@@ -1874,12 +1874,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/itk-dev/kontrolgruppen-core-bundle.git",
-                "reference": "a2523f14c32ad349ac21503dea0c4834e3cbfe51"
+                "reference": "a0843010c57b02ddcce86393d25df5057c7c072e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/itk-dev/kontrolgruppen-core-bundle/zipball/a2523f14c32ad349ac21503dea0c4834e3cbfe51",
-                "reference": "a2523f14c32ad349ac21503dea0c4834e3cbfe51",
+                "url": "https://api.github.com/repos/itk-dev/kontrolgruppen-core-bundle/zipball/a0843010c57b02ddcce86393d25df5057c7c072e",
+                "reference": "a0843010c57b02ddcce86393d25df5057c7c072e",
                 "shasum": ""
             },
             "require": {
@@ -1986,7 +1986,7 @@
             "support": {
                 "source": "https://github.com/itk-dev/kontrolgruppen-core-bundle/tree/feature-KON-428-process-clients"
             },
-            "time": "2021-07-06T08:02:57+00:00"
+            "time": "2021-07-13T12:59:56+00:00"
         },
         {
             "name": "laminas/laminas-code",
