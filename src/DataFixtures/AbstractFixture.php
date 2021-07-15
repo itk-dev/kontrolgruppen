@@ -69,8 +69,8 @@ abstract class AbstractFixture extends Fixture
 
         $fixtures = $this->loadFixture();
 
-        foreach ($fixtures as $index => $data) {
-            $entity = $this->buildEntity($data, $index);
+        foreach ($fixtures as $data) {
+            $entity = $this->buildEntity($data);
 
             if (null !== $entity) {
                 $errors = $this->validator->validate($entity);
@@ -88,9 +88,12 @@ abstract class AbstractFixture extends Fixture
         $manager->flush();
     }
 
-    protected function buildEntity(array $data, $index)
+    protected function buildEntity(array $data, string $class = null)
     {
-        $entity = new $this->class();
+        if (null === $class) {
+            $class = $this->class;
+        }
+        $entity = new $class();
         $metadata = $this->getMetadata($entity);
         foreach ($data as $propertyPath => $value) {
             if (0 === strpos($propertyPath, '@')) {
@@ -104,6 +107,8 @@ abstract class AbstractFixture extends Fixture
                 } else {
                     $value = $this->getEntityReference($value);
                 }
+            } elseif (isset($metadata->embeddedClasses[$propertyPath])) {
+                $value = $this->buildEntity($value, $metadata->embeddedClasses[$propertyPath]['class']);
             } elseif (isset($metadata->fieldMappings[$propertyPath]['type'])) {
                 $value = $this->convert($value, $metadata->fieldMappings[$propertyPath]['type']);
             }
@@ -111,7 +116,7 @@ abstract class AbstractFixture extends Fixture
             try {
                 $this->propertyAccessor->setValue($entity, $propertyPath, $value);
             } catch (\Exception $exception) {
-                throw new \RuntimeException(sprintf('Cannot set property %s.%s on entity %s', \get_class($entity), $propertyPath, $entity));
+                throw new \RuntimeException(sprintf('Cannot set property %s.%s on entity %s', \get_class($entity), $propertyPath, $entity), $exception->getCode(), $exception);
             }
         }
 
