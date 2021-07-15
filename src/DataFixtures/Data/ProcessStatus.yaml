@@ -2,52 +2,62 @@
     '@id': process-status:oprettet
     name: Oprettet
     isCompletingStatus: false
+
 -
     '@id': process-status:forespg_dfd_udland
     clientTypes: [person]
     name: Forespørgsel DFD Udland
     isCompletingStatus: false
+
 -
     '@id': process-status:agterskrivelse
     clientTypes: [person]
     name: Agterskrivelse
     isCompletingStatus: false
+
 -
     '@id': process-status:partshoring
     clientTypes: [person]
     name: Partshøring
     isCompletingStatus: false
+
 -
     '@id': process-status:afgorelse
     clientTypes: [person]
     name: Afgørelse
     isCompletingStatus: false
+
 -
     '@id': process-status:ved_ankestyrelse
     clientTypes: [person]
     name: Ved Ankestyrelse
     isForwardToAnotherAuthority: true
     isCompletingStatus: false
+
 -
     '@id': process-status:afsluttet
     clientTypes: [person]
     name: Afsluttet
     isCompletingStatus: true
+
 -
     '@id': process-status:afventer_sagsbehandler
-    clientTypes: [person]
+    clientTypes: [company, person]
     name: Afventer tildeling af sagsbehandler
     isCompletingStatus: false
+
 -
     '@id': process-status:ringebrev
     clientTypes: [person]
     name: Ringebrev
     isCompletingStatus: false
+
 -
     '@id': process-status:virksomhedskontrol
     clientTypes: [person]
     name: Virksomhedskontrol
     isCompletingStatus: false
+
 -
     '@id': process-status:indkaldelse_til_samtale
     clientTypes: [person]
@@ -55,16 +65,21 @@
     isCompletingStatus: false
 
 -
-    '@id': process-status-company:afventer_sagsbehandler
+    '@id': process-status:company:oprettet
+    name: Oprettet
+    isCompletingStatus: false
+
+-
+    '@id': process-status:company:fødevarekontrol
     clientTypes: [company]
     name: Afventer tildeling af sagsbehandler
     isCompletingStatus: false
 
 -
-    '@id': process-status-company:fødevarekontrol
+    '@id': process-status:company:afsluttet
     clientTypes: [company]
-    name: Afventer tildeling af sagsbehandler
-    isCompletingStatus: false
+    name: Afsluttet
+    isCompletingStatus: true
 
 # - '@process-status:oprettet'
 # - '@process-status:forespg_dfd_udland'

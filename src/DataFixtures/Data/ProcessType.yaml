@@ -794,14 +794,16 @@
     name: 'Virksomhedsprocess'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     defaultProcessStatus: '@process-status:oprettet'
-    defaultProcessStatusOnEmptyCaseWorker: '@process-status-company:afventer_sagsbehandler'
-    # channels:
-    #     - '@channel:company-udbetaling_danmark'
-    # processStatuses:
-    #     - '@process-status:company-oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
+    channels:
+        - '@channel:company:projekter'
+        # - '@channel:kampagne'
+    processStatuses:
+        - '@process-status:company:oprettet'
+        - '@process-status:afventer_sagsbehandler'
     #     - '@process-status:company-indkaldelse_til_samtale'
     #     - '@process-status:company-virksomhedskontrol'
-    #     - '@process-status:company-afsluttet'
+        - '@process-status:company:afsluttet'
     # services:
     #     - '@service:las'
     #     - '@service:fortidspension'
