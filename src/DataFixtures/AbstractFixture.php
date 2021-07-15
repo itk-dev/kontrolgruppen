@@ -16,6 +16,9 @@ use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Yaml\Yaml;
 
+/**
+ * Class AbstractFixture.
+ */
 abstract class AbstractFixture extends Fixture
 {
     /** @var string */
@@ -30,10 +33,47 @@ abstract class AbstractFixture extends Fixture
     /** @var ValidatorInterface */
     protected $validator;
 
+    /**
+     * AbstractFixture constructor.
+     *
+     * @param PropertyAccessorInterface $propertyAccessor The property accessor
+     * @param ValidatorInterface        $validator        The validator
+     */
     public function __construct(PropertyAccessorInterface $propertyAccessor, ValidatorInterface $validator)
     {
         $this->propertyAccessor = $propertyAccessor;
         $this->validator = $validator;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function load(ObjectManager $manager)
+    {
+        if (null === $this->class) {
+            throw new \RuntimeException(sprintf('No class defined in %s', static::class));
+        }
+
+        $fixtures = $this->loadFixture();
+
+        foreach ($fixtures as $data) {
+            $entity = $this->buildEntity($data);
+
+            if (null !== $entity) {
+                $errors = $this->validator->validate($entity);
+                if (\count($errors) > 0) {
+                    $message = Yaml::dump($data).PHP_EOL.(string) $errors;
+                    throw new \InvalidArgumentException($message);
+                }
+
+                $manager->persist($entity);
+            }
+
+            if (isset($data['@id'])) {
+                $this->addReference($data['@id'], $entity);
+            }
+        }
+        $manager->flush();
     }
 
     /**
@@ -61,33 +101,14 @@ abstract class AbstractFixture extends Fixture
         return Yaml::parse($content);
     }
 
-    public function load(ObjectManager $manager)
-    {
-        if (null === $this->class) {
-            throw new \RuntimeException('No class defined in '.static::class);
-        }
-
-        $fixtures = $this->loadFixture();
-
-        foreach ($fixtures as $data) {
-            $entity = $this->buildEntity($data);
-
-            if (null !== $entity) {
-                $errors = $this->validator->validate($entity);
-                if (\count($errors) > 0) {
-                    throw new \InvalidArgumentException(Yaml::dump($data).PHP_EOL.(string) $errors);
-                }
-
-                $manager->persist($entity);
-            }
-
-            if (isset($data['@id'])) {
-                $this->addReference($data['@id'], $entity);
-            }
-        }
-        $manager->flush();
-    }
-
+    /**
+     * Build entity.
+     *
+     * @param array       $data  The data
+     * @param string|null $class The entity class
+     *
+     * @return mixed
+     */
     protected function buildEntity(array $data, string $class = null)
     {
         if (null === $class) {
@@ -116,18 +137,38 @@ abstract class AbstractFixture extends Fixture
             try {
                 $this->propertyAccessor->setValue($entity, $propertyPath, $value);
             } catch (\Exception $exception) {
-                throw new \RuntimeException(sprintf('Cannot set property %s.%s on entity %s', \get_class($entity), $propertyPath, $entity), $exception->getCode(), $exception);
+                $message = sprintf(
+                    'Cannot set property %s.%s on entity %s',
+                    \get_class($entity),
+                    $propertyPath,
+                    $entity
+                );
+                throw new \RuntimeException($message, $exception->getCode(), $exception);
             }
         }
 
         return $entity;
     }
 
+    /**
+     * Get entity metadata.
+     *
+     * @param $entity The entity
+     *
+     * @return \Doctrine\Persistence\Mapping\ClassMetadata
+     */
     protected function getMetadata($entity)
     {
         return $this->referenceRepository->getManager()->getClassMetadata(\get_class($entity));
     }
 
+    /**
+     * Get entity reference.
+     *
+     * @param $reference The reference
+     *
+     * @return object
+     */
     protected function getEntityReference($reference)
     {
         if (0 === strpos($reference, '@')) {

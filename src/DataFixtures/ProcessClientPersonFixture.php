@@ -13,10 +13,16 @@ namespace App\DataFixtures;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 
+/**
+ * Class ProcessClientPersonFixture.
+ */
 class ProcessClientPersonFixture extends AbstractFixture implements DependentFixtureInterface
 {
     protected $class = ProcessClientPerson::class;
 
+    /**
+     * {@inheritdoc}
+     */
     public function getDependencies()
     {
         return [

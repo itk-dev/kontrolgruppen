@@ -12,6 +12,9 @@ namespace App\DataFixtures;
 
 use Kontrolgruppen\CoreBundle\Entity\Service;
 
+/**
+ * Class ServiceFixture.
+ */
 class ServiceFixture extends AbstractFixture
 {
     protected $class = Service::class;

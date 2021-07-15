@@ -12,6 +12,9 @@ namespace App\DataFixtures;
 
 use Kontrolgruppen\CoreBundle\Entity\ProcessStatus;
 
+/**
+ * Class ProcessStatusFixture.
+ */
 class ProcessStatusFixture extends AbstractFixture
 {
     protected $class = ProcessStatus::class;

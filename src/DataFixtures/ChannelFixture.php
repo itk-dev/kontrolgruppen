@@ -12,6 +12,9 @@ namespace App\DataFixtures;
 
 use Kontrolgruppen\CoreBundle\Entity\Channel;
 
+/**
+ * Class ChannelFixture.
+ */
 class ChannelFixture extends AbstractFixture
 {
     protected $class = Channel::class;

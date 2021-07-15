@@ -12,6 +12,9 @@ namespace App\DataFixtures;
 
 use Kontrolgruppen\CoreBundle\Entity\User;
 
+/**
+ * Class UserFixture.
+ */
 class UserFixture extends AbstractFixture
 {
     protected $class = User::class;

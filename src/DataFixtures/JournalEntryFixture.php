@@ -13,10 +13,16 @@ namespace App\DataFixtures;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Kontrolgruppen\CoreBundle\Entity\JournalEntry;
 
+/**
+ * Class JournalEntryFixture.
+ */
 class JournalEntryFixture extends AbstractFixture implements DependentFixtureInterface
 {
     protected $class = JournalEntry::class;
 
+    /**
+     * {@inheritdoc}
+     */
     public function getDependencies()
     {
         return [
