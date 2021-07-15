@@ -12,7 +12,8 @@ namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Component\PropertyAccess\PropertyAccessor;
+use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Yaml\Yaml;
 
 abstract class AbstractFixture extends Fixture
@@ -23,8 +24,17 @@ abstract class AbstractFixture extends Fixture
     /** @var string */
     protected $fixtureName;
 
-    /** @var PropertyAccessor */
-    protected $accessor;
+    /** @var PropertyAccessorInterface */
+    protected $propertyAccessor;
+
+    /** @var ValidatorInterface */
+    protected $validator;
+
+    public function __construct(PropertyAccessorInterface $propertyAccessor, ValidatorInterface $validator)
+    {
+        $this->propertyAccessor = $propertyAccessor;
+        $this->validator = $validator;
+    }
 
     /**
      * Load a fixture.
@@ -58,11 +68,16 @@ abstract class AbstractFixture extends Fixture
         }
 
         $fixtures = $this->loadFixture();
-        $this->accessor = new PropertyAccessor();
 
         foreach ($fixtures as $index => $data) {
             $entity = $this->buildEntity($data, $index);
+
             if (null !== $entity) {
+                $errors = $this->validator->validate($entity);
+                if (\count($errors) > 0) {
+                    throw new \InvalidArgumentException(Yaml::dump($data).PHP_EOL.(string) $errors);
+                }
+
                 $manager->persist($entity);
             }
 
@@ -94,7 +109,7 @@ abstract class AbstractFixture extends Fixture
             }
 
             try {
-                $this->accessor->setValue($entity, $propertyPath, $value);
+                $this->propertyAccessor->setValue($entity, $propertyPath, $value);
             } catch (\Exception $exception) {
                 throw new \RuntimeException(sprintf('Cannot set property %s.%s on entity %s', \get_class($entity), $propertyPath, $entity));
             }
