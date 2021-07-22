@@ -82,3 +82,8 @@
     '@id': channel:company:projekter
     clientTypes: [company]
     name: Projekter
+
+-
+    '@id': channel:company:projekter-002
+    clientTypes: [company]
+    name: Projekter II
