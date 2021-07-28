@@ -18,6 +18,7 @@ return [
         'PhanInvalidConstantFQSEN',
     ],
     'directory_list' => [
+        'core',
         'src',
         'public',
     ],
