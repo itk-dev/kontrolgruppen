@@ -15,8 +15,8 @@
             <tr>
                 <th>{{ 'process_type.table.process_statuses'|trans }}</th>
                 <td>
-                    {% for processStatus in process_type.processStatuses %}
-                        {{ processStatus }}{% if not loop.last %}, {% endif %}
+                    {% for process_status in process_type.processStatuses %}
+                        {{ process_status }}{% if not loop.last %}, {% endif %}
                     {% endfor %}
                 </td>
             </tr>

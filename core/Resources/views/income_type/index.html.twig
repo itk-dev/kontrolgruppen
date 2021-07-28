@@ -14,15 +14,15 @@
             </tr>
             </thead>
             <tbody>
-            {% for incomeType in incomeTypes %}
+            {% for income_type in incomeTypes %}
                 <tr>
-                    <td>{{ incomeType.name }}</td>
+                    <td>{{ income_type.name }}</td>
                     <td class="text-right">
-                        <a href="{{ path('income_type_show', {'id': incomeType.id}) }}" class="btn btn-sm btn-dark" data-toggle="tooltip" data-placement="top"
+                        <a href="{{ path('income_type_show', {'id': income_type.id}) }}" class="btn btn-sm btn-dark" data-toggle="tooltip" data-placement="top"
                            title="{{ 'common.actions.show'|trans }}">
                             <i class="fas {{ iconClass('show') }} fa-inverse"></i>
                         </a>
-                        <a href="{{ path('income_type_edit', {'id': incomeType.id}) }}" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top"
+                        <a href="{{ path('income_type_edit', {'id': income_type.id}) }}" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top"
                            title="{{ 'common.actions.edit'|trans }}">
                             <i class="fas {{ iconClass('edit') }} fa-inverse"></i></a>
                         </a>
