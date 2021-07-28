@@ -349,7 +349,7 @@ class ProcessController extends BaseController
      * @param \Kontrolgruppen\CoreBundle\Entity\Process                     $process
      * @param \Kontrolgruppen\CoreBundle\Repository\ServiceRepository       $serviceRepository
      * @param \Kontrolgruppen\CoreBundle\Repository\ProcessStatusRepository $processStatusRepository
-     * @param \Kontrolgruppen\CoreBundle\Service\EconomyService             $economyService
+     * @param \Kontrolgruppen\CoreBundle\Service\ProcessManager             $processManager
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
@@ -415,8 +415,9 @@ class ProcessController extends BaseController
     /**
      * @Route("/{id}/resume", name="process_resume", methods={"POST", "GET"})
      *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Kontrolgruppen\CoreBundle\Entity\Process $process
+     * @param \Symfony\Component\HttpFoundation\Request                     $request
+     * @param \Kontrolgruppen\CoreBundle\Entity\Process                     $process
+     * @param \Kontrolgruppen\CoreBundle\Repository\ProcessStatusRepository $processStatusRepository
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */

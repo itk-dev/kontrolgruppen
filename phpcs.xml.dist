@@ -19,4 +19,9 @@
 
     <rule ref="PSR2"/>
     <rule ref="Symfony"/>
+
+    <!-- The Generic.Files.LineLength.MaxExceeded rule conflicts with Symfony.Functions.Arguments.Invalid -->
+    <rule ref="Generic.Files.LineLength.MaxExceeded">
+      <exclude-pattern>*</exclude-pattern>
+    </rule>
 </ruleset>
