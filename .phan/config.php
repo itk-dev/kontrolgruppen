@@ -9,18 +9,16 @@
  */
 return [
     'backward_compatibility_checks' => false,
-    'target_php_version' => 7.2,
-   
+    'target_php_version' => 7.4,
     'dead_code_detection' => true,
     'ignore_undeclared_functions_with_known_signatures' => false,
     'whitelist_issue_types' => [
-       'PhanCompatiblePHP7',
-       'PhanDeprecatedFunctionInternal',
-	   'PhanInvalidConstantFQSEN',
+        'PhanCompatiblePHP7',
+        'PhanDeprecatedFunctionInternal',
+        'PhanInvalidConstantFQSEN',
     ],
     'directory_list' => [
         'src',
-        'packages',
         'public',
     ],
     'exclude_analysis_directory_list' => [
