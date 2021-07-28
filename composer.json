@@ -56,7 +56,7 @@
         "drenso/phan-extensions": "^2.5",
         "escapestudios/symfony2-coding-standard": "^3.11",
         "friendsofphp/php-cs-fixer": "^2.16",
-        "friendsoftwig/twigcs": "^3.2",
+        "friendsoftwig/twigcs": "^5.0",
         "phan/phan": "^2.4",
         "phpmd/phpmd": "^2.8",
         "phpunit/phpunit": "^9.2",
@@ -136,7 +136,7 @@
             "phpcs --standard=phpcs.xml.dist"
         ],
         "check-coding-standards/twigcs": [
-            "twigcs lint templates && twigcs lint core/Resources/views"
+            "twigcs --twig-version=2 templates core/Resources/views"
         ],
         "check-coding-standards": [
             "@check-coding-standards/php-cs-fixer",
@@ -179,7 +179,7 @@
             "php-cs-fixer --config=.php_cs.dist fix --dry-run --diff --diff-format=udiff"
         ],
         "actions/twigcs": [
-            "twigcs lint templates && twigcs lint core/Resources/views"
+            "twigcs --twig-version=2 templates core/Resources/views"
         ],
         "actions/phan": [
             "phan --no-progress-bar --allow-polyfill-parser"
