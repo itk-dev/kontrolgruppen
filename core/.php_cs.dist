@@ -1,14 +1,13 @@
 <?php
 
 $finder = PhpCsFixer\Finder::create()
-     ->notPath('Kernel.php')
-     ->in(__DIR__.'/{core,src,tests}')
+     ->in(__DIR__.'/')
 ;
 
 $header =<<<'HEADER'
-This file is part of itk-dev/kontrolgruppen.
+This file is part of aakb/kontrolgruppen-core-bundle.
 
-(c) 2019–2021 ITK Development
+(c) 2019 ITK Development
 
 This source file is subject to the MIT license.
 HEADER;
