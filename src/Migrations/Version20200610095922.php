@@ -20,18 +20,28 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20200610095922 extends AbstractMigration
 {
+    /**
+     * {@inheritdoc}
+     */
     public function getDescription(): string
     {
         return '';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf('mysql' !== $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on \'mysql\'.');
+
         $this->addSql('ALTER TABLE revenue_entry CHANGE future_savings_type future_savings_type ENUM(\'FIXED_VALUE\', \'SANCTION\', \'PR_MND_X_12\', \'SELF_SUPPORT\', \'PR_WEEK_X_52\') DEFAULT NULL COMMENT \'(DC2Type:RevenueFutureTypeEnumType)\'');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs

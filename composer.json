@@ -136,7 +136,7 @@
             "phpcs --standard=phpcs.xml.dist"
         ],
         "check-coding-standards/twigcs": [
-            "twigcs lint templates core/Resources/views"
+            "twigcs lint templates && twigcs lint core/Resources/views"
         ],
         "check-coding-standards": [
             "@check-coding-standards/php-cs-fixer",
@@ -179,7 +179,7 @@
             "php-cs-fixer --config=.php_cs.dist fix --dry-run --diff --diff-format=udiff"
         ],
         "actions/twigcs": [
-            "twigcs lint templates core/Resources/views"
+            "twigcs lint templates && twigcs lint core/Resources/views"
         ],
         "actions/phan": [
             "phan --no-progress-bar --allow-polyfill-parser"

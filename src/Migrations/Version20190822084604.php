@@ -20,11 +20,17 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20190822084604 extends AbstractMigration
 {
+    /**
+     * {@inheritdoc}
+     */
     public function getDescription(): string
     {
         return '';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
@@ -33,6 +39,9 @@ final class Version20190822084604 extends AbstractMigration
         $this->addSql('ALTER TABLE economy_entry DROP repayment_amount');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
