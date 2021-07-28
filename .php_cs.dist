@@ -2,7 +2,7 @@
 
 $finder = PhpCsFixer\Finder::create()
      ->notPath('Kernel.php')
-     ->in(__DIR__.'/{src,tests}')
+     ->in(__DIR__.'/{core,src,tests}')
 ;
 
 $header =<<<'HEADER'
@@ -21,8 +21,10 @@ return PhpCsFixer\Config::create()
         'array_syntax' => ['syntax' => 'short'],
         'header_comment' => ['header' => $header],
         'list_syntax' => ['syntax' => 'short'],
+        'no_superfluous_phpdoc_tags' => false,
         'method_argument_space' => ['on_multiline' => 'ensure_fully_multiline'],
         'strict_comparison' => true,
+        'phpdoc_align' => false,
     ])
     ->setFinder($finder)
 ;

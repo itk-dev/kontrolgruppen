@@ -1,0 +1,69 @@
+services:
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        bind:
+            $cprServiceUrl: '%env(CPR_SERVICE_URL)%'
+
+    Kontrolgruppen\CoreBundle\:
+        resource: '../../*'
+        exclude: '../../{DependencyInjection,Entity,Migrations,Tests,Kernel.php,assets,node_modules,vendor}'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    Kontrolgruppen\CoreBundle\Controller\:
+        resource: '../../Controller'
+        tags: ['controller.service_arguments']
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+    Kontrolgruppen\CoreBundle\Export\Manager:
+        arguments:
+            $configuration: ~
+
+    # Exports
+    Kontrolgruppen\CoreBundle\Export\:
+        resource: '../../Export/*/*'
+        # Exports must be public to load them dynamically (by id) in the Export
+        # manager.
+        public: true
+
+    Kontrolgruppen\CoreBundle\Security\SAMLAuthenticator:
+        arguments:
+            $router: '@router.default'
+            $session: '@session'
+            $settings: ~
+
+    Kontrolgruppen\CoreBundle\Security\UserManager:
+        arguments:
+            $objectManager: '@doctrine.orm.entity_manager'
+            $class: ~
+
+    Kontrolgruppen\CoreBundle\CPR\CprServiceInterface:
+        class: 'Kontrolgruppen\CoreBundle\CPR\ServiceplatformenCprService'
+
+    Kontrolgruppen\CoreBundle\Service\LockService:
+        arguments: ['@lock.store.semaphore']
+
+    Kontrolgruppen\CoreBundle\EventListener\LoggerListener:
+        arguments:
+            $loggableListener: '@stof_doctrine_extensions.listener.loggable'
+            $authorizationChecker: '@?security.authorization_checker'
+            $tokenStorage: '@?security.token_storage'
+
+    ItkDev\Serviceplatformen\Service\PersonBaseDataExtendedService:
+        factory: ['Kontrolgruppen\CoreBundle\CPR\ServiceplatformenServiceFactory', createPersonBaseDataExtendedService]
+        arguments: [
+                '%azure_tenant_id%',
+                '%azure_application_id%',
+                '%azure_client_secret%',
+                '%azure_key_vault_name%',
+                '%azure_key_vault_secret%',
+                '%azure_key_vault_secret_version%',
+                '%serviceplatformen_service_agreement_uuid%',
+                '%serviceplatformen_user_system_uuid%',
+                '%serviceplatformen_user_uuid%',
+                '%person_base_data_extended_service_contract%',
+                '%person_base_data_extended_service_endpoint%',
+                '%person_base_data_extended_service_uuid%'
+        ]

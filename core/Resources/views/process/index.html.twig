@@ -1,0 +1,27 @@
+{% extends '@KontrolgruppenCore/main/index.html.twig' %}
+
+{% block title %}{{ 'process.index.title'|trans }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-12">
+            <h1 class="float-left">{{ 'process.index.title'|trans }}</h1>
+            <a href="{{ path('process_new') }}" class="btn btn-success btn-lg float-right">{{ 'process.btns.create_new'|trans }}</a>
+        </div>
+    </div>
+
+    <form method="get" action="." class="form form-inline">
+        {{ form_rest(form) }}
+    </form>
+
+    {% include '@KontrolgruppenCore/process/_process_table_pagination.html.twig' %}
+
+    {% include '@KontrolgruppenCore/journal_entry/_modal_quick_view.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {{ encore_entry_script_tags('processFilters') }}
+    {{ encore_entry_script_tags('journalQuickview') }}
+{% endblock %}

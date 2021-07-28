@@ -32,17 +32,6 @@ open http://$(docker-compose port nginx 80)
 
 ## Setup for development
 
-Add core-bundle to the project:
-```sh
-git clone git@github.com:aakb/kontrolgruppen-core-bundle.git bundles/core-bundle
-
-# Use the recently checked out bundle in the composer setup:
-composer config repositories.kontrolgruppen/core-bundle path bundles/core-bundle
-composer require 'kontrolgruppen/core-bundle:*'
-```
-
-It's very important that you don't commit the changed composer.json and composer.lock file, as they now are in a development version.
-
 ```sh
 # Install dependencies.
 composer install
