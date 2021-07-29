@@ -33,8 +33,8 @@ composer require 'kontrolgruppen/core-bundle:«some branch name»
 Build production assets. They will be added to public/prod.
 
 ```sh
-docker run --volume ${PWD}:/app --workdir /app node:10 yarn install
-docker run --volume ${PWD}:/app --workdir /app node:10 yarn build
+docker-compose run node yarn install
+docker-compose run node yarn build
 ```
 
 Commit the built files to git.

@@ -108,3 +108,9 @@ services:
       - SA_PASSWORD=VeryStrongPassword1
     ports:
       - "1433"
+
+  node:
+    image: node:14
+    volumes:
+      - ./:/app:delegat
+    working_dir: /app
