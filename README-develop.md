@@ -88,8 +88,7 @@ This will place the files in the correct location.
 Watch for changes in js and css files and build development version:
 
 ```sh
-docker run --volume ${PWD}:/app --workdir /app node:10 yarn install
-docker run --interactive --tty --volume ${PWD}:/app --workdir /app node:10 yarn watch
+docker-compose run node yarn watch
 ```
 
 ## Coding standards
@@ -121,13 +120,13 @@ composer check-coding-standards/twigcs
 Check JavaScript files using [eslint](https://eslint.org/):
 
 ```sh
-yarn check-coding-standards-js
+docker-compose run node yarn check-coding-standards-js
 ```
 
 Apply coding standards:
 
 ```sh
-yarn apply-coding-standards-js
+docker-compose run node yarn apply-coding-standards-js
 ```
 
 ### SCSS
@@ -135,13 +134,13 @@ yarn apply-coding-standards-js
 Check SCSS files using [stylelint](https://stylelint.io/):
 
 ```sh
-yarn check-coding-standards-scss
+docker-compose run node yarn check-coding-standards-scss
 ```
 
 Apply coding standards:
 
 ```sh
-yarn apply-coding-standards-scss
+docker-compose run node yarn apply-coding-standards-scss
 ```
 
 ### GitHub Actions
