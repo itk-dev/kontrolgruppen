@@ -2,8 +2,7 @@
 set -o errexit -o errtrace -o noclobber -o nounset -o pipefail
 IFS=$'\n\t'
 
-script_dir=$(cd $(dirname "${BASH_SOURCE[0]}") && pwd)
-bin_dir=$(cd $(dirname "${BASH_SOURCE[0]}")/../bin/ && pwd)
+bin_dir=$(cd "$(dirname "${BASH_SOURCE[0]}")"/../bin/ && pwd)
 bold=$(tput bold)
 normal=$(tput sgr0)
 
@@ -35,4 +34,4 @@ else
   APP_ENV=$symfony_env composer install
 fi
 
-APP_ENV=$symfony_env $bin_dir/console doctrine:migrations:migrate --no-interaction
+APP_ENV=$symfony_env "$bin_dir"/console doctrine:migrations:migrate --no-interaction

@@ -61,6 +61,7 @@ docker-compose exec phpfpm bin/console kontrolgruppen:user:login admin@example.c
 to get a one-time sign in url.
 
 ### CPR Service
+
 ```sh
 # Make sure that the database is created
 docker-compose exec borgerdata node createdb.js
@@ -72,12 +73,11 @@ docker-compose exec borgerdata yarn knex migrate:latest
 docker-compose exec borgerdata yarn knex seed:run
 ```
 
-
 ## Use maker bundle
 
 To use MakerBundle in Kontrolgruppen\CoreBundle, use the following environment variable:
 
-```
+```sh
 MAKER_NAMESPACE=Kontrolgruppen\\CoreBundle php bin/console make:entity
 ```
 
