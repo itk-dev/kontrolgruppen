@@ -96,7 +96,8 @@ jobs:
                   composer install -q --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
             - uses: actions/setup-node@v1
               with:
-                  node-version: '10.x'
+                  # Node LTS (cf. https://nodejs.org/en/about/releases/)
+                  node-version: '14.x'
             - name: install
               run: |
                   yarn install
