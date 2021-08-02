@@ -110,6 +110,7 @@ services:
       - "1433"
 
   node:
+    # Node LTS (cf. https://nodejs.org/en/about/releases/)
     image: node:14
     volumes:
       - ./:/app:delegat
