@@ -18,6 +18,12 @@
     city: Billund
     cvr: 47458714
     name: LEGO
+    pNumber: '1002020560'
+    notes: |-
+        Det er vist hovedkvarterets p-nummer; adressen er
+
+        Åstvej 1
+        7190 Billund
     contactPerson:
         name: Spaceman
         telephone: 87878787
