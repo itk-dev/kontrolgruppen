@@ -2,7 +2,7 @@
 # KON-425
 
 ```sh
-git checkout -b feature/KON-425
+git checkout feature/KON-425
 composer install
 bin/console app:KON-425
 ```
