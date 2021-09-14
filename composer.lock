@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8f45203ffe33f0eb5ca9e1e667e118f2",
+    "content-hash": "f8cfc7444feb74c9171e726cd2035f5b",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -1935,16 +1935,16 @@
         },
         {
             "name": "kontrolgruppen/core-bundle",
-            "version": "dev-feature-KON-428-process-clients",
+            "version": "dev-release-1.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/itk-dev/kontrolgruppen-core-bundle.git",
-                "reference": "8ef7ff39c2c881f2a42ac32efaf44b803789e1e2"
+                "reference": "71edc1be23bf2c9aea44361320e059b8a46e3a5b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/itk-dev/kontrolgruppen-core-bundle/zipball/8ef7ff39c2c881f2a42ac32efaf44b803789e1e2",
-                "reference": "8ef7ff39c2c881f2a42ac32efaf44b803789e1e2",
+                "url": "https://api.github.com/repos/itk-dev/kontrolgruppen-core-bundle/zipball/71edc1be23bf2c9aea44361320e059b8a46e3a5b",
+                "reference": "71edc1be23bf2c9aea44361320e059b8a46e3a5b",
                 "shasum": ""
             },
             "require": {
@@ -2050,9 +2050,9 @@
             },
             "description": "Kontrolgruppen core bundle",
             "support": {
-                "source": "https://github.com/itk-dev/kontrolgruppen-core-bundle/tree/feature-KON-428-process-clients"
+                "source": "https://github.com/itk-dev/kontrolgruppen-core-bundle/tree/develop"
             },
-            "time": "2021-09-09T07:32:49+00:00"
+            "time": "2021-09-14T11:41:53+00:00"
         },
         {
             "name": "laminas/laminas-code",
