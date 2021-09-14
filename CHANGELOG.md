@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.12.0] - 2021-09-14
+### Changed
+- Required Core Bundle version 1.12.0.
+
 ## [1.11.5] - 2021-06-11
 ### Changed
 - Required Core Bundle version 1.11.5.

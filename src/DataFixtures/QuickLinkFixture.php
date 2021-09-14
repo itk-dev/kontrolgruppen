@@ -12,6 +12,9 @@ namespace App\DataFixtures;
 
 use Kontrolgruppen\CoreBundle\Entity\QuickLink;
 
+/**
+ * Class QuickLinkFixture.
+ */
 class QuickLinkFixture extends AbstractFixture
 {
     protected $class = QuickLink::class;

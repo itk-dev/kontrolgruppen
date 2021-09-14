@@ -1,0 +1,8 @@
+-
+    '@id': account:account-001
+    clientTypes: [person]
+    name: Konto 1
+-
+    '@id': account:account-002
+    clientTypes: [company]
+    name: Konto 2

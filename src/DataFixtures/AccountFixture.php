@@ -10,12 +10,12 @@
 
 namespace App\DataFixtures;
 
-use Kontrolgruppen\CoreBundle\Entity\User;
+use Kontrolgruppen\CoreBundle\Entity\Account;
 
 /**
- * Class UserFixture.
+ * Class AccountFixture.
  */
-class UserFixture extends AbstractFixture
+class AccountFixture extends AbstractFixture
 {
-    protected $class = User::class;
+    protected $class = Account::class;
 }

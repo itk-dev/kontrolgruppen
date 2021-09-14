@@ -1,0 +1,29 @@
+-
+    '@id': client-company:1
+    process: '@process:3'
+    address: Holmens Kanal 2
+    postalCode: 1060
+    city: København K
+    cvr: 61126228
+    name: 'DANSKE BANK A/S'
+    contactPerson:
+        name: 'Bandit i Habit'
+        telephone: 666
+
+-
+    '@id': client-company:2
+    process: '@process:4'
+    address: Legovej 1
+    postalCode: 1234
+    city: Billund
+    cvr: 47458714
+    name: LEGO
+    pNumber: '1002020560'
+    notes: |-
+        Det er vist hovedkvarterets p-nummer; adressen er
+
+        Åstvej 1
+        7190 Billund
+    contactPerson:
+        name: Spaceman
+        telephone: 87878787
