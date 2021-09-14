@@ -10,12 +10,12 @@
 
 namespace App\DataFixtures;
 
-use Kontrolgruppen\CoreBundle\Entity\User;
+use Kontrolgruppen\CoreBundle\Entity\IncomeType;
 
 /**
- * Class UserFixture.
+ * Class IncomeTypeFixture.
  */
-class UserFixture extends AbstractFixture
+class IncomeTypeFixture extends AbstractFixture
 {
-    protected $class = User::class;
+    protected $class = IncomeType::class;
 }

@@ -1,57 +1,71 @@
 -
     '@id': service:kontanthjalp
+    clientTypes: [person]
     name: Kontanthjælp
     net_default_value: 0.7
 -
     '@id': service:sygedagpenge
+    clientTypes: [person]
     name: Sygedagpenge
     net_default_value: 0.7
 -
     '@id': service:integrationsydelse
+    clientTypes: [person]
     name: Integrationsydelse
     net_default_value: 0.7
 -
     '@id': service:ledighedsydelse
+    clientTypes: [person]
     name: Ledighedsydelse
     net_default_value: 0.7
 -
     '@id': service:ressourceforlobsydelse
+    clientTypes: [person]
     name: Ressourceforløbsydelse
     net_default_value: 0.7
 -
     '@id': service:las
+    clientTypes: [person]
     name: Alt under lov am aktiv socialpolitik (LAS)
     net_default_value: 0.7
 -
     '@id': service:fleksjobsydelse
+    clientTypes: [person]
     name: Fleksjobsydelse
     net_default_value: 0.7
 -
     '@id': service:fortidspension
+    clientTypes: [person]
     name: Førtidspension
     net_default_value: 0.7
 -
     '@id': service:pension
+    clientTypes: [person]
     name: Pension
     net_default_value: 0.7
 -
     '@id': service:boligstotte
+    clientTypes: [person]
     name: Boligstøtte
     net_default_value: 0.7
 -
     '@id': service:lab
+    clientTypes: [person]
     name: Alt under lov om aktiv beskæftigelsesindsats (LAB)
     net_default_value: 0.7
 -
     '@id': service:sel
+    clientTypes: [person]
     name: Alt under lov om socialservices (SEL)
     net_default_value: 0.7
 -
     '@id': service:okonomisk_friplads
+    clientTypes: [person]
     name: Økonomisk friplads
     net_default_value: 0.7
 -
     '@id': service:andet
+    clientTypes: [person]
     name: Andet
     net_default_value: 0.7
 

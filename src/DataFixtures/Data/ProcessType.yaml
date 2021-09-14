@@ -1,5 +1,6 @@
 -
     '@id': process-type:udrejse
+    clientTypes: [person]
     name: Udrejse
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     defaultProcessStatus: '@process-status:oprettet'
@@ -47,8 +48,10 @@
         - '@forwarded_to_authority:anden_myndighed'
         - '@forwarded_to_authority:anden_kommune'
         - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
+
 -
     '@id': process-type:udrejse_registersamkoring
+    clientTypes: [person]
     name: 'Udrejse - Registersamkøring'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     defaultProcessStatus: '@process-status:oprettet'
@@ -82,8 +85,10 @@
         - '@forwarded_to_authority:anden_myndighed'
         - '@forwarded_to_authority:anden_kommune'
         - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
+
 -
     '@id': process-type:dobbelt_foresorgelse
+    clientTypes: [person]
     name: 'Dobbelt forsørgelse (løn eller SU)'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     defaultProcessStatus: '@process-status:oprettet'
@@ -125,8 +130,10 @@
         - '@forwarded_to_authority:anden_myndighed'
         - '@forwarded_to_authority:anden_kommune'
         - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
+
 -
     '@id': process-type:dobbelt_foresorgelse_registersamkoring
+    clientTypes: [person]
     name: 'Dobbelt forsørgelse (løn eller SU) - Registersamkøring'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     defaultProcessStatus: '@process-status:oprettet'
@@ -158,8 +165,10 @@
         - '@forwarded_to_authority:anden_myndighed'
         - '@forwarded_to_authority:anden_kommune'
         - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
+
 -
     '@id': process-type:okonomisk_friplads
+    clientTypes: [person]
     name: 'Økonomisk friplads'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     defaultProcessStatus: '@process-status:oprettet'
@@ -201,8 +210,10 @@
         - '@forwarded_to_authority:anden_myndighed'
         - '@forwarded_to_authority:anden_kommune'
         - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
+
 -
     '@id': process-type:okonomisk_friplads_registersamkoring
+    clientTypes: [person]
     name: 'Økonomisk friplads - Registersamkøring'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     defaultProcessStatus: '@process-status:oprettet'
@@ -230,8 +241,10 @@
         - '@forwarded_to_authority:anden_myndighed'
         - '@forwarded_to_authority:anden_kommune'
         - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
+
 -
     '@id': process-type:sygedagpenge
+    clientTypes: [person]
     name: 'Sygedagpenge'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     defaultProcessStatus: '@process-status:oprettet'
@@ -273,8 +286,10 @@
         - '@forwarded_to_authority:anden_myndighed'
         - '@forwarded_to_authority:anden_kommune'
         - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
+
 -
     '@id': process-type:sygedagpenges_registersamkoring
+    clientTypes: [person]
     name: 'Sygedagpenge - Registersamkøring'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     defaultProcessStatus: '@process-status:oprettet'
@@ -303,8 +318,10 @@
         - '@forwarded_to_authority:anden_myndighed'
         - '@forwarded_to_authority:anden_kommune'
         - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
+
 -
     '@id': process-type:fleksjob
+    clientTypes: [person]
     name: 'Fleksjob'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     defaultProcessStatus: '@process-status:oprettet'
@@ -350,8 +367,10 @@
         - '@forwarded_to_authority:anden_myndighed'
         - '@forwarded_to_authority:anden_kommune'
         - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
+
 -
     '@id': process-type:formue
+    clientTypes: [person]
     name: 'Formue'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     defaultProcessStatus: '@process-status:oprettet'
@@ -394,8 +413,10 @@
         - '@forwarded_to_authority:anden_myndighed'
         - '@forwarded_to_authority:anden_kommune'
         - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
+
 -
     '@id': process-type:formue_registersamkoring
+    clientTypes: [person]
     name: 'Formue - Registersamkøring'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     defaultProcessStatus: '@process-status:oprettet'
@@ -423,8 +444,10 @@
         - '@forwarded_to_authority:anden_myndighed'
         - '@forwarded_to_authority:anden_kommune'
         - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
+
 -
     '@id': process-type:uoplyst_indtagt
+    clientTypes: [person]
     name: 'Uoplyst indtægt (sort arbejde)'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     defaultProcessStatus: '@process-status:oprettet'
@@ -475,8 +498,10 @@
         - '@forwarded_to_authority:anden_myndighed'
         - '@forwarded_to_authority:anden_kommune'
         - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
+
 -
     '@id': process-type:uoplyst_arbejde
+    clientTypes: [person]
     name: 'Uoplyst arbejde'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     defaultProcessStatus: '@process-status:oprettet'
@@ -527,8 +552,10 @@
         - '@forwarded_to_authority:anden_myndighed'
         - '@forwarded_to_authority:anden_kommune'
         - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
+
 -
     '@id': process-type:egen_virksomhed
+    clientTypes: [person]
     name: 'Egen virksomhed'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     defaultProcessStatus: '@process-status:oprettet'
@@ -580,8 +607,10 @@
         - '@forwarded_to_authority:anden_myndighed'
         - '@forwarded_to_authority:anden_kommune'
         - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
+
 -
     '@id': process-type:hjemmeboende
+    clientTypes: [person]
     name: 'Hjemmeboende på udeboendesats'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     defaultProcessStatus: '@process-status:oprettet'
@@ -623,8 +652,10 @@
         - '@forwarded_to_authority:anden_myndighed'
         - '@forwarded_to_authority:anden_kommune'
         - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
+
 -
     '@id': process-type:hjemmeboende_registersamkoring
+    clientTypes: [person]
     name: 'Hjemmeboende på udeboendesats - Registersamkøring'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     defaultProcessStatus: '@process-status:oprettet'
@@ -652,8 +683,10 @@
         - '@forwarded_to_authority:anden_myndighed'
         - '@forwarded_to_authority:anden_kommune'
         - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
+
 -
     '@id': process-type:paragraf_9
+    clientTypes: [person]
     name: '§9 - Orientering UDK'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     defaultProcessStatus: '@process-status:oprettet'
@@ -694,8 +727,10 @@
         - '@forwarded_to_authority:anden_myndighed'
         - '@forwarded_to_authority:anden_kommune'
         - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
+
 -
     '@id': process-type:paragraf_10
+    clientTypes: [person]
     name: '§10 – Udveksling af oplysninger m. UDK'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     defaultProcessStatus: '@process-status:oprettet'
@@ -721,8 +756,10 @@
         - '@forwarded_to_authority:anden_myndighed'
         - '@forwarded_to_authority:anden_kommune'
         - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
+
 -
     '@id': process-type:paragraf_11
+    clientTypes: [person]
     name: '§11 - Sagsoplysning pva. UDK'
     conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
     defaultProcessStatus: '@process-status:oprettet'
@@ -750,3 +787,69 @@
         - '@forwarded_to_authority:anden_myndighed'
         - '@forwarded_to_authority:anden_kommune'
         - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
+
+-
+    '@id': process-type:company-001
+    clientTypes: [company]
+    name: 'Virksomhedsprocess'
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
+    channels:
+        - '@channel:company:projekter'
+        # - '@channel:kampagne'
+    processStatuses:
+        - '@process-status:company:oprettet'
+        - '@process-status:afventer_sagsbehandler'
+    #     - '@process-status:company-indkaldelse_til_samtale'
+    #     - '@process-status:company-virksomhedskontrol'
+        - '@process-status:company:afsluttet'
+    # services:
+    #     - '@service:las'
+    #     - '@service:fortidspension'
+    #     - '@service:pension'
+    #     - '@service:boligstotte'
+    #     - '@service:andet'
+    # forwardedToAuthorities:
+    #     - '@forwarded_to_authority:udbetaling_dk'
+    #     - '@forwarded_to_authority:su'
+    #     - '@forwarded_to_authority:skat'
+    #     - '@forwarded_to_authority:star'
+    #     - '@forwarded_to_authority:politi'
+    #     - '@forwarded_to_authority:soeik'
+    #     - '@forwarded_to_authority:anden_myndighed'
+    #     - '@forwarded_to_authority:anden_kommune'
+    #     - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'
+
+-
+    '@id': process-type:company-002
+    clientTypes: [company]
+    name: 'Virksomhedsprocess II'
+    conclusionClass: Kontrolgruppen\CoreBundle\Entity\BaseConclusion
+    defaultProcessStatus: '@process-status:oprettet'
+    defaultProcessStatusOnEmptyCaseWorker: '@process-status:afventer_sagsbehandler'
+    channels:
+        - '@channel:company:projekter-002'
+        # - '@channel:kampagne'
+    processStatuses:
+        - '@process-status:company:oprettet'
+        - '@process-status:afventer_sagsbehandler'
+    #     - '@process-status:company-indkaldelse_til_samtale'
+    #     - '@process-status:company-virksomhedskontrol'
+        - '@process-status:company:afsluttet'
+    # services:
+    #     - '@service:las'
+    #     - '@service:fortidspension'
+    #     - '@service:pension'
+    #     - '@service:boligstotte'
+    #     - '@service:andet'
+    # forwardedToAuthorities:
+    #     - '@forwarded_to_authority:udbetaling_dk'
+    #     - '@forwarded_to_authority:su'
+    #     - '@forwarded_to_authority:skat'
+    #     - '@forwarded_to_authority:star'
+    #     - '@forwarded_to_authority:politi'
+    #     - '@forwarded_to_authority:soeik'
+    #     - '@forwarded_to_authority:anden_myndighed'
+    #     - '@forwarded_to_authority:anden_kommune'
+    #     - '@forwarded_to_authority:anden_kommune_virksomhedskontrol'

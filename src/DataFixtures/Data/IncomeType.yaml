@@ -1,0 +1,16 @@
+-
+    '@id': income-type:income-type-001
+    clientTypes: [person]
+    name: Type 1
+-
+    '@id': income-type:income-type-002
+    clientTypes: [company]
+    name: Type 2
+-
+    '@id': income-type:income-type-003
+    clientTypes: ~
+    name: Type 3
+-
+    '@id': income-type:income-type-004
+    clientTypes: [person, company]
+    name: Type 4
