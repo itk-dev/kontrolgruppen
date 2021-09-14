@@ -11,14 +11,14 @@
 namespace App\DataFixtures;
 
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Kontrolgruppen\CoreBundle\Entity\Process;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 
 /**
- * Class ProcessFixture.
+ * Class ProcessClientPersonFixture.
  */
-class ProcessFixture extends AbstractFixture implements DependentFixtureInterface
+class ProcessClientPersonFixture extends AbstractFixture implements DependentFixtureInterface
 {
-    protected $class = Process::class;
+    protected $class = ProcessClientPerson::class;
 
     /**
      * {@inheritdoc}
@@ -26,10 +26,7 @@ class ProcessFixture extends AbstractFixture implements DependentFixtureInterfac
     public function getDependencies()
     {
         return [
-            ProcessStatusFixture::class,
-            ServiceFixture::class,
-            ChannelFixture::class,
-            ProcessTypeFixture::class,
+            ProcessFixture::class,
         ];
     }
 }

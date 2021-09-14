@@ -1,29 +1,38 @@
 -
     '@id': forwarded_to_authority:udbetaling_dk
+    clientTypes: [person]
     name: Udbetaling Danmark
 -
     '@id': forwarded_to_authority:su
+    clientTypes: [person]
     name: SU
 -
     '@id': forwarded_to_authority:skat
+    clientTypes: [person]
     name: SKAT
 -
     '@id': forwarded_to_authority:star
+    clientTypes: [person]
     name: STAR
 -
     '@id': forwarded_to_authority:politi
+    clientTypes: [person]
     name: Politi
 -
     '@id': forwarded_to_authority:soeik
+    clientTypes: [person]
     name: SØIK
 -
     '@id': forwarded_to_authority:anden_myndighed
+    clientTypes: [person]
     name: Anden myndighed
 -
     '@id': forwarded_to_authority:anden_kommune
+    clientTypes: [person]
     name: Anden kommune
 -
     '@id': forwarded_to_authority:anden_kommune_virksomhedskontrol
+    clientTypes: [person]
     name: Anden kommune [Virksomhedskontrol]
 
 # - '@forwarded_to_authority:udbetaling_dk'

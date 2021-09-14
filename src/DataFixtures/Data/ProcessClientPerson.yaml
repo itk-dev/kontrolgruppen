@@ -1,0 +1,20 @@
+-
+    '@id': client-person:1
+    process: '@process:1'
+    address: Klientvej 1
+    postalCode: 1000
+    city: Klientby
+    cpr: 1234567890
+    firstName: Klient
+    lastName: Klientsen
+
+-
+    '@id': client-person:2
+    process: '@process:2'
+    address: Tneilkvej 1
+    postalCode: 2000
+    city: Tneilkby
+    cpr: 2345678901
+    firstName: Tneilk
+    lastName: Tneilksen
+    hasCar: true

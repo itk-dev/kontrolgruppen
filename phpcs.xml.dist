@@ -4,6 +4,8 @@
 
     <file>src/</file>
     <file>tests/</file>
+    <!-- Don't bother Symfony with our coding standards -->
+    <exclude-pattern>src/Kernel.php</exclude-pattern>
 
     <config name="installed_paths" value="vendor/escapestudios/symfony2-coding-standard" />
 

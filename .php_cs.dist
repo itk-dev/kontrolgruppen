@@ -1,6 +1,7 @@
 <?php
 
 $finder = PhpCsFixer\Finder::create()
+     ->notPath('Kernel.php')
      ->in(__DIR__.'/{src,tests}')
 ;
 
