@@ -38,7 +38,7 @@ git clone git@github.com:aakb/kontrolgruppen-core-bundle.git bundles/core-bundle
 
 # Use the recently checked out bundle in the composer setup:
 composer config repositories.kontrolgruppen/core-bundle path bundles/core-bundle
-composer require 'kontrolgruppen/core-bundle:dev-develop'
+composer require 'kontrolgruppen/core-bundle:*'
 ```
 
 It's very important that you don't commit the changed composer.json and composer.lock file, as they now are in a development version.
@@ -97,8 +97,10 @@ This will place the files in the correct location.
 ## Building js assets
 
 Watch for changes in js and css files and build development version:
-```
-yarn watch
+
+```sh
+docker run --volume ${PWD}:/app --workdir /app node:10 yarn install
+docker run --interactive --tty --volume ${PWD}:/app --workdir /app node:10 yarn watch
 ```
 
 ## Coding standards
