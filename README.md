@@ -84,3 +84,17 @@ Run the removal command at regular intervals using `cron` or similar tools, e.g 
 # Run the command every day at midnight
 0 0 * * * bin/console kontrolgruppen:process:delete-completed-since
 ```
+
+## Production (docker-compose)
+
+```sh
+vi .env.docker.local
+# .env.docker.local
+# COMPOSE_PROJECT_NAME=kontrolgruppen
+# COMPOSE_SERVER_DOMAIN=kontrolgruppen.example.com
+docker-compose --env-file .env.docker.local --file docker-compose.server.yml up --detach --remove-orphans
+# @see https://stackoverflow.com/questions/36107400/composer-update-memory-limit
+docker-compose --env-file .env.docker.local --file docker-compose.server.yml exec --env COMPOSER_MEMORY_LIMIT=-1 --user deploy phpfpm composer install --no-dev --classmap-authoritative
+docker-compose --env-file .env.docker.local --file docker-compose.server.yml exec --user deploy phpfpm bin/console doctrine:migrations:migrate --no-interaction
+docker-compose --env-file .env.docker.local --file docker-compose.server.yml exec --user deploy phpfpm composer dump-env prod
+```

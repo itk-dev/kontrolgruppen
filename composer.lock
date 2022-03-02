@@ -1935,16 +1935,16 @@
         },
         {
             "name": "kontrolgruppen/core-bundle",
-            "version": "1.12.2",
+            "version": "1.12.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/itk-dev/kontrolgruppen-core-bundle.git",
-                "reference": "629965be607f941adf9677ddaf68d003d7f922f3"
+                "reference": "4445eddacbce5f791936807ce6531499d3dd00a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/itk-dev/kontrolgruppen-core-bundle/zipball/629965be607f941adf9677ddaf68d003d7f922f3",
-                "reference": "629965be607f941adf9677ddaf68d003d7f922f3",
+                "url": "https://api.github.com/repos/itk-dev/kontrolgruppen-core-bundle/zipball/4445eddacbce5f791936807ce6531499d3dd00a2",
+                "reference": "4445eddacbce5f791936807ce6531499d3dd00a2",
                 "shasum": ""
             },
             "require": {
@@ -2050,9 +2050,9 @@
             },
             "description": "Kontrolgruppen core bundle",
             "support": {
-                "source": "https://github.com/itk-dev/kontrolgruppen-core-bundle/tree/1.12.2"
+                "source": "https://github.com/itk-dev/kontrolgruppen-core-bundle/tree/1.12.3"
             },
-            "time": "2021-12-14T12:20:51+00:00"
+            "time": "2022-03-03T21:11:23+00:00"
         },
         {
             "name": "laminas/laminas-code",
@@ -5461,7 +5461,7 @@
                 "symfony",
                 "words"
             ],
-            "abandoned": "use `EnglishInflector` from the String component instead",
+            "abandoned": "EnglishInflector from the String component",
             "time": "2020-01-04T13:00:46+00:00"
         },
         {
@@ -7123,6 +7123,7 @@
             ],
             "description": "Symfony SwiftmailerBundle",
             "homepage": "http://symfony.com",
+            "abandoned": "symfony/mailer",
             "time": "2019-11-14T16:18:31+00:00"
         },
         {
