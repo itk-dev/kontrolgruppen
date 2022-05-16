@@ -15,8 +15,8 @@
             <tr>
                 <th>{{ 'forwarded_to_authority.table.process_types'|trans }}</th>
                 <td>
-                    {% for processType in forwarded_to_authority.processTypes %}
-                        {{ processType }}{% if not loop.last %}, {% endif %}
+                    {% for process_type in forwarded_to_authority.processTypes %}
+                        {{ process_type }}{% if not loop.last %}, {% endif %}
                     {% endfor %}
                 </td>
             </tr>

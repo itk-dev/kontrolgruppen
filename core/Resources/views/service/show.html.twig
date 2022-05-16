@@ -15,8 +15,8 @@
             <tr>
                 <th>{{ 'service.table.process_types'|trans }}</th>
                 <td>
-                    {% for processType in service.processTypes %}
-                        {{ processType }}{% if not loop.last %}, {% endif %}
+                    {% for process_type in service.processTypes %}
+                        {{ process_type }}{% if not loop.last %}, {% endif %}
                     {% endfor %}
                 </td>
             </tr>

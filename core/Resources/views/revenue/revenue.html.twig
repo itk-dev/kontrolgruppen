@@ -21,7 +21,7 @@
                         <td>{{ 'revenue.table.repayment.net_sum_title'|trans }}</td>
                         <td class="text-right">{{ revenue.netRepaymentSum|localizedcurrency('DKK') }}</td>
                     </tr>
-                    {% for key,data in revenue.repaymentSums %}
+                    {% for key, data in revenue.repaymentSums %}
                         <tr>
                             <td>{{ key }} ({{ data.netPercentage }}%)</td>
                             <td class="text-right">{{ data.sum|localizedcurrency('DKK') }}</td>
@@ -48,7 +48,7 @@
                         <td>{{ 'revenue.table.future_savings.net_sum_title'|trans }}</td>
                         <td class="text-right">{{ revenue.netFutureSavingsSum|localizedcurrency('DKK') }}</td>
                     </tr>
-                    {% for key,data in revenue.futureSavingsSums %}
+                    {% for key, data in revenue.futureSavingsSums %}
                         <tr>
                             <td>{{ key }} ({{ data.netPercentage }}%)</td>
                             <td class="text-right">{{ data.sum|localizedcurrency('DKK') }}</td>
