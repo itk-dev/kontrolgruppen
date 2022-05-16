@@ -20,11 +20,17 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20210628111051 extends AbstractMigration
 {
+    /**
+     * {@inheritdoc}
+     */
     public function getDescription(): string
     {
         return '';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
@@ -39,6 +45,9 @@ INSERT INTO process_client(discr, id, process_id, type, identifier, address, pos
  INNER JOIN process ON client.process_id = process.id");
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs

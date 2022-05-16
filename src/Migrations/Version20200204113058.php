@@ -20,11 +20,17 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20200204113058 extends AbstractMigration
 {
+    /**
+     * {@inheritdoc}
+     */
     public function getDescription(): string
     {
         return '';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
@@ -35,6 +41,9 @@ final class Version20200204113058 extends AbstractMigration
         $this->addSql('ALTER TABLE revenue_entry ADD CONSTRAINT FK_FD30B51EED5CA9E6 FOREIGN KEY (service_id) REFERENCES service (id)');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
