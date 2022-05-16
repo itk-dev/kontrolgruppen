@@ -10,21 +10,21 @@
             </tr>
             </thead>
             <tbody>
-            {% for economy_entry in economyEntries %}
+            {% for economyEntry in economyEntries %}
                 <tr>
                     <td>
                         {% if is_granted('edit', process) %}
-                            <a href="{{ path('economy_entry_edit', {'id': economy_entry.id, 'process': process}) }}">{{ economy_entry.incomeType ?: 'economy.table.income_type_not_chosen'|trans }}</a>
+                            <a href="{{ path('economy_entry_edit', {'id': economyEntry.id, 'process': process}) }}">{{ economyEntry.incomeType ?: 'economy.table.income_type_not_chosen'|trans }}</a>
                         {% else %}
-                            {{ economy_entry.incomeType }}
+                            {{ economyEntry.incomeType }}
                         {% endif %}
                     </td>
                     <td>
-                        {{ economy_entry.periodFrom ? economy_entry.periodFrom|simple_date('short') }} -
-                        {{ economy_entry.periodTo ? economy_entry.periodTo|simple_date('short') }}
+                        {{ economyEntry.periodFrom ? economyEntry.periodFrom|simple_date('short') }} -
+                        {{ economyEntry.periodTo ? economyEntry.periodTo|simple_date('short') }}
                     </td>
-                    <td>{{ economy_entry.amount|localizedcurrency('DKK') }}</td>
-                    <td class="w-20 text-right">{{ enumTranslation(economy_entry.amountPeriod, 'EconomyEntryAmountPeriodEnumType') }}</td>
+                    <td>{{ economyEntry.amount|localizedcurrency('DKK') }}</td>
+                    <td class="w-20 text-right">{{ enumTranslation(economyEntry.amountPeriod, 'EconomyEntryAmountPeriodEnumType') }}</td>
                 </tr>
             {% else %}
                 <tr>

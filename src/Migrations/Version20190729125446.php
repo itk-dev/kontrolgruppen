@@ -20,17 +20,11 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20190729125446 extends AbstractMigration
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getDescription(): string
     {
         return '';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
@@ -39,9 +33,6 @@ final class Version20190729125446 extends AbstractMigration
         $this->addSql('ALTER TABLE client ADD receives_public_aid TINYINT(1) DEFAULT NULL, ADD employed TINYINT(1) DEFAULT NULL, ADD has_own_company TINYINT(1) DEFAULT NULL, DROP self_employed, DROP works_in_major_company, DROP not_employed');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs

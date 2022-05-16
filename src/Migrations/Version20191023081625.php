@@ -20,17 +20,11 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20191023081625 extends AbstractMigration
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getDescription(): string
     {
         return '';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
@@ -39,9 +33,6 @@ final class Version20191023081625 extends AbstractMigration
         $this->addSql('CREATE UNIQUE INDEX UNIQ_861D18963F7E58FD ON process (case_number)');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs

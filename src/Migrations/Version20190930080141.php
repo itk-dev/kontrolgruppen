@@ -20,17 +20,11 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20190930080141 extends AbstractMigration
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getDescription(): string
     {
         return '';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
@@ -40,9 +34,6 @@ final class Version20190930080141 extends AbstractMigration
         $this->addSql('ALTER TABLE process_log_entry ADD CONSTRAINT FK_911634C57EC2F574 FOREIGN KEY (process_id) REFERENCES process (id) ON DELETE CASCADE');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs

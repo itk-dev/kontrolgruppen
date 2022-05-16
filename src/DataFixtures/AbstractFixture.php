@@ -86,11 +86,17 @@ abstract class AbstractFixture extends Fixture
         }
 
         $fixtures = $this->loadFixture();
-        $this->accessor = new PropertyAccessor();
 
-        foreach ($fixtures as $index => $data) {
-            $entity = $this->buildEntity($data, $index);
+        foreach ($fixtures as $data) {
+            $entity = $this->buildEntity($data);
+
             if (null !== $entity) {
+                $errors = $this->validator->validate($entity);
+                if (\count($errors) > 0) {
+                    $message = Yaml::dump($data).\PHP_EOL.(string) $errors;
+                    throw new \InvalidArgumentException($message);
+                }
+
                 $manager->persist($entity);
             }
 

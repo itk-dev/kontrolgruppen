@@ -20,17 +20,11 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20190827095037 extends AbstractMigration
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getDescription(): string
     {
         return '';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
@@ -39,9 +33,6 @@ final class Version20190827095037 extends AbstractMigration
         $this->addSql('ALTER TABLE economy_entry ADD future_savings_amount DOUBLE PRECISION DEFAULT NULL, ADD future_savings_period_from DATETIME DEFAULT NULL, ADD future_savings_period_to DATETIME DEFAULT NULL, ADD repayment_amount DOUBLE PRECISION DEFAULT NULL, ADD repayment_period_from DATETIME DEFAULT NULL, ADD repayment_period_to DATETIME DEFAULT NULL');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs

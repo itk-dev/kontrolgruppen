@@ -8,18 +8,18 @@
     </tr>
     </thead>
     <tbody>
-    {% for economy_entry in economyEntries %}
+    {% for economyEntry in economyEntries %}
         <tr>
-            <td>{{ economy_entry.incomeType.name }}</td>
+            <td>{{ economyEntry.incomeType.name }}</td>
             <td>
-                {% if economy_entry.periodFrom is not null %}
-                    {{ economy_entry.periodFrom|localizeddate('short', 'none') }} - {{ economy_entry.periodTo|localizeddate('short', 'none') }}
+                {% if economyEntry.periodFrom is not null %}
+                    {{ economyEntry.periodFrom|localizeddate('short', 'none') }} - {{ economyEntry.periodTo|localizeddate('short', 'none') }}
                 {% else %}
                     -
                 {% endif %}
             </td>
-            <td>{{ economy_entry.amount|localizedcurrency('DKK') }}</td>
-            <td style="text-align: right;">{{ enumTranslation(economy_entry.amountPeriod, 'EconomyEntryAmountPeriodEnumType') }}</td>
+            <td>{{ economyEntry.amount|localizedcurrency('DKK') }}</td>
+            <td style="text-align: right;">{{ enumTranslation(economyEntry.amountPeriod, 'EconomyEntryAmountPeriodEnumType') }}</td>
         </tr>
     {% else %}
         <tr>

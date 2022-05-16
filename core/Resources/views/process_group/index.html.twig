@@ -16,8 +16,8 @@
                 <h6 class="card-subtitle mb-2 text-muted">{{ 'process_group.index.number_of_relations'|trans({'%count%': process_group.processes|length}) }}</h6>
             </div>
             <ul class="list-group list-group-flush">
-                {% for related_process in related_processes %}
-                    <li class="list-group-item"><a href="{{ path('process_show', {'id': related_process.id}) }}">{{ related_process.caseNumber }}</a> {% if related_process.caseNumber == process_group.primaryProcess.caseNumber %}<span class="badge badge-primary">{{ 'process_group.primary_process'|trans }}</span>{% endif %}</li>
+                {% for relatedProcess in related_processes %}
+                    <li class="list-group-item"><a href="{{ path('process_show', {'id': relatedProcess.id}) }}">{{ relatedProcess.caseNumber }}</a> {% if relatedProcess.caseNumber == process_group.primaryProcess.caseNumber %}<span class="badge badge-primary">{{ 'process_group.primary_process'|trans }}</span>{% endif %}</li>
                 {% endfor %}
             </ul>
             <div class="card-body">
