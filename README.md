@@ -10,6 +10,17 @@ Run
 
 to install in production.
 
+### Update
+
+```sh
+bin/console doctrine:migrations:list
+bin/console doctrine:migrations:sync-metadata-storage
+bin/console doctrine:migrations:version --add --all --no-interaction
+bin/console doctrine:migrations:list
+```
+
+(cf. https://github.com/itk-dev/documentation/blob/7e97c511e0ba7e0de21e4cd5ea41b25d146d63d9/docs/symfony/DoctrineMigrations.md#doctrine-migrations-upgrade-from-2x-to-3x)
+
 ### Build
 
 ```sh
