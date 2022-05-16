@@ -77,37 +77,6 @@ abstract class AbstractFixture extends Fixture
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function load(ObjectManager $manager)
-    {
-        if (null === $this->class) {
-            throw new \RuntimeException(sprintf('No class defined in %s', static::class));
-        }
-
-        $fixtures = $this->loadFixture();
-
-        foreach ($fixtures as $data) {
-            $entity = $this->buildEntity($data);
-
-            if (null !== $entity) {
-                $errors = $this->validator->validate($entity);
-                if (\count($errors) > 0) {
-                    $message = Yaml::dump($data).\PHP_EOL.(string) $errors;
-                    throw new \InvalidArgumentException($message);
-                }
-
-                $manager->persist($entity);
-            }
-
-            if (isset($data['@id'])) {
-                $this->addReference($data['@id'], $entity);
-            }
-        }
-        $manager->flush();
-    }
-
-    /**
      * Load a fixture.
      *
      * @param string|null $fixtureName The fixture name

@@ -39,3 +39,8 @@ yarn-error.log
 
 # SAML keys and stuff
 saml/
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
