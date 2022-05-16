@@ -62,7 +62,7 @@ abstract class AbstractFixture extends Fixture
             if (null !== $entity) {
                 $errors = $this->validator->validate($entity);
                 if (\count($errors) > 0) {
-                    $message = Yaml::dump($data).PHP_EOL.(string) $errors;
+                    $message = Yaml::dump($data).\PHP_EOL.(string) $errors;
                     throw new \InvalidArgumentException($message);
                 }
 
