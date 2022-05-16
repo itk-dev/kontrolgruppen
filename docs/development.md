@@ -143,6 +143,17 @@ Apply coding standards:
 docker-compose run node yarn apply-coding-standards-scss
 ```
 
+## Code analysis
+
+We use [PHPStan](https://phpstan.org/) and [Psalm](https://psalm.dev/) for
+static code analysis.
+
+```sh
+composer code-analysis/phpstan
+composer code-analysis/psalm
+composer code-analysis # Run both tools
+```
+
 ### GitHub Actions
 
 All code checks mentioned above are automatically run by [GitHub
