@@ -2,6 +2,7 @@
 
 $finder = PhpCsFixer\Finder::create()
      ->notPath('Kernel.php')
+     ->notPath('bootstrap.php')
      ->in(__DIR__.'/{core,src,tests}')
 ;
 
