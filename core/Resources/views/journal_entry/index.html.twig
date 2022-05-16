@@ -42,9 +42,9 @@
 
         <label for="sort-select" class="sr-only">{{ 'journal_entry.table.filter.sort_label'|trans }}</label>
         <select id="js-sort-select" class="form-control form-control-sm">
-            {% for sortDirection in ['asc', 'desc'] %}
+            {% for sort_direction in ['asc', 'desc'] %}
                 <option
-                    value="{{ sortDirection }}" {% if sortDirection == app.request.get('sort_direction') %} selected="selected"{% endif %}>{{ ('journal_entry.table.filter.sort_' ~ sortDirection)|trans }}</option>
+                    value="{{ sort_direction }}" {% if sort_direction == app.request.get('sort_direction') %} selected="selected"{% endif %}>{{ ('journal_entry.table.filter.sort_' ~ sort_direction)|trans }}</option>
             {% endfor %}
         </select>
 

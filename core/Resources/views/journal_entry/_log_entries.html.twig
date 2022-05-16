@@ -21,12 +21,12 @@
                             <td>{{ log.loggedAt|simple_date('short') }}</td>
                             <td>{{ ('journal_entry.revision.action_type.' ~ (log.action|lower))|trans }}</td>
 
-                            {% for changeKey, change in log.data %}
+                            {% for change_key, change in log.data %}
                                 {% if not loop.first %}
                                     <tr>
                                     <td colspan="2"></td>
                                 {% endif %}
-                                <td>{{ ('journal_entry.revision.change_key.' ~ (changeKey|lower))|trans }}</td>
+                                <td>{{ ('journal_entry.revision.change_key.' ~ (change_key|lower))|trans }}</td>
                                 <td>{{ change|raw }}</td>
                                 {% if not loop.first %}
                                     </tr>
