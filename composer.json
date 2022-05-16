@@ -179,15 +179,15 @@
         "test-setup": [
             "cp tests/empty.sqlite tests/db_test.sqlite",
             "./bin/console doctrine:schema:update --env=test --force",
-            "./bin/console doctrine:fixtures:load --env=test"
+            "./bin/console doctrine:fixtures:load --env=test --no-interaction"
         ],
         "phpunit": [
             "@test-setup",
-            "./bin/phpunit"
+            "simple-phpunit"
         ],
         "phpunit-coverage": [
             "@test-setup",
-            "./bin/phpunit --coverage-text=coverage/report.txt"
+            "simple-phpunit --coverage-text=coverage/report.txt"
         ],
         "phan": [
             "phan --allow-polyfill-parser"
