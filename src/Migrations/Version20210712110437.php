@@ -20,11 +20,17 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20210712110437 extends AbstractMigration
 {
+    /**
+     * {@inheritdoc}
+     */
     public function getDescription(): string
     {
         return '';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
@@ -33,6 +39,9 @@ final class Version20210712110437 extends AbstractMigration
         $this->addSql('ALTER TABLE process_client ADD contact_person_name VARCHAR(255) DEFAULT NULL, ADD contact_person_telephone VARCHAR(255) DEFAULT NULL');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs

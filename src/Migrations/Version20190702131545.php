@@ -20,11 +20,17 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20190702131545 extends AbstractMigration
 {
+    /**
+     * {@inheritdoc}
+     */
     public function getDescription(): string
     {
         return '';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
@@ -35,6 +41,9 @@ final class Version20190702131545 extends AbstractMigration
         $this->addSql('ALTER TABLE client ADD has_drivers_license TINYINT(1) DEFAULT NULL, ADD has_car TINYINT(1) DEFAULT NULL');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
