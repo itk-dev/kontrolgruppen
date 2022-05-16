@@ -16,7 +16,7 @@
         "cweagans/composer-patches": "^1.6",
         "fresh/doctrine-enum-bundle": "^6.3",
         "friendsofsymfony/ckeditor-bundle": "^2.0",
-        "itk-dev/serviceplatformen": "0.0.4",
+        "itk-dev/serviceplatformen": "^1.1",
         "knplabs/knp-paginator-bundle": "^3.0",
         "lexik/form-filter-bundle": "^5.0",
         "mpdf/mpdf": "^8.0.2",
