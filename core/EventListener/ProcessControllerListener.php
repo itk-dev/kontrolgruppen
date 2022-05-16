@@ -10,7 +10,7 @@
 
 namespace Kontrolgruppen\CoreBundle\EventListener;
 
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 use Kontrolgruppen\CoreBundle\Controller\ClientController;
 use Kontrolgruppen\CoreBundle\Controller\ConclusionController;
 use Kontrolgruppen\CoreBundle\Controller\EconomyEntryController;

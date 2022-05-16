@@ -10,7 +10,7 @@
 
 namespace Kontrolgruppen\CoreBundle\Security;
 
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
