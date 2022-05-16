@@ -8,18 +8,18 @@
         </tr>
     </thead>
     <tbody>
-        {% for economy_entry in economyEntries %}
+        {% for economyEntry in economyEntries %}
         <tr>
-            <td>{{ economy_entry.account.name }}</td>
-            <td>{{ economy_entry.accountNumber }}</td>
+            <td>{{ economyEntry.account.name }}</td>
+            <td>{{ economyEntry.accountNumber }}</td>
             <td>
-                {% if economy_entry.date is not null %}
-                    {{ economy_entry.date|localizeddate('short', 'none') }}
+                {% if economyEntry.date is not null %}
+                    {{ economyEntry.date|localizeddate('short', 'none') }}
                 {% else %}
                     -
                 {% endif %}
             </td>
-            <td class="text-right">{{ economy_entry.amount|localizedcurrency('DKK') }}</td>
+            <td class="text-right">{{ economyEntry.amount|localizedcurrency('DKK') }}</td>
         </tr>
         {% else %}
             <tr>

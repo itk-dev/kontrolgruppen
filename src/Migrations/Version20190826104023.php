@@ -20,17 +20,11 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20190826104023 extends AbstractMigration
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getDescription(): string
     {
         return '';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
@@ -41,9 +35,6 @@ final class Version20190826104023 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_EE7979A27D0EFAEA ON economy_entry (income_type_id)');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs

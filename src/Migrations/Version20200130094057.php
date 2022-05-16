@@ -20,17 +20,11 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20200130094057 extends AbstractMigration
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getDescription(): string
     {
         return '';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
@@ -40,9 +34,6 @@ final class Version20200130094057 extends AbstractMigration
         $this->addSql('ALTER TABLE user_settings ADD settings_key VARCHAR(255) NOT NULL, ADD settings_value LONGTEXT NOT NULL COMMENT \'(DC2Type:json)\', DROP process_index_sort');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs

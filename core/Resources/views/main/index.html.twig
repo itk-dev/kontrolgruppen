@@ -31,18 +31,18 @@
                                     {{ 'navigation.main.quick_links'|trans }}
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarQuicklinksDropdown">
-                                    {% for quick_link in quickLinks %}
-                                        <a class="dropdown-item" href="{{ quick_link.href }}" target="_blank">{{ quick_link.name }}</a>
+                                    {% for quickLink in quickLinks %}
+                                        <a class="dropdown-item" href="{{ quickLink.href }}" target="_blank">{{ quickLink.name }}</a>
                                     {% endfor %}
                                 </div>
                             </li>
                         {% endif %}
 
                         {% block globalmenu_mobile %}
-                            {% for menu_item in globalMenuItems %}
+                            {% for globalMenuItem in globalMenuItems %}
                                 <li class="nav-item d-lg-none">
-                                    <a class="nav-link" href="{{ menu_item.path }}">
-                                        <i class="fas {{ menu_item.icon }} text-light mr-3 mr-lg-none"></i>{{ menu_item.name }}
+                                    <a class="nav-link" href="{{ globalMenuItem.path }}">
+                                        <i class="fas {{ globalMenuItem.icon }} text-light mr-3 mr-lg-none"></i>{{ globalMenuItem.name }}
                                     </a>
                                 </li>
                             {% endfor %}
@@ -50,11 +50,11 @@
 
                         {% block navigation_mobile %}
                             {% if menuItems is defined %}
-                                {% for menu_item in menuItems %}
-                                    {% if menu_item.hide_from_mobile_menu is not defined or not menu_item.hide_from_mobile_menu %}
+                                {% for menuItem in menuItems %}
+                                    {% if menuItem.hide_from_mobile_menu is not defined or not menuItem.hide_from_mobile_menu %}
                                         <li class="nav-item d-lg-none">
-                                            <a class="nav-link{{ menu_item.active ? ' active' : '' }}" href="{{ menu_item.path }}">
-                                                {{ menu_item.name }}
+                                            <a class="nav-link{{ menuItem.active ? ' active' : '' }}" href="{{ menuItem.path }}">
+                                                {{ menuItem.name }}
                                             </a>
                                         </li>
                                     {% endif %}
@@ -63,8 +63,26 @@
                         {% endblock %}
 
                         {% if is_granted(['ROLE_SAGSBEHANDLER']) %}
+                            {#
                             <li class="nav-item mr-0 mr-sm-3 mb-3 mb-lg-0">
                                 <a class="btn btn-sm btn-success btn-block" role="button" href="{{ path('process_new') }}">{{ 'navigation.main.new_process'|trans }}</a>
+                            </li>
+                            #}
+                            <li class="nav-item dropdown mr-0 mr-sm-3 mb-3 mb-lg-0">
+                                <a class="dropdown-toggle btn btn-sm btn-success btn-block" href="#" id="navbarScrollingDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
+                                    {{ 'navigation.main.new_process'|trans }}
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarScrollingDropdown">
+                                    {% set client_types = [
+                                        constant('Kontrolgruppen\\CoreBundle\\Entity\\ProcessClientPerson::TYPE'),
+                                        constant('Kontrolgruppen\\CoreBundle\\Entity\\ProcessClientCompany::TYPE'),
+                                        ] %}
+                                    {% for client_type in client_types %}
+                                        <div class="col">
+                                            <a href="{{ path('process_new', {clientType: client_type}) }}" class="dropdown-item">{{ ('process_client_type.' ~ client_type)|trans }}</a>
+                                        </div>
+                                    {% endfor %}
+                                </ul>
                             </li>
 
                             <li class="nav-item mr-0 mr-sm-3 mb-3 mb-lg-0">
@@ -95,11 +113,11 @@
                         {% block globalmenu_sidebar %}
                             <div class="globalmenu">
                                 <ul class="nav flex-column">
-                                    {% for menu_item in globalMenuItems %}
+                                    {% for globalMenuItem in globalMenuItems %}
                                         <li class="nav-item">
-                                            <a class="nav-link{{ menu_item.active ? ' active' : '' }}" href="{{ menu_item.path }}"
-                                               data-toggle="tooltip" data-placement="right" title="{{ menu_item.tooltip }}">
-                                                <i class="fas {{ menu_item.icon }} fa-fw"></i><span class="sr-only">{{ menu_item.name }}</span>
+                                            <a class="nav-link{{ globalMenuItem.active ? ' active' : '' }}" href="{{ globalMenuItem.path }}"
+                                               data-toggle="tooltip" data-placement="right" title="{{ globalMenuItem.tooltip }}">
+                                                <i class="fas {{ globalMenuItem.icon }} fa-fw"></i><span class="sr-only">{{ globalMenuItem.name }}</span>
                                             </a>
                                         </li>
                                     {% endfor %}
@@ -114,12 +132,12 @@
                         <nav class="d-none d-lg-flex bg-light p-3">
                             <div class="sidebar-sticky">
                                 <ul class="nav flex-column nav-pills">
-                                    {% for menu_item in menuItems %}
+                                    {% for menuItem in menuItems %}
                                         <li class="nav-item">
-                                            <a class="nav-link{{ menu_item.active ? ' active' : '' }}{{ menu_item.disabled ? ' disabled' : '' }}"
-                                               href="{{ menu_item.path }}" {{ menu_item.disabled ? 'tabindex="-1" aria-disabled="true"' : '' }}>
-                                                {{ menu_item.name }}
-                                                {% if process is defined and menu_item.name == 'reminder.index.title'|trans %}
+                                            <a class="nav-link{{ menuItem.active ? ' active' : '' }}{{ menuItem.disabled ? ' disabled' : '' }}"
+                                               href="{{ menuItem.path }}" {{ menuItem.disabled ? 'tabindex="-1" aria-disabled="true"' : '' }}>
+                                                {{ menuItem.name }}
+                                                {% if process is defined and menuItem.name == 'reminder.index.title'|trans %}
                                                     <span class="badge badge-secondary">{{ process.reminders|length }}</span>
                                                 {% endif %}
                                             </a>

@@ -20,17 +20,11 @@ use Doctrine\Migrations\AbstractMigration;
  */
 final class Version20190813091713 extends AbstractMigration
 {
-    /**
-     * {@inheritdoc}
-     */
     public function getDescription(): string
     {
         return '';
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
@@ -43,9 +37,6 @@ final class Version20190813091713 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_6337851C52436242 ON process_type (default_process_status_on_empty_case_worker_id)');
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs

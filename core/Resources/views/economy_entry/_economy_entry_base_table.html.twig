@@ -10,18 +10,18 @@
             </tr>
             </thead>
             <tbody>
-            {% for economy_entry in economyEntries %}
+            {% for economyEntry in economyEntries %}
                 <tr>
                     <td>
                         {% if is_granted('edit', process) %}
-                            <a href="{{ path('economy_entry_edit', {'id': economy_entry.id, 'process': process}) }}">{{ economy_entry.account ?: 'economy.table.account_not_chosen'|trans }}</a>
+                            <a href="{{ path('economy_entry_edit', {'id': economyEntry.id, 'process': process}) }}">{{ economyEntry.account ?: 'economy.table.account_not_chosen'|trans }}</a>
                         {% else %}
-                            {{ economy_entry.account }}
+                            {{ economyEntry.account }}
                         {% endif %}
                     </td>
-                    <td>{{ economy_entry.accountNumber }}</td>
-                    <td>{{ economy_entry.date|simple_date('short') }}</td>
-                    <td class="text-right">{{ economy_entry.amount|localizedcurrency('DKK') }}</td>
+                    <td>{{ economyEntry.accountNumber }}</td>
+                    <td>{{ economyEntry.date|simple_date('short') }}</td>
+                    <td class="text-right">{{ economyEntry.amount|localizedcurrency('DKK') }}</td>
                 </tr>
             {% else %}
                 <tr>
