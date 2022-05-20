@@ -13,6 +13,23 @@ Run
 
 to install in production.
 
+### Running on database without encryption
+
+```sh
+# Reverse patch from composer.json
+(cd vendor/doctrine/dbal && patch --strip=1 --reverse < ../../../core/patches/doctrine/dbal/encrypted-table.patch)
+# Remove encryption from migrations
+sed -i'' 's/ENCRYPTED = YES//g' migrations/Version*.php
+```
+
+Undo changes:
+
+```sh
+(cd vendor/doctrine/dbal && patch --strip=1 < ../../../core/patches/doctrine/dbal/encrypted-table.patch)
+# Remove encryption from migrations
+git checkout migrations/
+```
+
 ### Update
 
 ```sh
