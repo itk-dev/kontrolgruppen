@@ -66,8 +66,6 @@ docker-compose run node yarn install
 docker-compose run node yarn build
 ```
 
-Commit the built files to git.
-
 Tag the release.
 
 ## SAML
