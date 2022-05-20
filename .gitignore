@@ -38,7 +38,7 @@ yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 
 # SAML keys and stuff
-saml/
+/saml/
 
 ###> phpunit/phpunit ###
 /phpunit.xml
