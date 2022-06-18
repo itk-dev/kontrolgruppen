@@ -15,6 +15,7 @@ use OneLogin\Saml2\Error;
 use OneLogin\Saml2\IdPMetadataParser;
 use OneLogin\Saml2\Response;
 use OneLogin\Saml2\Settings;
+use OneLogin\Saml2\Utils;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -184,6 +185,10 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
      */
     public function getAuth()
     {
+        // Make sure that we can handle running behind a proxy (cf.
+        // https://github.com/onelogin/php-saml#url-guessing-methods).
+        Utils::setProxyVars(true);
+
         return new Auth($this->getSettings());
     }
 
