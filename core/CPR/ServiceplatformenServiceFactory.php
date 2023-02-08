@@ -14,7 +14,6 @@ use ItkDev\AzureKeyVault\Authorisation\VaultToken;
 use ItkDev\AzureKeyVault\Exception\TokenException;
 use ItkDev\AzureKeyVault\KeyVault\VaultSecret;
 use ItkDev\Serviceplatformen\Certificate\AzureKeyVaultCertificateLocator;
-use ItkDev\Serviceplatformen\Certificate\Exception\CertificateLocatorException;
 use ItkDev\Serviceplatformen\Request\InvocationContextRequestGenerator;
 use ItkDev\Serviceplatformen\Service\PersonBaseDataExtendedService;
 use Psr\Http\Client\ClientInterface;
@@ -73,26 +72,16 @@ class ServiceplatformenServiceFactory
             $azureKeyVaultSecretVersion
         );
 
-        try {
-            $pathToCertificate = $certificateLocator->getAbsolutePathToCertificate();
-        } catch (CertificateLocatorException $e) {
-            throw new CprException($e->getMessage(), $e->getCode());
-        }
-
-        $options = [
-            'local_cert' => $pathToCertificate,
-            'passphrase' => $certificateLocator->getPassphrase(),
-            'location' => $serviceEndpoint,
+        $soapClientOptions = [
+            'wsdl' => $serviceContractFilename,
+            'certificate_locator' => $certificateLocator,
+            'options' => [
+                'location' => $serviceEndpoint,
+            ],
         ];
 
         if (!realpath($serviceContractFilename)) {
             throw new CprException(sprintf('The path (%s) to the service contract is invalid.', $serviceContractFilename));
-        }
-
-        try {
-            $soapClient = new \SoapClient($serviceContractFilename, $options);
-        } catch (\SoapFault $e) {
-            throw new CprException($e->getMessage(), $e->getCode());
         }
 
         $requestGenerator = new InvocationContextRequestGenerator(
@@ -102,6 +91,6 @@ class ServiceplatformenServiceFactory
             $serviceplatformenUserUuid
         );
 
-        return new PersonBaseDataExtendedService($soapClient, $requestGenerator);
+        return new PersonBaseDataExtendedService($soapClientOptions, $requestGenerator);
     }
 }
