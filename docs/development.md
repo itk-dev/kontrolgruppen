@@ -1,5 +1,24 @@
 # Kontrolgruppen development setup
 
+```sh
+docker compose up --detach
+docker compose exec phpfpm composer install
+
+# Run migrations without encryption.
+# Reverse patch from composer.json
+(cd vendor/doctrine/dbal && patch --strip=1 --reverse < ../../../core/patches/doctrine/dbal/encrypted-table.patch)
+# Remove encryption from migrations
+sed -i'' 's/ENCRYPTED = YES//g' migrations/Version*.php
+docker compose exec phpfpm bin/console doctrine:migrations:migrate --no-interaction
+# Undo changes to migrations.
+git checkout migrations/
+# Apply patch from composer.json
+(cd vendor/doctrine/dbal && patch --strip=1 < ../../../core/patches/doctrine/dbal/encrypted-table.patch)
+
+docker compose exec phpfpm bin/console doctrine:fixtures:load
+docker compose exec phpfpm bin/console kontrolgruppen:user:login admin@example.com
+```
+
 ## Starting the show
 
 The `docker-compose` setup uses a custom image hosted on GitHub, and you have to
