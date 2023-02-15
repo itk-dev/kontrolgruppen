@@ -62,8 +62,8 @@ development.
 Build production assets. They will be put in the `public/prod` directory.
 
 ```sh
-docker-compose run node yarn install
-docker-compose run node yarn build
+docker compose run --rm node yarn install
+docker compose run --rm node yarn build
 ```
 
 Tag the release.

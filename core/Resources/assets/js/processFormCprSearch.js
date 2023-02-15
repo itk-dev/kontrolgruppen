@@ -15,7 +15,7 @@ $(function () {
 
         $.ajax({
             url: $searchCprButton.data('search-action'),
-            data: { 'cpr': $cprInputElement.val().replace('-', '') },
+            data: { 'cpr': $cprInputElement.val() },
             success: function (html) {
                 if ($('#cpr-search-results').length) {
                     $searchCprButton.hide();
