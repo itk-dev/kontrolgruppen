@@ -1,0 +1,29 @@
+{% extends '@KontrolgruppenCore/main/index.html.twig' %}
+
+{% block title %}{{ 'process.new.title'|trans }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <h1>{{ 'process.new.title'|trans }}</h1>
+
+            {{ include('@KontrolgruppenCore/process/_form.html.twig') }}
+
+            <a href="{{ path('process_index') }}" class="btn btn-light float-left">{{ 'common.back_to_list'|trans }}</a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {# Set variable that triggers that services are loaded for the currently selected process type #}
+    <script type="text/javascript">
+        window.PROCESS_FORM_JAVASCRIPT_RUN_FIRST = true;
+    </script>
+    {{ encore_entry_script_tags('processForm') }}
+    {{ encore_entry_script_tags('processFormCprSearch') }}
+    {{ encore_entry_script_tags('processFormCvrSearch') }}
+
+    {{ encore_entry_script_tags('inputCPR') }}
+{% endblock %}

@@ -1,0 +1,34 @@
+{% block economy_entry_base_table %}
+    <div class="table-responsive">
+        <table class="table table-striped table-hover table-borderless thead-light">
+            <thead>
+            <tr>
+                <th>{{ 'economy.table.base.account'|trans }}</th>
+                <th>{{ 'economy.table.base.account_number'|trans }}</th>
+                <th class="w-20">{{ 'economy.table.base.date'|trans }}</th>
+                <th class="w-20 text-right">{{ 'economy.table.base.amount'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for economy_entry in economyEntries %}
+                <tr>
+                    <td>
+                        {% if is_granted('edit', process) %}
+                            <a href="{{ path('economy_entry_edit', {'id': economy_entry.id, 'process': process}) }}">{{ economy_entry.account ?: 'economy.table.account_not_chosen'|trans }}</a>
+                        {% else %}
+                            {{ economy_entry.account }}
+                        {% endif %}
+                    </td>
+                    <td>{{ economy_entry.accountNumber }}</td>
+                    <td>{{ economy_entry.date|simple_date('short') }}</td>
+                    <td class="text-right">{{ economy_entry.amount|localizedcurrency('DKK') }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">{{ 'common.no_records_found'|trans }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

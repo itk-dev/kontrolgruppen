@@ -1,0 +1,30 @@
+<table class="border striped text-small">
+    <thead>
+    <tr>
+        <th class="w-20">{{ 'process_report.report.economy.income.type'|trans }}</th>
+        <th class="w-20">{{ 'process_report.report.economy.income.period'|trans }}</th>
+        <th class="w-15">{{ 'process_report.report.economy.income.amount'|trans }}</th>
+        <th style="text-align: right;">{{ 'process_report.report.economy.income.amount_period'|trans }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for economy_entry in economyEntries %}
+        <tr>
+            <td>{{ economy_entry.incomeType.name }}</td>
+            <td>
+                {% if economy_entry.periodFrom is not null %}
+                    {{ economy_entry.periodFrom|localizeddate('short', 'none') }} - {{ economy_entry.periodTo|localizeddate('short', 'none') }}
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+            <td>{{ economy_entry.amount|localizedcurrency('DKK') }}</td>
+            <td style="text-align: right;">{{ enumTranslation(economy_entry.amountPeriod, 'EconomyEntryAmountPeriodEnumType') }}</td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="4">{{ 'common.no_records_found'|trans }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

@@ -1,9 +1,9 @@
 <?php
 
 /*
- * This file is part of aakb/kontrolgruppen.
+ * This file is part of itk-dev/kontrolgruppen.
  *
- * (c) 2019 ITK Development
+ * (c) 2019–2021 ITK Development
  *
  * This source file is subject to the MIT license.
  */
@@ -11,7 +11,7 @@
 namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Yaml\Yaml;
@@ -62,7 +62,7 @@ abstract class AbstractFixture extends Fixture
             if (null !== $entity) {
                 $errors = $this->validator->validate($entity);
                 if (\count($errors) > 0) {
-                    $message = Yaml::dump($data).PHP_EOL.(string) $errors;
+                    $message = Yaml::dump($data).\PHP_EOL.(string) $errors;
                     throw new \InvalidArgumentException($message);
                 }
 
