@@ -21,7 +21,7 @@ docker compose exec phpfpm bin/console kontrolgruppen:user:login admin@example.c
 
 ## Starting the show
 
-The `docker-compose` setup uses a custom image hosted on GitHub, and you have to
+The `docker compose` setup uses a custom image hosted on GitHub, and you have to
 sign in to download this image.
 
 Go to <https://github.com/settings/tokens/new> and create a new personal access
@@ -39,14 +39,14 @@ to sign in (cf.
 <https://docs.github.com/en/packages/guides/configuring-docker-for-use-with-github-packages#authenticating-with-a-personal-access-token>).
 
 ```sh
-docker-compose pull
-docker-compose up -d
+docker compose pull
+docker compose up -d
 ```
 
 Open the site in your default browser:
 
 ```sh
-open http://$(docker-compose port nginx 80)
+open http://$(docker compose port nginx 80)
 ```
 
 ## Setup for development
@@ -57,10 +57,10 @@ composer install
 
 # Migrate database.
 # If using docker these bin/console commands should be run from inside the phpfpm container.
-docker-compose exec phpfpm /app/bin/console doctrine:migrations:migrate
+docker compose exec phpfpm /app/bin/console doctrine:migrations:migrate
 
 # Create super admin user.
-docker-compose exec phpfpm /app/bin/console fos:user:create --super-admin
+docker compose exec phpfpm /app/bin/console fos:user:create --super-admin
 ```
 
 ## Fixtures
@@ -68,13 +68,13 @@ docker-compose exec phpfpm /app/bin/console fos:user:create --super-admin
 You can load fixtures by running the command
 
 ```sh
-docker-compose exec phpfpm bin/console doctrine:fixtures:load
+docker compose exec phpfpm bin/console doctrine:fixtures:load
 ```
 
 and then use
 
 ```sh
-docker-compose exec phpfpm bin/console kontrolgruppen:user:login admin@example.com
+docker compose exec phpfpm bin/console kontrolgruppen:user:login admin@example.com
 ```
 
 to get a one-time sign in url.
@@ -83,13 +83,13 @@ to get a one-time sign in url.
 
 ```sh
 # Make sure that the database is created
-docker-compose exec borgerdata node createdb.js
+docker compose exec borgerdata node createdb.js
 
 # Migrate database
-docker-compose exec borgerdata yarn knex migrate:latest
+docker compose exec borgerdata yarn knex migrate:latest
 
 # Seed the database
-docker-compose exec borgerdata yarn knex seed:run
+docker compose exec borgerdata yarn knex seed:run
 ```
 
 ## Use maker bundle
@@ -107,7 +107,7 @@ This will place the files in the correct location.
 Watch for changes in js and css files and build development version:
 
 ```sh
-docker-compose run node yarn watch
+docker compose run --rm node yarn watch
 ```
 
 ## Coding standards
@@ -139,13 +139,13 @@ composer check-coding-standards/twigcs
 Check JavaScript files using [eslint](https://eslint.org/):
 
 ```sh
-docker-compose run node yarn check-coding-standards-js
+docker compose run --rm node yarn check-coding-standards-js
 ```
 
 Apply coding standards:
 
 ```sh
-docker-compose run node yarn apply-coding-standards-js
+docker compose run --rm node yarn apply-coding-standards-js
 ```
 
 ### SCSS
@@ -153,13 +153,13 @@ docker-compose run node yarn apply-coding-standards-js
 Check SCSS files using [stylelint](https://stylelint.io/):
 
 ```sh
-docker-compose run node yarn check-coding-standards-scss
+docker compose run --rm node yarn check-coding-standards-scss
 ```
 
 Apply coding standards:
 
 ```sh
-docker-compose run node yarn apply-coding-standards-scss
+docker compose run --rm node yarn apply-coding-standards-scss
 ```
 
 ## Code analysis
