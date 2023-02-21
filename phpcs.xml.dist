@@ -2,6 +2,7 @@
 <ruleset name="PHP_CodeSniffer">
     <description>The coding standard.</description>
 
+    <file>core/</file>
     <file>src/</file>
     <file>tests/</file>
     <!-- Don't bother Symfony with our coding standards -->
@@ -13,12 +14,14 @@
     <arg name="colors"/>
     <arg name="extensions" value="php"/>
 
-    <!-- Ignore since migrations are auto-generated -->
-    <exclude-pattern>src/Migrations/*</exclude-pattern>
-
     <!-- Do not print warnings -->
     <arg value="n"/>
 
     <rule ref="PSR2"/>
     <rule ref="Symfony"/>
+
+    <!-- The Generic.Files.LineLength.MaxExceeded rule conflicts with Symfony.Functions.Arguments.Invalid -->
+    <rule ref="Generic.Files.LineLength.MaxExceeded">
+      <exclude-pattern>*</exclude-pattern>
+    </rule>
 </ruleset>

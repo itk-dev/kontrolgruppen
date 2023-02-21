@@ -1,0 +1,74 @@
+{% extends '@KontrolgruppenCore/process/main.html.twig' %}
+
+{% block title %}{{ 'journal_entry.index.title'|trans }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        {% if canEdit %}
+            <div class="col-12">
+                <h1 class="float-left">{{ 'journal_entry.index.title'|trans }}</h1>
+                <span data-toggle="collapse" data-target="#journalEntryNew" aria-expanded="false">
+                    <button data-toggle="button" aria-pressed="false" autocomplete="off" class="btn btn-success btn-lg float-right">
+                        <span class="show">{{ 'journal_entry.actions.create'|trans }}</span>
+                        <span class="hide">{{ 'journal_entry.actions.hide'|trans }}</span>
+                    </button>
+                </span>
+            </div>
+            <div class="col-12 collapse" id="journalEntryNew">
+                <div class="bg-light border-bottom p-3 mb-3">
+                    {{ form_start(journalEntryForm, {'attr': {'id': 'journal-entry-form'}}) }}
+                    {{ form_widget(journalEntryForm) }}
+                    <div class="form-group text-right">
+                        <button class="btn btn-success pl-5 pr-5">{{ 'common.actions.save'|trans }}</button>
+                    </div>
+
+                    {{ form_end(journalEntryForm) }}
+                </div>
+            </div>
+        {% else %}
+            <div class="col-12">
+                <h1 class="float-left">{{ 'journal_entry.index.title'|trans }}</h1>
+            </div>
+        {% endif %}
+        {% if process.completedAt %}
+            <div class="col-12">
+                <div class="alert alert-warning">{{ 'process.completed_message'|trans }}</div>
+            </div>
+        {% endif %}
+    </div>
+
+    <form method="get" action="." class="form form-inline js-filters">
+        {{ form_rest(form) }}
+
+        <label for="sort-select" class="sr-only">{{ 'journal_entry.table.filter.sort_label'|trans }}</label>
+        <select id="js-sort-select" class="form-control form-control-sm">
+            {% for sort_direction in ['asc', 'desc'] %}
+                <option
+                    value="{{ sort_direction }}" {% if sort_direction == app.request.get('sort_direction') %} selected="selected"{% endif %}>{{ ('journal_entry.table.filter.sort_' ~ sort_direction)|trans }}</option>
+            {% endfor %}
+        </select>
+
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="onlyStatusCheckbox" value="true" />
+            <label class="form-check-lab" for="onlyStatusCheckbox">{{ 'journal_entry.table.filter.only_status_label'|trans }}</label>
+        </div>
+    </form>
+
+    {% include '@KontrolgruppenCore/journal_entry/_journal_entry_list_with_logs.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {{ encore_entry_script_tags('sortSubmit') }}
+
+    <script type="text/javascript">
+        $('#pagination-sort-select').on('change', function () {
+            window.location.href = $(this).find('option:selected').attr('href');
+        });
+    </script>
+
+    {{ encore_entry_script_tags('journalRevisionToggle') }}
+    {{ encore_entry_script_tags('processStatusChangeToggle') }}
+    {{ encore_entry_script_tags('journalEntryPreventDoubleSubmission') }}
+{% endblock %}

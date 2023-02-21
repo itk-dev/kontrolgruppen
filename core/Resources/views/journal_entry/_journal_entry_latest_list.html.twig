@@ -1,0 +1,41 @@
+{% block journal_entry_list %}
+    <div class="mb-3 p-3">
+        {% for journal_entry in journalEntries %}
+            <div class="row bg-light mb-2">
+                <div class="col-2 pt-2">
+                    <span class="text-muted d-block">{{ journal_entry.createdAt|localizeddate('short', 'none') }}</span>
+                </div>
+                <div class="col-8 pt-2">
+                    <p class="mb-0"><strong><a
+                                href="{{ path('journal_entry_show', {'id': journal_entry.id, 'process': journal_entry.process.id}) }}">{{ journal_entry.title }}</a></strong>
+                    </p>
+                </div>
+                <div class="col-2 pt-2 text-right">
+                    {% if not journal_entry.process.completedAt %}
+                        <a href="{{ path('journal_entry_show', {'id': journal_entry.id, 'process': journal_entry.process.id}) }}" class="btn btn-sm btn-dark"
+                        data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.show'|trans }}">
+                            <i class="fas {{ iconClass('show') }} fa-inverse"></i>
+                        </a>
+                        <a href="{{ path('journal_entry_edit', {'id': journal_entry.id, 'process': journal_entry.process.id}) }}" class="btn btn-sm btn-primary"
+                        data-toggle="tooltip" data-placement="top" title="{{ 'common.actions.edit'|trans }}">
+                            <i class="fas {{ iconClass('edit') }} fa-inverse"></i></a>
+                        </a>
+                    {% endif %}
+                </div>
+                <div class="col-2 pb-2">
+                    {% if journal_entry.type == 'NOTE' %}
+                        <span class="badge badge-info">{{ 'common.enum.journal_entry.note'|trans }}</span>
+                    {% elseif journal_entry.type == 'INTERNAL_NOTE' %}
+                        <span class="badge badge-warning">{{ 'common.enum.journal_entry.internal_note'|trans }}</span>
+                    {% endif %}
+                </div>
+                <div class="col-10 pb-2">
+                    {{ journal_entry.body|raw }}
+                </div>
+            </div>
+        {% else %}
+            {{ 'common.no_records_found'|trans }}
+        {% endfor %}
+    </div>
+
+{% endblock %}

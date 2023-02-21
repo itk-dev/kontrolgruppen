@@ -1,0 +1,15 @@
+diff --git a/src/Platforms/AbstractMySQLPlatform.php b/src/Platforms/AbstractMySQLPlatform.php
+index b802914..5435369 100644
+--- a/src/Platforms/AbstractMySQLPlatform.php
++++ b/src/Platforms/AbstractMySQLPlatform.php
+@@ -485,6 +485,10 @@ SQL
+             $tableOptions[] = sprintf('ROW_FORMAT = %s', $options['row_format']);
+         }
+ 
++        if (!isset($options['encrypted']) || $options['encrypted']) {
++            $tableOptions[] = 'ENCRYPTED = YES';
++        }
++
+         return implode(' ', $tableOptions);
+     }
+ 

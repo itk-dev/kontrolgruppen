@@ -1,0 +1,10 @@
+<h2>{{ 'process_report.report.journal.title'|trans }}</h2>
+
+{% for journal_entry in journalEntries %}
+    <h3>{{ journal_entry.createdAt|localizeddate('short', 'none') }} - {{ journal_entry.title }}</h3>
+    <table>
+        <tr>
+            <td>{{ journal_entry.body|raw }}</td>
+        </tr>
+    </table>
+{% endfor %}

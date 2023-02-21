@@ -2,13 +2,14 @@
 
 $finder = PhpCsFixer\Finder::create()
      ->notPath('Kernel.php')
-     ->in(__DIR__.'/{src,tests}')
+     ->notPath('bootstrap.php')
+     ->in(__DIR__.'/{core,src,tests}')
 ;
 
 $header =<<<'HEADER'
-This file is part of aakb/kontrolgruppen.
+This file is part of itk-dev/kontrolgruppen.
 
-(c) 2019 ITK Development
+(c) 2019–2021 ITK Development
 
 This source file is subject to the MIT license.
 HEADER;
@@ -21,8 +22,10 @@ return PhpCsFixer\Config::create()
         'array_syntax' => ['syntax' => 'short'],
         'header_comment' => ['header' => $header],
         'list_syntax' => ['syntax' => 'short'],
+        'no_superfluous_phpdoc_tags' => false,
         'method_argument_space' => ['on_multiline' => 'ensure_fully_multiline'],
         'strict_comparison' => true,
+        'phpdoc_align' => false,
     ])
     ->setFinder($finder)
 ;

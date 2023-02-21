@@ -1,0 +1,30 @@
+<table class="border striped text-small">
+    <thead>
+        <tr>
+            <th class="w-20">{{ 'process_report.report.economy.base.account'|trans }}</th>
+            <th class="w-20">{{ 'process_report.report.economy.base.account_number'|trans }}</th>
+            <th class="w-15">{{ 'process_report.report.economy.base.date'|trans }}</th>
+            <th style="text-align: right;">{{ 'process_report.report.economy.base.amount'|trans }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for economy_entry in economyEntries %}
+        <tr>
+            <td>{{ economy_entry.account.name }}</td>
+            <td>{{ economy_entry.accountNumber }}</td>
+            <td>
+                {% if economy_entry.date is not null %}
+                    {{ economy_entry.date|localizeddate('short', 'none') }}
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+            <td class="text-right">{{ economy_entry.amount|localizedcurrency('DKK') }}</td>
+        </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">{{ 'common.no_records_found'|trans }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

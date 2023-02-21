@@ -1,0 +1,209 @@
+/*
+ * Include variables, bootstrap and select2
+ */
+@import "_variables";
+@import "~bootstrap/scss/bootstrap";
+@import "~select2/src/scss/core";
+@import "~jquery-confirm/css/jquery-confirm";
+
+/*
+ * Push down content behind navbar
+ */
+
+.main-container {
+    margin-top: $navbarHeight;
+    margin-bottom: calc( (#{$spacer} + #{$navbarHeight}) * -1 );
+}
+
+/*
+ * GlobalMenu
+ */
+
+.globalmenu {
+    position: relative;
+    top: calc(#{$spacer} + #{$navbarHeight}); //sticky meny offset
+    height: calc(100vh - #{$navbarHeight} - #{$spacer});
+    .nav {
+        &-link {
+            color: $white;
+            &.active {
+                color: $primary;
+            }
+        }
+    }
+}
+
+/*
+ * Sidebar
+ */
+
+.sidebar {
+    z-index: 100; /* Behind the navbar */
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+}
+
+.sidebar-sticky {
+    position: relative;
+    top: calc(#{$spacer} + #{$navbarHeight}); //sticky meny offset
+    height: calc(100vh - #{$navbarHeight} - #{$spacer*2});
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+}
+
+@supports (position: sticky) {
+    .sidebar-sticky, .globalmenu {
+        position: sticky;
+    }
+}
+
+.sidebar .nav-link {
+    font-weight: 500;
+    color: $gray-900;
+}
+
+/*
+ * Navbar
+ */
+
+.navbar-brand {
+    padding-top: .75rem;
+    padding-bottom: .75rem;
+    font-size: 1rem;
+    font-family: $h1-font-family;
+}
+
+.navbar .form-control {
+    padding: .75rem 1rem;
+    border-width: 0;
+    opacity: .75;
+}
+.navbar .form-control:focus {
+    border-color: transparent;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+    opacity: 1;
+}
+
+h1 {
+    font-weight: 100;
+    font-family: $h1-font-family;
+}
+
+h2 {
+    font-size: $h2-font-size*.8;
+}
+
+h3 {
+    font-size: $h3-font-size*.7;
+}
+
+/* Sidebar tabs */
+.nav-tabs .nav-link.active {
+    background: $gray-100;
+    border-bottom-color: $gray-100;
+}
+
+table th a.asc,
+table th a.desc {
+    text-decoration: underline;
+}
+
+/* Toggle btn text and icon with collapse */
+.btn-collapse[aria-expanded="true"] {
+    .btn-collapse-show {
+        display: none;
+    }
+    .btn-collapse-hide {
+        display: inline;
+    }
+}
+.btn-collapse[aria-expanded="false"] {
+    .btn-collapse-show {
+        display: inline;
+    }
+    .btn-collapse-hide {
+        display: none;
+    }
+}
+
+/* Sidebar tab  */
+
+aside {
+    .short-text {
+        display: none;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1112px) {
+    aside {
+        .short-text {
+            display: block;
+        }
+        .long-text {
+            display: none;
+        }
+    }
+}
+
+/* Not visited cases */
+.not-visited, .table-striped tbody tr.not-visited {
+    font-weight: bold;
+    background-color: rgba(0, 123, 255, .1);
+    border-left: 3px solid $primary;
+    border-bottom: 1px solid $gray-100;
+    border-top: 1px solid $gray-100;
+}
+
+/* Toggle btn text while toggle, collapse etc. */
+*[data-toggle="button"][aria-pressed="false"],
+*[data-toggle="collapse"][aria-expanded="false"] {
+    .show {
+        display: block;
+    }
+    .hide {
+        display: none;
+    }
+}
+*[data-toggle="button"][aria-pressed="true"],
+*[data-toggle="collapse"][aria-expanded="true"] {
+    .show {
+        display: none;
+    }
+    .hide {
+        display: block;
+    }
+}
+
+/* Have tableheads align top */
+.table thead th {
+    vertical-align: top;
+}
+
+/* Style process type select */
+
+.form-control.process-type-select {
+    border-color: $primary;
+    color: $primary;
+    transition: background-color .1s cubic-bezier(.455, .03, .515, .955), color .1s cubic-bezier(.455, .03, .515, .955);
+    &:hover {
+        background-color: $primary;
+        color: $white;
+        transition: background-color .2s cubic-bezier(.455, .03, .515, .955), color .2s cubic-bezier(.455, .03, .515, .955);
+    }
+}
+
+/* Disabled style for div with form-control */
+div.form-control.disabled {
+    background-color: $input-disabled-bg;
+}
+
+.sidebar-right {
+    flex-basis: 30%;
+}
+
+.form-control[readonly].js-datepicker, .form-control[readonly].js-datetimepicker {
+    background-color: white;
+}
+
+.textarea {
+    white-space: pre;
+}

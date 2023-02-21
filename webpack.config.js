@@ -1,4 +1,4 @@
-var Encore = require('@symfony/webpack-encore');
+const Encore = require('@symfony/webpack-encore');
 
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
 // It's useful when you use tools that rely on webpack.config.js file.
@@ -8,44 +8,46 @@ if (!Encore.isRuntimeEnvironmentConfigured()) {
 
 Encore
     // directory where compiled assets will be stored
-    .setOutputPath(Encore.isProduction() ? 'public/prod' : 'public/build')
+    .setOutputPath('public/build/')
     // public path used by the web server to access the output path
-    .setPublicPath(Encore.isProduction() ? '/prod' : '/build')
+    .setPublicPath('/build')
+    // only needed for CDN's or sub-directory deploy
+    //.setManifestKeyPrefix('build/')
 
     /*
      * ENTRY CONFIG
      *
-     * Add 1 entry for each "page" of your app
-     * (including one that's included on every page - e.g. "app")
-     *
      * Each entry will result in one JavaScript file (e.g. app.js)
-     * and one CSS file (e.g. app.css) if you JavaScript imports CSS.
+     * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
-    .addEntry('core', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/core.js')
-    .addEntry('login', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/login.js')
-    .addEntry('inputCPR', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/inputCPR.js')
-    .addEntry('reminderLatest', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/reminderLatest.js')
-    .addEntry('sortSubmit', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/sortSubmit.js')
-    .addEntry('journalQuickview', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/journalQuickview.js')
-    .addEntry('processFilters', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/processFilters.js')
-    .addEntry('processForm', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/processForm.js')
-    .addEntry('processStatusForm', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/processStatusForm.js')
-    .addEntry('globalSearch', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/globalSearch.js')
-    .addEntry('searchPage', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/searchPage.js')
-    .addEntry('journalRevisionToggle', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/journalRevisionToggle.js')
-    .addEntry('cars', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/cars.js')
-    .addEntry('processReport', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/processReport.js')
-    .addEntry('export', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/export.js')
-    .addEntry('processStatusChangeToggle', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/processStatusChangeToggle.js')
-    .addEntry('addEconomyEntry', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/addEconomyEntry.js')
-    .addEntry('revenueForm', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/revenueForm.js')
-    .addEntry('dashboard', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/dashboard.js')
-    .addEntry('journalEntryPreventDoubleSubmission', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/journalEntryPreventDoubleSubmission.js')
-    .addEntry('processGroupForm', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/processGroupForm.js')
-    .addEntry('processFormCprSearch', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/processFormCprSearch.js')
-    .addEntry('processFormCvrSearch', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/processFormCvrSearch.js')
-    .addEntry('companies', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/companies.js')
-    .addEntry('people', './vendor/kontrolgruppen/core-bundle/Resources/assets/js/people.js')
+    .addEntry('addEconomyEntry', './core/Resources/assets/js/addEconomyEntry.js')
+    .addEntry('cars', './core/Resources/assets/js/cars.js')
+    .addEntry('companies', './core/Resources/assets/js/companies.js')
+    .addEntry('core', './core/Resources/assets/js/core.js')
+    .addEntry('dashboard', './core/Resources/assets/js/dashboard.js')
+    .addEntry('export', './core/Resources/assets/js/export.js')
+    .addEntry('globalSearch', './core/Resources/assets/js/globalSearch.js')
+    .addEntry('inputCPR', './core/Resources/assets/js/inputCPR.js')
+    .addEntry('journalEntryPreventDoubleSubmission', './core/Resources/assets/js/journalEntryPreventDoubleSubmission.js')
+    .addEntry('journalQuickview', './core/Resources/assets/js/journalQuickview.js')
+    .addEntry('journalRevisionToggle', './core/Resources/assets/js/journalRevisionToggle.js')
+    .addEntry('login', './core/Resources/assets/js/login.js')
+    .addEntry('people', './core/Resources/assets/js/people.js')
+    .addEntry('processFilters', './core/Resources/assets/js/processFilters.js')
+    .addEntry('processForm', './core/Resources/assets/js/processForm.js')
+    .addEntry('processFormCprSearch', './core/Resources/assets/js/processFormCprSearch.js')
+    .addEntry('processFormCvrSearch', './core/Resources/assets/js/processFormCvrSearch.js')
+    .addEntry('processGroupForm', './core/Resources/assets/js/processGroupForm.js')
+    .addEntry('processReport', './core/Resources/assets/js/processReport.js')
+    .addEntry('processStatusChangeToggle', './core/Resources/assets/js/processStatusChangeToggle.js')
+    .addEntry('processStatusForm', './core/Resources/assets/js/processStatusForm.js')
+    .addEntry('reminderLatest', './core/Resources/assets/js/reminderLatest.js')
+    .addEntry('revenueForm', './core/Resources/assets/js/revenueForm.js')
+    .addEntry('searchPage', './core/Resources/assets/js/searchPage.js')
+    .addEntry('sortSubmit', './core/Resources/assets/js/sortSubmit.js')
+
+    // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
+    // .enableStimulusBridge('./assets/controllers.json')
 
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
@@ -67,14 +69,30 @@ Encore
     // enables hashed filenames (e.g. app.abc123.css)
     .enableVersioning(Encore.isProduction())
 
-    // enables @babel/preset-env polyfills
-    .configureBabel(() => {}, {
-        useBuiltIns: 'usage',
-        corejs: 3
+    .configureBabel((config) => {
+        config.plugins.push('@babel/plugin-proposal-class-properties');
     })
 
+    // enables @babel/preset-env polyfills
+    .configureBabelPresetEnv((config) => {
+        config.useBuiltIns = 'usage';
+        config.corejs = 3;
+    })
+
+    // enables Sass/SCSS support
     .enableSassLoader()
+
+    // uncomment if you use TypeScript
+    //.enableTypeScriptLoader()
+
+    // uncomment if you use React
+    //.enableReactPreset()
+
+    // uncomment to get integrity="..." attributes on your script & link tags
+    // requires WebpackEncoreBundle 1.4 or higher
     .enableIntegrityHashes(Encore.isProduction())
+
+    // uncomment if you're having problems with a jQuery plugin
     .autoProvidejQuery()
 ;
 

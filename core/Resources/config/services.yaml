@@ -1,0 +1,97 @@
+services:
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        bind:
+            $cprServiceUrl: '%env(CPR_SERVICE_URL)%'
+
+    Kontrolgruppen\CoreBundle\:
+        resource: '../../*'
+        exclude: '../../{DependencyInjection,Entity,Migrations,Tests,Kernel.php,assets,node_modules,vendor}'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    Kontrolgruppen\CoreBundle\Controller\:
+        resource: '../../Controller'
+        tags: ['controller.service_arguments']
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+    Kontrolgruppen\CoreBundle\Export\Manager:
+        arguments:
+            $configuration: ~
+
+    # Exports
+    Kontrolgruppen\CoreBundle\Export\:
+        resource: '../../Export/*/*'
+        # Exports must be public to load them dynamically (by id) in the Export
+        # manager.
+        public: true
+
+    Kontrolgruppen\CoreBundle\Security\SAMLAuthenticator:
+        arguments:
+            $router: '@router.default'
+            $session: '@session'
+            $settings: ~
+
+    Kontrolgruppen\CoreBundle\Security\UserManager:
+        arguments:
+            $objectManager: '@doctrine.orm.entity_manager'
+            $class: ~
+
+    Kontrolgruppen\CoreBundle\CPR\CprServiceInterface:
+        class: 'Kontrolgruppen\CoreBundle\CPR\ServiceplatformenCprService'
+
+    Kontrolgruppen\CoreBundle\Service\LockService:
+        arguments: ['@lock.store.semaphore']
+
+    Kontrolgruppen\CoreBundle\EventListener\LoggerListener:
+        arguments:
+            $loggableListener: '@stof_doctrine_extensions.listener.loggable'
+            $authorizationChecker: '@?security.authorization_checker'
+            $tokenStorage: '@?security.token_storage'
+
+    # For some reason we have to alias ChoiceListFactoryInterface to be able to inject it.
+    Symfony\Component\Form\ChoiceList\Factory\ChoiceListFactoryInterface: '@form.choice_list_factory.default'
+
+    ItkDev\Serviceplatformen\Service\PersonBaseDataExtendedService:
+        # Must be lazy to work when CVR service is also in play.
+        lazy: true
+        factory: ['Kontrolgruppen\CoreBundle\CPR\ServiceplatformenServiceFactory', createPersonBaseDataExtendedService]
+        arguments: [
+                '@psr18.http_client',
+                '@nyholm.psr7.psr17_factory',
+                '%env(AZURE_TENANT_ID)%',
+                '%env(AZURE_APPLICATION_ID)%',
+                '%env(AZURE_CLIENT_SECRET)%',
+                '%env(AZURE_KEY_VAULT_NAME)%',
+                '%env(AZURE_KEY_VAULT_SECRET)%',
+                '%env(AZURE_KEY_VAULT_SECRET_VERSION)%',
+                '%env(SERVICEPLATFORMEN_CPR_SERVICE_AGREEMENT_UUID)%',
+                '%env(SERVICEPLATFORMEN_CPR_USER_SYSTEM_UUID)%',
+                '%env(SERVICEPLATFORMEN_CPR_USER_UUID)%',
+                '%env(resolve:SERVICEPLATFORMEN_CPR_SERVICE_CONTRACT)%',
+                '%env(SERVICEPLATFORMEN_CPR_SERVICE_ENDPOINT)%',
+                '%env(SERVICEPLATFORMEN_CPR_SERVICE_UUID)%'
+        ]
+
+    ItkDev\Serviceplatformen\Service\OnlineService:
+        # Must be lazy to work when CPR service is also in play.
+        lazy: true
+        factory: ['Kontrolgruppen\CoreBundle\CVR\ServiceplatformenServiceFactory', createOnlineService]
+        arguments: [
+                '@psr18.http_client',
+                '@nyholm.psr7.psr17_factory',
+                '%env(AZURE_TENANT_ID)%',
+                '%env(AZURE_APPLICATION_ID)%',
+                '%env(AZURE_CLIENT_SECRET)%',
+                '%env(AZURE_KEY_VAULT_NAME)%',
+                '%env(AZURE_KEY_VAULT_SECRET)%',
+                '%env(AZURE_KEY_VAULT_SECRET_VERSION)%',
+                '%env(SERVICEPLATFORMEN_CVR_SERVICE_AGREEMENT_UUID)%',
+                '%env(SERVICEPLATFORMEN_CVR_USER_SYSTEM_UUID)%',
+                '%env(SERVICEPLATFORMEN_CVR_USER_UUID)%',
+                '%env(resolve:SERVICEPLATFORMEN_CVR_SERVICE_CONTRACT)%',
+                '%env(SERVICEPLATFORMEN_CVR_SERVICE_ENDPOINT)%',
+                '%env(SERVICEPLATFORMEN_CVR_SERVICE_UUID)%'
+        ]

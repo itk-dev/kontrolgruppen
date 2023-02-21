@@ -1,0 +1,73 @@
+{{ form_start(form, {'attr': {'class': 'form-row prevent-double-submission'}}) }}
+    {% if form.vars.id == 'service_economy_entry' %}
+        <div class="col-4">
+            {{ form_row(form.service) }}
+        </div>
+    {% elseif form.vars.id == 'income_economy_entry' %}
+        <div class="col-4">
+            {{ form_row(form.incomeType) }}
+        </div>
+    {% endif %}
+    {% if form.vars.id in ['service_economy_entry', 'income_economy_entry'] %}
+        <div class="col-4">
+            {{ form_row(form.amountPeriod) }}
+        </div>
+        <div class="col-4">
+            {{ form_row(form.amount) }}
+        </div>
+        <div class="form-group col-12">
+            <label for="service_economy_entry_datepicker">{{ 'economy_entry.form.service.monthpicker'|trans }}</label>
+            <div class="form-control" id="economy_entry_datepicker">
+                {{ form.periodFrom.vars.value }}-{{ form.periodTo.vars.value }}
+            </div>
+            <small id="economy_entry_datepicker_help" class="form-text text-muted">{{ 'economy_entry.form.service.monthpicker_help'|trans }}</small>
+        </div>
+
+        <div class="modal fade" id="period_datepicker_modal" tabindex="-1"role="dialog" aria-labelledby="period_datepicker_modal_label" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-header" id="period_datepicker_modal_label">{{ 'economy_entry.form.service.monthpicker'|trans }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" style="overflow: hidden;">
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col">
+                                    {{ form_row(form.periodFrom) }}
+                                </div>
+                                <div class="col">
+                                    {{ form_row(form.periodTo) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ 'common.actions.close'|trans }}</button>
+                        <button id="datepicker_period_save" type="button" class="btn btn-primary">{{ 'common.actions.save'|trans }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% elseif form.vars.id == 'base_economy_entry' %}
+        <div class="col-3">
+            {{ form_row(form.account) }}
+        </div>
+        <div class="col-3">
+            {{ form_row(form.accountNumber) }}
+        </div>
+        <div class="col-3">
+            {{ form_row(form.date) }}
+        </div>
+        <div class="col-3">
+            {{ form_row(form.amount) }}
+        </div>
+    {% endif %}
+    <div class="form-group col-12 text-right">
+        <button class="btn btn-success pl-5 pr-5">
+            {{ (button_label is defined ? (form.vars.full_name ~ '.form.' ~ button_label|lower) : 'common.actions.save')|trans }}
+        </button>
+    </div>
+{{ form_end(form) }}
