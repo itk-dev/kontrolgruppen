@@ -22,7 +22,7 @@
         "friendsofsymfony/ckeditor-bundle": "^2.0",
         "itk-dev/serviceplatformen": "^1.1",
         "knplabs/knp-paginator-bundle": "^3.0",
-        "lexik/form-filter-bundle": "^5.0",
+        "lexik/form-filter-bundle": "^7.0",
         "mpdf/mpdf": "^8.0.2",
         "nyholm/psr7": "^1.4",
         "ocramius/doctrine-batch-utils": "^2.0",
