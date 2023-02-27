@@ -9,6 +9,10 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Changed
+
+- Upgraded to LexikFormFilterBundle v7
+
 ## [2.0.0] - 2023-02-21
 
 ### Changed
