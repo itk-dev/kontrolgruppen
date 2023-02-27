@@ -179,7 +179,7 @@ class Export extends AbstractExport
             'channel' => $process->getChannel() ? $process->getChannel()->getName() : null,
             'processType' => $process->getProcessType() ? $process->getProcessType()->getName() : null,
             'service' => $serviceName,
-            'clientHasOwnCompany' => $this->formatBooleanYesNoNull($process->getClient()->getHasOwnCompany()),
+            'clientHasOwnCompany' => $this->formatBooleanYesNoNull($process->getProcessClient()->getHasOwnCompany()),
             'performedCompanyCheck' => $this->formatBooleanYesNoNull($process->getPerformedCompanyCheck()),
             'repaymentSum' => 0.0,
             'futureSavingsSum' => 0.0,

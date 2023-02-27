@@ -12,6 +12,7 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 ### Changed
 
 - Upgraded to LexikFormFilterBundle v7
+- Removed use of undefined method `Kontrolgruppen\CoreBundle\Entity\Process::getClient()`.
 
 ## [2.0.0] - 2023-02-21
 
