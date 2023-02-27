@@ -347,8 +347,8 @@ abstract class AbstractProcessClient extends AbstractEntity implements ProcessLo
         if ($this->cars->contains($car)) {
             $this->cars->removeElement($car);
             // set the owning side to null (unless already changed)
-            if ($car->getClient() === $this) {
-                $car->setClient(null);
+            if ($car->getProcessClient() === $this) {
+                $car->setProcessClient(null);
             }
         }
 
