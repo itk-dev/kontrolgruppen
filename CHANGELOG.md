@@ -9,6 +9,10 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Changed
+
+- Fixed check for company
+
 ## [2.0.1] - 2023-02-27
 
 ### Changed

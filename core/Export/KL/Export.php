@@ -15,6 +15,7 @@ use Doctrine\ORM\EntityRepository;
 use DoctrineBatchUtils\BatchProcessing\SimpleBatchIteratorAggregate;
 use Exception;
 use Kontrolgruppen\CoreBundle\Entity\Process;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 use Kontrolgruppen\CoreBundle\Entity\ProcessStatus;
 use Kontrolgruppen\CoreBundle\Export\AbstractExport;
 use Kontrolgruppen\CoreBundle\Service\EconomyService;
@@ -174,12 +175,17 @@ class Export extends AbstractExport
         $forwardedTo = $process->getForwardedToAuthorities();
         $forwardedTo = \count($forwardedTo) > 0 ? $forwardedTo[0] : null;
 
+        $client = $process->getProcessClient();
+        $clientHasOwnCompany = $client instanceof ProcessClientPerson
+            ? $client->getHasOwnCompany()
+            : null;
+
         return [
             'caseNumber' => $process->getCaseNumber(),
             'channel' => $process->getChannel() ? $process->getChannel()->getName() : null,
             'processType' => $process->getProcessType() ? $process->getProcessType()->getName() : null,
             'service' => $serviceName,
-            'clientHasOwnCompany' => $this->formatBooleanYesNoNull($process->getProcessClient()->getHasOwnCompany()),
+            'clientHasOwnCompany' => $this->formatBooleanYesNoNull($clientHasOwnCompany),
             'performedCompanyCheck' => $this->formatBooleanYesNoNull($process->getPerformedCompanyCheck()),
             'repaymentSum' => 0.0,
             'futureSavingsSum' => 0.0,
