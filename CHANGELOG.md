@@ -9,6 +9,8 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [2.0.1] - 2023-02-27
+
 ### Changed
 
 - Upgraded to LexikFormFilterBundle v7
@@ -182,7 +184,8 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 - [KON-361](https://github.com/aakb/kontrolgruppen/pull/81): Changed datepicker
 
-[Unreleased]: https://github.com/itk-dev/kontrolgruppen/compare/2.0.0...HEAD
+[Unreleased]: https://github.com/itk-dev/kontrolgruppen/compare/2.0.1...HEAD
+[2.0.1]: https://github.com/itk-dev/kontrolgruppen/compare/2.0.0...2.0.1
 [2.0.0]: https://github.com/itk-dev/kontrolgruppen/compare/1.12.2...2.0.0
 [1.12.2]: https://github.com/itk-dev/kontrolgruppen/compare/1.12.0...1.12.2
 [1.12.0]: https://github.com/itk-dev/kontrolgruppen/compare/1.11.5...1.12.0
