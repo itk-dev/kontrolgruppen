@@ -9,6 +9,10 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Changed
+
+- Removed case create button from process index page
+
 ## [2.0.2] - 2023-02-27
 
 ### Changed
