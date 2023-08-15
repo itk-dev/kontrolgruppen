@@ -1,0 +1,15 @@
+1234567890:
+    persondata:
+        navn:
+            fornavn: Anders
+            # mellemnavn: ~
+            efternavn: And
+    adresse:
+        aktuelAdresse:
+            vejnavn: Paradisæblevej
+            husnummer: 13
+            # etage:
+            # sidedoer:
+            postnummer: 1234
+            postdistrikt: Andeby
+
