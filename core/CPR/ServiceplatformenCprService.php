@@ -25,9 +25,9 @@ class ServiceplatformenCprService extends AbstractCprService implements CprServi
      *
      * @param PersonBaseDataExtendedService $service
      */
-    public function __construct(PersonBaseDataExtendedService $service)
+    public function __construct(/*PersonBaseDataExtendedService $service*/)
     {
-        $this->service = $service;
+        // $this->service = $service;
     }
 
     /**
