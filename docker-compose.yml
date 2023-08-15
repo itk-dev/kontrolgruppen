@@ -20,7 +20,6 @@ services:
       - MYSQL_USER=db
       - MYSQL_PASSWORD=db
       - MYSQL_DATABASE=db
-      - ENCRYPT=1
     # https://symfony.com/doc/current/setup/symfony_server.html#docker-integration
     labels:
       com.symfony.server.service-prefix: 'DATABASE'

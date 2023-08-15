@@ -36,7 +36,7 @@ final class Version20210722085408 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf('mysql' !== $this->connection->getDatabasePlatform()->getName(), 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('CREATE TABLE person (id INT AUTO_INCREMENT NOT NULL, process_client_id INT NOT NULL, cpr VARCHAR(255) NOT NULL, name VARCHAR(255) NOT NULL, highlighted TINYINT(1) NOT NULL, INDEX IDX_34DCD17683A22BC9 (process_client_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB ENCRYPTED = YES');
+        $this->addSql('CREATE TABLE person (id INT AUTO_INCREMENT NOT NULL, process_client_id INT NOT NULL, cpr VARCHAR(255) NOT NULL, name VARCHAR(255) NOT NULL, highlighted TINYINT(1) NOT NULL, INDEX IDX_34DCD17683A22BC9 (process_client_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB ');
         $this->addSql('ALTER TABLE person ADD CONSTRAINT FK_34DCD17683A22BC9 FOREIGN KEY (process_client_id) REFERENCES process_client (id)');
     }
 
