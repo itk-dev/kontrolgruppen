@@ -89,7 +89,7 @@ class ReportExportCommand extends Command
     /**
      * @return string
      */
-    public function getHelp()
+    public function getHelp(): string
     {
         $help[] = parent::getHelp();
 

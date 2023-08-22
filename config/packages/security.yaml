@@ -16,13 +16,12 @@ security:
             security: false
 
         main:
-            anonymous: ~
+            lazy: true
 
-            guard:
-                authenticators:
-                    - Kontrolgruppen\CoreBundle\Security\SAMLAuthenticator
-                    - Kontrolgruppen\CoreBundle\Security\CliLoginTokenAuthenticator
-                entry_point: Kontrolgruppen\CoreBundle\Security\SAMLAuthenticator
+            custom_authenticators:
+                - Kontrolgruppen\CoreBundle\Security\SAMLAuthenticator
+                - Kontrolgruppen\CoreBundle\Security\CliLoginTokenAuthenticator
+            entry_point: Kontrolgruppen\CoreBundle\Security\SAMLAuthenticator
 
     access_control:
         - { path: ^/admin, role: ROLE_ADMIN }
