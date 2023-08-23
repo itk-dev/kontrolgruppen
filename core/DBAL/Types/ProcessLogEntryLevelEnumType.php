@@ -20,7 +20,7 @@ class ProcessLogEntryLevelEnumType extends AbstractEnumType
     public const INFO = 'INFO';
     public const NOTICE = 'NOTICE';
 
-    protected static $choices = [
+    protected static array $choices = [
         self::INFO => 'INFO',
         self::NOTICE => 'NOTICE',
     ];

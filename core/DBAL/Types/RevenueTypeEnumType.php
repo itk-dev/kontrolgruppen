@@ -25,5 +25,5 @@ final class RevenueTypeEnumType extends AbstractEnumType
         self::REPAYMENT => 'common.enum.revenue_type.repayment',
     ];
 
-    protected static $choices = self::TRANSLATIONS;
+    protected static array $choices = self::TRANSLATIONS;
 }

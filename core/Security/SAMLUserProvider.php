@@ -11,7 +11,7 @@
 namespace Kontrolgruppen\CoreBundle\Security;
 
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
@@ -76,7 +76,7 @@ class SAMLUserProvider implements UserProviderInterface
      *
      * @return UserInterface|void
      */
-    public function loadUserByUsername($username)
+    public function loadUserByIdentifier(string $username): UserInterface
     {
         throw new \RuntimeException(sprintf('Lazy programmer exception: %s not implemented!', __METHOD__));
     }
@@ -97,7 +97,7 @@ class SAMLUserProvider implements UserProviderInterface
         }
 
         if (null === $reloadedUser = $this->userManager->findUserBy(['id' => $user->getId()])) {
-            throw new UsernameNotFoundException(sprintf('User with ID "%s" could not be reloaded.', $user->getId()));
+            throw new UserNotFoundException(sprintf('User with ID "%s" could not be reloaded.', $user->getId()));
         }
 
         return $reloadedUser;

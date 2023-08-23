@@ -22,7 +22,7 @@ final class DateIntervalType extends AbstractEnumType
     public const TWO_WEEKS = 'TWO_WEEKS';
     public const MONTH = 'MONTH';
 
-    protected static $choices = [
+    protected static array $choices = [
         self::THIS_WEEK => 'common.enum.date_interval.this_week',
         self::WEEK => 'common.enum.date_interval.week',
         self::TWO_WEEKS => 'common.enum.date_interval.two_weeks',

@@ -10,9 +10,9 @@
 
 namespace Kontrolgruppen\CoreBundle\Service;
 
-use Symfony\Component\Lock\Factory;
+use Symfony\Component\Lock\LockFactory;
 use Symfony\Component\Lock\Lock;
-use Symfony\Component\Lock\StoreInterface;
+use Symfony\Component\Lock\Store\StoreFactory;
 
 /**
  * Class LockService.
@@ -25,17 +25,17 @@ class LockService
     /**
      * LockService constructor.
      *
-     * @param StoreInterface $store
+     * @param string $store
      */
-    public function __construct(StoreInterface $store)
+    public function __construct(string $store)
     {
-        $this->factory = new Factory($store);
+        $this->factory = new LockFactory(StoreFactory::createStore($store));
     }
 
     /**
      * @return Factory
      */
-    public function getFactory(): Factory
+    public function getFactory(): LockFactory
     {
         return $this->factory;
     }

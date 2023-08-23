@@ -10,7 +10,7 @@
 
 namespace Kontrolgruppen\CoreBundle\Event;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * Class GetConclusionTypesEvent.

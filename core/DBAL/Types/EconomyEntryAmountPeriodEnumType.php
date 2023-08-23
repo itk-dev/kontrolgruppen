@@ -31,5 +31,5 @@ final class EconomyEntryAmountPeriodEnumType extends AbstractEnumType
         self::PR_YEAR => 'common.enum.economy_entry_amount_period.pr_year',
     ];
 
-    protected static $choices = self::TRANSLATIONS;
+    protected static array $choices = self::TRANSLATIONS;
 }

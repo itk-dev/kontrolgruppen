@@ -22,7 +22,7 @@ use Symfony\Component\Security\Core\Security;
 class ProcessEconomyVoter extends Voter
 {
     // these strings are just invented: you can use anything
-    const EDIT = 'edit';
+    public const EDIT = 'edit';
 
     private $security;
 
@@ -39,7 +39,7 @@ class ProcessEconomyVoter extends Voter
     /**
      * {@inheritdoc}
      */
-    protected function supports($attribute, $subject)
+    protected function supports(string $attribute, mixed $subject): bool
     {
         // if the attribute isn't one we support, return false
         if (!\in_array($attribute, [self::EDIT])) {
@@ -60,7 +60,7 @@ class ProcessEconomyVoter extends Voter
     /**
      * {@inheritdoc}
      */
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();
 

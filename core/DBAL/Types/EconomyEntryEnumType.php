@@ -27,5 +27,5 @@ final class EconomyEntryEnumType extends AbstractEnumType
         self::INCOME => 'common.enum.economy_entry.income',
     ];
 
-    protected static $choices = self::TRANSLATIONS;
+    protected static array $choices = self::TRANSLATIONS;
 }

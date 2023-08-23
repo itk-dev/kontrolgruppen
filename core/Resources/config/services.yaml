@@ -31,7 +31,6 @@ services:
     Kontrolgruppen\CoreBundle\Security\SAMLAuthenticator:
         arguments:
             $router: '@router.default'
-            $session: '@session'
             $settings: ~
 
     Kontrolgruppen\CoreBundle\Security\UserManager:
