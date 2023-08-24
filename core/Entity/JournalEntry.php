@@ -44,7 +44,7 @@ class JournalEntry extends AbstractEntity implements ProcessLoggableInterface
     /**
      * @ORM\Column(name="type", type="JournalEntryEnumType", nullable=false)
      *
-     * @DoctrineAssert\Enum(entity="Kontrolgruppen\CoreBundle\DBAL\Types\JournalEntryEnumType")
+     * [DoctrineAssert\EnumType(entity: Kontrolgruppen\CoreBundle\DBAL\Types\JournalEntryEnumType:class)]
      *
      * @Gedmo\Versioned()
      */
