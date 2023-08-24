@@ -4,6 +4,7 @@ parameters:
   env(SAML_SP_KEY_FILE): '%kernel.project_dir%/saml/sp/sp.key'
   env(SAML_IDP_CONFIG_FILE): '%kernel.project_dir%/saml/idp/idp.xml'
   env(SAML_DEBUG): false
+
   # Fallback values; real values should be defined in .env.local
   env(SAML_CONTACT_PERSON_TECHNICAL_GIVEN_NAME): 'ITK Development'
   env(SAML_CONTACT_PERSON_TECHNICAL_EMAIL_ADDRESS): 'itkdev@mkb.aarhus.dk'
@@ -17,6 +18,11 @@ parameters:
   saml_sp_crt: '%env(default:saml_empty:file:resolve:SAML_SP_CRT_FILE)%'
   saml_sp_key: '%env(default:saml_empty:file:resolve:SAML_SP_KEY_FILE)%'
   saml_idp_config_file: '%env(default:saml_empty:resolve:SAML_IDP_CONFIG_FILE)%'
+
+  # Missing locale in ParameterBag
+  locale: 'da'
+  export_directory: '%env(EXPORT_DIRECTORY)%'
+  base_url: '%router.request_context.scheme%://%router.request_context.host%%router.request_context.base_url%'
 
 kontrolgruppen_core:
     # Default value for ProcessType.netDefaultValue.
