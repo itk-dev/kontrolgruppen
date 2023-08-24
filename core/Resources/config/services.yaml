@@ -1,4 +1,9 @@
+parameters:
+    locale: 'en'
+
 services:
+    Symfony\Component\DependencyInjection\ContainerInterface: '@service_container'
+
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
@@ -42,7 +47,7 @@ services:
         class: 'Kontrolgruppen\CoreBundle\CPR\ServiceplatformenCprService'
 
     Kontrolgruppen\CoreBundle\Service\LockService:
-        arguments: ['@lock.store.semaphore']
+        arguments: ['@lock.factory']
 
     Kontrolgruppen\CoreBundle\EventListener\LoggerListener:
         arguments:
@@ -95,3 +100,5 @@ services:
     #             '%env(SERVICEPLATFORMEN_CVR_SERVICE_ENDPOINT)%',
     #             '%env(SERVICEPLATFORMEN_CVR_SERVICE_UUID)%'
     #     ]
+
+
