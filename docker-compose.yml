@@ -25,22 +25,24 @@ services:
       com.symfony.server.service-prefix: 'DATABASE'
 
   phpfpm:
-    image: itkdev/php8.2-fpm:latest
+    build: docker/php-fpm
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    expose:
+      - 9000
     networks:
       - app
+    depends_on:
+      - mariadb
     environment:
-      - XDEBUG_MODE=${XDEBUG_MODE:-off}
-      - XDEBUG_SESSION=${XDEBUG_SESSION:-0}
       - PHP_MAX_EXECUTION_TIME=30
       - PHP_MEMORY_LIMIT=256M
-      # - PHP_MAIL=1 # Uncomment to enable mailhog.
       - DOCKER_HOST_DOMAIN=${COMPOSE_DOMAIN}
       - COMPOSER_VERSION=2
       - PHP_IDE_CONFIG=serverName=localhost
-    depends_on:
-      - mariadb
     volumes:
       - .:/app:delegated
+      - ./docker/php-fpm/php-overrides.ini:/usr/local/etc/php/conf.d/php-overrides.ini
     tmpfs:
       - /app/var:size=1G
       - /tmp:size=1G
