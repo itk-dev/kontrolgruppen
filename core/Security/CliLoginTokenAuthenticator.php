@@ -21,6 +21,7 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\CredentialsInterface;
+use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\CustomCredentials;
 
 /**
  * Class CliLoginTokenAuthenticator.
@@ -80,7 +81,7 @@ class CliLoginTokenAuthenticator extends AbstractAuthenticator
             $this->em->flush();
         }
 
-        return new Passport(new UserBadge($user->getUsername()), new CredentialsInterface(['cliLoginToken' => $cliLoginToken]));
+        return new Passport(new UserBadge($user->getUserIdentifier()), new CustomCredentials(fn() => true, ['cliLoginToken' => $cliLoginToken]));
     }
 
     /**

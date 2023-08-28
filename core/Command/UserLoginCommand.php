@@ -79,7 +79,9 @@ class UserLoginCommand extends Command
             $parameters['destination'] = $destination;
         }
 
-        $url = $this->urlGenerator->generate('cli_login', $parameters);
+        $url = $this->urlGenerator->generate('cli_login', $parameters, UrlGeneratorInterface::ABSOLUTE_URL);
         $output->writeln($url);
+
+        return 0;
     }
 }
