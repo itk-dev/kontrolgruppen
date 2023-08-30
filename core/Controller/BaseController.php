@@ -23,6 +23,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
+use Doctrine\ORM\EntityManagerInterface;
+
 
 /**
  * Class BaseController.
@@ -31,17 +33,20 @@ class BaseController extends AbstractController
 {
     protected $requestStack;
     protected $menuService;
+    protected $em;
 
     /**
      * BaseController constructor.
      *
      * @param RequestStack $requestStack
      * @param MenuService  $menuService
+     * @param EntityManagerInterface $em
      */
-    public function __construct(RequestStack $requestStack, MenuService $menuService)
+    public function __construct(RequestStack $requestStack, MenuService $menuService, EntityManagerInterface $em)
     {
         $this->requestStack = $requestStack;
         $this->menuService = $menuService;
+        $this->em = $em;
     }
 
     /**
@@ -51,22 +56,24 @@ class BaseController extends AbstractController
      * @param string        $view
      * @param array         $parameters
      * @param Response|null $response
+     * @param EntityManagerInterface $em
      *
      * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Psr\Cache\InvalidArgumentException
      */
     public function render(string $view, array $parameters = [], Response $response = null): Response
     {
         // Set reminders
-        $numberOfReminders = $this->getDoctrine()->getRepository(
+        $numberOfReminders = $this->em->getRepository(
             Reminder::class
         )->findNumberOfActiveUserReminders($this->getUser());
         $parameters['activeUserReminders'] = $numberOfReminders;
 
         // Set quickLinks
-        $quickLinks = $this->getDoctrine()
+        $quickLinks = $this->em
             ->getRepository(QuickLink::class)
             ->findAll();
         $parameters['quickLinks'] = $quickLinks;
@@ -90,7 +97,7 @@ class BaseController extends AbstractController
 
                 $parameters['changeProcessStatusForm'] = $changeProcessStatusForm->createView();
 
-                $parameters['recentActivity'] = $this->getDoctrine()->getRepository(
+                $parameters['recentActivity'] = $this->em->getRepository(
                     ProcessLogEntry::class
                 )->getLatestEntriesByLevel(
                     ProcessLogEntryLevelEnumType::NOTICE,
@@ -163,7 +170,7 @@ class BaseController extends AbstractController
     {
         $changeProcessStatusForm->handleRequest($request);
         if ($changeProcessStatusForm->isSubmitted() && $changeProcessStatusForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->em->flush();
         }
     }
 

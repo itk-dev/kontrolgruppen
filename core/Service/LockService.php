@@ -27,9 +27,9 @@ class LockService
      *
      * @param string $store
      */
-    public function __construct(string $store)
+    public function __construct(LockFactory $lockFactory)
     {
-        $this->factory = new LockFactory(StoreFactory::createStore($store));
+        $this->factory = $lockFactory;
     }
 
     /**

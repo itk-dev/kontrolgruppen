@@ -99,7 +99,7 @@ class ProcessFilterType extends AbstractType
 
         $builder->add('caseWorker', Filters\ChoiceFilterType::class, [
             'choices' => array_reduce($this->userRepository->findAll(), function ($carry, $caseWorker) {
-                $carry[$caseWorker->getUsername()] = $caseWorker->getId();
+                $carry[$caseWorker->getUserIdentifier()] = $caseWorker->getId();
 
                 return $carry;
             }, []),

@@ -78,7 +78,9 @@ class SAMLUserProvider implements UserProviderInterface
      */
     public function loadUserByIdentifier(string $username): UserInterface
     {
-        throw new \RuntimeException(sprintf('Lazy programmer exception: %s not implemented!', __METHOD__));
+        $user = $this->userManager->findUserByUsername($username);
+
+        return $user;
     }
 
     /**
