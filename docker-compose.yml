@@ -24,6 +24,19 @@ services:
     labels:
       com.symfony.server.service-prefix: 'DATABASE'
 
+  phpmyadmin:
+    depends_on:
+      - mariadb
+    image: phpmyadmin/phpmyadmin
+    networks:
+      - app
+    ports:
+      - '80:80'
+    environment:
+      PMA_HOST: mariadb
+      PMA_USER: db
+      PMA_PASSWORD: db
+
   phpfpm:
     build: docker/php-fpm
     extra_hosts:
