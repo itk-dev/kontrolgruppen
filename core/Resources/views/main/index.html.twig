@@ -24,7 +24,7 @@
             <div class="collapse navbar-collapse col-lg-7 col-xl-6" id="navbarNav">
                 {% if globalMenuItems|default(false) %}
                     <ul class="navbar-nav ml-0 ml-lg-auto p-3 p-lg-0">
-                        {% if is_granted(['ROLE_SAGSBEHANDLER']) %}
+                        {% if is_granted('ROLE_SAGSBEHANDLER') %}
                             <li class="nav-item dropdown mr-0 mr-sm-3 mb-3 mb-lg-0">
                                 <a class="btn btn-sm btn-light dropdown-toggle btn-block" href="#" id="navbarQuicklinksDropdown" role="button" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
@@ -62,7 +62,7 @@
                             {% endif %}
                         {% endblock %}
 
-                        {% if is_granted(['ROLE_SAGSBEHANDLER']) %}
+                        {% if is_granted('ROLE_SAGSBEHANDLER') %}
                             {#
                             <li class="nav-item mr-0 mr-sm-3 mb-3 mb-lg-0">
                                 <a class="btn btn-sm btn-success btn-block" role="button" href="{{ path('process_new') }}">{{ 'navigation.main.new_process'|trans }}</a>
@@ -95,9 +95,9 @@
                     </ul>
                 {% endif %}
 
-                {% if app.user.username|default(false) %}
+                {% if app.user|default(false) %}
                     <span class="nav-text text-muted p-2">
-                        <i class="fas {{ iconClass('user') }} mr-2"></i><span class="app-username">{{ app.user.username }}</span>
+                        <i class="fas {{ iconClass('user') }} mr-2"></i><span class="app-username">{{ app.user }}</span>
                     </span>
                 {% endif %}
             </div>

@@ -243,7 +243,7 @@ class ProcessController extends BaseController
         }
 
         // Get latest log entries
-        $recentActivity = $this->getDoctrine()->getRepository(
+        $recentActivity = $this->em->getRepository(
             ProcessLogEntry::class
         )->getLatestEntriesByLevel(ProcessLogEntryLevelEnumType::NOTICE, 10);
 
@@ -328,7 +328,7 @@ class ProcessController extends BaseController
     public function show(Request $request, Process $process, LogManager $logManager): Response
     {
         // Latest journal entries.
-        $latestJournalEntries = $this->getDoctrine()->getRepository(
+        $latestJournalEntries = $this->em->getRepository(
             JournalEntry::class
         )->getLatestEntries($process);
 
@@ -373,7 +373,7 @@ class ProcessController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->em->getManager()->flush();
 
             return $this->redirectToReferer(
                 'process_show',
@@ -412,7 +412,7 @@ class ProcessController extends BaseController
             'delete'.$process->getId(),
             $request->request->get('_token')
         )) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->em->getManager();
             $entityManager->remove($process);
             $entityManager->flush();
         }
@@ -453,7 +453,7 @@ class ProcessController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->em->getManager();
 
             $services = $serviceRepository->getByProcess($process);
             foreach ($services as $service) {
@@ -516,7 +516,7 @@ class ProcessController extends BaseController
             $process->setCompletedAt(null);
             $process->setLockedNetValue(null);
             $process->setLastReopened(new \DateTime());
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->em->getManager();
             $em->persist($process);
             $em->flush();
 
