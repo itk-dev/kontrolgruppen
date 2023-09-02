@@ -1,6 +1,6 @@
 services:
     Symfony\Component\DependencyInjection\ContainerInterface: '@service_container'
-
+    Symfony\Component\HttpKernel\Profiler\Profiler: '@profiler'
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
@@ -52,6 +52,12 @@ services:
             $authorizationChecker: '@?security.authorization_checker'
             $tokenStorage: '@?security.token_storage'
 
+    Symfony\Bundle\WebProfilerBundle\Controller\ProfilerController:
+        public: true
+        arguments:
+            $templates: [
+                '@Symfony\Bundle\FrameworkBundle\Controller\TemplateController',
+            ]
     # For some reason we have to alias ChoiceListFactoryInterface to be able to inject it.
     Symfony\Component\Form\ChoiceList\Factory\ChoiceListFactoryInterface: '@form.choice_list_factory.default'
 
