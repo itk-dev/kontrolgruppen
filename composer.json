@@ -6,7 +6,7 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": "~8.2.3",
+        "php": "~8.2.9",
         "ext-ctype": "*",
         "ext-dom": "*",
         "ext-iconv": "*",
