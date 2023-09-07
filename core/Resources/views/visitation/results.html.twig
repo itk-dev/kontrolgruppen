@@ -1,0 +1,113 @@
+{% extends '@KontrolgruppenCore/main/index.html.twig' %}
+
+{% block title %}{{ 'visitation.investigate.title'|trans }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6">
+            <h1>{{ 'visitation.investigate.title'|trans }}</h1>
+            
+            <!-- Other tables aligned left -->
+            <div>
+                {% for i in 1..4 %}
+                    <div class="accordion mb-3" id="tableAccordion{{ i }}">
+                        <div class="card">
+                            <div class="card-header bg-primary text-black" id="tableHeading{{ i }}">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-link btn-block text-left text-white" type="button" data-toggle="collapse" data-target="#tableCollapse{{ i }}" aria-expanded="false" aria-controls="tableCollapse{{ i }}">
+                                        Table {{ i }} <i class="fa fa-chevron-down float-right" aria-hidden="true"></i>
+                                    </button>
+                                </h2>
+                            </div>
+                            <div id="tableCollapse{{ i }}" class="collapse" aria-labelledby="tableHeading{{ i }}" data-parent="#tableAccordion{{ i }}">
+                                <div class="card-body p-0">
+                                    <table class="table mb-0 table-bordered bg-info">
+                                        <thead class="bg-primary">
+                                            <tr>
+                                                <th>Header 1</th>
+                                                <th>Header 2</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="bg-light">
+                                            <tr>
+                                                <td>Data 1</td>
+                                                <td>Data 2</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Fixed table aligned right -->
+        <div class="col-md-6">
+            <div class="fixed-table">
+                <div class="card-header bg-primary text-black">
+                    <h2 class="mb-0">
+                        Stamdata
+                    </h2>
+                </div>
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td>Navn</td>
+                            <td>Søren Sørensen</td>
+                        </tr>
+                        <tr>
+                            <td>CPR</td>
+                            <td>010101-2000 (23 år)</td>
+                        </tr>
+                        <tr>
+                            <td>Navn</td>
+                            <td>Søren Sørensen</td>
+                        </tr>
+                        <tr>
+                            <td>Navn</td>
+                            <td>Søren Sørensen</td>
+                        </tr>
+                        <tr>
+                            <td>Navn</td>
+                            <td>Søren Sørensen</td>
+                        </tr>
+                        <tr>
+                            <td>Navn</td>
+                            <td>Søren Sørensen</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .fixed-table {
+            position: fixed;
+            top: 120px;
+            right: 30px;
+            width: calc(50% - 200px); /* Adjust based on your needs */
+            z-index: 999;
+        }
+        .left-tables{
+            max-width: 600px
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.accordion .card-header').click(function() {
+                $(this).find('i').toggleClass('fa-chevron-down fa-chevron-up');
+            });
+        });
+    </script>
+{% endblock %}

@@ -160,6 +160,7 @@ common:
         save: Gem
         show: Vis
         done: Udført
+        search: Søg
     back_to_list: Tilbage til liste
     boolean:
         'null': ''
@@ -488,6 +489,7 @@ navigation:
         sign_out: Log ud
         quick_links: Genveje
         new_process: Ny sag
+        visitation: Visitation
         reminders:
             number_of_reminders: '%numberOfReminders%'
 
@@ -612,6 +614,131 @@ process:
         resume: Genoptag sag
     completed_message: Sagen er afsluttet og kan ikke længere redigeres
     is_completed: Afsluttet?
+
+visitation:
+    investigate:
+        title: Søg Oplysinger
+    actions:
+        label:
+        reminders: Påmindelser
+        journal_quickview: Senest i journal
+
+    complete:
+        cancel: Fortryd afslutning
+        case_worker: Sagsbehandler
+        complete: Afslut sag
+        confirm: Er du sikker på at du vil afslutte sagen?
+        court_decision: Rettens afgørelse
+        forwarded_to_authority: Videresendes til anden myndighed
+        performed_company_check: Har der været udført virksomhedskontrol?
+        police_report: Sagen er politianmeldt
+        processing_time: Sagens behandlingstid
+        processing_time_value: 'En dag|%days% dage'
+        # # @see https://symfony.com/doc/current/translation/message_format.html#pluralization
+        # processing_time_value: >
+        #   {days, plural,
+        #       =0 {Nul dage}
+        #       one {én dag}
+        #       other {%days% dage}
+        #   }
+        status: Status ved sagens afslutning
+        submit: Godkend afslutning af sag
+        title: Afslut sag %case_number%
+        process_completed: Sag afsluttet
+    resume:
+        title: Genoptag sag %case_number%
+        confirm: Er du sikker på at du vil genoptage sagen?
+        submit: Genoptag
+        cancel: Fortryd
+        process_status:
+            label: Vælg ny status
+    edit:
+        title: Rediger sag
+    form:
+        case_worker: Sagbehandler
+        reason: Årsag
+        change_process_status:
+            placeholder: Vælg sagsstatus
+            save: Gem ny status
+        channel: Kanal
+        client_cpr: CPR-nummer
+        client_cvr: CVR-nummer
+        client_type: Klienttype
+        client_type.empty: '(Vælg klienttype)'
+        client_type.company: Virksomhed
+        client_type.person: Person
+        court_decision: Rettens afgørelse
+        police_report: Er sagen politianmeldt?
+        process_status: Sagsstatus
+        process_type: Sagstype
+        service: Ydelse
+        update: Gem
+        status: Status
+        search_client_cpr:
+            search: Søg CPR nummer
+            loading: Søger...
+            results: Eksisterende sag(er) fundet
+        search_client_cvr:
+            search: Søg CVR nummer
+            loading: Søger...
+            results: Eksisterende sag(er) fundet
+    index:
+        title: Sager
+        pagination_info: '%start%–%end% af %total%'
+    menu_title: Sager
+    new:
+        title: Opret sag
+        select_client_type: Vælg klienttype
+        unique_error: Noget gik galt. Prøv venligst igen.
+    show:
+        title: Sag
+    summary:
+        title: Klient
+    table:
+        case_number: Sagsnummer
+        case_worker: Sagsbehandler
+        channel: Kanal
+        reason: Årsag
+        client_adress: Klient adresse
+        client: Klient
+        client_cpr: CPR-nummer
+        client_first_name: Fornavn
+        client_identifier: Klient
+        client_last_name: Efternavn
+        client_name: Klient navn
+        client_telephone: Klient telefonnummer
+        client_type: Klienttype
+        court_decision: Rettens afgørelse
+        id: ID
+        internal_note: Seneste interne notater
+        journal: Journal
+        note: Seneste notater
+        police_report: Er sagen politianmeldt?
+        process_status: Status
+        process_type: Type
+        processing_time: Sagens behandlingstid
+        reminders: Påmindelser
+        reminders_open: Vis påmindelser
+        service: Ydelse
+        relations: Relationer
+        filter:
+            show_all_client_types: Alle klienttyper
+            show_all_types: Alle sagstyper
+            show_all_status: Alle sagsstatusser
+            show_all_case_worker: Alle sagsbehandlere
+            status:
+                open: Åbne sager
+                completed: Afsluttet sager
+                show_all: Alle sager
+    tooltip: Liste med alle sager
+    btns:
+        create_new: Opret ny sag
+        create_report: Sagsrapport
+        complete: Afslut sag
+        resume: Genoptag sag
+    completed_message: Sagen er afsluttet og kan ikke længere redigeres
+    is_completed: Afsluttet?
+
 
 process_log:
     index:

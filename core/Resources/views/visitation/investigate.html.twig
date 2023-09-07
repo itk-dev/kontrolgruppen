@@ -1,0 +1,38 @@
+{% extends '@KontrolgruppenCore/main/index.html.twig' %}
+
+{% block title %}{{ 'visitation.investigate.title'|trans }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col">
+            <h1>{{ 'visitation.investigate.title'|trans }}</h1>
+
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {# Set variable that triggers that services are loaded for the currently selected process type #}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            const $cprInputElement = $('#visitation_person_cpr');
+            const $searchCprButton = $('#visitation_person_search');
+
+            $searchCprButton.click(function() {
+                const cprValue = $cprInputElement.val();
+                const redirectTo = "{{ path('result') }}" + "?cpr=" + cprValue; // path('result') will be your Symfony generated URL.
+                window.location.href = redirectTo;
+            });
+        });
+    </script>
+    {# {{ encore_entry_script_tags('processForm') }} #}
+    {{ encore_entry_script_tags('visitationFormCprSearch') }}
+    {# {{ encore_entry_script_tags('processFormCvrSearch') }} #}
+
+    {{ encore_entry_script_tags('inputCPR') }}
+{% endblock %}

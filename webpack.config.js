@@ -45,6 +45,8 @@ Encore
     .addEntry('revenueForm', './core/Resources/assets/js/revenueForm.js')
     .addEntry('searchPage', './core/Resources/assets/js/searchPage.js')
     .addEntry('sortSubmit', './core/Resources/assets/js/sortSubmit.js')
+    .addEntry('visitationFormCprSearch', './core/Resources/assets/js/visitationFormCprSearch.js')
+
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     // .enableStimulusBridge('./assets/controllers.json')
