@@ -10,25 +10,16 @@
 
 namespace Kontrolgruppen\CoreBundle\Controller;
 
-use Doctrine\ORM\EntityManagerInterface;
-use Knp\Component\Pager\PaginatorInterface;
-use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
 use Kontrolgruppen\CoreBundle\Entity\Visitation;
 use Kontrolgruppen\CoreBundle\Form\VisitationType;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
-use Kontrolgruppen\CoreBundle\Repository\UserRepository;
 use Kontrolgruppen\CoreBundle\Service\ProcessClientManager;
-use Kontrolgruppen\CoreBundle\Service\ProcessManager;
-use Kontrolgruppen\CoreBundle\Service\UserSettingsService;
-use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
-use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+
 /**
  * @Route("/visitation")
  */
@@ -74,15 +65,15 @@ class VisitationController extends BaseController
             $client = $clientManager->createClient($request->get('clientType') ?? '');
         } catch (\Exception $exception) {
             $this->addFlash('danger', $exception->getMessage());
-    
+
             return $this->render('process/select-client-type.html.twig');
         }
-    
+
         $visitation->setVisitationClient($client);
         $form = $this->createForm(VisitationType::class, $visitation);
-        
+
         $form->handleRequest($request);
-    
+
         // Check if form is submitted and valid
         if ($form->isSubmitted() && $form->isValid()) {
             // You can now redirect to your desired route
@@ -90,7 +81,7 @@ class VisitationController extends BaseController
                 'cpr' => $form->get('cpr')->getData(),  // Assuming 'cpr' is the form field name
             ]);
         }
-    
+
         return $this->render(
             '@KontrolgruppenCore/visitation/investigate.html.twig',
             [
@@ -102,7 +93,7 @@ class VisitationController extends BaseController
             ]
         );
     }
-    
+
 
     /**
      * @Route("/result", name="result", methods={"GET","POST"})
@@ -118,21 +109,21 @@ class VisitationController extends BaseController
     public function results(Request $request, ProcessClientManager $clientManager, HttpClientInterface $httpClient): Response
     {
         // GET CPR from request
-        $cpr = $request->get('cpr');
-    
+        $cpr = preg_replace('/\D+/', '', $request->get('cpr'));
+
         if (!$cpr) {
             throw new NotFoundHttpException('No CPR found!');
         }
-    
+
         $url = "http://host.docker.internal:9000/CPR/CprPersonFullSimple/1/rest/PersonFullListSimple?pnr.personnummer.eq=$cpr";
         try {
             $response = $httpClient->request('GET', $url);
         } catch (\Exception $e) {
             dump($e->getMessage());
-        }    
+        }
         if ($response->getStatusCode() == 200) {
             $data = $response->toArray();  // Convert JSON response to an associative array
-            
+
             return $this->render(
                 '@KontrolgruppenCore/visitation/results.html.twig',
                 [
@@ -142,7 +133,7 @@ class VisitationController extends BaseController
         } else {
             // Handle error (e.g., log it, display an error message)
             $this->addFlash('danger', 'Failed to fetch data from the API.');
-    
+
             return $this->render(
                 '@KontrolgruppenCore/visitation/results.html.twig'
             );
