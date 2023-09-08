@@ -22,6 +22,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Twig\Environment;
+use Doctrine\ORM\EntityManagerInterface;
+
 
 /**
  * Class ExportController.
@@ -46,9 +48,9 @@ class ExportController extends BaseController
      * @param FormFactoryInterface $formFactory
      * @param Environment          $twig
      */
-    public function __construct(RequestStack $requestStack, MenuService $menuService, Manager $exportManager, FormFactoryInterface $formFactory, Environment $twig)
+    public function __construct(RequestStack $requestStack, EntityManagerInterface $em, MenuService $menuService, Manager $exportManager, FormFactoryInterface $formFactory, Environment $twig)
     {
-        parent::__construct($requestStack, $menuService);
+        parent::__construct($requestStack, $menuService, $em);
         $this->exportManager = $exportManager;
         $this->formFactory = $formFactory;
         $this->twig = $twig;
