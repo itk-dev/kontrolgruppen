@@ -28,7 +28,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
-
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 /**
  * @Route("/visitation")
  */
@@ -115,21 +115,38 @@ class VisitationController extends BaseController
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Kontrolgruppen\CoreBundle\CPR\CprException
      */
-    public function results(Request $request, ProcessClientManager $clientManager): Response
+    public function results(Request $request, ProcessClientManager $clientManager, HttpClientInterface $httpClient): Response
     {
         // GET CPR from request
         $cpr = $request->get('cpr');
-        
+    
         if (!$cpr) {
             throw new NotFoundHttpException('No CPR found!');
         }
-
-
-        return $this->render(
-            '@KontrolgruppenCore/visitation/results.html.twig',
-            [
-            ]
-        );
+    
+        $url = "http://localhost:9000/CPR/CprPersonFullSimple/1/rest/PersonFullListSimple?pnr.personnummer.eq=$cpr";
+        try {
+            $response = $httpClient->request('GET', $url);
+        } catch (\Exception $e) {
+            dump($e->getMessage());
+        }    
+        if ($response->getStatusCode() == 200) {
+            $data = $response->toArray();  // Convert JSON response to an associative array
+            
+            return $this->render(
+                '@KontrolgruppenCore/visitation/results.html.twig',
+                [
+                    'data' => $data  // Pass the data to your Twig template
+                ]
+            );
+        } else {
+            // Handle error (e.g., log it, display an error message)
+            $this->addFlash('danger', 'Failed to fetch data from the API.');
+    
+            return $this->render(
+                '@KontrolgruppenCore/visitation/results.html.twig'
+            );
+        }
     }
 
     /**
