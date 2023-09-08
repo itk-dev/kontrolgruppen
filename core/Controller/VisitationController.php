@@ -14,6 +14,7 @@ use Kontrolgruppen\CoreBundle\Entity\Visitation;
 use Kontrolgruppen\CoreBundle\Form\VisitationType;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 use Kontrolgruppen\CoreBundle\Service\ProcessClientManager;
+use Mpdf\Container\NotFoundException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -120,7 +121,7 @@ class VisitationController extends DatafordelerController
         try {
             $data = $this->getPersonData($cpr, $httpClient);
         } catch (TransportExceptionInterface $e) {
-            dump($e->getMessage());
+            throw new NotFoundException($e->getMessage());
         }
 
         if (!empty($data)) {

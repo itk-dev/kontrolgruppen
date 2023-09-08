@@ -6,44 +6,41 @@
     <div class="row">
         <div class="col-md-6">
             <h1>{{ 'visitation.investigate.title'|trans }}</h1>
-            
+
             <!-- Other tables aligned left -->
-            <div>
-                {% for i in 1..4 %}
-                    <div class="accordion mb-3" id="tableAccordion{{ i }}">
-                        <div class="card">
-                            <div class="card-header bg-primary text-black" id="tableHeading{{ i }}">
-                                <h2 class="mb-0">
-                                    <button class="btn btn-link btn-block text-left text-white" type="button" data-toggle="collapse" data-target="#tableCollapse{{ i }}" aria-expanded="false" aria-controls="tableCollapse{{ i }}">
-                                        Table {{ i }} <i class="fa fa-chevron-down float-right" aria-hidden="true"></i>
-                                    </button>
-                                </h2>
-                            </div>
-                            <div id="tableCollapse{{ i }}" class="collapse" aria-labelledby="tableHeading{{ i }}" data-parent="#tableAccordion{{ i }}">
-                                <div class="card-body p-0">
-                                    <table class="table mb-0 table-bordered bg-info">
-                                        <thead class="bg-primary">
-                                            <tr>
-                                                <th>Header 1</th>
-                                                <th>Header 2</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="bg-light">
-                                            <tr>
-                                                <td>Data 1</td>
-                                                <td>Data 2</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
+            <div class="left-tables">
+                {# Individual tables go here #}
+
+                {# Adresse historik Table #}
+                {% include '@KontrolgruppenCore/visitation/tables/adresse_historik.html.twig' %}
+
+                {# Bopælssamling Table #}
+                {% include '@KontrolgruppenCore/visitation/tables/bopaelssamling.html.twig' %}
+
+                {# Bolig Table #}
+                {% include '@KontrolgruppenCore/visitation/tables/bolig.html.twig' %}
+
+                {# Børn Table #}
+                {% include '@KontrolgruppenCore/visitation/tables/boern.html.twig' %}
+
+                {# Civilstatus Table #}
+                {% include '@KontrolgruppenCore/visitation/tables/civil_status.html.twig' %}
+
+                {# CPR historik Table #}
+                {% include '@KontrolgruppenCore/visitation/tables/cpr_historik.html.twig' %}
+
+                {# Navnehistorik Table #}
+                {% include '@KontrolgruppenCore/visitation/tables/navnehistorik.html.twig' %}
+
+                {# Statsborgerskab Table #}
+                {% include '@KontrolgruppenCore/visitation/tables/statsborgerskab.html.twig' %}
+
+                {# Virksomhed Table #}
+                {% include '@KontrolgruppenCore/visitation/tables/virksomhed.html.twig' %}
             </div>
         </div>
 
-        <!-- Fixed table aligned right -->
+        <!-- Stamdata Table aligned right -->
         <div class="col-md-6">
             <div class="fixed-table">
                 <div class="card-header bg-primary text-black">
@@ -55,29 +52,25 @@
                     <tbody>
                         <tr>
                             <td>Navn</td>
-                            <td>Søren Sørensen</td>
+                            <td>{{ data.Person.Navne[2].Navn.fornavne }} {{ data.Person.Navne[2].Navn.efternavn }}</td>
                         </tr>
                         <tr>
                             <td>CPR</td>
-                            <td>010101-2000 (23 år)</td>
+                            <td>{{ data.Person.Personnumre[0].Personnummer.personnummer }}</td>
                         </tr>
                         <tr>
-                            <td>Navn</td>
-                            <td>Søren Sørensen</td>
+                            <td>Adresse</td>
+                            <td>{{ data.Person.Adresseoplysninger[1].Adresseoplysninger.SupplerendeAdresse.SimpelAdresse.adresselinie1 }} {{ data.Person.Navne[2].Navn.efternavn }}</td>
                         </tr>
                         <tr>
-                            <td>Navn</td>
-                            <td>Søren Sørensen</td>
+                            <td>Køn</td>
+                            <td>{{ data.Person.koen }}</td>
                         </tr>
                         <tr>
-                            <td>Navn</td>
-                            <td>Søren Sørensen</td>
+                            <td>Eksisterende sager</td>
+                            <td></td>
                         </tr>
-                        <tr>
-                            <td>Navn</td>
-                            <td>Søren Sørensen</td>
-                        </tr>
-
+                        {# Add more rows as needed #}
                     </tbody>
                 </table>
             </div>
@@ -95,8 +88,8 @@
             width: calc(50% - 200px); /* Adjust based on your needs */
             z-index: 999;
         }
-        .left-tables{
-            max-width: 600px
+        .left-tables {
+            max-width: 600px;
         }
     </style>
 {% endblock %}
