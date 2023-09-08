@@ -18,12 +18,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
  * @Route("/visitation")
  */
-class VisitationController extends BaseController
+class VisitationController extends DatafordelerController
 {
     /**
      * @Route("/", name="visitation_index", methods={"GET"})
@@ -108,30 +109,28 @@ class VisitationController extends BaseController
      */
     public function results(Request $request, ProcessClientManager $clientManager, HttpClientInterface $httpClient): Response
     {
-        // GET CPR from request
-        $cpr = preg_replace('/\D+/', '', $request->get('cpr'));
+        $cpr = $request->get('cpr');
 
         if (!$cpr) {
             throw new NotFoundHttpException('No CPR found!');
         }
 
-        $url = "http://host.docker.internal:9000/CPR/CprPersonFullSimple/1/rest/PersonFullListSimple?pnr.personnummer.eq=$cpr";
+        $cpr = preg_replace('/\D+/', '', $cpr);
+
         try {
-            $response = $httpClient->request('GET', $url);
-        } catch (\Exception $e) {
+            $data = $this->getPersonData($cpr, $httpClient);
+        } catch (TransportExceptionInterface $e) {
             dump($e->getMessage());
         }
-        if ($response->getStatusCode() == 200) {
-            $data = $response->toArray();  // Convert JSON response to an associative array
 
+        if (!empty($data)) {
             return $this->render(
                 '@KontrolgruppenCore/visitation/results.html.twig',
                 [
-                    'data' => $data  // Pass the data to your Twig template
+                    'data' => $data
                 ]
             );
         } else {
-            // Handle error (e.g., log it, display an error message)
             $this->addFlash('danger', 'Failed to fetch data from the API.');
 
             return $this->render(
