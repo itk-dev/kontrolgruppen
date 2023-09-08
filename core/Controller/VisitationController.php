@@ -124,7 +124,7 @@ class VisitationController extends BaseController
             throw new NotFoundHttpException('No CPR found!');
         }
     
-        $url = "http://localhost:9000/CPR/CprPersonFullSimple/1/rest/PersonFullListSimple?pnr.personnummer.eq=$cpr";
+        $url = "http://host.docker.internal:9000/CPR/CprPersonFullSimple/1/rest/PersonFullListSimple?pnr.personnummer.eq=$cpr";
         try {
             $response = $httpClient->request('GET', $url);
         } catch (\Exception $e) {
