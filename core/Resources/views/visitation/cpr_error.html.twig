@@ -1,0 +1,17 @@
+{% extends '@KontrolgruppenCore/main/index.html.twig' %}
+
+{% block title %}{{ 'process.index.title'|trans }}{% endblock %}
+
+{% block content %}
+    <div>
+
+        TELL THE USER CPR IS NOT FOUND
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {{ encore_entry_script_tags('processFilters') }}
+    {{ encore_entry_script_tags('journalQuickview') }}
+{% endblock %}

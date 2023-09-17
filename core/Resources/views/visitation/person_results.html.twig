@@ -12,31 +12,31 @@
                 {# Individual tables go here #}
 
                 {# Adresse historik Table #}
-                {% include '@KontrolgruppenCore/visitation/tables/adresse_historik.html.twig' %}
+                {% include '@KontrolgruppenCore/visitation/person_tables/adresse_historik.html.twig' %}
 
                 {# Bopælssamling Table #}
-                {% include '@KontrolgruppenCore/visitation/tables/bopaelssamling.html.twig' %}
+                {% include '@KontrolgruppenCore/visitation/person_tables/bopaelssamling.html.twig' %}
 
                 {# Bolig Table #}
-                {% include '@KontrolgruppenCore/visitation/tables/bolig.html.twig' %}
+                {% include '@KontrolgruppenCore/visitation/person_tables/bolig.html.twig' %}
 
                 {# Børn Table #}
-                {% include '@KontrolgruppenCore/visitation/tables/boern.html.twig' %}
+                {% include '@KontrolgruppenCore/visitation/person_tables/boern.html.twig' %}
 
                 {# Civilstatus Table #}
-                {% include '@KontrolgruppenCore/visitation/tables/civil_status.html.twig' %}
+                {% include '@KontrolgruppenCore/visitation/person_tables/civil_status.html.twig' %}
 
                 {# CPR historik Table #}
-                {% include '@KontrolgruppenCore/visitation/tables/cpr_historik.html.twig' %}
+                {% include '@KontrolgruppenCore/visitation/person_tables/cpr_historik.html.twig' %}
 
                 {# Navnehistorik Table #}
-                {% include '@KontrolgruppenCore/visitation/tables/navnehistorik.html.twig' %}
+                {% include '@KontrolgruppenCore/visitation/person_tables/navnehistorik.html.twig' %}
 
                 {# Statsborgerskab Table #}
-                {% include '@KontrolgruppenCore/visitation/tables/statsborgerskab.html.twig' %}
+                {% include '@KontrolgruppenCore/visitation/person_tables/statsborgerskab.html.twig' %}
 
                 {# Virksomhed Table #}
-                {% include '@KontrolgruppenCore/visitation/tables/virksomhed.html.twig' %}
+                {% include '@KontrolgruppenCore/visitation/person_tables/virksomhed.html.twig' %}
             </div>
         </div>
 
@@ -49,7 +49,7 @@
                     </h6>
                 </div>
                 <table class="table table-bordered">
-                    <tbody>
+                    <tbody class="stam-data-body">
                         <tr>
                             <td>Navn</td>
                             <td>{{ data.Person.Navne[0].Navn.fornavne }} {{ data.Person.Navne[0].Navn.efternavn }}</td>
@@ -89,7 +89,7 @@
             z-index: 999;
         }
         .left-tables {
-            max-width: 700px;
+            max-width: 900px;
         }
         .card-header {
             background-color:#c8defc ;
@@ -118,6 +118,9 @@
             background-color: #d0dcfc;
         }
         .bg-light{
+            background-color: #e8ecfc;
+        }
+        .stam-data-body{
             background-color: #e8ecfc;
         }
         .card-header.collapsed .fa-chevron-down {

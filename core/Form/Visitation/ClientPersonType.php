@@ -54,7 +54,6 @@ class ClientPersonType extends AbstractType
                 'label' => 'visitation.form.search_client_cpr.search',
                 'attr' => [
                     'class' => 'btn-primary',
-
                     // Make a route to the result page and pass the cpr as a parameter. Remember to set the route name in the controller.
                     'data-search-action' => $this->router->generate(
                         'result',

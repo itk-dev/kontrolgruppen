@@ -6,10 +6,12 @@
     <div class="row">
         <div class="col">
             <h1>{{ 'visitation.investigate.title'|trans }}</h1>
+            <div class="col-md-6 mx-auto search-cpr">
 
-            {{ form_start(form) }}
-                {{ form_widget(form) }}
-            {{ form_end(form) }}
+                {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                {{ form_end(form) }}
+            </div>
         </div>
     </div>
 {% endblock %}
@@ -35,4 +37,16 @@
     {# {{ encore_entry_script_tags('processFormCvrSearch') }} #}
 
     {{ encore_entry_script_tags('inputCPR') }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .search-cpr{
+            top: 70%;
+        }
+        #visitation_person_cpr{
+            float: right;
+        }
+    </style>
 {% endblock %}
