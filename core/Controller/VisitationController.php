@@ -126,7 +126,7 @@ class VisitationController extends DatafordelerController
 
         if (!empty($data)) {
             return $this->render(
-                '@KontrolgruppenCore/visitation/results.html.twig',
+                '@KontrolgruppenCore/visitation/person_results.html.twig',
                 [
                     'data' => $data
                 ]
@@ -135,7 +135,7 @@ class VisitationController extends DatafordelerController
             $this->addFlash('danger', 'Failed to fetch data from the API.');
 
             return $this->render(
-                '@KontrolgruppenCore/visitation/results.html.twig'
+                '@KontrolgruppenCore/visitation/person_results.html.twig'
             );
         }
     }
