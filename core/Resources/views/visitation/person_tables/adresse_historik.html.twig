@@ -20,14 +20,19 @@
                         </tr>
                     </thead>
                     <tbody class="bg-light">
-                        {# Loop through the data for this table if applicable. Otherwise, statically add rows. #}
+                        {% for adresse in data.Person.Adresseoplysninger %}
                         <tr>
-                            {# <td>{{ data.Person.Adresseoplysninger[0].SimpelAdresse.adresselinie1 }}</td> #}
-                            {# <td>{{ data.adresse_historik.post_nr_og_by }}</td>
-                            <td>{{ data.adresse_historik.kommune }}</td>
-                            <td>{{ data.adresse_historik.land }}</td>
-                            <td>{{ data.adresse_historik.dato_fra_til }}</td> #}
+                            <td>{{ adresse.Adresseoplysninger.CprAdresse.vejadresseringsnavn }}</td>
+                            <td>{{ adresse.Adresseoplysninger.CprAdresse.postnummer }} {{ adresse.Adresseoplysninger.CprAdresse.bynavn }}</td>
+                            <td>{{ adresse.Adresseoplysninger.CprAdresse.cprKommunenavn }}</td>
+                            <td></td>
+                            {% if adresse.Adresseoplysninger.virkningTil is defined %}
+                                <td>{{ adresse.Adresseoplysninger.virkningFra|date("m-d-Y") }} til {{ adresse.Adresseoplysninger.virkningTil|date("m-d-Y") }} </td>
+                            {% else %}
+                                <td>{{ adresse.Adresseoplysninger.virkningFra|date("m-d-Y") }}</td>
+                            {% endif %}
                         </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>

@@ -12,7 +12,7 @@
                 {# Individual tables go here #}
 
                 {# Adresse historik Table #}
-                {% include '@KontrolgruppenCore/visitation/person_tables/adresse_historik.html.twig' %}
+                {% include '@KontrolgruppenCore/visitation/person_tables/adresse_historik.html.twig' with {'data': data} %}
 
                 {# Bopælssamling Table #}
                 {% include '@KontrolgruppenCore/visitation/person_tables/bopaelssamling.html.twig' %}
@@ -60,7 +60,7 @@
                         </tr>
                         <tr>
                             <td>Adresse</td>
-                            <td>{{ data.Person.Adresseoplysninger[0].Adresseoplysninger.SupplerendeAdresse.SimpelAdresse.adresselinie1 }} {{ data.Person.Navne[0].Navn.efternavn }}</td>
+                            <td>{{ data.Person.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.vejadresseringsnavn}} {{ data.Person.Navne[0].Navn.efternavn }}</td>
                         </tr>
                         <tr>
                             <td>Køn</td>
