@@ -2,12 +2,12 @@
     <div class="card">
         <div class="card-header text-black" id="tableHeadingVirksomhed">
             <h2 class="mb-0">
-                <button class="btn btn-block text-left text-black collapsed btn-header " type="button" data-toggle="collapse" data-target="#tableCollapseVirksomhed" aria-expanded="false" aria-controls="tableCollapseVirksomhed">
+                <button class="btn btn-block text-left text-black collapsed btn-header " type="button" data-toggle="collapse" data-target="#tableCollapseVirksomhedCreated" aria-expanded="false" aria-controls="tableCollapseVirksomhedCreated">
                     Oprettelsesdato <i class="fa fa-chevron-down float-right" aria-hidden="true"></i>
                 </button>
             </h2>
         </div>
-        <div id="tableCollapseVirksomhed" class="collapse" aria-labelledby="tableHeadingVirksomhed" data-parent="#tableAccordionVirksomhed">
+        <div id="tableCollapseVirksomhedCreated" class="collapse" aria-labelledby="tableHeadingVirksomhed" data-parent="#tableAccordionVirksomhed">
             <div class="card-body p-0">
                 <table class="table mb-0 table-bordered bg-info">
                     <thead class="data-header">
@@ -18,11 +18,7 @@
                     <tbody class="bg-light">
                         {# Loop through the data for this table if applicable. Otherwise, statically add rows. #}
                         <tr>
-                            {# <td>{{ data.Person.Adresseoplysninger[0].SimpelAdresse.adresselinie1 }}</td> #}
-                            {# <td>{{ data.adresse_historik.post_nr_og_by }}</td>
-                            <td>{{ data.adresse_historik.kommune }}</td>
-                            <td>{{ data.adresse_historik.land }}</td>
-                            <td>{{ data.adresse_historik.dato_fra_til }}</td> #}
+                            <td>{{ data[0].virksomhed.virksomhedStartdato|date("m-d-Y") }}</td>
                         </tr>
                     </tbody>
                 </table>

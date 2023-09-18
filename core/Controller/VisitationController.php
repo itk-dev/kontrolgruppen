@@ -75,13 +75,19 @@ class VisitationController extends DatafordelerController
         $form = $this->createForm(VisitationType::class, $visitation);
 
         $form->handleRequest($request);
-
-        // Check if form is submitted and valid
+        
         if ($form->isSubmitted() && $form->isValid()) {
             // You can now redirect to your desired route
-            return $this->redirectToRoute('result', [
-                'cpr' => $form->get('cpr')->getData(),  // Assuming 'cpr' is the form field name
-            ]);
+            return $this->render(
+                '@KontrolgruppenCore/visitation/investigate.html.twig',
+                [
+                    'menuItems' => $this->menuService->getProcessMenu(
+                        $request->getPathInfo(),
+                    ),
+                    'visitation' => $visitation,
+                    'form' => $form->createView()
+                ]
+            );
         }
 
         return $this->render(
@@ -111,33 +117,54 @@ class VisitationController extends DatafordelerController
     public function results(Request $request, ProcessClientManager $clientManager, HttpClientInterface $httpClient): Response
     {
         $cpr = $request->get('cpr');
+        $cvr = $request->get('cvr');
 
-        if (!$cpr) {
-            throw new NotFoundHttpException('No CPR found!');
+        if ($cvr) {
+            try {
+                $data = $this->getVirksomhedData($cvr, $httpClient);
+            } catch (TransportExceptionInterface $e) {
+                throw new NotFoundException($e->getMessage());
+            }
+            if (!empty($data)) {
+                return $this->render(
+                    '@KontrolgruppenCore/visitation/virksomhed_results.html.twig',
+                    [
+                        'data' => $data
+                    ]
+                );
+            } else {
+                $this->addFlash('danger', 'Failed to fetch data from the API.');
+    
+                return $this->render(
+                    '@KontrolgruppenCore/visitation/virksomhed_results.html.twig'
+                );
+            }
+        }
+        else if($cpr) {
+            $cpr = preg_replace('/\D+/', '', $cpr);
+            try {
+                $data = $this->getPersonData($cpr, $httpClient);
+            } catch (TransportExceptionInterface $e) {
+                throw new NotFoundException($e->getMessage());
+            }
+            if (!empty($data)) {
+                return $this->render(
+                    '@KontrolgruppenCore/visitation/person_results.html.twig',
+                    [
+                        'data' => $data
+                    ]
+                );
+            } else {
+                $this->addFlash('danger', 'Failed to fetch data from the API.');
+    
+                return $this->render(
+                    '@KontrolgruppenCore/visitation/person_results.html.twig'
+                );
+            }
         }
 
-        $cpr = preg_replace('/\D+/', '', $cpr);
 
-        try {
-            $data = $this->getPersonData($cpr, $httpClient);
-        } catch (TransportExceptionInterface $e) {
-            throw new NotFoundException($e->getMessage());
-        }
 
-        if (!empty($data)) {
-            return $this->render(
-                '@KontrolgruppenCore/visitation/person_results.html.twig',
-                [
-                    'data' => $data
-                ]
-            );
-        } else {
-            $this->addFlash('danger', 'Failed to fetch data from the API.');
-
-            return $this->render(
-                '@KontrolgruppenCore/visitation/person_results.html.twig'
-            );
-        }
     }
 
     /**

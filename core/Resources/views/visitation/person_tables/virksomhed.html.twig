@@ -17,14 +17,22 @@
                         </tr>
                     </thead>
                     <tbody class="bg-light">
-                        {# Loop through the data for this table if applicable. Otherwise, statically add rows. #}
-                        <tr>
-                            {# <td>{{ data.Person.Adresseoplysninger[0].SimpelAdresse.adresselinie1 }}</td> #}
-                            {# <td>{{ data.adresse_historik.post_nr_og_by }}</td>
-                            <td>{{ data.adresse_historik.kommune }}</td>
-                            <td>{{ data.adresse_historik.land }}</td>
-                            <td>{{ data.adresse_historik.dato_fra_til }}</td> #}
-                        </tr>
+                        {% if data.Person.Statsborgerskab is defined %}
+                            {% for land in data.Person.Statsborgerskab %}
+                            <tr>
+                                <td>{{ land.cprlandenavn }}</td>
+                                {% if land.virkningTil is defined %}
+                                    <td>{{ land.virkningFra|date("m-d-Y") }} til {{ land.virkningTil|date("m-d-Y") }} </td>
+                                {% else %}
+                                    <td>{{ land.virkningFra|date("m-d-Y") }}</td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td class="empty-column" colspan="4">Ingen Virksomhed</td>
+                            </tr>
+                        {% endif %}
                     </tbody>
                 </table>
             </div>

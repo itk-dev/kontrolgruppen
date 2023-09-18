@@ -38,4 +38,28 @@ class DatafordelerController extends BaseController
 
         return $response->toArray();
     }
+
+        /**
+     * @return array
+     *
+     * @throws TransportExceptionInterface
+     */
+    protected function getVirksomhedData(string $cvr, HttpClientInterface $httpClient): array
+    {
+        $response = $httpClient->request(
+            'GET',
+            $this->getParameter('datafordeler_url') . 'CVR/n',
+            [
+                'query' => [
+                    'pnr.cvr.eq' => $cvr,
+                ],
+            ]
+        );
+
+        if ($response->getStatusCode() === 404) {
+            return [];
+        }
+
+        return $response->toArray();
+    }
 }

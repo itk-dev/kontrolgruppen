@@ -1,0 +1,146 @@
+{% extends '@KontrolgruppenCore/main/index.html.twig' %}
+
+{% block title %}{{ 'visitation.investigate.title'|trans }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-8">
+            <h1>{{ 'visitation.investigate.title'|trans }}</h1>
+
+            <!-- Other tables aligned left -->
+            <div class="left-tables">
+                {# Adresse historik Table #}
+                {% include '@KontrolgruppenCore/visitation/company_tables/created_date.html.twig' with {'data': data} %}
+
+                {# Bopælssamling Table #}
+                {% include '@KontrolgruppenCore/visitation/company_tables/real_owners.html.twig' %}
+
+                {# Bolig Table #}
+                {% include '@KontrolgruppenCore/visitation/company_tables/registration_history.html.twig' %}
+
+                {# Børn Table #}
+                {% include '@KontrolgruppenCore/visitation/company_tables/history.html.twig' %}
+
+                {# Civilstatus Table #}
+                {% include '@KontrolgruppenCore/visitation/company_tables/p_number.html.twig' %}
+
+                {# CPR historik Table #}
+                {% include '@KontrolgruppenCore/visitation/company_tables/amount_workers.html.twig' %}            
+            </div>
+        </div>
+
+        <!-- Stamdata Table aligned right -->
+        <div class="col-md-4">
+            <div class="fixed-table">
+                <div class="card-header text-black stam-data">
+                    <h6 class="mb-0" id="stam-data">
+                        Stamdata
+                    </h6>
+                </div>
+                <table class="table table-bordered">
+                    <tbody class="stam-data-body">
+                        <tr>
+                            <td>Navn</td>
+                            <td>{{ data[0].virksomhedsnavn.vaerdi }}</td>
+                        </tr>
+                        <tr>
+                            <td>CVR</td>
+                            <td>{{ data[0].virksomhed.CVRNummer }}</td>
+                        </tr>
+                        <tr>
+                            <td>Adresse</td>
+                            <td>{{ data[0].beliggenhedsadresse.adresse }} {{ data[0].beliggenhedsadresse.adresse }}</td>
+                        </tr>
+                        <tr>
+                            <td>Kontakt</td>
+                            <td>{{ data[0].emailadresse.vaerdi }}</td>
+                        </tr>
+                        <tr>
+                            <td>Virksomhedsform</td>
+                            <td>{{ data[0].virksomhedsform.vaerdi }}</td>
+                        </tr>
+                        <tr>
+                            <td>Status</td>
+                            <td>{{ data[0].virksomhed.status }}</td>
+                        </tr>
+                        <tr>
+                            <td>Relationer</td>
+                            {# <td>{{ data[0].virksomhed.status }}</td> #}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .fixed-table {
+            position: fixed;
+            top: 120px;
+            right: 30px;
+            width: 30%;
+            z-index: 999;
+        }
+        .left-tables {
+            max-width: 900px;
+        }
+        .card-header {
+            background-color:#c8defc ;
+        }
+        .card-header.active {
+            background-color: #81b4fe;
+        }
+        .btn-header{
+            color: black;
+            font-weight: bold;
+        }
+        .btn-header:hover{
+            font-weight: bold;
+        }
+        .btn-header:focus{
+            text-decoration: none;
+            box-shadow: none;
+        }
+        #stam-data{
+            font-weight: bold;
+        }
+        .stam-data{
+            background-color: #81b4fe;
+        }
+        .data-header{
+            background-color: #d0dcfc;
+        }
+        .bg-light{
+            background-color: #e8ecfc;
+        }
+        .stam-data-body{
+            background-color: #e8ecfc;
+        }
+        .card-header.collapsed .fa-chevron-down {
+            transform: rotate(90deg);
+        }
+
+        .card-header.active .fa-chevron-up {
+            transform: rotate(-90deg);
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.accordion .card-header').click(function() {
+                $(this).find('i').toggleClass('fa-chevron-down fa-chevron-up');
+            });
+            $(document).ready(function() {
+                $(".btn-header").click(function() {
+                    $(this).closest(".card-header").toggleClass("collapsed active");
+                });
+            });
+        });
+    </script>
+{% endblock %}

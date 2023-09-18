@@ -22,6 +22,14 @@
     {# Set variable that triggers that services are loaded for the currently selected process type #}
     <script type="text/javascript">
         $(document).ready(function() {
+            const $cvrInputElement = $('#visitation_company_cvr');
+            const $searchCvrButton = $('#visitation_company_search');
+
+            $searchCvrButton.click(function() {
+                const cvrValue = $cvrInputElement.val();
+                const redirectTo = "{{ path('result') }}" + "?cvr=" + cvrValue; // path('result') will be your Symfony generated URL.
+                window.location.href = redirectTo;
+            });
             const $cprInputElement = $('#visitation_person_cpr');
             const $searchCprButton = $('#visitation_person_search');
 
@@ -34,6 +42,8 @@
     </script>
     {# {{ encore_entry_script_tags('processForm') }} #}
     {{ encore_entry_script_tags('visitationFormCprSearch') }}
+    {# {{ encore_entry_script_tags('visitationFormCvrSearch') }} #}
+
     {# {{ encore_entry_script_tags('processFormCvrSearch') }} #}
 
     {{ encore_entry_script_tags('inputCPR') }}
