@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col">
             <h1>{{ 'visitation.investigate.title'|trans }}</h1>
-            <div class="col-md-6 mx-auto search-cpr">
+            <div class="col-md-4 mx-auto search-cpr">
 
                 {{ form_start(form) }}
                     {{ form_widget(form) }}
@@ -41,7 +41,7 @@
         });
     </script>
     {# {{ encore_entry_script_tags('processForm') }} #}
-    {{ encore_entry_script_tags('visitationFormCprSearch') }}
+    {# {{ encore_entry_script_tags('visitationFormCprSearch') }} #}
     {# {{ encore_entry_script_tags('visitationFormCvrSearch') }} #}
 
     {# {{ encore_entry_script_tags('processFormCvrSearch') }} #}
@@ -55,8 +55,17 @@
         .search-cpr{
             top: 70%;
         }
-        #visitation_person_cpr{
+        #visitation_person_search{
             float: right;
+        }
+        #visitation_company_search{
+            float: right;
+        }
+        #visitation_person_cpr{
+            background-color: #d9d9d9;
+        }
+        #visitation_company_cvr{
+            background-color: #d9d9d9;
         }
     </style>
 {% endblock %}
