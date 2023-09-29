@@ -136,7 +136,7 @@ class Export extends AbstractExport
                         $now, // 'Udtræksdato'
                         $process->getCaseNumber(), // 'Sagsnummer'
                         $this->formatDate($process->getCreatedAt(), 'long'), // 'Oprettet dato'
-                        $process->getCaseWorker() ? $process->getCaseWorker()->getUsername() : null, // 'Sagsbehandler'
+                        $process->getCaseWorker() ? $process->getCaseWorker()->getUserIdentifier() : null, // 'Sagsbehandler'
                         $client->getPostalCode(), // 'Postnummer'
                         $client->getCPR(), // 'CPR-nummer'
                         $client->getNumberOfChildren(), // 'Antal børn'
