@@ -1,71 +1,86 @@
-{% extends '@KontrolgruppenCore/main/index.html.twig' %}
-
-{% block title %}{{ 'visitation.investigate.title'|trans }}{% endblock %}
-
-{% block content %}
-    <div class="row">
-        <div class="col">
-            <h1>{{ 'visitation.investigate.title'|trans }}</h1>
-            <div class="col-md-4 mx-auto search-cpr">
-
-                {{ form_start(form) }}
-                    {{ form_widget(form) }}
-                {{ form_end(form) }}
+{% extends '@KontrolgruppenCore/main/index.html.twig' %} {% block title %}{{
+    "visitation.investigate.title" | trans
+}}{% endblock %} {% block content %}
+<div class="row">
+    <div class="col">
+        <h1>{{ "visitation.investigate.title" | trans }}</h1>
+        <div class="col-md-4 mx-auto search-cpr">
+            {# IF type "PERSON" show CPR search #}
+            <div class="form-group">
+                <label for="visitation_person_cpr" class="required">{{
+                    "visitation.form.client_cpr" | trans
+                }}</label>
+                <input
+                    type="text"
+                    id="visitation_person_cpr"
+                    name="visitation[person][cpr]"
+                    required="required"
+                    class="js-input-cpr no-cpr-scanning form-control"
+                    placeholder="{{ 'visitation.form.cpr_placehoder' | trans }}"
+                />
+                <button
+                    type="button"
+                    id="visitation_person_search"
+                    name="visitation[person][search]"
+                    class="btn-primary btn"
+                    {# data-search-action="http://0.0.0.0:63585/process/search-process-by-cpr" #}
+                    data-search-text="Søg efter eksisterende sager"
+                    data-loading-text="Søger..."
+                >
+                    {{ "visitation.form.search_client_cpr.search" | trans }}
+                </button>
             </div>
         </div>
     </div>
-{% endblock %}
+</div>
+{% endblock %} {% block javascripts %}
+{{ parent() }}
 
-{% block javascripts %}
-    {{ parent() }}
+{# Set variable that triggers that services are loaded for the currently
+selected process type #}
+<script type="text/javascript">
+    $(document).ready(function () {
+        const $cvrInputElement = $("#visitation_company_cvr");
+        const $searchCvrButton = $("#visitation_company_search");
 
-    {# Set variable that triggers that services are loaded for the currently selected process type #}
-    <script type="text/javascript">
-        $(document).ready(function() {
-            const $cvrInputElement = $('#visitation_company_cvr');
-            const $searchCvrButton = $('#visitation_company_search');
-
-            $searchCvrButton.click(function() {
-                const cvrValue = $cvrInputElement.val();
-                const redirectTo = "{{ path('result') }}" + "?cvr=" + cvrValue; // path('result') will be your Symfony generated URL.
-                window.location.href = redirectTo;
-            });
-            const $cprInputElement = $('#visitation_person_cpr');
-            const $searchCprButton = $('#visitation_person_search');
-
-            $searchCprButton.click(function() {
-                const cprValue = $cprInputElement.val();
-                const redirectTo = "{{ path('result') }}" + "?cpr=" + cprValue; // path('result') will be your Symfony generated URL.
-                window.location.href = redirectTo;
-            });
+        $searchCvrButton.click(function () {
+            const cvrValue = $cvrInputElement.val();
+            const redirectTo = "{{ path('result') }}" + "?cvr=" + cvrValue; // path('result') will be your Symfony generated URL.
+            window.location.href = redirectTo;
         });
-    </script>
-    {# {{ encore_entry_script_tags('processForm') }} #}
-    {# {{ encore_entry_script_tags('visitationFormCprSearch') }} #}
-    {# {{ encore_entry_script_tags('visitationFormCvrSearch') }} #}
+        const $cprInputElement = $("#visitation_person_cpr");
+        const $searchCprButton = $("#visitation_person_search");
 
-    {# {{ encore_entry_script_tags('processFormCvrSearch') }} #}
-
-    {{ encore_entry_script_tags('inputCPR') }}
-{% endblock %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    <style>
-        .search-cpr{
-            top: 70%;
-        }
-        #visitation_person_search{
-            float: right;
-        }
-        #visitation_company_search{
-            float: right;
-        }
-        #visitation_person_cpr{
-            background-color: #d9d9d9;
-        }
-        #visitation_company_cvr{
-            background-color: #d9d9d9;
-        }
-    </style>
+        $searchCprButton.click(function () {
+            const cprValue = $cprInputElement.val();
+            const redirectTo = "{{ path('result') }}" + "?cpr=" + cprValue; // path('result') will be your Symfony generated URL.
+            window.location.href = redirectTo;
+        });
+    });
+</script>
+{{ encore_entry_script_tags("processForm") }} 
+{{ encore_entry_script_tags("visitationFormCprSearch") }}
+{# {{ encore_entry_script_tags("visitationFormCvrSearch") }} #}
+{{ encore_entry_script_tags("processFormCvrSearch") }} 
+{{ encore_entry_script_tags("inputCPR") }} {% endblock %} {% block
+stylesheets %}
+{{ parent() }}
+<style>
+    .search-cpr {
+        top: 70%;
+    }
+    #visitation_person_search {
+        float: right;
+        margin-top: 15px;
+    }
+    #visitation_company_search {
+        float: right;
+    }
+    #visitation_person_cpr {
+        background-color: #d9d9d9;
+    }
+    #visitation_company_cvr {
+        background-color: #d9d9d9;
+    }
+</style>
 {% endblock %}

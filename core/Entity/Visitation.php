@@ -12,150 +12,62 @@
  
  use Doctrine\Common\Collections\ArrayCollection;
  use Doctrine\Common\Collections\Collection;
- 
- class Visitation
+ use Doctrine\ORM\Mapping as ORM;
+ use Gedmo\Mapping\Annotation as Gedmo;
+
+ /**
+ * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\VisitationRepository")
+ *
+ * @Gedmo\Loggable()
+ */ class Visitation extends AbstractEntity
  {
-     private $completedAt;
-     private $processType;
-     private $processStatus;
-     private $reminders;
-     private $journalEntries;
-     private $visitationClient;
-     private $conclusion;
-     private $economyEntries;
-     private $logEntries;
-     private $policeReport;
-     private $courtDecision;
-     private $lockedNetValue;
-     private $visitedByCaseWorker = false;
-     private $lockedNetValues;
-     private $forwardedToAuthorities;
-     private $revenueEntries;
-     private $processGroups;
-     private $lastCompletedAt;
-     private $lastReopened;
-     private $lastNetCollectiveSum;
-     private $netCollectiveSumDifference;
-     private $originallyCompletedAt;
+    /**
+     * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\VisitationLogEntry", mappedBy="process", cascade={"persist", "remove"}, orphanRemoval=true)
+     */
+    private $logEntries;
+    /**
+     * @ORM\OneToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\AbstractVisitationClient", mappedBy="visitation", cascade={"persist", "remove"})
+     */
+    private $visitationClient;
+
+    /**
+     * @ORM\Column(type="string", length=180, nullable=true)
+     */
+    private $identifier;
+
+    /**
+     * @ORM\Column(type="string", length=180, nullable=true)
+     */
+    private $type;
  
      public function __construct()
      {
-         $this->reminders = new ArrayCollection();
-         $this->journalEntries = new ArrayCollection();
-         $this->economyEntries = new ArrayCollection();
          $this->logEntries = new ArrayCollection();
-         $this->lockedNetValues = new ArrayCollection();
-         $this->forwardedToAuthorities = new ArrayCollection();
-         $this->revenueEntries = new ArrayCollection();
-         $this->processGroups = new ArrayCollection(); 
-    }
-
-    /**
-     * @return \DateTime|null
-     */
-    public function getCompletedAt(): ?\DateTime
-    {
-        return $this->completedAt;
     }
 
         /**
-     * @return AbstractProcessClient|null
+     * @return AbstractVisitationClient|null
      */
-    public function getVisitationClient(): ?AbstractProcessClient
+    public function getVisitationClient(): ?AbstractVisitationClient
     {
         return $this->visitationClient;
     }
 
-        /**
-     * @param AbstractProcessClient $processClient
-     *
-     * @return Process
-     */
-    public function setVisitationClient(AbstractProcessClient $processClient): self
-    {
-        $this->visitationClient = $processClient;
-
-        return $this;
-    }
-
     /**
-     * @param \DateTime|null $completedAt
+     * @param AbstractVisitationClient $visitationClient
      *
      * @return Visitation
      */
-    public function setCompletedAt(?\DateTime $completedAt): self
+    public function setVisitationClient(AbstractVisitationClient $visitationClient): self
     {
-        $this->completedAt = $completedAt;
+        $this->visitationClient = $visitationClient;
+
+        // set the owning side of the relation if necessary
+        if ($this !== $visitationClient->getVisitation()) {
+            $visitationClient->setVisitation($this);
+        }
 
         return $this;
-    }
-
-
-
-    /**
-     * @return ProcessType|null
-     */
-    public function getProcessType(): ?ProcessType
-    {
-        return $this->processType;
-    }
-
-    /**
-     * @param ProcessType|null $processType
-     *
-     * @return Visitation
-     */
-    public function setProcessType(?ProcessType $processType): self
-    {
-        $this->processType = $processType;
-
-        return $this;
-    }
-
-    /**
-     * @return ProcessStatus|null
-     */
-    public function getProcessStatus(): ?ProcessStatus
-    {
-        return $this->processStatus;
-    }
-
-    /**
-     * @param ProcessStatus|null $processStatus
-     *
-     * @return Visitation
-     */
-    public function setProcessStatus(?ProcessStatus $processStatus): self
-    {
-        $this->processStatus = $processStatus;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Reminder[]
-     */
-    public function getReminders(): Collection
-    {
-        return $this->reminders;
-    }
-
-
-    /**
-     * @return Collection|JournalEntry[]
-     */
-    public function getJournalEntries(): Collection
-    {
-        return $this->journalEntries;
-    }
-
-
-    /**
-     * @return Conclusion|null
-     */
-    public function getConclusion(): ?Conclusion
-    {
-        return $this->conclusion;
     }
 
     /**
@@ -163,7 +75,7 @@
      * 
 
     /**
-     * @return Collection|ProcessLogEntry[]
+     * @return Collection|VisitationLogEntry[]
      */
     public function getLogEntries(): Collection
     {
@@ -171,184 +83,35 @@
     }
 
     /**
-     * @return bool|null
+     * @return int|null
      */
-    public function getCourtDecision(): ?bool
+    public function getId(): ?int
     {
-        return $this->courtDecision;
+        return $this->id;
     }
 
-    /**
-     * @param bool|null $courtDecision
-     *
-     * @return Visitation
-     */
-    public function setCourtDecision(?bool $courtDecision): self
+    // Make get and set methods for the new field
+    public function getIdentifier(): ?string
     {
-        $this->courtDecision = $courtDecision;
-
-        return $this;
+        return $this->identifier;
     }
 
-    /**
-     * @return float|null
-     */
-    public function getLockedNetValue(): ?float
+    public function setIdentifier(?string $identifier): self
     {
-        return $this->lockedNetValue;
+        $this->identifier = $identifier;
+ 
+         return $this;
+     }
+
+    public function getType(): ?string
+    {
+        return $this->type;
     }
 
-    /**
-     * @param float|null $lockedNetValue
-     *
-     * @return Visitation
-     */
-    public function setLockedNetValue(?float $lockedNetValue): self
+    public function setType(?string $type): self
     {
-        $this->lockedNetValue = $lockedNetValue;
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getVisitedByCaseWorker(): bool
-    {
-        return $this->visitedByCaseWorker;
-    }
-
-    /**
-     * @param bool $visited
-     */
-    public function setVisitedByCaseWorker(bool $visited)
-    {
-        $this->visitedByCaseWorker = $visited;
-    }
-
-    /**
-     * @return Collection|LockedNetValue[]
-     */
-    public function getLockedNetValues(): Collection
-    {
-        return $this->lockedNetValues;
-    }
-
-    /**
-     * @param LockedNetValue $lockedNetValue
-     *
-     * @return Visitation
-     */
-    public function removeLockedNetValue(LockedNetValue $lockedNetValue): self
-    {
-        if ($this->lockedNetValues->contains($lockedNetValue)) {
-            $this->lockedNetValues->removeElement($lockedNetValue);
-            // set the owning side to null (unless already changed)
-            if ($lockedNetValue->getProcess() === $this) {
-                $lockedNetValue->setProcess(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return \DateTimeInterface|null
-     */
-    public function getLastCompletedAt(): ?\DateTimeInterface
-    {
-        return $this->lastCompletedAt;
-    }
-
-    /**
-     * @param \DateTimeInterface|null $lastCompletedAt
-     *
-     * @return $this
-     */
-    public function setLastCompletedAt(?\DateTimeInterface $lastCompletedAt): self
-    {
-        $this->lastCompletedAt = $lastCompletedAt;
-
-        return $this;
-    }
-
-    /**
-     * @return \DateTimeInterface|null
-     */
-    public function getLastReopened(): ?\DateTimeInterface
-    {
-        return $this->lastReopened;
-    }
-
-    /**
-     * @param \DateTimeInterface|null $lastReopened
-     *
-     * @return $this
-     */
-    public function setLastReopened(?\DateTimeInterface $lastReopened): self
-    {
-        $this->lastReopened = $lastReopened;
-
-        return $this;
-    }
-
-    /**
-     * @return float|null
-     */
-    public function getLastNetCollectiveSum(): ?float
-    {
-        return $this->lastNetCollectiveSum;
-    }
-
-    /**
-     * @param float|null $lastNetCollectiveSum
-     *
-     * @return $this
-     */
-    public function setLastNetCollectiveSum(?float $lastNetCollectiveSum): self
-    {
-        $this->lastNetCollectiveSum = $lastNetCollectiveSum;
-
-        return $this;
-    }
-
-    /**
-     * @return float|null
-     */
-    public function getNetCollectiveSumDifference(): ?float
-    {
-        return $this->netCollectiveSumDifference;
-    }
-
-    /**
-     * @param float|null $netCollectiveSumDifference
-     *
-     * @return $this
-     */
-    public function setNetCollectiveSumDifference(?float $netCollectiveSumDifference): self
-    {
-        $this->netCollectiveSumDifference = $netCollectiveSumDifference;
-
-        return $this;
-    }
-
-    /**
-     * @return \DateTimeInterface|null
-     */
-    public function getOriginallyCompletedAt(): ?\DateTimeInterface
-    {
-        return $this->originallyCompletedAt;
-    }
-
-    /**
-     * @param \DateTimeInterface|null $originallyCompletedAt
-     *
-     * @return $this
-     */
-    public function setOriginallyCompletedAt(?\DateTimeInterface $originallyCompletedAt): self
-    {
-        $this->originallyCompletedAt = $originallyCompletedAt;
-
-        return $this;
-    }
+        $this->type = $type;
+ 
+         return $this;
+     }
 }

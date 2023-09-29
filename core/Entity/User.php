@@ -46,6 +46,11 @@ class User implements UserInterface
     private $processes;
 
     /**
+     * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\Visitation", mappedBy="caseWorker")
+     */
+    private $visitations;
+
+    /**
      * @ORM\Column(type="string", nullable=true)
      */
     private $cliLoginToken;
@@ -153,6 +158,28 @@ class User implements UserInterface
         if (!$this->processes->contains($process)) {
             $this->processes[] = $process;
             $process->setCaseWorker($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Visitation[]
+     */
+    public function getVisitations(): Collection
+    {
+        return $this->visitations ?? new ArrayCollection();
+    }
+
+    /**
+     * @param Visitation $visitation
+     *
+     * @return User
+     */
+    public function addVisitation(Visitation $visitation): self
+    {
+        if (!$this->visitations->contains($visitation)) {
+            $this->visitations[] = $visitation;
         }
 
         return $this;

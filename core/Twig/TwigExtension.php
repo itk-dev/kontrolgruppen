@@ -225,6 +225,10 @@ class TwigExtension extends AbstractExtension
                 return 'fa-sort';
             case 'sort-up':
                 return 'fa-sort-up';
+            case 'expand':
+                return 'fa-caret-up';
+            case 'fold':
+                return 'fa-caret-down';
             case 'sort-down':
                 return 'fa-sort-down';
             case 'layer-group':

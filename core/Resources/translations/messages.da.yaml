@@ -668,6 +668,8 @@ visitation:
         client_type.company: Virksomhed
         client_type.person: Person
         court_decision: Rettens afgørelse
+        cpr_placehoder: Indtast CPR
+        cvr_placeholder: Indtast CVR
         police_report: Er sagen politianmeldt?
         process_status: Sagsstatus
         process_type: Sagstype
@@ -675,11 +677,11 @@ visitation:
         update: Gem
         status: Status
         search_client_cpr:
-            search: Søg CPR nummer
+            search: Søg
             loading: Søger...
             results: Eksisterende sag(er) fundet
         search_client_cvr:
-            search: Søg CVR nummer
+            search: Søg
             loading: Søger...
             results: Eksisterende sag(er) fundet
     index:

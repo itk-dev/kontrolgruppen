@@ -10,10 +10,13 @@
 
 namespace Kontrolgruppen\CoreBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
 use Kontrolgruppen\CoreBundle\Entity\Visitation;
+use Kontrolgruppen\CoreBundle\Entity\VisitationClientPerson;
+use Kontrolgruppen\CoreBundle\Entity\VisitationLogEntry;
 use Kontrolgruppen\CoreBundle\Form\VisitationType;
-use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
-use Kontrolgruppen\CoreBundle\Service\ProcessClientManager;
+use Kontrolgruppen\CoreBundle\Repository\VisitationRepository;
+use Kontrolgruppen\CoreBundle\Service\VisitationClientManager;
 use Mpdf\Container\NotFoundException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -60,46 +63,56 @@ class VisitationController extends DatafordelerController
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Kontrolgruppen\CoreBundle\CPR\CprException
      */
-    public function investigate(Request $request, ProcessClientManager $clientManager): Response
+    public function investigate(Request $request): Response
     {
-        $visitation = new Visitation();
-        try {
-            $client = $clientManager->createClient($request->get('clientType') ?? '');
-        } catch (\Exception $exception) {
-            $this->addFlash('danger', $exception->getMessage());
+        // $visitation = new Visitation();
+        // try {
+        //     $client = $clientManager->createClient($request->get('clientType') ?? '');
+        // } catch (\Exception $exception) {
+        //     $this->addFlash('danger', $exception->getMessage());
 
-            return $this->render('process/select-client-type.html.twig');
-        }
+        //     return $this->render('process/select-client-type.html.twig');
+        // }
 
-        $visitation->setVisitationClient($client);
-        $form = $this->createForm(VisitationType::class, $visitation);
+        // $visitation->setVisitationClient($client);
+        // $form = $this->createForm(VisitationType::class, $visitation);
 
-        $form->handleRequest($request);
-        
-        if ($form->isSubmitted() && $form->isValid()) {
-            // You can now redirect to your desired route
-            return $this->render(
-                '@KontrolgruppenCore/visitation/investigate.html.twig',
-                [
-                    'menuItems' => $this->menuService->getProcessMenu(
-                        $request->getPathInfo(),
-                    ),
-                    'visitation' => $visitation,
-                    'form' => $form->createView()
-                ]
-            );
-        }
-
+        // $form->handleRequest($request);
         return $this->render(
             '@KontrolgruppenCore/visitation/investigate.html.twig',
             [
-                'menuItems' => $this->menuService->getProcessMenu(
-                    $request->getPathInfo(),
-                ),
-                'visitation' => $visitation,
-                'form' => $form->createView()
+                'client_type' =>$request->get('clientType')
+                // 'menuItems' => $this->menuService->getProcessMenu(
+                //     $request->getPathInfo(),
+                // ),
+                // 'visitation' => $visitation,
+                // 'form' => $form->createView()
             ]
         );
+        // if ($form->isSubmitted() && $form->isValid()) {
+        //     // You can now redirect to your desired route
+        //     return $this->render(
+        //         '@KontrolgruppenCore/visitation/investigate.html.twig',
+        //         [
+        //             'menuItems' => $this->menuService->getProcessMenu(
+        //                 $request->getPathInfo(),
+        //             ),
+        //             'visitation' => $visitation,
+        //             'form' => $form->createView()
+        //         ]
+        //     );
+        // }
+
+        // return $this->render(
+        //     '@KontrolgruppenCore/visitation/investigate.html.twig',
+        //     [
+        //         'menuItems' => $this->menuService->getProcessMenu(
+        //             $request->getPathInfo(),
+        //         ),
+        //         'visitation' => $visitation,
+        //         'form' => $form->createView()
+        //     ]
+        // );
     }
 
 
@@ -114,12 +127,14 @@ class VisitationController extends DatafordelerController
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Kontrolgruppen\CoreBundle\CPR\CprException
      */
-    public function results(Request $request, ProcessClientManager $clientManager, HttpClientInterface $httpClient): Response
+    public function results(Request $request, HttpClientInterface $httpClient): Response
     {
         $cpr = $request->get('cpr');
         $cvr = $request->get('cvr');
-
+        $visitation = new Visitation();
         if ($cvr) {
+            $visitation->setType('virksomhed');
+
             try {
                 $data = $this->getVirksomhedData($cvr, $httpClient);
             } catch (TransportExceptionInterface $e) {
@@ -141,6 +156,12 @@ class VisitationController extends DatafordelerController
             }
         }
         else if($cpr) {
+            $visitation->setType('person');
+            $hashedCpr = hash ('md5' ,$cpr);
+            $visitation->setIdentifier($hashedCpr);
+            $this->em->persist($visitation);
+            $this->em->flush();
+
             $cpr = preg_replace('/\D+/', '', $cpr);
             try {
                 $data = $this->getPersonData($cpr, $httpClient);
@@ -151,7 +172,8 @@ class VisitationController extends DatafordelerController
                 return $this->render(
                     '@KontrolgruppenCore/visitation/person_results.html.twig',
                     [
-                        'data' => $data
+                        'data' => $data,
+                        'visitation' => $visitation
                     ]
                 );
             } else {
@@ -171,7 +193,7 @@ class VisitationController extends DatafordelerController
      * @Route("/search-visitation-by-cvr", name="visitation_search_by_cpr", methods={"GET"})
      *
      * @param Request           $request
-     * @param ProcessRepository $processRepository
+     * @param VisitationRepository $visitationRepository
      *
      * @return Response
      *
@@ -188,6 +210,43 @@ class VisitationController extends DatafordelerController
         return $this->render(
             '@KontrolgruppenCore/visitation/_visitation_search_cvr_result.html.twig'
         );
+    }
+
+        /**
+     * @Route("/visitation-log", name="log_visitation", methods={"POST"})
+     *
+     * @param Request           $request
+     * @param VisitationRepository $visitationRepository
+     *
+     * @return Response
+     *
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function VisitationLog(Request $request): Response
+    {
+        $table_name = $request->request->get('table_name');
+        $cpr = $request->request->get('cpr');
+        $visitation_id = $request->request->get('visitation');
+        
+        $visitation_id = (int)$visitation_id;
+        // find visitation by id
+
+        $visitationLog = new VisitationLogEntry();
+        $hashedCpr = hash ('md5' ,$cpr);
+        $visitationLog->setCprNumber($hashedCpr);
+        $visitationLog->setTableName($table_name);
+        $visitationLog->setVisitation($this->em->getRepository(Visitation::class)->find($visitation_id));
+        // $visitation->setVisitationClient(VisitationClientPerson);
+        // $visitation->setCompletedAt(null);
+        // $visitation->setLockedNetValue(null);
+        // $visitation->setLastReopened(new \DateTime());
+        // $em = $this->em->getManager();
+        $this->em->persist($visitationLog);
+        $this->em->flush();
+
+        // return 200
+        return new Response(Response::HTTP_OK);
     }
 
 }
