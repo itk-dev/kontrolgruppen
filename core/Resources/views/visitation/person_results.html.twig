@@ -4,11 +4,10 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-9 left-tables">
             <h1>{{ 'visitation.investigate.title'|trans }}</h1>
 
             <!-- Other tables aligned left -->
-            <div class="left-tables">
                 {# Individual tables go here #}
 
                 {# Adresse historik Table #}
@@ -37,11 +36,18 @@
 
                 {# Virksomhed Table #}
                 {% include '@KontrolgruppenCore/visitation/person_tables/virksomhed.html.twig' %}
+                <div class="d-flex justify-content-between">
+                <div></div>
+                <div class="new-process">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#">
+                        {{ 'visitation.new.title'|trans }}
+                    </button>
+                </div>
             </div>
         </div>
 
         <!-- Stamdata Table aligned right -->
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="fixed-table">
                 <div class="card-header text-black stam-data">
                     <h6 class="mb-0" id="stam-data">
@@ -81,6 +87,10 @@
 {% block stylesheets %}
     {{ parent() }}
     <style>
+        .new-process {
+            margin-top: 20px;
+            margin-bottom: 50px;
+        }
         .fixed-table {
             position: fixed;
             top: 120px;
@@ -89,7 +99,7 @@
             z-index: 999;
         }
         .left-tables {
-            max-width: 900px;
+            max-width: 1000px;
         }
         .card-header {
             background-color:#c8defc ;
