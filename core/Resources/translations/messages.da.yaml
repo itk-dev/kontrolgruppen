@@ -616,7 +616,7 @@ process:
     is_completed: Afsluttet?
 
 visitation:
-    investigate:
+    search:
         title: Søg Oplysinger
     actions:
         label:

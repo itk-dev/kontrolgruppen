@@ -53,7 +53,7 @@ class VisitationController extends DatafordelerController
     }
 
     /**
-     * @Route("/investigate", name="visitation_investigate", methods={"GET","POST"})
+     * @Route("/search", name="visitation_search", methods={"GET","POST"})
      *
      * @param Request              $request
      *
@@ -63,7 +63,7 @@ class VisitationController extends DatafordelerController
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Kontrolgruppen\CoreBundle\CPR\CprException
      */
-    public function investigate(Request $request): Response
+    public function search(Request $request): Response
     {
         // $visitation = new Visitation();
         // try {
@@ -79,7 +79,7 @@ class VisitationController extends DatafordelerController
 
         // $form->handleRequest($request);
         return $this->render(
-            '@KontrolgruppenCore/visitation/investigate.html.twig',
+            '@KontrolgruppenCore/visitation/search.html.twig',
             [
                 'client_type' =>$request->get('clientType')
                 // 'menuItems' => $this->menuService->getProcessMenu(
@@ -92,7 +92,7 @@ class VisitationController extends DatafordelerController
         // if ($form->isSubmitted() && $form->isValid()) {
         //     // You can now redirect to your desired route
         //     return $this->render(
-        //         '@KontrolgruppenCore/visitation/investigate.html.twig',
+        //         '@KontrolgruppenCore/visitation/search.html.twig',
         //         [
         //             'menuItems' => $this->menuService->getProcessMenu(
         //                 $request->getPathInfo(),
@@ -104,7 +104,7 @@ class VisitationController extends DatafordelerController
         // }
 
         // return $this->render(
-        //     '@KontrolgruppenCore/visitation/investigate.html.twig',
+        //     '@KontrolgruppenCore/visitation/search.html.twig',
         //     [
         //         'menuItems' => $this->menuService->getProcessMenu(
         //             $request->getPathInfo(),
@@ -167,7 +167,7 @@ class VisitationController extends DatafordelerController
                 $data = $this->getPersonData($cpr, $httpClient);
                 if($data == null) {
                     return $this->render(
-                        '@KontrolgruppenCore/visitation/investigate.html.twig',
+                        '@KontrolgruppenCore/visitation/search.html.twig',
                         [
                             'client_type' =>'person',
                             'error' => 'CPR nummer ikke genkendt, prøv igen.'
@@ -176,7 +176,7 @@ class VisitationController extends DatafordelerController
                 }
             } catch (TransportExceptionInterface $e) {
                 return $this->render(
-                    '@KontrolgruppenCore/visitation/investigate.html.twig',
+                    '@KontrolgruppenCore/visitation/search.html.twig',
                     [
                         'client_type' =>'person',
                         'error' => 'Forbindelse fejlet. Prøv igen'

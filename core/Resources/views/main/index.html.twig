@@ -95,7 +95,7 @@
                                         ] %}
                                     {% for client_type in client_types %}
                                         <div class="col">
-                                            <a href="{{ path('visitation_investigate', {clientType: client_type}) }}" class="dropdown-item">{{ ('process_client_type.' ~ client_type)|trans }}</a>
+                                            <a href="{{ path('visitation_search', {clientType: client_type}) }}" class="dropdown-item">{{ ('process_client_type.' ~ client_type)|trans }}</a>
                                         </div>
                                     {% endfor %}
                                 </ul>
