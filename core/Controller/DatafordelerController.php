@@ -24,7 +24,7 @@ class DatafordelerController extends BaseController
     {
         $response = $httpClient->request(
             'GET',
-            $this->getParameter('datafordeler_url') . 'CPR/CprPersonFullSimple/1/rest/PersonFullListSimple',
+            $this->getParameter('datafordeler_url') . 'CPR/CprPersonFullComplete/1/rest/PersonFullCurrentListComplete',
             [
                 'query' => [
                     'pnr.personnummer.eq' => $cpr,
