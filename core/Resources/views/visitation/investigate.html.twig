@@ -17,7 +17,12 @@
                     required="required"
                     class="js-input-cpr no-cpr-scanning form-control"
                     placeholder="{{ 'visitation.form.cpr_placehoder' | trans }}"
+                    autocomplete="off"
                 />
+                {# if error exists #}
+                {% if error is defined %}
+                    <p class="error-code">{{ error }}</p>
+                {% endif %}
                 <button
                     type="button"
                     id="visitation_person_search"
@@ -52,22 +57,26 @@ selected process type #}
         const $searchCprButton = $("#visitation_person_search");
 
         $searchCprButton.click(function () {
+            $searchCprButton.text($searchCprButton.data('loading-text'));
             const cprValue = $cprInputElement.val();
             const redirectTo = "{{ path('result') }}" + "?cpr=" + cprValue; // path('result') will be your Symfony generated URL.
             window.location.href = redirectTo;
         });
     });
 </script>
-{{ encore_entry_script_tags("processForm") }} 
-{{ encore_entry_script_tags("visitationFormCprSearch") }}
+{# {{ encore_entry_script_tags("processForm") }}  #}
+{# {{ encore_entry_script_tags("visitationFormCprSearch") }} #}
 {# {{ encore_entry_script_tags("visitationFormCvrSearch") }} #}
-{{ encore_entry_script_tags("processFormCvrSearch") }} 
+{# {{ encore_entry_script_tags("processFormCvrSearch") }}  #}
 {{ encore_entry_script_tags("inputCPR") }} {% endblock %} {% block
 stylesheets %}
 {{ parent() }}
 <style>
     .search-cpr {
         top: 70%;
+    }
+    .error-code {
+        color: red;
     }
     #visitation_person_search {
         float: right;

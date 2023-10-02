@@ -165,8 +165,23 @@ class VisitationController extends DatafordelerController
             $cpr = preg_replace('/\D+/', '', $cpr);
             try {
                 $data = $this->getPersonData($cpr, $httpClient);
+                if($data == null) {
+                    return $this->render(
+                        '@KontrolgruppenCore/visitation/investigate.html.twig',
+                        [
+                            'client_type' =>'person',
+                            'error' => 'CPR nummer ikke genkendt, prøv igen.'
+                        ]
+                    );
+                }
             } catch (TransportExceptionInterface $e) {
-                throw new NotFoundException($e->getMessage());
+                return $this->render(
+                    '@KontrolgruppenCore/visitation/investigate.html.twig',
+                    [
+                        'client_type' =>'person',
+                        'error' => 'Forbindelse fejlet. Prøv igen'
+                    ]
+                );
             }
             if (!empty($data)) {
                 return $this->render(

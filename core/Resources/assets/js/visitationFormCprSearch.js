@@ -13,19 +13,19 @@ $(function () {
     $searchCprButton.click(function () {
         $searchCprButton.text($searchCprButton.data('loading-text'));
 
-        $.ajax({
-            url: $searchCprButton.data('search-action'),
-            data: { 'cpr': $cprInputElement.val() },
-            success: function (html) {
-                if ($('#cpr-search-results').length) {
-                    $searchCprButton.hide();
-                    $('#cpr-search-results').replaceWith(html);
-                    $('#cpr-search-results').show();
-                } else {
-                    $searchCprButton.hide();
-                    $searchCprButton.after(html);
-                }
-            }
-        });
+        // $.ajax({
+        //     url: $searchCprButton.data('search-action'),
+        //     data: { 'cpr': $cprInputElement.val() },
+        //     success: function (html) {
+        //         if ($('#cpr-search-results').length) {
+        //             $searchCprButton.hide();
+        //             $('#cpr-search-results').replaceWith(html);
+        //             $('#cpr-search-results').show();
+        //         } else {
+        //             $searchCprButton.hide();
+        //             $searchCprButton.after(html);
+        //         }
+        //     }
+        // });
     });
 });
