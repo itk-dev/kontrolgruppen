@@ -60,7 +60,7 @@
                         </tr>
                         <tr>
                             <td>CPR</td>
-                            <td>{{ data.Person.Personnumre[0].Personnummer.personnummer }}</td>
+                            <td id="cprField">{{ data.Person.Personnumre[0].Personnummer.personnummer }}</td>
                         </tr>
                         <tr>
                             <td>Adresse</td>
@@ -144,7 +144,47 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
+        function formatCprAndCalculateAge(cpr) {
+            // Extract day, month, year, and 7th digit from the CPR number
+            const day = cpr.substring(0, 2);
+            const month = cpr.substring(2, 4);
+            const year = cpr.substring(4, 6);
+            const seventhDigit = parseInt(cpr.substring(6, 7), 10);
+            const cprAgeTranslation = "{{ 'visitation.form.cpr_age'|trans }}";
+            // Determine the correct century
+            let fullYear;
+            if (seventhDigit >= 0 && seventhDigit <= 3) {
+                fullYear = `19${year}`;
+            } else if (seventhDigit === 4) {
+                fullYear = (parseInt(year, 10) >= 37) ? `19${year}` : `20${year}`;
+            } else if (seventhDigit >= 5 && seventhDigit <= 8) {
+                fullYear = (parseInt(year, 10) >= 58) ? `18${year}` : `20${year}`;
+            } else if (seventhDigit === 9) {
+                fullYear = (parseInt(year, 10) >= 37) ? `19${year}` : `20${year}`;
+            }
+
+            // Calculate the current age
+            const today = new Date();
+            const birthDate = new Date(`${fullYear}-${month}-${day}`);
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const monthDifference = today.getMonth() - birthDate.getMonth();
+            
+            if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+
+            // Format the CPR number
+            const formattedCpr = `${day}${month}${year}-xxxx (${age} ${cprAgeTranslation})`;
+
+            return formattedCpr;
+        }
+
         $(document).ready(function() {
+            const cprElement = document.getElementById("cprField");
+            const originalCpr = cprElement.textContent;
+            const formattedCprAndAge = formatCprAndCalculateAge(originalCpr);
+            cprElement.textContent = formattedCprAndAge;
+
             $('.accordion .card-header').click(function() {
                 $(this).find('i').toggleClass('fa-chevron-down fa-chevron-up');
             });

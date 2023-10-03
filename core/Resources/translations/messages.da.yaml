@@ -618,48 +618,7 @@ process:
 visitation:
     search:
         title: Søg Oplysinger
-    actions:
-        label:
-        reminders: Påmindelser
-        journal_quickview: Senest i journal
-
-    complete:
-        cancel: Fortryd afslutning
-        case_worker: Sagsbehandler
-        complete: Afslut sag
-        confirm: Er du sikker på at du vil afslutte sagen?
-        court_decision: Rettens afgørelse
-        forwarded_to_authority: Videresendes til anden myndighed
-        performed_company_check: Har der været udført virksomhedskontrol?
-        police_report: Sagen er politianmeldt
-        processing_time: Sagens behandlingstid
-        processing_time_value: 'En dag|%days% dage'
-        # # @see https://symfony.com/doc/current/translation/message_format.html#pluralization
-        # processing_time_value: >
-        #   {days, plural,
-        #       =0 {Nul dage}
-        #       one {én dag}
-        #       other {%days% dage}
-        #   }
-        status: Status ved sagens afslutning
-        submit: Godkend afslutning af sag
-        title: Afslut sag %case_number%
-        process_completed: Sag afsluttet
-    resume:
-        title: Genoptag sag %case_number%
-        confirm: Er du sikker på at du vil genoptage sagen?
-        submit: Genoptag
-        cancel: Fortryd
-        process_status:
-            label: Vælg ny status
-    edit:
-        title: Rediger sag
     form:
-        case_worker: Sagbehandler
-        reason: Årsag
-        change_process_status:
-            placeholder: Vælg sagsstatus
-            save: Gem ny status
         channel: Kanal
         client_cpr: CPR-nummer
         client_cvr: CVR-nummer
@@ -669,6 +628,7 @@ visitation:
         client_type.person: Person
         court_decision: Rettens afgørelse
         cpr_placehoder: Indtast CPR
+        cpr_age: år
         cvr_placeholder: Indtast CVR
         police_report: Er sagen politianmeldt?
         process_status: Sagsstatus
