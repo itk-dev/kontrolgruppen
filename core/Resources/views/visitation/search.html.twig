@@ -7,33 +7,37 @@
         <div class="col-md-4 mx-auto search-cpr">
             {# IF type "PERSON" show CPR search #}
             <div class="form-group">
-                <label for="visitation_person_cpr" class="required">{{
-                    "visitation.form.client_cpr" | trans
-                }}</label>
-                <input
-                    type="text"
-                    id="visitation_person_cpr"
-                    name="visitation[person][cpr]"
-                    required="required"
-                    class="js-input-cpr no-cpr-scanning form-control"
-                    placeholder="{{ 'visitation.form.cpr_placehoder' | trans }}"
-                    autocomplete="off"
-                />
-                {# if error exists #}
-                {% if error is defined %}
-                    <p class="error-code">{{ error }}</p>
-                {% endif %}
-                <button
-                    type="button"
-                    id="visitation_person_search"
-                    name="visitation[person][search]"
-                    class="btn-primary btn"
-                    {# data-search-action="http://0.0.0.0:63585/process/search-process-by-cpr" #}
-                    data-search-text="Søg efter eksisterende sager"
-                    data-loading-text="Søger..."
-                >
-                    {{ "visitation.form.search_client_cpr.search" | trans }}
-                </button>
+                <form id="cprForm" method="post" action="{{ path('result') }}">
+                    <input type="hidden" id="hiddenCprInput" name="cpr">
+                    <!-- your existing input and button here -->
+                    <label for="visitation_person_cpr" class="required">{{
+                        "visitation.form.client_cpr" | trans
+                    }}</label>
+                    <input
+                        type="text"
+                        id="visitation_person_cpr"
+                        name="visitation[person][cpr]"
+                        required="required"
+                        class="js-input-cpr no-cpr-scanning form-control"
+                        placeholder="{{ 'visitation.form.cpr_placehoder' | trans }}"
+                        autocomplete="off"
+                    />
+                    {# if error exists #}
+                    {% if error is defined %}
+                        <p class="error-code">{{ error }}</p>
+                    {% endif %}
+                    <button
+                        type="submit"
+                        id="visitation_person_search"
+                        name="visitation[person][search]"
+                        class="btn-primary btn"
+                        {# data-search-action="http://0.0.0.0:63585/process/search-process-by-cpr" #}
+                        data-search-text="Søg efter eksisterende sager"
+                        data-loading-text="Søger..."
+                    >
+                        {{ "visitation.form.search_client_cpr.search" | trans }}
+                    </button>
+                </form>
             </div>
         </div>
     </div>
@@ -57,10 +61,9 @@ selected process type #}
         const $searchCprButton = $("#visitation_person_search");
 
         $searchCprButton.click(function () {
-            $searchCprButton.text($searchCprButton.data('loading-text'));
             const cprValue = $cprInputElement.val();
-            const redirectTo = "{{ path('result') }}" + "?cpr=" + cprValue; // path('result') will be your Symfony generated URL.
-            window.location.href = redirectTo;
+            $('#hiddenCprInput').val(cprValue);
+            $('#cprForm').submit();
         });
     });
 </script>
@@ -68,8 +71,8 @@ selected process type #}
 {# {{ encore_entry_script_tags("visitationFormCprSearch") }} #}
 {# {{ encore_entry_script_tags("visitationFormCvrSearch") }} #}
 {# {{ encore_entry_script_tags("processFormCvrSearch") }}  #}
-{{ encore_entry_script_tags("inputCPR") }} {% endblock %} {% block
-stylesheets %}
+{{ encore_entry_script_tags("inputCPR") }} {% endblock %} 
+{% block stylesheets %}
 {{ parent() }}
 <style>
     .search-cpr {
