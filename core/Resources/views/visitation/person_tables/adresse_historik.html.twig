@@ -23,7 +23,7 @@
                         {% for adresse in data.Person.Adresseoplysninger %}
                         <tr>
                             <td>{{ adresse.Adresseoplysninger.CprAdresse.vejadresseringsnavn }}</td>
-                            <td>{{ adresse.Adresseoplysninger.CprAdresse.postnummer }} {{ adresse.Adresseoplysninger.CprAdresse.bynavn }}</td>
+                            <td>{{ adresse.Adresseoplysninger.CprAdresse.postnummer }} {{ adresse.Adresseoplysninger.CprAdresse.postdistrikt }}</td>
                             <td>{{ adresse.Adresseoplysninger.CprAdresse.cprKommunenavn }}</td>
                             <td></td>
                             {% if adresse.Adresseoplysninger.virkningTil is defined %}

@@ -44,3 +44,7 @@ yarn-error.log
 /phpunit.xml
 .phpunit.result.cache
 ###< phpunit/phpunit ###
+
+# Ignore Certificates
+private_key.pem
+public_key.cer

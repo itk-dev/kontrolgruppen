@@ -14,3 +14,11 @@ framework:
     #fragments: true
     php_errors:
         log: true
+
+    http_client:
+        scoped_clients:
+            datafordelerHttpClient:
+                base_uri: '%env(DATAFORDELER_URL)%'
+                local_pk: '%kernel.project_dir%/%env(DATAFORDELER_PRIVATE_KEY_FILE)%'
+                local_cert: '%kernel.project_dir%/%env(DATAFORDELER_PUBLIC_KEY_FILE)%'
+                passphrase: '%env(DATAFORDELER_PUBLIC_KEY_PASSWORD)%'
