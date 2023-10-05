@@ -10,13 +10,9 @@
 
 namespace Kontrolgruppen\CoreBundle\Controller;
 
-use Doctrine\ORM\EntityManager;
 use Kontrolgruppen\CoreBundle\Entity\Visitation;
-use Kontrolgruppen\CoreBundle\Entity\VisitationClientPerson;
 use Kontrolgruppen\CoreBundle\Entity\VisitationLogEntry;
-use Kontrolgruppen\CoreBundle\Form\VisitationType;
 use Kontrolgruppen\CoreBundle\Repository\VisitationRepository;
-use Kontrolgruppen\CoreBundle\Service\VisitationClientManager;
 use Mpdf\Container\NotFoundException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -127,7 +123,7 @@ class VisitationController extends DatafordelerController
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Kontrolgruppen\CoreBundle\CPR\CprException
      */
-    public function results(Request $request, HttpClientInterface $httpClient): Response
+    public function results(Request $request, HttpClientInterface $datafordelerHttpClient): Response
     {
         $cpr = $request->get('cpr');
         $cvr = $request->get('cvr');
@@ -136,7 +132,7 @@ class VisitationController extends DatafordelerController
             $visitation->setType('virksomhed');
 
             try {
-                $data = $this->getVirksomhedData($cvr, $httpClient);
+                $data = $this->getVirksomhedData($cvr, $datafordelerHttpClient);
             } catch (TransportExceptionInterface $e) {
                 throw new NotFoundException($e->getMessage());
             }
@@ -164,7 +160,7 @@ class VisitationController extends DatafordelerController
 
             $cpr = preg_replace('/\D+/', '', $cpr);
             try {
-                $data = $this->getPersonData($cpr, $httpClient);
+                $data = $this->getPersonData($cpr, $datafordelerHttpClient);
                 if($data == null) {
                     return $this->render(
                         '@KontrolgruppenCore/visitation/search.html.twig',
@@ -187,7 +183,7 @@ class VisitationController extends DatafordelerController
                 return $this->render(
                     '@KontrolgruppenCore/visitation/person_results.html.twig',
                     [
-                        'data' => $data,
+                        'data' => $data['Personer'][0],
                         'visitation' => $visitation
                     ]
                 );

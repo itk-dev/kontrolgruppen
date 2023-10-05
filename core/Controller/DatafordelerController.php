@@ -20,11 +20,11 @@ class DatafordelerController extends BaseController
      *
      * @throws TransportExceptionInterface
      */
-    protected function getPersonData(string $cpr, HttpClientInterface $httpClient): array
+    protected function getPersonData(string $cpr, HttpClientInterface $datafordelerHttpClient): array
     {
-        $response = $httpClient->request(
+        $response = $datafordelerHttpClient->request(
             'GET',
-            $this->getParameter('datafordeler_url') . 'CPR/CprPersonFullComplete/1/rest/PersonFullCurrentListComplete',
+            'CPR/CprPersonFullComplete/1/rest/PersonFullCurrentListComplete',
             [
                 'query' => [
                     'pnr.personnummer.eq' => $cpr,
@@ -39,16 +39,16 @@ class DatafordelerController extends BaseController
         return $response->toArray();
     }
 
-        /**
+    /**
      * @return array
      *
      * @throws TransportExceptionInterface
      */
-    protected function getVirksomhedData(string $cvr, HttpClientInterface $httpClient): array
+    protected function getVirksomhedData(string $cvr, HttpClientInterface $datafordelerHttpClient): array
     {
-        $response = $httpClient->request(
+        $response = $datafordelerHttpClient->request(
             'GET',
-            $this->getParameter('datafordeler_url') . 'CVR/n',
+            'CVR/n',
             [
                 'query' => [
                     'pnr.cvr.eq' => $cvr,
