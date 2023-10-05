@@ -616,6 +616,8 @@ process:
     is_completed: Afsluttet?
 
 visitation:
+    data:
+        empty: Ingen data
     search:
         title: Søg Oplysinger
     form:
