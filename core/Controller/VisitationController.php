@@ -129,18 +129,37 @@ class VisitationController extends DatafordelerController
         $cvr = $request->get('cvr');
         $visitation = new Visitation();
         if ($cvr) {
-            $visitation->setType('virksomhed');
+            $visitation->setType('company');
+            $visitation->setIdentifier($cvr);
+            $this->em->persist($visitation);
+            $this->em->flush();
 
             try {
                 $data = $this->getVirksomhedData($cvr, $datafordelerHttpClient);
+                if($data == null) {
+                    return $this->render(
+                        '@KontrolgruppenCore/visitation/search.html.twig',
+                        [
+                            'client_type' =>'company',
+                            'error' => 'CVR nummer ikke genkendt, prøv igen.'
+                        ]
+                    );
+                }
             } catch (TransportExceptionInterface $e) {
-                throw new NotFoundException($e->getMessage());
+                return $this->render(
+                    '@KontrolgruppenCore/visitation/search.html.twig',
+                    [
+                        'client_type' =>'company',
+                        'error' => 'Forbindelse fejlet. Prøv igen'
+                    ]
+                );
             }
             if (!empty($data)) {
                 return $this->render(
                     '@KontrolgruppenCore/visitation/virksomhed_results.html.twig',
                     [
-                        'data' => $data
+                        'data' => $data,
+                        'visitation' => $visitation
                     ]
                 );
             } else {
@@ -237,22 +256,23 @@ class VisitationController extends DatafordelerController
     public function VisitationLog(Request $request): Response
     {
         $table_name = $request->request->get('table_name');
-        $cpr = $request->request->get('cpr');
         $visitation_id = $request->request->get('visitation');
-        
-        $visitation_id = (int)$visitation_id;
-        // find visitation by id
 
+        $visitation_id = (int)$visitation_id;
         $visitationLog = new VisitationLogEntry();
-        $hashedCpr = hash ('md5' ,$cpr);
-        $visitationLog->setCprNumber($hashedCpr);
-        $visitationLog->setTableName($table_name);
-        $visitationLog->setVisitation($this->em->getRepository(Visitation::class)->find($visitation_id));
-        // $visitation->setVisitationClient(VisitationClientPerson);
-        // $visitation->setCompletedAt(null);
-        // $visitation->setLockedNetValue(null);
-        // $visitation->setLastReopened(new \DateTime());
-        // $em = $this->em->getManager();
+
+        // check if cpr or cvr
+        if($request->request->get('cpr') != null) {
+            $visitationLog->setTableName($table_name);
+            $visitationLog->setVisitation($this->em->getRepository(Visitation::class)->find($visitation_id));
+        }
+        elseif ($request->request->get('cvr') != null) {
+            $visitationLog->setTableName($table_name);
+            $visitationLog->setVisitation($this->em->getRepository(Visitation::class)->find($visitation_id));
+        }
+        else {
+            return new Response(Response::HTTP_BAD_REQUEST);
+        }
         $this->em->persist($visitationLog);
         $this->em->flush();
 

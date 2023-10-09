@@ -4,41 +4,76 @@
 <div class="row">
     <div class="col">
         <h1>{{ "visitation.search.title" | trans }}</h1>
-        <div class="col-md-4 mx-auto search-cpr">
+        <div class="col-md-4 mx-auto visitation-search">
             {# IF type "PERSON" show CPR search #}
-            <div class="form-group">
-                <form id="cprForm" method="post" action="{{ path('result') }}">
-                    <input type="hidden" id="hiddenCprInput" name="cpr">
-                    <!-- your existing input and button here -->
-                    <label for="visitation_person_cpr" class="required">{{
-                        "visitation.form.client_cpr" | trans
-                    }}</label>
-                    <input
-                        type="text"
-                        id="visitation_person_cpr"
-                        name="visitation[person][cpr]"
-                        required="required"
-                        class="js-input-cpr no-cpr-scanning form-control"
-                        placeholder="{{ 'visitation.form.cpr_placehoder' | trans }}"
-                        autocomplete="off"
-                    />
-                    {# if error exists #}
-                    {% if error is defined %}
-                        <p class="error-code">{{ error }}</p>
-                    {% endif %}
-                    <button
-                        type="submit"
-                        id="visitation_person_search"
-                        name="visitation[person][search]"
-                        class="btn-primary btn"
-                        {# data-search-action="http://0.0.0.0:63585/process/search-process-by-cpr" #}
-                        data-search-text="Søg efter eksisterende sager"
-                        data-loading-text="Søger..."
-                    >
-                        {{ "visitation.form.search_client_cpr.search" | trans }}
-                    </button>
-                </form>
-            </div>
+            {% if client_type == "person" %}
+                <div class="form-group">
+                    <form id="cprForm" method="post" action="{{ path('result') }}">
+                        <input type="hidden" id="hiddenCprInput" name="cpr">
+                        <!-- your existing input and button here -->
+                        <label for="visitation_person_cpr" class="required">{{
+                            "visitation.form.client_cpr" | trans
+                        }}</label>
+                        <input
+                            type="text"
+                            id="visitation_person_cpr"
+                            name="visitation[person][cpr]"
+                            required="required"
+                            class="js-input-cpr no-cpr-scanning form-control visitation-input"
+                            placeholder="{{ 'visitation.form.cpr_placehoder' | trans }}"
+                            autocomplete="off"
+                        />
+                        {# if error exists #}
+                        {% if error is defined %}
+                            <p class="error-code">{{ error }}</p>
+                        {% endif %}
+                        <button
+                            type="submit"
+                            id="visitation_person_search"
+                            name="visitation[person][search]"
+                            class="btn-primary btn btn-search"
+                            data-search-text="Søg efter eksisterende sager"
+                            data-loading-text="Søger..."
+                        >
+                            {{ "visitation.form.search_client_cpr.search" | trans }}
+                        </button>
+                    </form>
+                </div>
+            {# Else if type company #}
+            {% elseif client_type =="company"%}
+                <div class="form-group">
+                    <form id="cvrForm" method="post" action="{{ path('result') }}">
+                        <input type="hidden" id="hiddenCvrInput" name="cvr">
+                        <!-- your existing input and button here -->
+                        <label for="visitation_company_cvr" class="required">{{
+                            "visitation.form.client_cvr" | trans
+                        }}</label>
+                        <input
+                            type="text"
+                            id="visitation_company_cvr"
+                            name="visitation[company][cvr]"
+                            required="required"
+                            class="js-input-cpr no-cpr-scanning form-control visitation-input"
+                            placeholder="{{ 'visitation.form.cvr_placeholder' | trans }}"
+                            autocomplete="off"
+                        />
+                        {# if error exists #}
+                        {% if error is defined %}
+                            <p class="error-code">{{ error }}</p>
+                        {% endif %}
+                        <button
+                            type="submit"
+                            id="visitation_company_search"
+                            name="visitation[company][search]"
+                            class="btn-primary btn btn-search"
+                            data-search-text="Søg efter eksisterende sager"
+                            data-loading-text="Søger..."
+                        >
+                            {{ "visitation.form.search_client_cvr.search" | trans }}
+                        </button>
+                    </form>
+                </div>
+            {% endif %}
         </div>
     </div>
 </div>
@@ -54,8 +89,8 @@ selected process type #}
 
         $searchCvrButton.click(function () {
             const cvrValue = $cvrInputElement.val();
-            const redirectTo = "{{ path('result') }}" + "?cvr=" + cvrValue; // path('result') will be your Symfony generated URL.
-            window.location.href = redirectTo;
+            $('#hiddenCvrInput').val(cvrValue);
+            $('#cvrForm').submit();
         });
         const $cprInputElement = $("#visitation_person_cpr");
         const $searchCprButton = $("#visitation_person_search");
@@ -75,23 +110,17 @@ selected process type #}
 {% block stylesheets %}
 {{ parent() }}
 <style>
-    .search-cpr {
+    .visitation-search {
         top: 70%;
     }
     .error-code {
         color: red;
     }
-    #visitation_person_search {
+    .btn-search {
         float: right;
         margin-top: 15px;
     }
-    #visitation_company_search {
-        float: right;
-    }
-    #visitation_person_cpr {
-        background-color: #d9d9d9;
-    }
-    #visitation_company_cvr {
+    .visitation-input {
         background-color: #d9d9d9;
     }
 </style>
