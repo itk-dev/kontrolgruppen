@@ -43,7 +43,7 @@
                         </tr>
                         <tr>
                             <td>CVR</td>
-                            <td>{{ data[0].virksomhed.CVRNummer }}</td>
+                            <td id="cvrField">{{ data[0].virksomhed.CVRNummer }}</td>
                         </tr>
                         <tr>
                             <td>Adresse</td>
@@ -132,12 +132,29 @@
     {{ parent() }}
     <script type="text/javascript">
         $(document).ready(function() {
+            const cvrElement = document.getElementById("cvrField");
+
             $('.accordion .card-header').click(function() {
                 $(this).find('i').toggleClass('fa-chevron-down fa-chevron-up');
             });
             $(document).ready(function() {
                 $(".btn-header").click(function() {
                     $(this).closest(".card-header").toggleClass("collapsed active");
+                    if($(this).closest(".card-header").hasClass("collapsed")){
+                        // Ajax post request to log_visitation route, with data and cpr
+                        $.ajax({
+                            url: "{{ path('log_visitation') }}",
+                            type: "POST",
+                            data: {
+                                table_name: $(this).closest(".card-header").attr("id"),
+                                cvr: cvrElement.innerHTML,
+                                visitation: "{{ visitation }}",
+                            },
+                            success: function(data) {
+                                console.log(data);
+                            }
+                        });
+                    }
                 });
             });
         });
