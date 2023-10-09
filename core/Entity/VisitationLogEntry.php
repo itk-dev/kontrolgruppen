@@ -39,11 +39,6 @@ class VisitationLogEntry extends AbstractEntity
     /**
      * @ORM\Column(type="string", length=180, nullable=true)
      */
-    private $cprNumber;
-
-    /**
-     * @ORM\Column(type="string", length=180, nullable=true)
-     */
     private $tableName;
 
     /**
@@ -108,30 +103,6 @@ class VisitationLogEntry extends AbstractEntity
     public function getCreatorName(): ?string
     {
         return $this->creatorName;
-    }
-
-    /**
-     * Set cpr.
-     *
-     * @param string|null $cprNumber
-     *
-     * @return $this
-     */
-    public function setCprNumber(?string $cprNumber): self
-    {
-        $this->cprNumber = $cprNumber;
-
-        return $this;
-    }
-
-    /**
-     * Get cprNumber.
-     *
-     * @return string|null
-     */
-    public function getCprNumber(): ?string
-    {
-        return $this->cprNumber;
     }
 
     /**
