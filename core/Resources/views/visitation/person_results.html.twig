@@ -60,7 +60,7 @@
                         </tr>
                         <tr>
                             <td>CPR</td>
-                            <td id="cprField">{{ data.Person.Personnumre[0].Personnummer.personnummer }}</td>
+                            <td class="cprField">{{ data.Person.Personnumre[0].Personnummer.personnummer }}</td>
                         </tr>
                         <tr>
                             <td>Adresse</td>
@@ -183,10 +183,16 @@
         }
 
         $(document).ready(function() {
-            const cprElement = document.getElementById("cprField");
-            const originalCpr = cprElement.textContent;
-            const formattedCprAndAge = formatCprAndCalculateAge(originalCpr);
-            cprElement.textContent = formattedCprAndAge;
+            // Format the CPR number and calculate the age for each cprField class
+            const cprFields = document.getElementsByClassName("cprField");
+            for (let i = 0; i < cprFields.length; i++) {
+                const originalCpr = cprFields[i].textContent;
+                const formattedCprAndAge = formatCprAndCalculateAge(originalCpr);
+                cprFields[i].textContent = formattedCprAndAge;
+            }
+            // const cprElement = document.getElementById("cprField");
+            // console.log(formattedCprAndAge);
+            // const formattedCprAndAge = formatCprAndCalculateAge(originalCpr);
 
             $('.accordion .card-header').click(function() {
                 $(this).find('i').toggleClass('fa-chevron-down fa-chevron-up');

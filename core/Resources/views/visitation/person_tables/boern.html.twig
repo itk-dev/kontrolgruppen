@@ -12,23 +12,19 @@
                 <table class="table mb-0 table-bordered bg-info">
                     <thead class="data-header">
                         <tr>
-                            <th>Fornavn</th>
-                            <th>Efternavn</th>
+                            <th>Navn</th>
                             <th>Fødselsdag</th>
                             <th>Forældremyndighed</th>
                         </tr>
                     </thead>
                     <tbody class="bg-light">
                         {# Check if data.Person.barn Exists #}
-                        {% if data.Person.Barn is defined %}
-                            {% for barn in data.Person.Barn %}
+                        {% if data.Person.Boern is defined %}
+                            {% for barn in data.Person.Boern %}
                             <tr>
-                                <td>{{ barn.Navn.fornavne }} {{ barn.Navn.efternavn }}</td>
-                                {% if cprnummer.Personnummer.virkningTil is defined %}
-                                    <td>{{ cprnummer.Personnummer.virkningFra|date("m-d-Y") }} til {{ cprnummer.Personnummer.virkningTil|date("m-d-Y") }} </td>
-                                {% else %}
-                                    <td>{{ cprnummer.Personnummer.virkningFra|date("m-d-Y") }}</td>
-                                {% endif %}
+                                <td>{{ barn.Barnoplysning.Barn.Navn.fornavne }} {{ barn.Barnoplysning.Barn.Navn.efternavn }}</td>
+                                <td class="cprField">{{ barn.Barnoplysning.Barn.barnPersonnummer }}</td>
+                                <td> Ukendt</td>
                             </tr>
                             {% endfor %}
                         {% else %}
