@@ -18,11 +18,15 @@
                         </tr>
                     </thead>
                     <tbody class="bg-light">
-                        {# Check if data.Person.barn Exists #}
                         {% if data.Person.Boern is defined %}
                             {% for barn in data.Person.Boern %}
                             <tr>
-                                <td>{{ barn.Barnoplysning.Barn.Navn.fornavne }} {{ barn.Barnoplysning.Barn.Navn.efternavn }}</td>
+                                <td>                        
+                                    <form id="cprForm{{ loop.index }}" method="post" action="{{ path('result') }}">
+                                    <input type="hidden" name="cpr" value="{{ barn.Barnoplysning.Barn.barnPersonnummer }}">
+                                    <a href="#" class="child-name" onclick="document.getElementById('cprForm{{ loop.index }}').submit();">{{ barn.Barnoplysning.Barn.Navn.fornavne }} {{ barn.Barnoplysning.Barn.Navn.efternavn }}</a>
+                                    </form>
+                                </td>
                                 <td class="cprField">{{ barn.Barnoplysning.Barn.barnPersonnummer }}</td>
                                 <td> Ukendt</td>
                             </tr>
