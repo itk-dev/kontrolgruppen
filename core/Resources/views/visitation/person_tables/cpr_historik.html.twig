@@ -21,9 +21,9 @@
                         <tr>
                             <td>{{ cprnummer.Personnummer.personnummer }}</td>
                             {% if cprnummer.Personnummer.virkningTil is defined %}
-                                <td>{{ cprnummer.Personnummer.virkningFra|date("m-d-Y") }} til {{ cprnummer.Personnummer.virkningTil|date("m-d-Y") }} </td>
+                                <td>{{ cprnummer.Personnummer.virkningFra|date("d-m-Y") }} til {{ cprnummer.Personnummer.virkningTil|date("d-m-Y") }} </td>
                             {% else %}
-                                <td>{{ cprnummer.Personnummer.virkningFra|date("m-d-Y") }}</td>
+                                <td>{{ cprnummer.Personnummer.virkningFra|date("d-m-Y") }} - i dag</td>
                             {% endif %}
                         </tr>
                         {% endfor %}

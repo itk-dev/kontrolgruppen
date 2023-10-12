@@ -21,9 +21,9 @@
                         <tr>
                             <td>{{ navn.Navn.fornavne }} {{ navn.Navn.efternavn }}</td>
                             {% if navn.Navn.virkningTil is defined %}
-                                <td>{{ navn.Navn.virkningFra|date("m-d-Y") }} til {{ navn.Navn.virkningTil|date("m-d-Y") }} </td>
+                                <td>{{ navn.Navn.virkningFra|date("d-m-Y") }} til {{ navn.Navn.virkningTil|date("d-m-Y") }} </td>
                             {% else %}
-                                <td>{{ navn.Navn.virkningFra|date("m-d-Y") }}</td>
+                                <td>{{ navn.Navn.virkningFra|date("d-m-Y") }} - i dag</td>
                             {% endif %}
                         </tr>
                         {% endfor %}

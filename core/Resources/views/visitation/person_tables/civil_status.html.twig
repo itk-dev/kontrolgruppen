@@ -27,9 +27,9 @@
                                 <td>{{ civilStatus.Civilstand.Civilstandstype }}</td>
                                 <td>{{ civilStatus.Civilstand.Civilstandstype }}</td>
                                 {% if civilStatus.Civilstand.virkningTil is defined %}
-                                <td>{{ civilStatus.Civilstand.virkningFra|date("m-d-Y") }} til {{ civilStatus.Civilstand.virkningTil|date("m-d-Y") }} </td>
+                                <td>{{ civilStatus.Civilstand.virkningFra|date("d-y-Y") }} til {{ civilStatus.Civilstand.virkningTil|date("d-m-Y") }} </td>
                                 {% else %}
-                                <td>{{ civilStatus.Civilstand.virkningFra|date("m-d-Y") }}</td>
+                                <td>{{ civilStatus.Civilstand.virkningFra|date("d-m-Y") }}</td>
                                 {% endif %}
 
                             </tr>

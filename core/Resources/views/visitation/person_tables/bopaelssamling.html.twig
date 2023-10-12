@@ -23,9 +23,9 @@
                             <tr>
                                 <td>{{ land.cprlandenavn }}</td>
                                 {% if land.virkningTil is defined %}
-                                    <td>{{ land.virkningFra|date("m-d-Y") }} til {{ land.virkningTil|date("m-d-Y") }} </td>
+                                    <td>{{ land.virkningFra|date("d-m-Y") }} til {{ land.virkningTil|date("d-m-Y") }} </td>
                                 {% else %}
-                                    <td>{{ land.virkningFra|date("m-d-Y") }}</td>
+                                    <td>{{ land.virkningFra|date("d-m-Y") }}</td>
                                 {% endif %}
                             </tr>
                             {% endfor %}

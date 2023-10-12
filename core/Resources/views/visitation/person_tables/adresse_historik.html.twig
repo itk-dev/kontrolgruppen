@@ -27,9 +27,9 @@
                             <td>{{ adresse.Adresseoplysninger.CprAdresse.cprKommunenavn }}</td>
                             <td></td>
                             {% if adresse.Adresseoplysninger.virkningTil is defined %}
-                                <td>{{ adresse.Adresseoplysninger.virkningFra|date("m-d-Y") }} til {{ adresse.Adresseoplysninger.virkningTil|date("m-d-Y") }} </td>
+                                <td>{{ adresse.Adresseoplysninger.virkningFra|date("d-m-Y") }} til {{ adresse.Adresseoplysninger.virkningTil|date("d-m-Y") }} </td>
                             {% else %}
-                                <td>{{ adresse.Adresseoplysninger.virkningFra|date("m-d-Y") }}</td>
+                                <td>{{ adresse.Adresseoplysninger.virkningFra|date("d-m-Y") }}</td>
                             {% endif %}
                         </tr>
                         {% endfor %}
