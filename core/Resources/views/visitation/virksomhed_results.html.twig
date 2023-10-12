@@ -37,30 +37,62 @@
                 </div>
                 <table class="table table-bordered">
                     <tbody class="stam-data-body">
-                        <tr>
-                            <td>Navn</td>
-                            <td>{{ data[0].virksomhedsnavn.vaerdi }}</td>
-                        </tr>
-                        <tr>
-                            <td>CVR</td>
-                            <td id="cvrField">{{ data[0].virksomhed.CVRNummer }}</td>
-                        </tr>
-                        <tr>
-                            <td>Adresse</td>
-                            <td>{{ data[0].beliggenhedsadresse.adresse }} {{ data[0].beliggenhedsadresse.adresse }}</td>
-                        </tr>
-                        <tr>
-                            <td>Kontakt</td>
-                            <td>{{ data[0].emailadresse.vaerdi }}</td>
-                        </tr>
-                        <tr>
-                            <td>Virksomhedsform</td>
-                            <td>{{ data[0].virksomhedsform.vaerdi }}</td>
-                        </tr>
-                        <tr>
-                            <td>Status</td>
-                            <td>{{ data[0].virksomhed.status }}</td>
-                        </tr>
+                        {% if data.virksomhedsnavn.vaerdi is not empty %}
+                            <tr>
+                                <td>Navn</td>
+                                <td>{{ data.virksomhedsnavn.vaerdi }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if data.virksomhed.CVRNummer is not empty %}
+                            <tr>
+                                <td>CVR</td>
+                                <td id="cvrField">{{ data.virksomhed.CVRNummer }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if data.beliggenhedsadresse.adresse is not empty %}
+                            <tr>
+                                <td>Adresse</td>
+                                <td>
+                                    {% if data.beliggenhedsadresse.CVRAdresse_vejnavn is not empty %}
+                                        {{ data.beliggenhedsadresse.CVRAdresse_vejnavn }}
+                                    {% endif %}
+                                    {% if data.beliggenhedsadresse.CVRAdresse_husnummerFra is not empty %}
+                                        {{ data.beliggenhedsadresse.CVRAdresse_husnummerFra }}
+                                    {% endif %}                                
+                                    {% if data.beliggenhedsadresse.CVRAdresse_etagebetegnelse is not empty %}
+                                        {{ data.beliggenhedsadresse.CVRAdresse_etagebetegnelse }}
+                                    {% endif %}                                
+                                    {% if data.beliggenhedsadresse.CVRAdresse_doerbetegnelse is not empty %}
+                                        {{ data.beliggenhedsadresse.CVRAdresse_doerbetegnelse }},
+                                    {% endif %}
+                                    
+                                    {% if data.beliggenhedsadresse.CVRAdresse_postnummer is not empty %}
+                                        {{ data.beliggenhedsadresse.CVRAdresse_postnummer }}
+                                    {% endif %}
+                                    {% if data.beliggenhedsadresse.CVRAdresse_postdistrikt is not empty %}
+                                        {{ data.beliggenhedsadresse.CVRAdresse_postdistrikt }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% if data['e-mailadresse'].vaerdi is not empty %}
+                            <tr>
+                                <td>Kontakt</td>
+                                <td>{{ data['e-mailadresse'].vaerdi }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if data.virksomhedsform.vaerdi is not empty %}
+                            <tr>
+                                <td>Virksomhedsform</td>
+                                <td>{{ data.virksomhedsform.vaerdiTekst }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if data.virksomhed.status is not empty %}
+                            <tr>
+                                <td>Status</td>
+                                <td>{{ data.virksomhed.status }}</td>
+                            </tr>
+                        {% endif %}
                         <tr>
                             <td>Relationer</td>
                             <td></td>
@@ -113,6 +145,9 @@
             background-color: #d0dcfc;
         }
         .bg-light{
+            background-color: #e8ecfc;
+        }
+        .pnumber{
             background-color: #e8ecfc;
         }
         .stam-data-body{

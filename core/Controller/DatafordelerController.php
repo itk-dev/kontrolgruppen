@@ -48,10 +48,34 @@ class DatafordelerController extends BaseController
     {
         $response = $datafordelerHttpClient->request(
             'GET',
-            'CVR/n',
+            'CVR/HentCVRData/1/rest/hentVirksomhedMedCVRNummer',
             [
                 'query' => [
-                    'pnr.cvr.eq' => $cvr,
+                    'pCVRNummer' => $cvr,
+                ],
+            ]
+        );
+
+        if ($response->getStatusCode() === 404) {
+            return [];
+        }
+
+        return $response->toArray();
+    }
+
+        /**
+     * @return array
+     *
+     * @throws TransportExceptionInterface
+     */
+    protected function getVirksomhedDataByPNumber(string $pnumber, HttpClientInterface $datafordelerHttpClient): array
+    {
+        $response = $datafordelerHttpClient->request(
+            'GET',
+            'CVR/HentCVRData/1/rest/hentProduktionsenhedMedPNummer',
+            [
+                'query' => [
+                    'ppNummer' => $pnumber,
                 ],
             ]
         );

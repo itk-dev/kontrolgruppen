@@ -155,6 +155,21 @@ class VisitationController extends DatafordelerController
                 );
             }
             if (!empty($data)) {
+                // foreach $data['produktionsenheder']
+                foreach ($data['produktionsenheder'] as $value) {
+                    try {
+                        // add to data['p-numre']
+                        $data['p-numre'][] = $this->getVirksomhedDataByPNumber($value['pNummer'], $datafordelerHttpClient);
+                    } catch (TransportExceptionInterface $e) {
+                        return $this->render(
+                            '@KontrolgruppenCore/visitation/search.html.twig',
+                            [
+                                'client_type' =>'company',
+                                'error' => 'Forbindelse fejlet. Prøv igen'
+                            ]
+                        );
+                    }
+                }
                 return $this->render(
                     '@KontrolgruppenCore/visitation/virksomhed_results.html.twig',
                     [
