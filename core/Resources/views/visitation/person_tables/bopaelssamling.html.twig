@@ -23,7 +23,7 @@
                             {% for Bopaelssamling in data.Bopaelssamling %}
                             <tr>
                                 <td>
-                                    <form id="cprForm{{ loop.index }}" method="post" action="{{ path('result') }}">
+                                    <form target="_blank" id="cprForm{{ loop.index }}" method="post" action="{{ path('result') }}">
                                         <input type="hidden" name="cpr" value="{{ Bopaelssamling.CPR }}">
                                         <a href="#" class="child-name" onclick="document.getElementById('cprForm{{ loop.index }}').submit();">{{ Bopaelssamling.Navn }}</a>
                                     </form>
