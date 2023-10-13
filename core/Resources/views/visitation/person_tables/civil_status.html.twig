@@ -20,8 +20,8 @@
                     </thead>
                     <tbody class="bg-light">
                         {# Loop through the data for this table if applicable. Otherwise, statically add rows. #}
-                        {% if data.Person.Civilstande is defined %}
-                            {% for civilStatus in data.Person.Civilstande %}
+                        {% if data.Civilstande is defined %}
+                            {% for civilStatus in data.Civilstande %}
                             <tr>
                                 <td>{{ civilStatus.Civilstand.Civilstandstype }}</td>
                                 <td>{{ civilStatus.Civilstand.Civilstandstype }}</td>

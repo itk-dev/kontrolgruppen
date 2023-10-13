@@ -17,7 +17,7 @@
                         </tr>
                     </thead>
                     <tbody class="bg-light">
-                        {% for navn in data.Person.Navne %}
+                        {% for navn in data.Navne %}
                         <tr>
                             <td>{{ navn.Navn.fornavne }} {{ navn.Navn.efternavn }}</td>
                             {% if navn.Navn.virkningTil is defined %}

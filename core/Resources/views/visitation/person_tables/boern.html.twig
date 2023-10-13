@@ -18,8 +18,8 @@
                         </tr>
                     </thead>
                     <tbody class="bg-light">
-                        {% if data.Person.Boern is defined %}
-                            {% for barn in data.Person.Boern %}
+                        {% if data.Boern is defined %}
+                            {% for barn in data.Boern %}
                             <tr>
                                 <td>                        
                                     <form id="cprForm{{ loop.index }}" method="post" action="{{ path('result') }}">

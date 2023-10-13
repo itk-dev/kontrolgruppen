@@ -56,19 +56,19 @@
                     <tbody class="stam-data-body">
                         <tr>
                             <td>Navn</td>
-                            <td>{{ data.Person.Navne[0].Navn.fornavne }} {{ data.Person.Navne[0].Navn.efternavn }}</td>
+                            <td>{{ data.Navne[0].Navn.fornavne }} {{ data.Navne[0].Navn.efternavn }}</td>
                         </tr>
                         <tr>
                             <td>CPR</td>
-                            <td class="cprField">{{ data.Person.Personnumre[0].Personnummer.personnummer }}</td>
+                            <td class="cprField">{{ data.Personnumre[0].Personnummer.personnummer }}</td>
                         </tr>
                         <tr>
                             <td>Adresse</td>
-                            <td>{{ data.Person.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.vejadresseringsnavn}} {{ data.Person.Navne[0].Navn.efternavn }}</td>
+                            <td>{{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.vejadresseringsnavn}} {{ data.Navne[0].Navn.efternavn }}</td>
                         </tr>
                         <tr>
                             <td>Køn</td>
-                            <td>{{ data.Person.koen }}</td>
+                            <td>{{ data.koen }}</td>
                         </tr>
                         <tr>
                             <td>Eksisterende sager</td>
@@ -211,7 +211,7 @@
                             type: "POST",
                             data: {
                                 table_name: $(this).closest(".card-header").attr("id"),
-                                cpr: "{{ data.Person.Personnumre[0].Personnummer.personnummer }}",
+                                cpr: "{{ data.Personnumre[0].Personnummer.personnummer }}",
                                 visitation: "{{ visitation }}",
                             },
                             success: function(data) {

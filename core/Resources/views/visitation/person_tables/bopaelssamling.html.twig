@@ -18,8 +18,8 @@
                     </thead>
                     <tbody class="bg-light">
                         {# Loop through the data for this table if applicable. Otherwise, statically add rows. #}
-                        {% if data.Person.Statsborgerskab is defined %}
-                            {% for land in data.Person.Statsborgerskab %}
+                        {% if data.Statsborgerskab is defined %}
+                            {% for land in data.Statsborgerskab %}
                             <tr>
                                 <td>{{ land.cprlandenavn }}</td>
                                 {% if land.virkningTil is defined %}

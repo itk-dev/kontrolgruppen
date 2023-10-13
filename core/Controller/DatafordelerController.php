@@ -36,7 +36,74 @@ class DatafordelerController extends BaseController
             return [];
         }
 
-        return $response->toArray();
+        $data = $response->toArray()['Personer'][0]['Person'];
+        if ($cprAdresse = $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']) {
+            $data['Bopaelssamling'] = $this->getBopaelssamling($cprAdresse, $data['Personnumre'][0]['Personnummer']['personnummer'], $data['Navne'][0]['Navn']['adresseringsnavn'], $datafordelerHttpClient);
+        }
+
+        return $data;
+    }
+
+    /**
+     * @return array
+     *
+     * @throws TransportExceptionInterface
+     */
+    protected function getBopaelssamling(array $cprAdresse, string $relationCpr, string $relationFullname, HttpClientInterface $datafordelerHttpClient): array
+    {
+        $query = ['adropl.status.eq' => 'aktuel'];
+        foreach ($cprAdresse as $key => $value) {
+            $query['cadr.' . $key . '.eq'] = $value;
+        }
+        $response = $datafordelerHttpClient->request(
+            'GET',
+            'CPR/CprPersonFullComplete/1/rest/PersonFullCurrentListComplete',
+            [
+                'query' => $query
+            ]
+        );
+
+        if ($response->getStatusCode() === 404) {
+            return [];
+        }
+
+        $data = $response->toArray()['Personer'];
+        $bopaelssamling = [];
+        foreach ($data as $person) {
+            if ($person['Person']['Personnumre'][0]['Personnummer']['personnummer'] == $relationCpr) {
+                continue;
+            }
+
+            $relation = 'Andet';
+            foreach ($person['Foraelderoplysninger'] as $fop) {
+                if ($fop['Foraelderoplysninger']['Foraelder']['Navn']['adresseringsnavn'] == $relationFullname) {
+                    $relation = 'Barn';
+                }
+            }
+            foreach ($person['Civilstande'] as $civ) {
+                if ($civ['Civilstand']['status'] == 'aktuel' && isset($civ['Civilstand']['Aegtefaelle']) && $civ['Civilstand']['Aegtefaelle']['Navn']['adresseringsnavn'] == $relationFullname) {
+                    $relation = 'Ægtefælle';
+                }
+            }
+
+            $bopaelssamling[] = [
+                'CPR' => $person['Person']['Personnumre'][0]['Personnummer']['personnummer'],
+                'Navn' => $this->getFullnameFromNameObject($person['Person']['Navne'][0]['Navn']),
+                'DatoFra' => $person['Person']['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']['virkningFra'],
+                'Relation' => $relation
+            ];
+        }
+
+        return $bopaelssamling;
+    }
+
+    protected function getFullnameFromNameObject($navn): string
+    {
+        $fornavne = $navn['fornavne'];
+        $mellemnavn = $navn['mellemnavn'] ?? '';
+        $efternavn = $navn['efternavn'];
+
+        return implode (' ', [$fornavne, $mellemnavn, $efternavn]);
     }
 
     /**
@@ -63,7 +130,7 @@ class DatafordelerController extends BaseController
         return $response->toArray();
     }
 
-        /**
+    /**
      * @return array
      *
      * @throws TransportExceptionInterface
