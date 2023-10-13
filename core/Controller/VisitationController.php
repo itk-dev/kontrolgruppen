@@ -216,7 +216,7 @@ class VisitationController extends DatafordelerController
                 return $this->render(
                     '@KontrolgruppenCore/visitation/person_results.html.twig',
                     [
-                        'data' => $data['Personer'][0],
+                        'data' => $data,
                         'visitation' => $visitation
                     ]
                 );

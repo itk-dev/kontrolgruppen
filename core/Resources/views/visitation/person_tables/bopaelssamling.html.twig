@@ -14,19 +14,22 @@
                         <tr>
                             <th>Navn</th>
                             <th>Dato (fra)</th>
+                            <th>Relation</th>
                         </tr>
                     </thead>
                     <tbody class="bg-light">
                         {# Loop through the data for this table if applicable. Otherwise, statically add rows. #}
-                        {% if data.Statsborgerskab is defined %}
-                            {% for land in data.Statsborgerskab %}
+                        {% if data.Bopaelssamling is defined %}
+                            {% for Bopaelssamling in data.Bopaelssamling %}
                             <tr>
-                                <td>{{ land.cprlandenavn }}</td>
-                                {% if land.virkningTil is defined %}
-                                    <td>{{ land.virkningFra|date("d-m-Y") }} til {{ land.virkningTil|date("d-m-Y") }} </td>
-                                {% else %}
-                                    <td>{{ land.virkningFra|date("d-m-Y") }}</td>
-                                {% endif %}
+                                <td>
+                                    <form id="cprForm{{ loop.index }}" method="post" action="{{ path('result') }}">
+                                        <input type="hidden" name="cpr" value="{{ Bopaelssamling.CPR }}">
+                                        <a href="#" class="child-name" onclick="document.getElementById('cprForm{{ loop.index }}').submit();">{{ Bopaelssamling.Navn }}</a>
+                                    </form>
+                                </td>
+                                <td>{{ Bopaelssamling.DatoFra|date("d-m-Y") }}</td>
+                                <td>{{ Bopaelssamling.Relation }}</td>
                             </tr>
                             {% endfor %}
                         {% else %}

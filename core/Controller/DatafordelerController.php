@@ -75,12 +75,12 @@ class DatafordelerController extends BaseController
             }
 
             $relation = 'Andet';
-            foreach ($person['Foraelderoplysninger'] as $fop) {
-                if ($fop['Foraelderoplysninger']['Foraelder']['Navn']['adresseringsnavn'] == $relationFullname) {
+            foreach ($person['Person']['Foraelderoplysninger'] as $fop) {
+                if ($fop['Foraelderoplysning']['Foraelder']['Navn']['adresseringsnavn'] == $relationFullname) {
                     $relation = 'Barn';
                 }
             }
-            foreach ($person['Civilstande'] as $civ) {
+            foreach ($person['Person']['Civilstande'] as $civ) {
                 if ($civ['Civilstand']['status'] == 'aktuel' && isset($civ['Civilstand']['Aegtefaelle']) && $civ['Civilstand']['Aegtefaelle']['Navn']['adresseringsnavn'] == $relationFullname) {
                     $relation = 'Ægtefælle';
                 }
@@ -89,7 +89,7 @@ class DatafordelerController extends BaseController
             $bopaelssamling[] = [
                 'CPR' => $person['Person']['Personnumre'][0]['Personnummer']['personnummer'],
                 'Navn' => $this->getFullnameFromNameObject($person['Person']['Navne'][0]['Navn']),
-                'DatoFra' => $person['Person']['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']['virkningFra'],
+                'DatoFra' => $person['Person']['Adresseoplysninger'][0]['Adresseoplysninger']['virkningFra'],
                 'Relation' => $relation
             ];
         }
