@@ -64,7 +64,14 @@
                         </tr>
                         <tr>
                             <td>Adresse</td>
-                            <td>{{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.vejadresseringsnavn}} {{ data.Navne[0].Navn.efternavn }}</td>
+                            <td>{{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.vejadresseringsnavn}} 
+                                {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.husnummer }}
+                                {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.etage }}
+                                {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.sidedoer }}
+                                <br>
+                                {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.postnummer }}
+                                {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.postdistrikt }}
+                            </td>
                         </tr>
                         <tr>
                             <td>Køn</td>

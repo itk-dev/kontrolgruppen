@@ -24,8 +24,21 @@
                             {% for civilStatus in data.Civilstande %}
                             <tr>
                                 <td>{{ civilStatus.Civilstand.Civilstandstype }}</td>
-                                <td>{{ civilStatus.Civilstand.Civilstandstype }}</td>
-                                <td>{{ civilStatus.Civilstand.Civilstandstype }}</td>
+                                {% if civilStatus.Civilstand.Aegtefaelle is defined %}
+                                <td>
+                                    <form target="_blank" id="cprForm{{ loop.index }}" method="post" action="{{ path('result') }}">
+                                        <input type="hidden" name="cpr" value="{{ civilStatus.Civilstand.Aegtefaelle.aegtefaellePersonnummer  }}">
+                                        <a href="#" class="child-name" onclick="document.getElementById('cprForm{{ loop.index }}').submit();">
+                                            {{ civilStatus.Civilstand.Aegtefaelle.Navn.fornavne }}
+                                            {{ civilStatus.Civilstand.Aegtefaelle.Navn.efternavn }}
+                                        </a>
+                                    </form>
+                                </td>
+                                <td class="cprField">{{ civilStatus.Civilstand.Aegtefaelle.aegtefaellePersonnummer }}</td>
+                                {% else %}
+                                <td class="text-muted">-</td>
+                                <td class="text-muted">-</td>
+                                {% endif %}
                                 {% if civilStatus.Civilstand.virkningTil is defined %}
                                 <td>{{ civilStatus.Civilstand.virkningFra|date("d-y-Y") }} til {{ civilStatus.Civilstand.virkningTil|date("d-m-Y") }} </td>
                                 {% else %}
