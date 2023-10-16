@@ -152,6 +152,9 @@
             color: black;
             text-decoration: underline;
         }
+        .iconClass{
+            margin-left: 10px
+        }
     </style>
 {% endblock %}
 
@@ -206,7 +209,12 @@
             // const formattedCprAndAge = formatCprAndCalculateAge(originalCpr);
 
             $('.accordion .card-header').click(function() {
-                $(this).find('i').toggleClass('fa-chevron-down fa-chevron-up');
+                var icon = $(this).closest(".card-header").find('.iconClass');
+                if ($(this).closest(".card-header").hasClass('collapsed')) {
+                    icon.removeClass('fa-sort-down').addClass('fa-sort-up');
+                } else {
+                    icon.removeClass('fa-sort-up').addClass('fa-sort-down');
+                }
             });
             $(document).ready(function() {
                 $(".btn-header").click(function() {
