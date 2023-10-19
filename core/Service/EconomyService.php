@@ -113,9 +113,9 @@ class EconomyService
                 $carry['entries'][] = $entry;
 
                 if (RevenueTypeEnumType::REPAYMENT === $entry->getType()) {
-                    $carry['repaymentSum'] = $carry['repaymentSum'] + $amount;
+                    $carry['repaymentSum'] += $amount;
                     $netAmount = $amount * $netMultiplier;
-                    $carry['netRepaymentSum'] = $carry['netRepaymentSum'] + $netAmount;
+                    $carry['netRepaymentSum'] += $netAmount;
 
                     $carry['repaymentSums'][$serviceName] = [
                         'netPercentage' => $netMultiplier * 100,
@@ -132,8 +132,8 @@ class EconomyService
 
                     $calculatedAmount = $amount * $futureSavingsMultiplier;
 
-                    $carry['futureSavingsSum'] = $carry['futureSavingsSum'] + $calculatedAmount;
-                    $carry['netFutureSavingsSum'] = $carry['netFutureSavingsSum'] + ($calculatedAmount * $netMultiplier);
+                    $carry['futureSavingsSum'] += $calculatedAmount;
+                    $carry['netFutureSavingsSum'] += ($calculatedAmount * $netMultiplier);
 
                     $carry['futureSavingsSums'][$serviceName] = [
                         'netPercentage' => $netMultiplier * 100,

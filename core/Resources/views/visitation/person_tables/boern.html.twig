@@ -21,7 +21,7 @@
                         {% if data.Boern is defined %}
                             {% for barn in data.Boern %}
                             <tr>
-                                <td>                        
+                                <td>
                                     <form target="_blank" id="cprForm{{ loop.index }}" method="post" action="{{ path('result') }}">
                                     <input type="hidden" name="cpr" value="{{ barn.Barnoplysning.Barn.barnPersonnummer }}">
                                     <a href="#" class="child-name" onclick="document.getElementById('cprForm{{ loop.index }}').submit();">{{ barn.Barnoplysning.Barn.Navn.fornavne }} {{ barn.Barnoplysning.Barn.Navn.efternavn }}</a>
@@ -33,7 +33,7 @@
                             {% endfor %}
                         {% else %}
                             <tr>
-                                <td class="empty-column" colspan="4">{{ "visitation.data.empty" | trans}}</td>
+                                <td class="empty-column" colspan="4">{{ "visitation.data.empty"|trans }}</td>
                             </tr>
                         {% endif %}
                     </tbody>

@@ -17,7 +17,7 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 class GetConclusionTemplateEvent extends Event
 {
-    const NAME = 'kontrolgruppen.core.get_conclusion_template';
+    public const NAME = 'kontrolgruppen.core.get_conclusion_template';
 
     private $class;
     private $template;

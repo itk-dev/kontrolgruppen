@@ -42,7 +42,7 @@ class DatafordelerController extends BaseController
             ]
         );
 
-        if ($response->getStatusCode() === 404) {
+        if (404 === $response->getStatusCode()) {
             return [];
         }
 
@@ -63,35 +63,35 @@ class DatafordelerController extends BaseController
     {
         $query = ['adropl.status.eq' => 'aktuel'];
         foreach ($cprAdresse as $key => $value) {
-            $query['cadr.' . $key . '.eq'] = $value;
+            $query['cadr.'.$key.'.eq'] = $value;
         }
         $response = $datafordelerHttpClient->request(
             'GET',
             'CPR/CprPersonFullComplete/1/rest/PersonFullCurrentListComplete',
             [
-                'query' => $query
+                'query' => $query,
             ]
         );
 
-        if ($response->getStatusCode() === 404) {
+        if (404 === $response->getStatusCode()) {
             return [];
         }
 
         $data = $response->toArray()['Personer'];
         $bopaelssamling = [];
         foreach ($data as $person) {
-            if ($person['Person']['Personnumre'][0]['Personnummer']['personnummer'] == $relationCpr) {
+            if ($person['Person']['Personnumre'][0]['Personnummer']['personnummer'] === $relationCpr) {
                 continue;
             }
 
             $relation = 'Andet';
             foreach ($person['Person']['Foraelderoplysninger'] as $fop) {
-                if ($fop['Foraelderoplysning']['Foraelder']['Navn']['adresseringsnavn'] == $relationFullname) {
+                if ($fop['Foraelderoplysning']['Foraelder']['Navn']['adresseringsnavn'] === $relationFullname) {
                     $relation = 'Barn';
                 }
             }
             foreach ($person['Person']['Civilstande'] as $civ) {
-                if ($civ['Civilstand']['status'] == 'aktuel' && isset($civ['Civilstand']['Aegtefaelle']) && $civ['Civilstand']['Aegtefaelle']['Navn']['adresseringsnavn'] == $relationFullname) {
+                if ('aktuel' === $civ['Civilstand']['status'] && isset($civ['Civilstand']['Aegtefaelle']) && $civ['Civilstand']['Aegtefaelle']['Navn']['adresseringsnavn'] === $relationFullname) {
                     $relation = 'Ægtefælle';
                 }
             }
@@ -100,7 +100,7 @@ class DatafordelerController extends BaseController
                 'CPR' => $person['Person']['Personnumre'][0]['Personnummer']['personnummer'],
                 'Navn' => $this->getFullnameFromNameObject($person['Person']['Navne'][0]['Navn']),
                 'DatoFra' => $person['Person']['Adresseoplysninger'][0]['Adresseoplysninger']['virkningFra'],
-                'Relation' => $relation
+                'Relation' => $relation,
             ];
         }
 
@@ -113,7 +113,7 @@ class DatafordelerController extends BaseController
         $mellemnavn = $navn['mellemnavn'] ?? '';
         $efternavn = $navn['efternavn'];
 
-        return implode (' ', [$fornavne, $mellemnavn, $efternavn]);
+        return implode(' ', [$fornavne, $mellemnavn, $efternavn]);
     }
 
     /**
@@ -133,7 +133,7 @@ class DatafordelerController extends BaseController
             ]
         );
 
-        if ($response->getStatusCode() === 404) {
+        if (404 === $response->getStatusCode()) {
             return [];
         }
 
@@ -157,7 +157,7 @@ class DatafordelerController extends BaseController
             ]
         );
 
-        if ($response->getStatusCode() === 404) {
+        if (404 === $response->getStatusCode()) {
             return [];
         }
 

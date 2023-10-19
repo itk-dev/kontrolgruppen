@@ -74,7 +74,8 @@
         "symfony/phpunit-bridge": "^6.3",
         "symfony/stopwatch": "6.3.*",
         "symfony/web-profiler-bundle": "6.3.*",
-        "vimeo/psalm": "^4.23"
+        "vimeo/psalm": "^4.23",
+        "vincentlanglet/twig-cs-fixer": "^1.5"
     },
     "config": {
         "platform": {
@@ -190,7 +191,7 @@
             "phpcs --standard=phpcs.xml.dist --report=checkstyle"
         ],
         "actions/phpcsfixer": [
-            "php-cs-fixer --config=.php_cs.dist fix --dry-run --diff --diff-format=udiff"
+            "php-cs-fixer --config=.php-cs-fixer.dist.php fix --dry-run --diff"
         ],
         "actions/twigcs": [
             "twigcs --twig-version=2 templates core/Resources/views"

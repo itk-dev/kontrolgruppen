@@ -16,7 +16,6 @@ use DoctrineBatchUtils\BatchProcessing\SimpleBatchIteratorAggregate;
 use Knp\Component\Pager\PaginatorInterface;
 use Kontrolgruppen\CoreBundle\Entity\Visitation;
 use Kontrolgruppen\CoreBundle\Entity\VisitationLogEntry;
-use Traversable;
 
 /**
  * @method VisitationLogEntry|null find($id, $lockMode = null, $lockVersion = null)
@@ -113,9 +112,9 @@ class VisitationLogEntryRepository extends ServiceEntityRepository
      * @param Visitation $visitation
      * @param int     $batchSize
      *
-     * @return Traversable
+     * @return \Traversable
      */
-    public function getAllLogEntriesBatchVisited(Visitation $visitation, $batchSize = 100): Traversable
+    public function getAllLogEntriesBatchVisited(Visitation $visitation, $batchSize = 100): \Traversable
     {
         return SimpleBatchIteratorAggregate::fromQuery(
             $this->getLatestEntriesQuery($visitation),

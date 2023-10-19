@@ -117,7 +117,7 @@ abstract class AbstractFixture extends Fixture
         $entity = new $class();
         $metadata = $this->getMetadata($entity);
         foreach ($data as $propertyPath => $value) {
-            if (0 === strpos($propertyPath, '@')) {
+            if (str_starts_with($propertyPath, '@')) {
                 continue;
             }
 
@@ -139,7 +139,7 @@ abstract class AbstractFixture extends Fixture
             } catch (\Exception $exception) {
                 $message = sprintf(
                     'Cannot set property %s.%s on entity %s',
-                    \get_class($entity),
+                    $entity::class,
                     $propertyPath,
                     $entity
                 );
@@ -159,7 +159,7 @@ abstract class AbstractFixture extends Fixture
      */
     protected function getMetadata($entity)
     {
-        return $this->referenceRepository->getManager()->getClassMetadata(\get_class($entity));
+        return $this->referenceRepository->getManager()->getClassMetadata($entity::class);
     }
 
     /**
@@ -171,7 +171,7 @@ abstract class AbstractFixture extends Fixture
      */
     protected function getEntityReference($reference)
     {
-        if (0 === strpos($reference, '@')) {
+        if (str_starts_with($reference, '@')) {
             return $this->getReference(substr($reference, 1));
         }
         throw new \RuntimeException(sprintf('Invalid reference: %s', $reference));

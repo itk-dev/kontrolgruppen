@@ -15,7 +15,6 @@ use Doctrine\Persistence\ManagerRegistry;
 use DoctrineBatchUtils\BatchProcessing\SimpleBatchIteratorAggregate;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\Service;
-use Traversable;
 
 /**
  * @method Process|null find($id, $lockMode = null, $lockVersion = null)
@@ -114,9 +113,9 @@ class ProcessRepository extends ServiceEntityRepository
      *
      * @param int $batchSize
      *
-     * @return Traversable|Process[]
+     * @return \Traversable|Process[]
      */
-    public function findAllBatchProcessed(int $batchSize = 100): Traversable
+    public function findAllBatchProcessed(int $batchSize = 100): \Traversable
     {
         return SimpleBatchIteratorAggregate::fromQuery(
             $this->createQueryBuilder('p')->getQuery(),

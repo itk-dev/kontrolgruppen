@@ -64,7 +64,7 @@
                         </tr>
                         <tr>
                             <td>Adresse</td>
-                            <td>{{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.vejadresseringsnavn}} 
+                            <td>{{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.vejadresseringsnavn }}
                                 {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.husnummer }}
                                 {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.etage }}
                                 {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.sidedoer }}
@@ -185,7 +185,7 @@
             const birthDate = new Date(`${fullYear}-${month}-${day}`);
             let age = today.getFullYear() - birthDate.getFullYear();
             const monthDifference = today.getMonth() - birthDate.getMonth();
-            
+
             if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
                 age--;
             }

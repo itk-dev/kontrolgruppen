@@ -39,7 +39,7 @@ class ConclusionService
      */
     public function getEntityFormType(AbstractEntity $entity)
     {
-        return str_replace('Entity', 'Form', \get_class($entity).'Type');
+        return str_replace('Entity', 'Form', $entity::class.'Type');
     }
 
     /**

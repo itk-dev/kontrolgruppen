@@ -13,7 +13,6 @@ namespace Kontrolgruppen\CoreBundle\Controller;
 use Kontrolgruppen\CoreBundle\Entity\Visitation;
 use Kontrolgruppen\CoreBundle\Entity\VisitationLogEntry;
 use Kontrolgruppen\CoreBundle\Repository\VisitationRepository;
-use Mpdf\Container\NotFoundException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -43,7 +42,7 @@ class VisitationController extends DatafordelerController
             [
                 'menuItems' => $this->menuService->getProcessMenu(
                     $request->getPathInfo()
-                )
+                ),
             ]
         );
     }
@@ -77,7 +76,7 @@ class VisitationController extends DatafordelerController
         return $this->render(
             '@KontrolgruppenCore/visitation/search.html.twig',
             [
-                'client_type' => $request->get('clientType')
+                'client_type' => $request->get('clientType'),
                 // 'menuItems' => $this->menuService->getProcessMenu(
                 //     $request->getPathInfo(),
                 // ),
@@ -111,7 +110,6 @@ class VisitationController extends DatafordelerController
         // );
     }
 
-
     /**
      * @Route("/result", name="result", methods={"GET","POST"})
      *
@@ -136,12 +134,12 @@ class VisitationController extends DatafordelerController
 
             try {
                 $data = $this->getVirksomhedData($cvr, $datafordelerHttpClient);
-                if($data == null) {
+                if (null === $data) {
                     return $this->render(
                         '@KontrolgruppenCore/visitation/search.html.twig',
                         [
                             'client_type' => 'company',
-                            'error' => 'CVR nummer ikke genkendt, prøv igen.'
+                            'error' => 'CVR nummer ikke genkendt, prøv igen.',
                         ]
                     );
                 }
@@ -150,7 +148,7 @@ class VisitationController extends DatafordelerController
                     '@KontrolgruppenCore/visitation/search.html.twig',
                     [
                         'client_type' => 'company',
-                        'error' => 'Forbindelse fejlet. Prøv igen'
+                        'error' => 'Forbindelse fejlet. Prøv igen',
                     ]
                 );
             }
@@ -165,16 +163,17 @@ class VisitationController extends DatafordelerController
                             '@KontrolgruppenCore/visitation/search.html.twig',
                             [
                                 'client_type' => 'company',
-                                'error' => 'Forbindelse fejlet. Prøv igen'
+                                'error' => 'Forbindelse fejlet. Prøv igen',
                             ]
                         );
                     }
                 }
+
                 return $this->render(
                     '@KontrolgruppenCore/visitation/virksomhed_results.html.twig',
                     [
                         'data' => $data,
-                        'visitation' => $visitation
+                        'visitation' => $visitation,
                     ]
                 );
             } else {
@@ -184,7 +183,7 @@ class VisitationController extends DatafordelerController
                     '@KontrolgruppenCore/visitation/virksomhed_results.html.twig'
                 );
             }
-        } elseif($cpr) {
+        } elseif ($cpr) {
             $visitation->setType('person');
             $hashedCpr = hash('md5', $cpr);
             $visitation->setIdentifier($hashedCpr);
@@ -194,12 +193,12 @@ class VisitationController extends DatafordelerController
             $cpr = preg_replace('/\D+/', '', $cpr);
             try {
                 $data = $this->getPersonData($cpr, $datafordelerHttpClient);
-                if($data == null) {
+                if (null === $data) {
                     return $this->render(
                         '@KontrolgruppenCore/visitation/search.html.twig',
                         [
                             'client_type' => 'person',
-                            'error' => 'CPR nummer ikke genkendt, prøv igen.'
+                            'error' => 'CPR nummer ikke genkendt, prøv igen.',
                         ]
                     );
                 }
@@ -208,7 +207,7 @@ class VisitationController extends DatafordelerController
                     '@KontrolgruppenCore/visitation/search.html.twig',
                     [
                         'client_type' => 'person',
-                        'error' => 'Forbindelse fejlet. Prøv igen'
+                        'error' => 'Forbindelse fejlet. Prøv igen',
                     ]
                 );
             }
@@ -217,7 +216,7 @@ class VisitationController extends DatafordelerController
                     '@KontrolgruppenCore/visitation/person_results.html.twig',
                     [
                         'data' => $data,
-                        'visitation' => $visitation
+                        'visitation' => $visitation,
                     ]
                 );
             } else {
@@ -269,14 +268,14 @@ class VisitationController extends DatafordelerController
         $table_name = $request->request->get('table_name');
         $visitation_id = $request->request->get('visitation');
 
-        $visitation_id = (int)$visitation_id;
+        $visitation_id = (int) $visitation_id;
         $visitationLog = new VisitationLogEntry();
 
         // check if cpr or cvr
-        if($request->request->get('cpr') != null) {
+        if (null !== $request->request->get('cpr')) {
             $visitationLog->setTableName($table_name);
             $visitationLog->setVisitation($this->em->getRepository(Visitation::class)->find($visitation_id));
-        } elseif ($request->request->get('cvr') != null) {
+        } elseif (null !== $request->request->get('cvr')) {
             $visitationLog->setTableName($table_name);
             $visitationLog->setVisitation($this->em->getRepository(Visitation::class)->find($visitation_id));
         } else {
@@ -288,5 +287,4 @@ class VisitationController extends DatafordelerController
         // return 200
         return new Response(Response::HTTP_OK);
     }
-
 }

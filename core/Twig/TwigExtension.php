@@ -10,7 +10,6 @@
 
 namespace Kontrolgruppen\CoreBundle\Twig;
 
-use Exception;
 use Kontrolgruppen\CoreBundle\Entity\Conclusion;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
@@ -303,7 +302,7 @@ class TwigExtension extends AbstractExtension
                     'process' => $processId,
                 ]
             );
-        } catch (Exception $exception) {
+        } catch (\Exception $exception) {
             return '#';
         }
     }

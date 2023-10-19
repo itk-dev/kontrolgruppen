@@ -23,7 +23,7 @@
                 {% include '@KontrolgruppenCore/visitation/company_tables/p_number.html.twig' %}
 
                 {# CPR historik Table #}
-                {% include '@KontrolgruppenCore/visitation/company_tables/amount_workers.html.twig' %}            
+                {% include '@KontrolgruppenCore/visitation/company_tables/amount_workers.html.twig' %}
             </div>
         </div>
 
@@ -58,14 +58,14 @@
                                     {% endif %}
                                     {% if data.beliggenhedsadresse.CVRAdresse_husnummerFra is not empty %}
                                         {{ data.beliggenhedsadresse.CVRAdresse_husnummerFra }}
-                                    {% endif %}                                
+                                    {% endif %}
                                     {% if data.beliggenhedsadresse.CVRAdresse_etagebetegnelse is not empty %}
                                         {{ data.beliggenhedsadresse.CVRAdresse_etagebetegnelse }}
-                                    {% endif %}                                
+                                    {% endif %}
                                     {% if data.beliggenhedsadresse.CVRAdresse_doerbetegnelse is not empty %}
                                         {{ data.beliggenhedsadresse.CVRAdresse_doerbetegnelse }},
                                     {% endif %}
-                                    
+
                                     {% if data.beliggenhedsadresse.CVRAdresse_postnummer is not empty %}
                                         {{ data.beliggenhedsadresse.CVRAdresse_postnummer }}
                                     {% endif %}

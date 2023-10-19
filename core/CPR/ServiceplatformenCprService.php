@@ -23,6 +23,11 @@ class ServiceplatformenCprService extends AbstractCprService implements CprServi
     private $dataFordelerController;
     private $httpClient;
 
+    /**
+     * ServiceplatformenCprService constructor.
+     *
+     * @param PersonBaseDataExtendedService $service
+     */
     public function __construct(DatafordelerController $dataFordelerController, HttpClientInterface $httpClient)
     {
         $this->dataFordelerController = $dataFordelerController;

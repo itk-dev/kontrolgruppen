@@ -43,6 +43,7 @@ class Car extends AbstractEntity
 
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\AbstractProcessClient", inversedBy="cars")
+     *
      * @ORM\JoinColumn(nullable=false)
      */
     private $processClient;

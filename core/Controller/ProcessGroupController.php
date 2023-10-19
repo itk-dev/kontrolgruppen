@@ -12,7 +12,6 @@ namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
-use Exception;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessGroup;
 use Kontrolgruppen\CoreBundle\Form\ProcessGroupType;
@@ -35,7 +34,7 @@ class ProcessGroupController extends BaseController
      *
      * @throws NoResultException
      * @throws NonUniqueResultException
-     * @throws Exception
+     * @throws \Exception
      */
     public function index(Request $request, Process $process): Response
     {

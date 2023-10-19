@@ -10,8 +10,6 @@
 
 namespace Kontrolgruppen\CoreBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -19,9 +17,13 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * Base class for clients on a visitation.
  *
  * @ORM\Entity()
+ *
  * @ORM\Table(name="visitation_client")
+ *
  * @ORM\InheritanceType("SINGLE_TABLE")
+ *
  * @ORM\DiscriminatorColumn(name="discr", type="string")
+ *
  * @ORM\DiscriminatorMap({
  * })
  *
@@ -37,6 +39,7 @@ abstract class AbstractVisitationClient extends AbstractEntity implements Visita
 
     /**
      * @ORM\OneToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Visitation", inversedBy="visitationClient", cascade={"persist", "remove"})
+     *
      * @ORM\JoinColumn(nullable=false)
      */
     private $visitation;

@@ -25,7 +25,7 @@ class ServiceplatformenCvrService extends AbstractCvrService implements CvrServi
      *
      * @param OnlineService $service
      */
-    public function __construct(/*OnlineService $service*/)
+    public function __construct(/* OnlineService $service */)
     {
         // $this->service = $service;
     }

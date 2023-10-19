@@ -19,7 +19,9 @@ class UserSettings
 {
     /**
      * @ORM\Id()
+     *
      * @ORM\GeneratedValue()
+     *
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -36,6 +38,7 @@ class UserSettings
 
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\User", inversedBy="userSettings")
+     *
      * @ORM\JoinColumn(nullable=false)
      */
     private $user;

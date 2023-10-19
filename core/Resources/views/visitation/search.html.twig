@@ -1,9 +1,7 @@
-{% extends '@KontrolgruppenCore/main/index.html.twig' %} {% block title %}{{
-    "visitation.search.title" | trans
-}}{% endblock %} {% block content %}
+{% extends '@KontrolgruppenCore/main/index.html.twig' %} {% block title %}{{ "visitation.search.title"|trans }}{% endblock %} {% block content %}
 <div class="row">
     <div class="col">
-        <h1>{{ "visitation.search.title" | trans }}</h1>
+        <h1>{{ "visitation.search.title"|trans }}</h1>
         <div class="col-md-4 mx-auto visitation-search">
             {# IF type "PERSON" show CPR search #}
             {% if client_type == "person" %}
@@ -11,16 +9,14 @@
                     <form id="cprForm" method="post" action="{{ path('result') }}">
                         <input type="hidden" id="hiddenCprInput" name="cpr">
                         <!-- your existing input and button here -->
-                        <label for="visitation_person_cpr" class="required">{{
-                            "visitation.form.client_cpr" | trans
-                        }}</label>
+                        <label for="visitation_person_cpr" class="required">{{ "visitation.form.client_cpr"|trans }}</label>
                         <input
                             type="text"
                             id="visitation_person_cpr"
                             name="visitation[person][cpr]"
                             required="required"
                             class="js-input-cpr no-cpr-scanning form-control visitation-input"
-                            placeholder="{{ 'visitation.form.cpr_placehoder' | trans }}"
+                            placeholder="{{ 'visitation.form.cpr_placehoder'|trans }}"
                             autocomplete="off"
                         />
                         {# if error exists #}
@@ -35,26 +31,24 @@
                             data-search-text="Søg efter eksisterende sager"
                             data-loading-text="Søger..."
                         >
-                            {{ "visitation.form.search_client_cpr.search" | trans }}
+                            {{ "visitation.form.search_client_cpr.search"|trans }}
                         </button>
                     </form>
                 </div>
             {# Else if type company #}
-            {% elseif client_type =="company"%}
+            {% elseif client_type == "company" %}
                 <div class="form-group">
                     <form id="cvrForm" method="post" action="{{ path('result') }}">
                         <input type="hidden" id="hiddenCvrInput" name="cvr">
                         <!-- your existing input and button here -->
-                        <label for="visitation_company_cvr" class="required">{{
-                            "visitation.form.client_cvr" | trans
-                        }}</label>
+                        <label for="visitation_company_cvr" class="required">{{ "visitation.form.client_cvr"|trans }}</label>
                         <input
                             type="text"
                             id="visitation_company_cvr"
                             name="visitation[company][cvr]"
                             required="required"
                             class="js-input-cpr no-cpr-scanning form-control visitation-input"
-                            placeholder="{{ 'visitation.form.cvr_placeholder' | trans }}"
+                            placeholder="{{ 'visitation.form.cvr_placeholder'|trans }}"
                             autocomplete="off"
                         />
                         {# if error exists #}
@@ -69,7 +63,7 @@
                             data-search-text="Søg efter eksisterende sager"
                             data-loading-text="Søger..."
                         >
-                            {{ "visitation.form.search_client_cvr.search" | trans }}
+                            {{ "visitation.form.search_client_cvr.search"|trans }}
                         </button>
                     </form>
                 </div>
@@ -102,11 +96,11 @@ selected process type #}
         });
     });
 </script>
-{# {{ encore_entry_script_tags("processForm") }}  #}
+{# {{ encore_entry_script_tags("processForm") }} #}
 {# {{ encore_entry_script_tags("visitationFormCprSearch") }} #}
 {# {{ encore_entry_script_tags("visitationFormCvrSearch") }} #}
-{# {{ encore_entry_script_tags("processFormCvrSearch") }}  #}
-{{ encore_entry_script_tags("inputCPR") }} {% endblock %} 
+{# {{ encore_entry_script_tags("processFormCvrSearch") }} #}
+{{ encore_entry_script_tags("inputCPR") }} {% endblock %}
 {% block stylesheets %}
 {{ parent() }}
 <style>

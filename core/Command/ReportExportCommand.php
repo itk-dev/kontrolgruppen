@@ -98,7 +98,7 @@ class ReportExportCommand extends Command
         $help[] = '';
         foreach ($exports as $export) {
             $help[] = sprintf('  Title: %s', $export->getTitle());
-            $help[] = sprintf('  Class name: %s', \get_class($export));
+            $help[] = sprintf('  Class name: %s', $export::class);
             $help[] = '  Parameters:';
             foreach ($export->getParameters() as $name => $info) {
                 $type = $info['type'] ?? TextType::class;
