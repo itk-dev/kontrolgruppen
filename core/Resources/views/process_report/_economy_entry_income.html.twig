@@ -13,7 +13,7 @@
             <td>{{ economy_entry.incomeType.name }}</td>
             <td>
                 {% if economy_entry.periodFrom is not null %}
-                    {{ economy_entry.periodFrom|localizeddate('short', 'none') }} - {{ economy_entry.periodTo|localizeddate('short', 'none') }}
+                    {{ economy_entry.periodFrom|date('short', 'none') }} - {{ economy_entry.periodTo|date('short', 'none') }}
                 {% else %}
                     -
                 {% endif %}

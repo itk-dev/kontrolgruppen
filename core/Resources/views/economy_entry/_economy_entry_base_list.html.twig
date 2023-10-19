@@ -7,7 +7,7 @@
                         <span class="text-muted d-block">{{ economy_entry.text }}</span>
                     </div>
                     <div class="col-2 pt-2">
-                        <span class="text-muted d-block">{{ economy_entry.date|localizeddate('short', 'none') }}</span>
+                        <span class="text-muted d-block">{{ economy_entry.date|date('short', 'none') }}</span>
                     </div>
                     <div class="col-2 pt-2">
                         <span class="text-muted d-block">{{ economy_entry.amount|localizedcurrency('DKK') }}</span>

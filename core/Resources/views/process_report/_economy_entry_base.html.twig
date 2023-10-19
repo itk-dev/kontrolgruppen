@@ -14,7 +14,7 @@
             <td>{{ economy_entry.accountNumber }}</td>
             <td>
                 {% if economy_entry.date is not null %}
-                    {{ economy_entry.date|localizeddate('short', 'none') }}
+                    {{ economy_entry.date|date('short', 'none') }}
                 {% else %}
                     -
                 {% endif %}
