@@ -77,7 +77,7 @@ class VisitationController extends DatafordelerController
         return $this->render(
             '@KontrolgruppenCore/visitation/search.html.twig',
             [
-                'client_type' =>$request->get('clientType')
+                'client_type' => $request->get('clientType')
                 // 'menuItems' => $this->menuService->getProcessMenu(
                 //     $request->getPathInfo(),
                 // ),
@@ -129,31 +129,64 @@ class VisitationController extends DatafordelerController
         $cvr = $request->get('cvr');
         $visitation = new Visitation();
         if ($cvr) {
-            $visitation->setType('virksomhed');
+            $visitation->setType('company');
+            $visitation->setIdentifier($cvr);
+            $this->em->persist($visitation);
+            $this->em->flush();
 
             try {
                 $data = $this->getVirksomhedData($cvr, $datafordelerHttpClient);
+                if($data == null) {
+                    return $this->render(
+                        '@KontrolgruppenCore/visitation/search.html.twig',
+                        [
+                            'client_type' => 'company',
+                            'error' => 'CVR nummer ikke genkendt, prøv igen.'
+                        ]
+                    );
+                }
             } catch (TransportExceptionInterface $e) {
-                throw new NotFoundException($e->getMessage());
+                return $this->render(
+                    '@KontrolgruppenCore/visitation/search.html.twig',
+                    [
+                        'client_type' => 'company',
+                        'error' => 'Forbindelse fejlet. Prøv igen'
+                    ]
+                );
             }
             if (!empty($data)) {
+                // foreach $data['produktionsenheder']
+                foreach ($data['produktionsenheder'] as $value) {
+                    try {
+                        // add to data['p-numre']
+                        $data['p-numre'][] = $this->getVirksomhedDataByPNumber($value['pNummer'], $datafordelerHttpClient);
+                    } catch (TransportExceptionInterface $e) {
+                        return $this->render(
+                            '@KontrolgruppenCore/visitation/search.html.twig',
+                            [
+                                'client_type' => 'company',
+                                'error' => 'Forbindelse fejlet. Prøv igen'
+                            ]
+                        );
+                    }
+                }
                 return $this->render(
                     '@KontrolgruppenCore/visitation/virksomhed_results.html.twig',
                     [
-                        'data' => $data
+                        'data' => $data,
+                        'visitation' => $visitation
                     ]
                 );
             } else {
                 $this->addFlash('danger', 'Failed to fetch data from the API.');
-    
+
                 return $this->render(
                     '@KontrolgruppenCore/visitation/virksomhed_results.html.twig'
                 );
             }
-        }
-        else if($cpr) {
+        } elseif($cpr) {
             $visitation->setType('person');
-            $hashedCpr = hash ('md5' ,$cpr);
+            $hashedCpr = hash('md5', $cpr);
             $visitation->setIdentifier($hashedCpr);
             $this->em->persist($visitation);
             $this->em->flush();
@@ -165,7 +198,7 @@ class VisitationController extends DatafordelerController
                     return $this->render(
                         '@KontrolgruppenCore/visitation/search.html.twig',
                         [
-                            'client_type' =>'person',
+                            'client_type' => 'person',
                             'error' => 'CPR nummer ikke genkendt, prøv igen.'
                         ]
                     );
@@ -174,7 +207,7 @@ class VisitationController extends DatafordelerController
                 return $this->render(
                     '@KontrolgruppenCore/visitation/search.html.twig',
                     [
-                        'client_type' =>'person',
+                        'client_type' => 'person',
                         'error' => 'Forbindelse fejlet. Prøv igen'
                     ]
                 );
@@ -183,21 +216,18 @@ class VisitationController extends DatafordelerController
                 return $this->render(
                     '@KontrolgruppenCore/visitation/person_results.html.twig',
                     [
-                        'data' => $data['Personer'][0],
+                        'data' => $data,
                         'visitation' => $visitation
                     ]
                 );
             } else {
                 $this->addFlash('danger', 'Failed to fetch data from the API.');
-    
+
                 return $this->render(
                     '@KontrolgruppenCore/visitation/person_results.html.twig'
                 );
             }
         }
-
-
-
     }
 
     /**
@@ -223,7 +253,7 @@ class VisitationController extends DatafordelerController
         );
     }
 
-        /**
+    /**
      * @Route("/visitation-log", name="log_visitation", methods={"POST"})
      *
      * @param Request           $request
@@ -237,22 +267,21 @@ class VisitationController extends DatafordelerController
     public function VisitationLog(Request $request): Response
     {
         $table_name = $request->request->get('table_name');
-        $cpr = $request->request->get('cpr');
         $visitation_id = $request->request->get('visitation');
-        
-        $visitation_id = (int)$visitation_id;
-        // find visitation by id
 
+        $visitation_id = (int)$visitation_id;
         $visitationLog = new VisitationLogEntry();
-        $hashedCpr = hash ('md5' ,$cpr);
-        $visitationLog->setCprNumber($hashedCpr);
-        $visitationLog->setTableName($table_name);
-        $visitationLog->setVisitation($this->em->getRepository(Visitation::class)->find($visitation_id));
-        // $visitation->setVisitationClient(VisitationClientPerson);
-        // $visitation->setCompletedAt(null);
-        // $visitation->setLockedNetValue(null);
-        // $visitation->setLastReopened(new \DateTime());
-        // $em = $this->em->getManager();
+
+        // check if cpr or cvr
+        if($request->request->get('cpr') != null) {
+            $visitationLog->setTableName($table_name);
+            $visitationLog->setVisitation($this->em->getRepository(Visitation::class)->find($visitation_id));
+        } elseif ($request->request->get('cvr') != null) {
+            $visitationLog->setTableName($table_name);
+            $visitationLog->setVisitation($this->em->getRepository(Visitation::class)->find($visitation_id));
+        } else {
+            return new Response(Response::HTTP_BAD_REQUEST);
+        }
         $this->em->persist($visitationLog);
         $this->em->flush();
 

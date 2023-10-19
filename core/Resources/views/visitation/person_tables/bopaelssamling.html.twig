@@ -3,7 +3,7 @@
         <div class="card-header text-black" id="tableHeadingBopaelssamling">
             <h2 class="mb-0">
                 <button class="btn btn-block text-left text-black collapsed btn-header" type="button" data-toggle="collapse" data-target="#tableCollapseBopaelssamling" aria-expanded="false" aria-controls="tableCollapseBopaelssamling">
-                    Bopælssamling <i class="fa fa-chevron-down float-right" aria-hidden="true"></i>
+                    Bopælssamling<i class="iconClass fas fa-sort-down"></i>
                 </button>
             </h2>
         </div>
@@ -14,24 +14,27 @@
                         <tr>
                             <th>Navn</th>
                             <th>Dato (fra)</th>
+                            <th>Relation</th>
                         </tr>
                     </thead>
                     <tbody class="bg-light">
                         {# Loop through the data for this table if applicable. Otherwise, statically add rows. #}
-                        {% if data.Person.Statsborgerskab is defined %}
-                            {% for land in data.Person.Statsborgerskab %}
+                        {% if data.Bopaelssamling is defined %}
+                            {% for Bopaelssamling in data.Bopaelssamling %}
                             <tr>
-                                <td>{{ land.cprlandenavn }}</td>
-                                {% if land.virkningTil is defined %}
-                                    <td>{{ land.virkningFra|date("m-d-Y") }} til {{ land.virkningTil|date("m-d-Y") }} </td>
-                                {% else %}
-                                    <td>{{ land.virkningFra|date("m-d-Y") }}</td>
-                                {% endif %}
+                                <td>
+                                    <form target="_blank" id="cprForm{{ loop.index }}" method="post" action="{{ path('result') }}">
+                                        <input type="hidden" name="cpr" value="{{ Bopaelssamling.CPR }}">
+                                        <a href="#" class="child-name" onclick="document.getElementById('cprForm{{ loop.index }}').submit();">{{ Bopaelssamling.Navn }}</a>
+                                    </form>
+                                </td>
+                                <td>{{ Bopaelssamling.DatoFra|date("d-m-Y") }}</td>
+                                <td>{{ Bopaelssamling.Relation }}</td>
                             </tr>
                             {% endfor %}
                         {% else %}
                             <tr>
-                                <td class="empty-column" colspan="4">Ingen Bopælssamling</td>
+                                <td class="empty-column" colspan="4">{{ "visitation.data.empty" | trans}}</td>
                             </tr>
                         {% endif %}
                     </tbody>

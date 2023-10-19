@@ -3,7 +3,7 @@
         <div class="card-header text-black" id="tableHeadingVirksomhed">
             <h2 class="mb-0">
                 <button class="btn btn-block text-left text-black collapsed btn-header " type="button" data-toggle="collapse" data-target="#tableCollapseVirksomhed" aria-expanded="false" aria-controls="tableCollapseVirksomhed">
-                    Virksomhed <i class="fa fa-chevron-down float-right" aria-hidden="true"></i>
+                    Virksomhed <i class="iconClass fas fa-sort-down"></i>
                 </button>
             </h2>
         </div>
@@ -17,20 +17,20 @@
                         </tr>
                     </thead>
                     <tbody class="bg-light">
-                        {% if data.Person.Statsborgerskab is defined %}
-                            {% for land in data.Person.Statsborgerskab %}
+                        {% if data.Statsborgerskab is defined %}
+                            {% for land in data.Statsborgerskab %}
                             <tr>
                                 <td>{{ land.cprlandenavn }}</td>
                                 {% if land.virkningTil is defined %}
-                                    <td>{{ land.virkningFra|date("m-d-Y") }} til {{ land.virkningTil|date("m-d-Y") }} </td>
+                                    <td>{{ land.virkningFra|date("d-m-Y") }} til {{ land.virkningTil|date("d-m-Y") }} </td>
                                 {% else %}
-                                    <td>{{ land.virkningFra|date("m-d-Y") }}</td>
+                                    <td>{{ land.virkningFra|date("d-m-Y") }}</td>
                                 {% endif %}
                             </tr>
                             {% endfor %}
                         {% else %}
                             <tr>
-                                <td class="empty-column" colspan="4">Ingen Virksomhed</td>
+                                <td class="empty-column" colspan="4">{{ "visitation.data.empty" | trans}}</td>
                             </tr>
                         {% endif %}
                     </tbody>

@@ -56,19 +56,26 @@
                     <tbody class="stam-data-body">
                         <tr>
                             <td>Navn</td>
-                            <td>{{ data.Person.Navne[0].Navn.fornavne }} {{ data.Person.Navne[0].Navn.efternavn }}</td>
+                            <td>{{ data.Navne[0].Navn.fornavne }} {{ data.Navne[0].Navn.efternavn }}</td>
                         </tr>
                         <tr>
                             <td>CPR</td>
-                            <td id="cprField">{{ data.Person.Personnumre[0].Personnummer.personnummer }}</td>
+                            <td class="cprField">{{ data.Personnumre[0].Personnummer.personnummer }}</td>
                         </tr>
                         <tr>
                             <td>Adresse</td>
-                            <td>{{ data.Person.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.vejadresseringsnavn}} {{ data.Person.Navne[0].Navn.efternavn }}</td>
+                            <td>{{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.vejadresseringsnavn}} 
+                                {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.husnummer }}
+                                {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.etage }}
+                                {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.sidedoer }}
+                                <br>
+                                {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.postnummer }}
+                                {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.postdistrikt }}
+                            </td>
                         </tr>
                         <tr>
                             <td>Køn</td>
-                            <td>{{ data.Person.koen }}</td>
+                            <td>{{ data.koen }}</td>
                         </tr>
                         <tr>
                             <td>Eksisterende sager</td>
@@ -138,6 +145,16 @@
         .card-header.active .fa-chevron-up {
             transform: rotate(-90deg);
         }
+        .empty-column {
+            color: red;
+        }
+        .child-name {
+            color: black;
+            text-decoration: underline;
+        }
+        .iconClass{
+            margin-left: 10px
+        }
     </style>
 {% endblock %}
 
@@ -180,13 +197,24 @@
         }
 
         $(document).ready(function() {
-            const cprElement = document.getElementById("cprField");
-            const originalCpr = cprElement.textContent;
-            const formattedCprAndAge = formatCprAndCalculateAge(originalCpr);
-            cprElement.textContent = formattedCprAndAge;
+            // Format the CPR number and calculate the age for each cprField class
+            const cprFields = document.getElementsByClassName("cprField");
+            for (let i = 0; i < cprFields.length; i++) {
+                const originalCpr = cprFields[i].textContent;
+                const formattedCprAndAge = formatCprAndCalculateAge(originalCpr);
+                cprFields[i].textContent = formattedCprAndAge;
+            }
+            // const cprElement = document.getElementById("cprField");
+            // console.log(formattedCprAndAge);
+            // const formattedCprAndAge = formatCprAndCalculateAge(originalCpr);
 
             $('.accordion .card-header').click(function() {
-                $(this).find('i').toggleClass('fa-chevron-down fa-chevron-up');
+                var icon = $(this).closest(".card-header").find('.iconClass');
+                if ($(this).closest(".card-header").hasClass('collapsed')) {
+                    icon.removeClass('fa-sort-down').addClass('fa-sort-up');
+                } else {
+                    icon.removeClass('fa-sort-up').addClass('fa-sort-down');
+                }
             });
             $(document).ready(function() {
                 $(".btn-header").click(function() {
@@ -198,7 +226,7 @@
                             type: "POST",
                             data: {
                                 table_name: $(this).closest(".card-header").attr("id"),
-                                cpr: "{{ data.Person.Personnumre[0].Personnummer.personnummer }}",
+                                cpr: "{{ data.Personnumre[0].Personnummer.personnummer }}",
                                 visitation: "{{ visitation }}",
                             },
                             success: function(data) {
