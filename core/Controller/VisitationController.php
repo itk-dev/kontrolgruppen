@@ -28,7 +28,7 @@ class VisitationController extends DatafordelerController
     /**
      * @Route("/", name="visitation_index", methods={"GET"})
      *
-     * @param Request                       $request
+     * @param Request $request
      *
      * @return Response
      *
@@ -50,7 +50,7 @@ class VisitationController extends DatafordelerController
     /**
      * @Route("/search", name="visitation_search", methods={"GET","POST"})
      *
-     * @param Request              $request
+     * @param Request $request
      *
      * @return Response
      *
@@ -113,7 +113,8 @@ class VisitationController extends DatafordelerController
     /**
      * @Route("/result", name="result", methods={"GET","POST"})
      *
-     * @param Request              $request
+     * @param Request             $request
+     * @param HttpClientInterface $datafordelerHttpClient
      *
      * @return Response
      *
@@ -176,13 +177,13 @@ class VisitationController extends DatafordelerController
                         'visitation' => $visitation,
                     ]
                 );
-            } else {
-                $this->addFlash('danger', 'Failed to fetch data from the API.');
-
-                return $this->render(
-                    '@KontrolgruppenCore/visitation/virksomhed_results.html.twig'
-                );
             }
+
+            $this->addFlash('danger', 'Failed to fetch data from the API.');
+
+            return $this->render(
+                '@KontrolgruppenCore/visitation/virksomhed_results.html.twig'
+            );
         } elseif ($cpr) {
             $visitation->setType('person');
             $hashedCpr = hash('md5', $cpr);
@@ -219,13 +220,13 @@ class VisitationController extends DatafordelerController
                         'visitation' => $visitation,
                     ]
                 );
-            } else {
-                $this->addFlash('danger', 'Failed to fetch data from the API.');
-
-                return $this->render(
-                    '@KontrolgruppenCore/visitation/person_results.html.twig'
-                );
             }
+
+            $this->addFlash('danger', 'Failed to fetch data from the API.');
+
+            return $this->render(
+                '@KontrolgruppenCore/visitation/person_results.html.twig'
+            );
         }
     }
 
@@ -255,8 +256,7 @@ class VisitationController extends DatafordelerController
     /**
      * @Route("/visitation-log", name="log_visitation", methods={"POST"})
      *
-     * @param Request           $request
-     * @param VisitationRepository $visitationRepository
+     * @param Request $request
      *
      * @return Response
      *
@@ -265,19 +265,19 @@ class VisitationController extends DatafordelerController
      */
     public function VisitationLog(Request $request): Response
     {
-        $table_name = $request->request->get('table_name');
-        $visitation_id = $request->request->get('visitation');
+        $tableName = $request->request->get('table_name');
+        $visitationId = $request->request->get('visitation');
 
-        $visitation_id = (int) $visitation_id;
+        $visitationId = (int) $visitationId;
         $visitationLog = new VisitationLogEntry();
 
         // check if cpr or cvr
         if (null !== $request->request->get('cpr')) {
-            $visitationLog->setTableName($table_name);
-            $visitationLog->setVisitation($this->em->getRepository(Visitation::class)->find($visitation_id));
+            $visitationLog->setTableName($tableName);
+            $visitationLog->setVisitation($this->em->getRepository(Visitation::class)->find($visitationId));
         } elseif (null !== $request->request->get('cvr')) {
-            $visitationLog->setTableName($table_name);
-            $visitationLog->setVisitation($this->em->getRepository(Visitation::class)->find($visitation_id));
+            $visitationLog->setTableName($tableName);
+            $visitationLog->setVisitation($this->em->getRepository(Visitation::class)->find($visitationId));
         } else {
             return new Response(Response::HTTP_BAD_REQUEST);
         }

@@ -74,8 +74,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
     }
 
     /**
-     * @param Conclusion|null $conclusion
-     * /**
      * @return Collection|VisitationLogEntry[]
      */
     public function getLogEntries(): Collection

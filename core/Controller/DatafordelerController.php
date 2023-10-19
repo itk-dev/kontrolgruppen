@@ -18,17 +18,20 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  */
 class DatafordelerController extends BaseController
 {
-
     private $datafordelerHttpClient;
 
-
+    /**
+     * DatafordelerController constructor.
+     *
+     * @param HttpClientInterface $datafordelerHttpClient
+     */
     public function __construct(HttpClientInterface $datafordelerHttpClient)
     {
         $this->datafordelerHttpClient = $datafordelerHttpClient;
     }
 
     /**
-     * @param string $cpr
+     * @param string              $cpr
      * @param HttpClientInterface $datafordelerHttpClient
      *
      * @return array
@@ -37,7 +40,6 @@ class DatafordelerController extends BaseController
      */
     public function getPersonData(string $cpr, HttpClientInterface $datafordelerHttpClient): array
     {
-        
         $response = $datafordelerHttpClient->request(
             'GET',
             'CPR/CprPersonFullComplete/1/rest/PersonFullCurrentListComplete',
@@ -61,9 +63,9 @@ class DatafordelerController extends BaseController
     }
 
     /**
-     * @param array $cprAdresse
-     * @param string $relationCpr
-     * @param string $relationFullname
+     * @param array               $cprAdresse
+     * @param string              $relationCpr
+     * @param string              $relationFullname
      * @param HttpClientInterface $datafordelerHttpClient
      *
      * @return array
@@ -118,7 +120,12 @@ class DatafordelerController extends BaseController
         return $bopaelssamling;
     }
 
-    protected function getFullnameFromNameObject($navn): string
+    /**
+     * @param string $navn
+     *
+     * @return string
+     */
+    protected function getFullnameFromNameObject(string $navn): string
     {
         $fornavne = $navn['fornavne'];
         $mellemnavn = $navn['mellemnavn'] ?? '';
@@ -128,7 +135,7 @@ class DatafordelerController extends BaseController
     }
 
     /**
-     * @param string $cvr
+     * @param string              $cvr
      * @param HttpClientInterface $datafordelerHttpClient
      *
      * @return array
@@ -155,7 +162,7 @@ class DatafordelerController extends BaseController
     }
 
     /**
-     * @param string $pnumber
+     * @param string              $pnumber
      * @param HttpClientInterface $datafordelerHttpClient
      *
      * @return array

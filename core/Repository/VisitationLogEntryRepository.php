@@ -46,9 +46,9 @@ class VisitationLogEntryRepository extends ServiceEntityRepository
      *
      * @param Visitation $visitation
      *   The visitation the logs belong to
-     * @param int                                          $page
+     * @param int        $page
      *   The pagination page
-     * @param int                                          $limit
+     * @param int        $limit
      *   The limit on number of results
      *
      * @return \Knp\Component\Pager\Pagination\PaginationInterface

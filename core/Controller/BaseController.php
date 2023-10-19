@@ -52,10 +52,9 @@ class BaseController extends AbstractController
      * Render view.
      * Attaches menu and quick links.
      *
-     * @param string        $view
-     * @param array         $parameters
-     * @param Response|null $response
-     * @param EntityManagerInterface $em
+     * @param string                 $view
+     * @param array                  $parameters
+     * @param Response|null          $response
      *
      * @return Response
      *
