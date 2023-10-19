@@ -12,7 +12,6 @@ namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\Entity\Visitation;
 use Kontrolgruppen\CoreBundle\Entity\VisitationLogEntry;
-use Kontrolgruppen\CoreBundle\Repository\VisitationRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -233,8 +232,7 @@ class VisitationController extends DatafordelerController
     /**
      * @Route("/search-visitation-by-cvr", name="visitation_search_by_cpr", methods={"GET"})
      *
-     * @param Request           $request
-     * @param VisitationRepository $visitationRepository
+     * @param Request $request
      *
      * @return Response
      *
@@ -263,7 +261,7 @@ class VisitationController extends DatafordelerController
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function VisitationLog(Request $request): Response
+    public function visitationLog(Request $request): Response
     {
         $tableName = $request->request->get('table_name');
         $visitationId = $request->request->get('visitation');
