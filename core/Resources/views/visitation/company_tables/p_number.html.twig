@@ -14,13 +14,13 @@
                         {# foreach produktionsenheder #}
                         {% for produktionsenhed in data['p-numre'] %}
                         <tr class="pnumber"><td colspan="4">
-                            {{produktionsenhed.produktionsenhed.pNummer}}
+                            {{ produktionsenhed.produktionsenhed.pNummer }}
                         </td></tr>
                         <tr>                        <th>Navn</th>
                             <th>Adresse</th>
                             <th>Telefon</th>
                             <th>Mail</th></tr>
-                        <tr>                       
+                        <tr>
                             <td>{{ produktionsenhed.produktionsenhedsnavn.vaerdi }}</td>
                             <td>
                                 {% if produktionsenhed.beliggenhedsadresse.CVRAdresse_vejnavn is not empty %}
@@ -28,14 +28,14 @@
                                 {% endif %}
                                 {% if produktionsenhed.beliggenhedsadresse.CVRAdresse_husnummer is not empty %}
                                     {{ produktionsenhed.beliggenhedsadresse.CVRAdresse_husnummer }}
-                                {% endif %}                                
+                                {% endif %}
                                 {% if produktionsenhed.beliggenhedsadresse.CVRAdresse_etagebetegnelse is not empty %}
                                     {{ produktionsenhed.beliggenhedsadresse.CVRAdresse_etagebetegnelse }}
-                                {% endif %}                                
+                                {% endif %}
                                 {% if produktionsenhed.beliggenhedsadresse.CVRAdresse_doerbetegnelse is not empty %}
                                     {{ produktionsenhed.beliggenhedsadresse.CVRAdresse_doerbetegnelse }},
                                 {% endif %}
-                                
+
                                 {% if produktionsenhed.beliggenhedsadresse.CVRAdresse_postnummer is not empty %}
                                     {{ produktionsenhed.beliggenhedsadresse.CVRAdresse_postnummer }}
                                 {% endif %}

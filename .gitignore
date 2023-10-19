@@ -48,3 +48,7 @@ yarn-error.log
 # Ignore Certificates
 private_key.pem
 public_key.cer
+
+###> vincentlanglet/twig-cs-fixer ###
+/.twig-cs-fixer.cache
+###< vincentlanglet/twig-cs-fixer ###

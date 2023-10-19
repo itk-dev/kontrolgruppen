@@ -21,35 +21,35 @@
                     <tbody class="bg-light">
                         {# Loop through the data for this table if applicable. Otherwise, statically add rows. #}
                         {% if data.Civilstande is defined %}
-                            {% for civilStatus in data.Civilstande %}
+                            {% for civilstatus in data.Civilstande %}
                             <tr>
-                                <td>{{ civilStatus.Civilstand.Civilstandstype }}</td>
-                                {% if civilStatus.Civilstand.Aegtefaelle is defined %}
+                                <td>{{ civilstatus.Civilstand.Civilstandstype }}</td>
+                                {% if civilstatus.Civilstand.Aegtefaelle is defined %}
                                 <td>
                                     <form target="_blank" id="cprForm{{ loop.index }}" method="post" action="{{ path('result') }}">
-                                        <input type="hidden" name="cpr" value="{{ civilStatus.Civilstand.Aegtefaelle.aegtefaellePersonnummer  }}">
+                                        <input type="hidden" name="cpr" value="{{ civilstatus.Civilstand.Aegtefaelle.aegtefaellePersonnummer }}">
                                         <a href="#" class="child-name" onclick="document.getElementById('cprForm{{ loop.index }}').submit();">
-                                            {{ civilStatus.Civilstand.Aegtefaelle.Navn.fornavne }}
-                                            {{ civilStatus.Civilstand.Aegtefaelle.Navn.efternavn }}
+                                            {{ civilstatus.Civilstand.Aegtefaelle.Navn.fornavne }}
+                                            {{ civilstatus.Civilstand.Aegtefaelle.Navn.efternavn }}
                                         </a>
                                     </form>
                                 </td>
-                                <td class="cprField">{{ civilStatus.Civilstand.Aegtefaelle.aegtefaellePersonnummer }}</td>
+                                <td class="cprField">{{ civilstatus.Civilstand.Aegtefaelle.aegtefaellePersonnummer }}</td>
                                 {% else %}
                                 <td class="text-muted">-</td>
                                 <td class="text-muted">-</td>
                                 {% endif %}
-                                {% if civilStatus.Civilstand.virkningTil is defined %}
-                                <td>{{ civilStatus.Civilstand.virkningFra|date("d-y-Y") }} til {{ civilStatus.Civilstand.virkningTil|date("d-m-Y") }} </td>
+                                {% if civilstatus.Civilstand.virkningTil is defined %}
+                                <td>{{ civilstatus.Civilstand.virkningFra|date("d-y-Y") }} til {{ civilstatus.Civilstand.virkningTil|date("d-m-Y") }} </td>
                                 {% else %}
-                                <td>{{ civilStatus.Civilstand.virkningFra|date("d-m-Y") }}</td>
+                                <td>{{ civilstatus.Civilstand.virkningFra|date("d-m-Y") }}</td>
                                 {% endif %}
 
                             </tr>
                             {% endfor %}
                         {% else %}
                             <tr>
-                                <td class="empty-column" colspan="4">{{ "visitation.data.empty" | trans}}</td>
+                                <td class="empty-column" colspan="4">{{ "visitation.data.empty"|trans }}</td>
                             </tr>
                         {% endif %}
                     </tbody>
