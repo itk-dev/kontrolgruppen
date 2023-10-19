@@ -52,7 +52,7 @@ class ConclusionController extends BaseController
         }
 
         // Get template from event.
-        $event = new GetConclusionTemplateEvent(\get_class($conclusion), 'show');
+        $event = new GetConclusionTemplateEvent($conclusion::class, 'show');
         $template = $dispatcher->dispatch(GetConclusionTemplateEvent::NAME, $event)->getTemplate();
 
         return $this->render($template, [
@@ -104,7 +104,7 @@ class ConclusionController extends BaseController
         }
 
         // Get template from event.
-        $event = new GetConclusionTemplateEvent(\get_class($conclusion), 'edit');
+        $event = new GetConclusionTemplateEvent($conclusion::class, 'edit');
         $template = $dispatcher->dispatch(GetConclusionTemplateEvent::NAME, $event)->getTemplate();
 
         return $this->render($template, [

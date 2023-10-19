@@ -12,10 +12,7 @@ namespace Kontrolgruppen\CoreBundle\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use DoctrineBatchUtils\BatchProcessing\SimpleBatchIteratorAggregate;
 use Kontrolgruppen\CoreBundle\Entity\Visitation;
-use Kontrolgruppen\CoreBundle\Entity\Service;
-use Traversable;
 
 /**
  * @method Visitation|null find($id, $lockMode = null, $lockVersion = null)

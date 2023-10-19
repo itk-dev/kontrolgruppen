@@ -10,6 +10,7 @@
 
 namespace Kontrolgruppen\CoreBundle\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Kontrolgruppen\CoreBundle\Export\AbstractExport;
 use Kontrolgruppen\CoreBundle\Export\Manager;
 use Kontrolgruppen\CoreBundle\Export\Reports\RevenueExport;
@@ -22,8 +23,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Twig\Environment;
-use Doctrine\ORM\EntityManagerInterface;
-
 
 /**
  * Class ExportController.
@@ -116,7 +115,7 @@ class ExportController extends BaseController
         $exportClass = null;
         foreach ($this->getExports() as $r) {
             if ($this->getExportKey($r) === $exportKey) {
-                $exportClass = \get_class($r);
+                $exportClass = $r::class;
                 break;
             }
         }
@@ -172,7 +171,7 @@ class ExportController extends BaseController
                         $mock->appendChild($mock->importNode($child, true));
                     }
 
-                    if (RevenueExport::class === \get_class($export)) {
+                    if (RevenueExport::class === $export::class) {
                         $extra = $this->twig->render('@KontrolgruppenCore/export/revenue_export.show.html.twig');
                     }
 
@@ -218,7 +217,7 @@ class ExportController extends BaseController
      */
     private function getExportKey(AbstractExport $export)
     {
-        return md5(\get_class($export));
+        return md5($export::class);
     }
 
     /**

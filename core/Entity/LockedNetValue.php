@@ -19,19 +19,23 @@ class LockedNetValue
 {
     /**
      * @ORM\Id()
+     *
      * @ORM\GeneratedValue()
+     *
      * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="\Kontrolgruppen\CoreBundle\Entity\Service", inversedBy="lockedNetValues")
+     *
      * @ORM\JoinColumn(nullable=false)
      */
     private $service;
 
     /**
      * @ORM\ManyToOne(targetEntity="\Kontrolgruppen\CoreBundle\Entity\Process", inversedBy="lockedNetValues")
+     *
      * @ORM\JoinColumn(nullable=false)
      */
     private $process;

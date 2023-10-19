@@ -17,7 +17,7 @@ use Symfony\Contracts\EventDispatcher\Event;
  */
 class GetConclusionTypesEvent extends Event
 {
-    const NAME = 'kontrolgruppen.core.get_conclusion_types';
+    public const NAME = 'kontrolgruppen.core.get_conclusion_types';
 
     private $types;
 

@@ -13,7 +13,6 @@ namespace Kontrolgruppen\CoreBundle\Export\KL;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use DoctrineBatchUtils\BatchProcessing\SimpleBatchIteratorAggregate;
-use Exception;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 use Kontrolgruppen\CoreBundle\Entity\ProcessStatus;
@@ -21,7 +20,6 @@ use Kontrolgruppen\CoreBundle\Export\AbstractExport;
 use Kontrolgruppen\CoreBundle\Service\EconomyService;
 use Psr\Cache\CacheItemPoolInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Traversable;
 
 /**
  * Class Export.
@@ -43,7 +41,7 @@ class Export extends AbstractExport
      * @param EconomyService         $economyService
      * @param CacheItemPoolInterface $cachePhpspreadsheet
      *
-     * @throws Exception
+     * @throws \Exception
      */
     public function __construct(EntityManagerInterface $entityManager, EconomyService $economyService, CacheItemPoolInterface $cachePhpspreadsheet)
     {
@@ -197,9 +195,9 @@ class Export extends AbstractExport
     }
 
     /**
-     * @throws Exception
+     * @return \Traversable
      *
-     * @return Traversable
+     * @throws \Exception
      */
     private function getProcesses()
     {

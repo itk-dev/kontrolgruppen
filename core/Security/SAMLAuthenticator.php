@@ -16,16 +16,16 @@ use OneLogin\Saml2\IdPMetadataParser;
 use OneLogin\Saml2\Response;
 use OneLogin\Saml2\Settings;
 use OneLogin\Saml2\Utils;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
-use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\CredentialsInterface;
+use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 
 /**
  * Class SAMLAuthenticator.
@@ -63,9 +63,9 @@ class SAMLAuthenticator extends AbstractAuthenticator
 
     /**
      * @param Request $request
-     * 
+     *
      * @return Passport
-     * 
+     *
      * @throws AuthenticationException
      * @throws \OneLogin\Saml2\ValidationError
      */

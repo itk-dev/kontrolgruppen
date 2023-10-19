@@ -15,6 +15,7 @@ use Kontrolgruppen\CoreBundle\Export\AbstractExport;
 
 /**
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\BIExportRepository")
+ *
  * @ORM\Table(name="bi_export")
  */
 class BIExport extends AbstractEntity

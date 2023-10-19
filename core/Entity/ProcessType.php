@@ -61,6 +61,7 @@ class ProcessType extends AbstractTaxonomy
 
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessStatus")
+     *
      * @ORM\JoinColumn(nullable=false)
      *
      * @ValidClientTaxonomy()
@@ -69,6 +70,7 @@ class ProcessType extends AbstractTaxonomy
 
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessStatus")
+     *
      * @ORM\JoinColumn(nullable=false)
      *
      * @ValidClientTaxonomy()

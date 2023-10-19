@@ -11,7 +11,6 @@
 namespace Kontrolgruppen\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
 use Gedmo\Loggable\Entity\LogEntry;
 
 /**
@@ -21,6 +20,7 @@ class VisitationLogEntry extends AbstractEntity
 {
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\visitation", inversedBy="logEntries")
+     *
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $visitation;

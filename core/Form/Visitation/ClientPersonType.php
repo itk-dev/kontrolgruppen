@@ -48,7 +48,7 @@ class ClientPersonType extends AbstractType
                 'label' => 'visitation.form.client_cpr',
                 'attr' => [
                     'class' => 'js-input-cpr no-cpr-scanning',
-                    'placeholder' => 'visitation.form.cpr_placehoder'
+                    'placeholder' => 'visitation.form.cpr_placehoder',
                 ],
             ])
             ->add('search', ButtonType::class, [

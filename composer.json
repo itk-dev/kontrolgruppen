@@ -190,7 +190,7 @@
             "phpcs --standard=phpcs.xml.dist --report=checkstyle"
         ],
         "actions/phpcsfixer": [
-            "php-cs-fixer --config=.php_cs.dist fix --dry-run --diff --diff-format=udiff"
+            "php-cs-fixer --config=.php-cs-fixer.dist.php fix --dry-run --diff"
         ],
         "actions/twigcs": [
             "twigcs --twig-version=2 templates core/Resources/views"

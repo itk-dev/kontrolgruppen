@@ -16,7 +16,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * @ORM\Entity(repositoryClass="Kontrolgruppen\CoreBundle\Repository\EconomyEntryRepository")
+ *
  * @ORM\InheritanceType("SINGLE_TABLE")
+ *
  * @ORM\DiscriminatorColumn(name="discr", type="string")
  *
  * @Gedmo\Loggable()
@@ -32,6 +34,7 @@ class EconomyEntry extends AbstractEntity implements ProcessLoggableInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Process", inversedBy="economyEntries")
+     *
      * @ORM\JoinColumn(nullable=false)
      */
     private $process;

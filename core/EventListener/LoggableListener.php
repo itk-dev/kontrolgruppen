@@ -205,7 +205,7 @@ class LoggableListener extends BaseLoggableListener
 
         $uow = $objectManager->getUnitOfWork();
         $uow->computeChangeSet(
-            $objectManager->getClassMetadata(\get_class($processLogEntry)),
+            $objectManager->getClassMetadata($processLogEntry::class),
             $processLogEntry
         );
     }

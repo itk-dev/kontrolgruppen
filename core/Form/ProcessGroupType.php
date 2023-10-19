@@ -56,7 +56,7 @@ class ProcessGroupType extends AbstractType
                     return $processRepository->createQueryBuilder('p')
                         ->where('p.caseNumber != :primaryProcessCaseNumber')
                         ->setParameter(':primaryProcessCaseNumber', $primaryProcess->getCaseNumber())
-                        ;
+                    ;
                 },
             ]);
         };

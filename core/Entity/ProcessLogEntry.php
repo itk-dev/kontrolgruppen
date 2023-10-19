@@ -21,12 +21,14 @@ class ProcessLogEntry extends AbstractEntity
 {
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Process", inversedBy="logEntries")
+     *
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $process;
 
     /**
      * @ORM\ManyToOne(targetEntity="Gedmo\Loggable\Entity\LogEntry")
+     *
      * @ORM\JoinColumn(nullable=false)
      */
     private $logEntry;

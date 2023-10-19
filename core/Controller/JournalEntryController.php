@@ -335,8 +335,8 @@ class JournalEntryController extends BaseController
         $this->denyAccessUnlessGranted('edit', $process);
 
         // If trying to delete a journal entry that does not belong to the process, redirect to index.
-        if ($journalEntry->getProcess() !== $process ||
-            null !== $process->getCompletedAt()) {
+        if ($journalEntry->getProcess() !== $process
+            || null !== $process->getCompletedAt()) {
             return $this->redirectToRoute('journal_entry_index', ['process' => $process->getId()]);
         }
 

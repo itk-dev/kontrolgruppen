@@ -1,9 +1,9 @@
 <?php
 
 $finder = PhpCsFixer\Finder::create()
-     ->notPath('Kernel.php')
-     ->notPath('bootstrap.php')
-     ->in(__DIR__.'/{core,src,tests}')
+    ->notPath('Kernel.php')
+    ->notPath('bootstrap.php')
+    ->in(__DIR__.'/{core,src,tests}')
 ;
 
 $header =<<<'HEADER'
@@ -13,8 +13,8 @@ This file is part of itk-dev/kontrolgruppen.
 
 This source file is subject to the MIT license.
 HEADER;
-
-return PhpCsFixer\Config::create()
+$config = new PhpCsFixer\Config();
+return $config
     ->setRiskyAllowed(true)
     ->setRules([
         '@Symfony' => true,

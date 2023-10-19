@@ -10,7 +10,6 @@
 
 namespace Kontrolgruppen\CoreBundle\Export\BI;
 
-use Exception;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
 use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
@@ -45,7 +44,7 @@ class Export extends AbstractExport
      * @param ProcessRepository         $processRepository
      * @param CacheItemPoolInterface    $cachePhpspreadsheet
      *
-     * @throws Exception
+     * @throws \Exception
      */
     public function __construct(EconomyService $economyService, ProcessLogEntryRepository $processLogEntryRepository, ProcessRepository $processRepository, CacheItemPoolInterface $cachePhpspreadsheet)
     {

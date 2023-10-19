@@ -20,7 +20,9 @@ class Person
 {
     /**
      * @ORM\Id()
+     *
      * @ORM\GeneratedValue()
+     *
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -41,6 +43,7 @@ class Person
 
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany", inversedBy="people")
+     *
      * @ORM\JoinColumn(nullable=false)
      */
     private $processClient;

@@ -71,7 +71,7 @@ class Manager
             foreach ($this->configuration['exports'] as $service) {
                 $export = $this->getExport($service);
                 if (null !== $export) {
-                    $exports[\get_class($export)] = $export;
+                    $exports[$export::class] = $export;
                 }
             }
         }

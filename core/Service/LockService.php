@@ -10,9 +10,8 @@
 
 namespace Kontrolgruppen\CoreBundle\Service;
 
-use Symfony\Component\Lock\LockFactory;
 use Symfony\Component\Lock\Lock;
-use Symfony\Component\Lock\Store\StoreFactory;
+use Symfony\Component\Lock\LockFactory;
 
 /**
  * Class LockService.

@@ -14,8 +14,6 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use DoctrineBatchUtils\BatchProcessing\SimpleBatchIteratorAggregate;
 use Kontrolgruppen\CoreBundle\Entity\Navigation;
-use Kontrolgruppen\CoreBundle\Entity\Service;
-use Traversable;
 
 /**
  * @method Navigation|null find($id, $lockMode = null, $lockVersion = null)
@@ -32,7 +30,6 @@ class NavigationRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Navigation::class);
     }
-
 
     /**
      * @return Process[]
@@ -56,9 +53,9 @@ class NavigationRepository extends ServiceEntityRepository
      *
      * @param int $batchSize
      *
-     * @return Traversable|Process[]
+     * @return \Traversable|Process[]
      */
-    public function findAllBatchProcessed(int $batchSize = 100): Traversable
+    public function findAllBatchProcessed(int $batchSize = 100): \Traversable
     {
         return SimpleBatchIteratorAggregate::fromQuery(
             $this->createQueryBuilder('p')->getQuery(),

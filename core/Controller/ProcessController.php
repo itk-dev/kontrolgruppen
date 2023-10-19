@@ -20,12 +20,10 @@ use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
 use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
 use Kontrolgruppen\CoreBundle\Entity\ProcessType as ProcessTypeEntity;
-use Kontrolgruppen\CoreBundle\Entity\Visitation;
 use Kontrolgruppen\CoreBundle\Filter\ProcessFilterType;
 use Kontrolgruppen\CoreBundle\Form\ProcessCompleteType;
 use Kontrolgruppen\CoreBundle\Form\ProcessResumeType;
 use Kontrolgruppen\CoreBundle\Form\ProcessType;
-use Kontrolgruppen\CoreBundle\Form\VisitationType;
 use Kontrolgruppen\CoreBundle\Repository\AbstractTaxonomyRepository;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 use Kontrolgruppen\CoreBundle\Repository\ProcessStatusRepository;
@@ -590,8 +588,8 @@ class ProcessController extends BaseController
      */
     private function handleTaxonomyCallback(FormInterface $form, Request $request, Process $process)
     {
-        if ('GET' === $request->getMethod() &&
-            null !== ($processData = $request->query->get('process'))
+        if ('GET' === $request->getMethod()
+            && null !== ($processData = $request->query->get('process'))
             && isset($processData['processType'])) {
             $form->submit($processData);
         }

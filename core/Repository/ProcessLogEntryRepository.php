@@ -17,7 +17,6 @@ use Knp\Component\Pager\PaginatorInterface;
 use Kontrolgruppen\CoreBundle\DBAL\Types\ProcessLogEntryLevelEnumType;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
-use Traversable;
 
 /**
  * @method ProcessLogEntry|null find($id, $lockMode = null, $lockVersion = null)
@@ -154,9 +153,9 @@ class ProcessLogEntryRepository extends ServiceEntityRepository
      * @param Process $process
      * @param int     $batchSize
      *
-     * @return Traversable
+     * @return \Traversable
      */
-    public function getAllLogEntriesBatchProcessed(Process $process, $batchSize = 100): Traversable
+    public function getAllLogEntriesBatchProcessed(Process $process, $batchSize = 100): \Traversable
     {
         return SimpleBatchIteratorAggregate::fromQuery(
             $this->getLatestEntriesQuery($process),
