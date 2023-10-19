@@ -1,4 +1,5 @@
 <!-- markdownlint-disable MD024 -->
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
@@ -12,6 +13,7 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 ## [3.0.0] - 2023-10-05
 
 ### Changed
+
 - PHP Upgraded from 7.4 -> 8.2
 - Symfony upgraded from 4.4 -> 6.3
 - Design updates and bug fixes

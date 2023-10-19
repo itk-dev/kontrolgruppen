@@ -13,9 +13,15 @@ namespace Kontrolgruppen\CoreBundle\Controller;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
+/**
+ * Class DatafordelerController.
+ */
 class DatafordelerController extends BaseController
 {
     /**
+     * @param string $cpr
+     * @param HttpClientInterface $datafordelerHttpClient
+     *
      * @return array
      *
      * @throws TransportExceptionInterface
@@ -45,6 +51,11 @@ class DatafordelerController extends BaseController
     }
 
     /**
+     * @param array $cprAdresse
+     * @param string $relationCpr
+     * @param string $relationFullname
+     * @param HttpClientInterface $datafordelerHttpClient
+     *
      * @return array
      *
      * @throws TransportExceptionInterface
@@ -107,6 +118,9 @@ class DatafordelerController extends BaseController
     }
 
     /**
+     * @param string $cvr
+     * @param HttpClientInterface $datafordelerHttpClient
+     *
      * @return array
      *
      * @throws TransportExceptionInterface
@@ -131,6 +145,9 @@ class DatafordelerController extends BaseController
     }
 
     /**
+     * @param string $pnumber
+     * @param HttpClientInterface $datafordelerHttpClient
+     *
      * @return array
      *
      * @throws TransportExceptionInterface

@@ -44,11 +44,11 @@ class VisitationLogEntryRepository extends ServiceEntityRepository
     /**
      * Get the latest entries, paginated.
      *
-     * @param \Kontrolgruppen\CoreBundle\Entity\Visitation $visitation
+     * @param Visitation $visitation
      *   The visitation the logs belong to
-     * @param int                                       $page
+     * @param int                                          $page
      *   The pagination page
-     * @param int                                       $limit
+     * @param int                                          $limit
      *   The limit on number of results
      *
      * @return \Knp\Component\Pager\Pagination\PaginationInterface
@@ -66,7 +66,7 @@ class VisitationLogEntryRepository extends ServiceEntityRepository
     /**
      * Get the latest log entries.
      *
-     * @param \Kontrolgruppen\CoreBundle\Entity\Visitation $visitation
+     * @param Visitation $visitation
      *   The visitation the logs belong to
      * @param                                           $level
      *   The log level
@@ -95,7 +95,7 @@ class VisitationLogEntryRepository extends ServiceEntityRepository
     /**
      * Get all log entries.
      *
-     * @param \Kontrolgruppen\CoreBundle\Entity\Visitation $visitation
+     * @param Visitation $visitation
      *   The visitation the logs belong to
      *
      * @return mixed
@@ -110,7 +110,7 @@ class VisitationLogEntryRepository extends ServiceEntityRepository
      * Get all log entries utilizing batch visitedsing.
      *
      * @param Visitation $visitation
-     * @param int     $batchSize
+     * @param int        $batchSize
      *
      * @return \Traversable
      */
@@ -125,7 +125,7 @@ class VisitationLogEntryRepository extends ServiceEntityRepository
     /**
      * Get the latest entries, as query.
      *
-     * @param \Kontrolgruppen\CoreBundle\Entity\Visitation $visitaton
+     * @param Visitation $visitation
      *   The visitation the logs belong to
      *
      * @return \Doctrine\ORM\Query
