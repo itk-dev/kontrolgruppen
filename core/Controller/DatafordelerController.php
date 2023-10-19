@@ -15,13 +15,23 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 class DatafordelerController extends BaseController
 {
+
+    private $datafordelerHttpClient;
+
+
+    public function __construct(HttpClientInterface $datafordelerHttpClient)
+    {
+        $this->datafordelerHttpClient = $datafordelerHttpClient;
+    }
+
     /**
      * @return array
      *
      * @throws TransportExceptionInterface
      */
-    protected function getPersonData(string $cpr, HttpClientInterface $datafordelerHttpClient): array
+    public function getPersonData(string $cpr, HttpClientInterface $datafordelerHttpClient): array
     {
+        
         $response = $datafordelerHttpClient->request(
             'GET',
             'CPR/CprPersonFullComplete/1/rest/PersonFullCurrentListComplete',

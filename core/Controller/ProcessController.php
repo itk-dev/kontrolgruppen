@@ -78,14 +78,14 @@ class ProcessController extends BaseController
         $selectedCaseWorker = $filterForm->get('caseWorker');
 
         if (null === $selectedCaseWorker->getData()) {
-            $filterForm->get('caseWorker')->setData($this->getUser()->getId());
+            $filterForm->get('caseWorker')->setData($this->getUser()->getUserIdentifier());
         }
 
         if ($request->query->has($filterForm->getName())) {
             $formParameters = $request->query->get($filterForm->getName());
 
             if (!isset($formParameters['caseWorker'])) {
-                $formParameters['caseWorker'] = $this->getUser()->getId();
+                $formParameters['caseWorker'] = $this->getUser()->getUserIdentifier();
             }
 
             // manually bind values from the request
@@ -220,7 +220,7 @@ class ProcessController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Get unmapped client data from request.
-            $data = $request->request->get('process');
+            $data = $request->get('process');
             $clientType = $process->getProcessClient()->getType();
             $clientData = $data[$clientType] ?? [];
             $processCreated = false;
@@ -375,7 +375,7 @@ class ProcessController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->em->getManager()->flush();
+            $this->em->flush();
 
             return $this->redirectToReferer(
                 'process_show',
@@ -414,7 +414,7 @@ class ProcessController extends BaseController
             'delete'.$process->getId(),
             $request->request->get('_token')
         )) {
-            $entityManager = $this->em->getManager();
+            $entityManager = $this->em;
             $entityManager->remove($process);
             $entityManager->flush();
         }
@@ -455,7 +455,7 @@ class ProcessController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->em->getManager();
+            $em = $this->em;
 
             $services = $serviceRepository->getByProcess($process);
             foreach ($services as $service) {
@@ -518,7 +518,7 @@ class ProcessController extends BaseController
             $process->setCompletedAt(null);
             $process->setLockedNetValue(null);
             $process->setLastReopened(new \DateTime());
-            $em = $this->em->getManager();
+            $em = $this->em;
             $em->persist($process);
             $em->flush();
 
