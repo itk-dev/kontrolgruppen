@@ -40,6 +40,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
      */
     private $type;
 
+    /**
+     * Visitation constructor.
+     */
     public function __construct()
     {
         $this->logEntries = new ArrayCollection();
@@ -88,12 +91,19 @@ use Gedmo\Mapping\Annotation as Gedmo;
         return $this->id;
     }
 
-    // Make get and set methods for the new field
+    /**
+     * @return string|null
+     */
     public function getIdentifier(): ?string
     {
         return $this->identifier;
     }
 
+    /**
+     * @param string|null $identifier
+     *
+     * @return Visitation
+     */
     public function setIdentifier(?string $identifier): self
     {
         $this->identifier = $identifier;
@@ -101,11 +111,19 @@ use Gedmo\Mapping\Annotation as Gedmo;
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getType(): ?string
     {
         return $this->type;
     }
 
+    /**
+     * @param string|null $type
+     *
+     * @return Visitation
+     */
     public function setType(?string $type): self
     {
         $this->type = $type;

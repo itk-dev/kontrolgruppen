@@ -24,7 +24,7 @@ class LockService
     /**
      * LockService constructor.
      *
-     * @param string $store
+     * @param string $lockFactory
      */
     public function __construct(LockFactory $lockFactory)
     {

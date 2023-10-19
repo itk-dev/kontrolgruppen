@@ -24,7 +24,6 @@ docker compose exec phpfpm bin/console doctrine:migrations:migrate --no-interact
 docker compose exec phpfpm bin/console doctrine:fixtures:load --no-interaction
 ```
 
-
 ```sh
 # Sign in as the admin@example.com user.
 docker compose exec --env ROUTER_REQUEST_CONTEXT_HOST=$(docker compose port nginx 8080) phpfpm bin/console kontrolgruppen:user:login admin@example.com

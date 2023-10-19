@@ -34,7 +34,7 @@ class UserLoginCommand extends Command
      *
      * @param UserRepository         $userRepository
      * @param EntityManagerInterface $entityManager
-     * @param UrlGeneratorInterface        $router
+     * @param UrlGeneratorInterface  $urlGenerator
      */
     public function __construct(private UserRepository $userRepository, private EntityManagerInterface $entityManager, private UrlGeneratorInterface $urlGenerator)
     {
