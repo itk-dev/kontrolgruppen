@@ -378,7 +378,7 @@ class ProcessController extends BaseController
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function edit(Request $request, Process $process): Response
+    public function edit(Request $request, Process $process, HttpClientInterface $datafordelerHttpClient): Response
     {
         $this->denyAccessUnlessGranted('edit', $process);
 
@@ -390,6 +390,20 @@ class ProcessController extends BaseController
         $this->handleTaxonomyCallback($form, $request, $process);
         $form->handleRequest($request);
 
+        $processClientIdentifier = $process->getProcessClient()->getIdentifier();
+        // Get client type
+        $clientType = $process->getProcessClient()->getType();
+
+        if ($clientType == ProcessClientPerson::PERSON) {
+            $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
+            $datafordelerService = new DatafordelerService($datafordelerHttpClient);
+            $data = $datafordelerService->getPersonData($processClientIdentifier);
+        }
+        elseif($clientType == ProcessClientPerson::COMPANY){
+            $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
+            $datafordelerService = new DatafordelerService($datafordelerHttpClient);
+            $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
+        }
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->flush();
 
@@ -409,6 +423,7 @@ class ProcessController extends BaseController
                     $process
                 ),
                 'process' => $process,
+                'data' => $data,
                 'form' => $form->createView(),
             ]
         );

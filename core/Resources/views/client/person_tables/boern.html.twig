@@ -1,0 +1,44 @@
+<div class="accordion mb-3" id="tableAccordionBoern">
+    <div class="card">
+        <div class="card-header text-black" id="tableHeadingBoern">
+            <h2 class="mb-0">
+                <button class="btn btn-block text-left text-black collapsed btn-header" type="button" data-toggle="collapse" data-target="#tableCollapseBoern" aria-expanded="false" aria-controls="tableCollapseBoern">
+                    {{ 'visitation.person.child'|trans }} <i class="iconClass fas fa-sort-down"></i>
+                </button>
+            </h2>
+        </div>
+        <div id="tableCollapseBoern" class="collapse" aria-labelledby="tableHeadingBoern" data-parent="#tableAccordionBoern">
+            <div class="card-body p-0">
+                <table class="table mb-0 table-bordered bg-info">
+                    <thead class="data-header">
+                        <tr>
+                            <th>{{ 'visitation.person.name'|trans }}</th>
+                            <th>{{ 'visitation.person.birthday'|trans }}</th>
+                            <th>{{ 'visitation.person.custody'|trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-light">
+                        {% if data.Boern is defined %}
+                            {% for barn in data.Boern %}
+                            <tr>
+                                <td>
+                                    <form target="_blank" id="cprForm{{ loop.index }}" method="post" action="{{ path('result') }}">
+                                    <input type="hidden" name="cpr" value="{{ barn.Barnoplysning.Barn.barnPersonnummer }}">
+                                    <a href="#" class="child-name" onclick="document.getElementById('cprForm{{ loop.index }}').submit();">{{ barn.Barnoplysning.Barn.Navn.fornavne }} {{ barn.Barnoplysning.Barn.Navn.efternavn }}</a>
+                                    </form>
+                                </td>
+                                <td class="cprField">{{ barn.Barnoplysning.Barn.barnPersonnummer }}</td>
+                                <td>{{ 'visitation.person.unknown'|trans }}</td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td class="empty-column" colspan="4">{{ "visitation.data.empty"|trans }}</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

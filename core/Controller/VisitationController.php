@@ -168,6 +168,14 @@ class VisitationController extends DatafordelerController
                         'error' => 'Forbindelse fejlet. Prøv igen',
                     ]
                 );
+            } catch (\Exception $e) {
+                return $this->render(
+                    '@KontrolgruppenCore/visitation/search.html.twig',
+                    [
+                        'client_type' => 'person',
+                        'error' => 'CPR nummer ikke genkendt, prøv igen.',
+                    ]
+                );
             }
             if (!empty($data)) {
                 return $this->render(

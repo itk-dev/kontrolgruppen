@@ -30,7 +30,12 @@ class DatafordelerController extends BaseController
     {
 
         $datafordelerService = new DatafordelerService($datafordelerHttpClient);
-        $data = $datafordelerService->getPersonData($cpr);
+        
+        try {
+            $data = $datafordelerService->getPersonData($cpr);
+        } catch (\Exception $e) {
+            throw new \Exception("Failed to get person data", 1);
+        }
 
         return $data;
     }

@@ -19,7 +19,48 @@
         <div class="alert alert-warning">{{ 'process.completed_message'|trans }}</div>
     {% endif %}
 
-    <h2>{{ 'client.sections.generel_info'|trans }}</h2>
+    <div class="col-md-9 left-tables">
+
+        <!-- Other tables aligned left -->
+            {# Individual tables go here #}
+
+            {# Adresse historik Table #}
+            {% if process.processType == 'Udrejse' %}
+                {# Civilstatus Table #}
+                {% include '@KontrolgruppenCore/client/person_tables/civil_status.html.twig' %}
+            {% endif %}
+            {% include '@KontrolgruppenCore/client/person_tables/adresse_historik.html.twig' with {'data': data} %}
+            {# Bopælssamling Table #}
+            {% include '@KontrolgruppenCore/client/person_tables/bopaelssamling.html.twig' %}
+
+            {# Bolig Table #}
+            {% include '@KontrolgruppenCore/client/person_tables/bolig.html.twig' %}
+
+            {# Børn Table #}
+            {% include '@KontrolgruppenCore/client/person_tables/boern.html.twig' %}
+
+            {# Civilstatus Table #}
+            {% include '@KontrolgruppenCore/client/person_tables/civil_status.html.twig' %}
+
+            {# CPR historik Table #}
+            {% include '@KontrolgruppenCore/client/person_tables/cpr_historik.html.twig' %}
+
+            {# Navnehistorik Table #}
+            {% include '@KontrolgruppenCore/client/person_tables/navnehistorik.html.twig' %}
+
+            {# Statsborgerskab Table #}
+            {% include '@KontrolgruppenCore/client/person_tables/statsborgerskab.html.twig' %}
+
+            {# Virksomhed Table #}
+            {% include '@KontrolgruppenCore/client/person_tables/virksomhed.html.twig' %}
+            <div class="d-flex justify-content-between">
+            <div></div>
+            {% if canEdit %}
+                <a href="{{ path('client_edit', {'process': process.id}) }}" class="btn btn-primary float-right pl-5 pr-5">{{ 'common.actions.edit'|trans }}</a>
+            {% endif %}
+        </div>
+    </div>
+    {# <h2>{{ 'client.sections.generel_info'|trans }}</h2>
     <div class="row mb-3">
         <div class="col-12 col-sm-6">
             <div class="row">
@@ -110,9 +151,7 @@
                 {% endfor %}
             </ul>
         </div>
-    </div>
+    </div> #}
 
-    {% if canEdit %}
-        <a href="{{ path('client_edit', {'process': process.id}) }}" class="btn btn-primary float-right pl-5 pr-5">{{ 'common.actions.edit'|trans }}</a>
-    {% endif %}
+
 {% endblock %}

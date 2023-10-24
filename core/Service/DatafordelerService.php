@@ -29,7 +29,11 @@ class DatafordelerService
             return [];
         }
 
-        $data = $response->toArray()['Personer'][0]['Person'];
+        try {
+            $data = $response->toArray()['Personer'][0]['Person'];
+        } catch (\Exception $e) {
+            throw new \Exception("Cpr data kan ikke findes", 1);
+        }
         if ($cprAdresse = $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']) {
             $data['Bopaelssamling'] = $this->getBopaelssamling($cprAdresse, $data['Personnumre'][0]['Personnummer']['personnummer'], $data['Navne'][0]['Navn']['adresseringsnavn'], $this->datafordelerHttpClient);
         }
