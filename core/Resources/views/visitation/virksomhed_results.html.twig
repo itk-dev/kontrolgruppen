@@ -32,26 +32,26 @@
             <div class="fixed-table">
                 <div class="card-header text-black stam-data">
                     <h6 class="mb-0" id="stam-data">
-                        Stamdata
+                        {{ visitation.basic_info|trans }}
                     </h6>
                 </div>
                 <table class="table table-bordered">
                     <tbody class="stam-data-body">
                         {% if data.virksomhedsnavn.vaerdi is not empty %}
                             <tr>
-                                <td>Navn</td>
+                                <td>{{ visitation.name|trans }}</td>
                                 <td>{{ data.virksomhedsnavn.vaerdi }}</td>
                             </tr>
                         {% endif %}
                         {% if data.virksomhed.CVRNummer is not empty %}
                             <tr>
-                                <td>CVR</td>
+                                <td>{{ visitation.cvr|trans }}</td>
                                 <td id="cvrField">{{ data.virksomhed.CVRNummer }}</td>
                             </tr>
                         {% endif %}
                         {% if data.beliggenhedsadresse.adresse is not empty %}
                             <tr>
-                                <td>Adresse</td>
+                                <td>{{ visitation.address|trans }}</td>
                                 <td>
                                     {% if data.beliggenhedsadresse.CVRAdresse_vejnavn is not empty %}
                                         {{ data.beliggenhedsadresse.CVRAdresse_vejnavn }}
@@ -77,24 +77,24 @@
                         {% endif %}
                         {% if data['e-mailadresse'].vaerdi is not empty %}
                             <tr>
-                                <td>Kontakt</td>
+                                <td>{{ visitation.contact|trans }}</td>
                                 <td>{{ data['e-mailadresse'].vaerdi }}</td>
                             </tr>
                         {% endif %}
                         {% if data.virksomhedsform.vaerdi is not empty %}
                             <tr>
-                                <td>Virksomhedsform</td>
+                                <td>{{ visitation.company_type|trans }}</td>
                                 <td>{{ data.virksomhedsform.vaerdiTekst }}</td>
                             </tr>
                         {% endif %}
                         {% if data.virksomhed.status is not empty %}
                             <tr>
-                                <td>Status</td>
+                                <td>{{ visitation.status|trans }}</td>
                                 <td>{{ data.virksomhed.status }}</td>
                             </tr>
                         {% endif %}
                         <tr>
-                            <td>Relationer</td>
+                            <td>{{ visitation.relations|trans }}</td>
                             <td></td>
                             {# <td>{{ data[0].virksomhed.status }}</td> #}
                         </tr>

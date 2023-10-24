@@ -49,21 +49,21 @@
             <div class="fixed-table">
                 <div class="card-header text-black stam-data">
                     <h6 class="mb-0" id="stam-data">
-                        Stamdata
+                        {{ visitation.basic_info|trans }}
                     </h6>
                 </div>
                 <table class="table table-bordered">
                     <tbody class="stam-data-body">
                         <tr>
-                            <td>Navn</td>
+                            <td>{{ visitation.name|trans }}</td>
                             <td>{{ data.Navne[0].Navn.fornavne }} {{ data.Navne[0].Navn.efternavn }}</td>
                         </tr>
                         <tr>
-                            <td>CPR</td>
+                            <td>{{ visitation.cpr|trans }}</td>
                             <td class="cprField">{{ data.Personnumre[0].Personnummer.personnummer }}</td>
                         </tr>
                         <tr>
-                            <td>Adresse</td>
+                            <td>{{ visitation.address|trans }}</td>
                             <td>{{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.vejadresseringsnavn }}
                                 {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.husnummer }}
                                 {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.etage }}
@@ -74,11 +74,11 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>Køn</td>
+                            <td>{{ visitation.gender|trans }}</td>
                             <td>{{ data.koen }}</td>
                         </tr>
                         <tr>
-                            <td>Eksisterende sager</td>
+                            <td>{{ visitation.existing_cases|trans }}</td>
                             <td></td>
                         </tr>
                         {# Add more rows as needed #}
