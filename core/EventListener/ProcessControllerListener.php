@@ -104,7 +104,8 @@ class ProcessControllerListener implements EventSubscriberInterface
         if (\in_array(\get_class($controller[0]), $controllers)) {
             if ($event->getRequest()->isMethod('GET') && $event->getRequest()->attributes->has('process')) {
                 /** @var Process $process */
-                $process = $event->getRequest()->attributes->get('process');
+                $processId = $event->getRequest()->attributes->get('process');
+                $process = $this->processRepository->find($processId);
 
                 // If the request is coming from inside the Process route group, we dont
                 // dispatch the onRead event, as it already has been dispatched when visiting
