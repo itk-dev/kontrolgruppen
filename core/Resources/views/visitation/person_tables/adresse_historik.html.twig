@@ -22,7 +22,20 @@
                     <tbody class="bg-light">
                         {% for adresse in data.Adresseoplysninger %}
                         <tr>
-                            <td>{{ adresse.Adresseoplysninger.CprAdresse.vejadresseringsnavn }}</td>
+                            <td>
+                                {% if adresse.Adresseoplysninger.CprAdresse.vejadresseringsnavn is defined %}
+                                    {{ adresse.Adresseoplysninger.CprAdresse.vejadresseringsnavn }}
+                                {% endif %}
+                                {% if adresse.Adresseoplysninger.CprAdresse.husnummer is defined %}
+                                    {{ adresse.Adresseoplysninger.CprAdresse.husnummer }}
+                                {% endif %}
+                                {% if adresse.Adresseoplysninger.CprAdresse.etage is defined %}
+                                    {{ adresse.Adresseoplysninger.CprAdresse.etage }}
+                                {% endif %}
+                                {% if adresse.Adresseoplysninger.CprAdresse.sidedoer is defined %}
+                                    {{ adresse.Adresseoplysninger.CprAdresse.sidedoer }}
+                                {% endif %}
+                            </td>
                             <td>{{ adresse.Adresseoplysninger.CprAdresse.postnummer }} {{ adresse.Adresseoplysninger.CprAdresse.postdistrikt }}</td>
                             <td>{{ adresse.Adresseoplysninger.CprAdresse.cprKommunenavn }}</td>
                             <td></td>
