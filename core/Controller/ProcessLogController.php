@@ -41,7 +41,7 @@ class ProcessLogController extends BaseController
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         // Latest Log entries
-        $logEntriesPagination = $this->getDoctrine()->getRepository(
+        $logEntriesPagination = $this->em->getRepository(
             ProcessLogEntry::class
         )->getLatestEntriesPaginated(
             $process,
