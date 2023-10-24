@@ -44,6 +44,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
  * @Route("/process")
@@ -319,18 +320,33 @@ class ProcessController extends BaseController
      * @param Request    $request
      * @param Process    $process
      * @param LogManager $logManager
+     * @param HttpClientInterface $datafordelerHttpClient
      *
      * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function show(Request $request, Process $process, LogManager $logManager): Response
+    public function show(Request $request, Process $process, LogManager $logManager, HttpClientInterface $datafordelerHttpClient): Response
     {
         // Latest journal entries.
         $latestJournalEntries = $this->em->getRepository(
             JournalEntry::class
         )->getLatestEntries($process);
+        // Get the ProcessClient Identifier from process
+        $processClientIdentifier = $process->getProcessClient()->getIdentifier();
+        // Get client type
+        $clientType = $process->getProcessClient()->getType();
+
+        if ($clientType == ProcessClientPerson::PERSON) {
+            $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
+            $datafordelerController = new DatafordelerController($datafordelerHttpClient);
+            $data = $datafordelerController->getPersonData($processClientIdentifier, $datafordelerHttpClient);
+        }
+        elseif($clientType == ProcessClientPerson::COMPANY){
+            $datafordelerController = new DatafordelerController($datafordelerHttpClient);
+            $data = $datafordelerController->getVirksomhedData($processClientIdentifier, $datafordelerHttpClient);
+        }
 
         if ($this->isGranted('ROLE_ADMIN', $this->getUser())) {
             $latestJournalEntries = $logManager->attachLogEntriesToJournalEntries($latestJournalEntries);
@@ -344,6 +360,7 @@ class ProcessController extends BaseController
                     $process
                 ),
                 'process' => $process,
+                'data' => $data,
                 'latestJournalEntries' => $latestJournalEntries,
             ]
         );

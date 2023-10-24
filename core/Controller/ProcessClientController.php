@@ -29,6 +29,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
  * @Route("/process/{process}/client")
@@ -66,13 +67,14 @@ class ProcessClientController extends BaseController
      *
      * @param Request $request
      * @param Process $process
+     * @param HttpClientInterface $datafordelerHttpClient
      *
      * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function show(Request $request, Process $process): Response
+    public function show(Request $request, Process $process, HttpClientInterface $datafordelerHttpClient): Response
     {
         $client = $process->getProcessClient();
 
@@ -87,11 +89,26 @@ class ProcessClientController extends BaseController
 
         $view = $this->getView($client, 'show');
 
+        // Get the ProcessClient Identifier from process
+        $processClientIdentifier = $process->getProcessClient()->getIdentifier();
+        // Get client type
+        $clientType = $process->getProcessClient()->getType();
+
+        if ($clientType == ProcessClientPerson::PERSON) {
+            $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
+            $datafordelerController = new DatafordelerController($datafordelerHttpClient);
+            $data = $datafordelerController->getPersonData($processClientIdentifier, $datafordelerHttpClient);
+        }
+        elseif($clientType == ProcessClientPerson::COMPANY){
+            $datafordelerController = new DatafordelerController($datafordelerHttpClient);
+            $data = $datafordelerController->getVirksomhedData($processClientIdentifier, $datafordelerHttpClient);
+        }
         return $this->render($view, [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'client' => $client,
             'canEdit' => $this->isGranted('edit', $process) && null === $process->getCompletedAt(),
             'changeProcessStatusForm' => $changeProcessStatusForm->createView(),
+            'data' => $data,
             'process' => $process,
             'newClientInfoAvailable' => $newInfoAvailable,
         ]);

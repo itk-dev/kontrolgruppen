@@ -19,14 +19,14 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  */
 class ServiceplatformenCprService extends AbstractCprService implements CprServiceInterface
 {
-    private $service;
     private $dataFordelerController;
     private $httpClient;
 
     /**
      * ServiceplatformenCprService constructor.
      *
-     * @param PersonBaseDataExtendedService $service
+     * @param DatafordelerController $dataFordelerController
+     * @param HttpClientInterface $httpClient
      */
     public function __construct(DatafordelerController $dataFordelerController, HttpClientInterface $httpClient)
     {
