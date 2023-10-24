@@ -30,7 +30,7 @@ class DatafordelerController extends BaseController
     {
         $response = $datafordelerHttpClient->request(
             'GET',
-            'CPR/CprPersonFullComplete/1/rest/PersonFullCurrentListComplete',
+            'CPR/CprPersonFullComplete/1/rest/PersonFullListComplete',
             [
                 'query' => [
                     'pnr.personnummer.eq' => $cpr,
@@ -109,11 +109,11 @@ class DatafordelerController extends BaseController
     }
 
     /**
-     * @param string $navn
+     * @param array $navn
      *
      * @return string
      */
-    protected function getFullnameFromNameObject(string $navn): string
+    protected function getFullnameFromNameObject(array $navn): string
     {
         $fornavne = $navn['fornavne'];
         $mellemnavn = $navn['mellemnavn'] ?? '';
