@@ -59,54 +59,12 @@ class VisitationController extends DatafordelerController
      */
     public function search(Request $request): Response
     {
-        // $visitation = new Visitation();
-        // try {
-        //     $client = $clientManager->createClient($request->get('clientType') ?? '');
-        // } catch (\Exception $exception) {
-        //     $this->addFlash('danger', $exception->getMessage());
-
-        //     return $this->render('process/select-client-type.html.twig');
-        // }
-
-        // $visitation->setVisitationClient($client);
-        // $form = $this->createForm(VisitationType::class, $visitation);
-
-        // $form->handleRequest($request);
         return $this->render(
             '@KontrolgruppenCore/visitation/search.html.twig',
             [
                 'client_type' => $request->get('clientType'),
-                // 'menuItems' => $this->menuService->getProcessMenu(
-                //     $request->getPathInfo(),
-                // ),
-                // 'visitation' => $visitation,
-                // 'form' => $form->createView()
             ]
         );
-        // if ($form->isSubmitted() && $form->isValid()) {
-        //     // You can now redirect to your desired route
-        //     return $this->render(
-        //         '@KontrolgruppenCore/visitation/search.html.twig',
-        //         [
-        //             'menuItems' => $this->menuService->getProcessMenu(
-        //                 $request->getPathInfo(),
-        //             ),
-        //             'visitation' => $visitation,
-        //             'form' => $form->createView()
-        //         ]
-        //     );
-        // }
-
-        // return $this->render(
-        //     '@KontrolgruppenCore/visitation/search.html.twig',
-        //     [
-        //         'menuItems' => $this->menuService->getProcessMenu(
-        //             $request->getPathInfo(),
-        //         ),
-        //         'visitation' => $visitation,
-        //         'form' => $form->createView()
-        //     ]
-        // );
     }
 
     /**
@@ -252,6 +210,8 @@ class VisitationController extends DatafordelerController
     }
 
     /**
+     * Logs a visitation
+     * 
      * @Route("/visitation-log", name="log_visitation", methods={"POST"})
      *
      * @param Request $request
@@ -282,7 +242,6 @@ class VisitationController extends DatafordelerController
         $this->em->persist($visitationLog);
         $this->em->flush();
 
-        // return 200
         return new Response(Response::HTTP_OK);
     }
 }

@@ -11,7 +11,6 @@
 namespace Kontrolgruppen\CoreBundle\CVR;
 
 use ItkDev\Serviceplatformen\Service\Exception\ServiceException;
-use ItkDev\Serviceplatformen\Service\OnlineService;
 
 /**
  * Class ServiceplatformenCvrService.
@@ -19,16 +18,6 @@ use ItkDev\Serviceplatformen\Service\OnlineService;
 class ServiceplatformenCvrService extends AbstractCvrService implements CvrServiceInterface
 {
     private $service;
-
-    /**
-     * ServiceplatformenCvrService constructor.
-     *
-     * @param OnlineService $service
-     */
-    public function __construct(/* OnlineService $service */)
-    {
-        // $this->service = $service;
-    }
 
     /**
      * {@inheritdoc}

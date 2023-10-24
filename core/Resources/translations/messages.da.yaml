@@ -674,6 +674,7 @@ visitation:
     company_type: Virksomhedsform
     status: Status
     relations: Relationer
+    user_not_found: Bruger ikke fundet
     data:
         empty: Ingen data
     search:
