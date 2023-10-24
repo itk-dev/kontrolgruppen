@@ -30,6 +30,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
 
 /**
  * @Route("/process/{process}/client")
@@ -96,12 +97,13 @@ class ProcessClientController extends BaseController
 
         if ($clientType == ProcessClientPerson::PERSON) {
             $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
-            $datafordelerController = new DatafordelerController($datafordelerHttpClient);
-            $data = $datafordelerController->getPersonData($processClientIdentifier, $datafordelerHttpClient);
+            $datafordelerService = new DatafordelerService($datafordelerHttpClient);
+            $data = $datafordelerService->getPersonData($processClientIdentifier);
         }
         elseif($clientType == ProcessClientPerson::COMPANY){
-            $datafordelerController = new DatafordelerController($datafordelerHttpClient);
-            $data = $datafordelerController->getVirksomhedData($processClientIdentifier, $datafordelerHttpClient);
+            $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
+            $datafordelerService = new DatafordelerService($datafordelerHttpClient);
+            $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
         }
         return $this->render($view, [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
@@ -125,7 +127,7 @@ class ProcessClientController extends BaseController
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function edit(Request $request, Process $process): Response
+    public function edit(Request $request, Process $process, HttpClientInterface $datafordelerHttpClient): Response
     {
         $this->denyAccessUnlessGranted('edit', $process);
 
@@ -151,11 +153,28 @@ class ProcessClientController extends BaseController
 
         $view = $this->getView($client, 'edit');
 
+        // Get the ProcessClient Identifier from process
+        $processClientIdentifier = $client->getIdentifier();
+        // Get client type
+        $clientType = $client->getType();
+
+        if ($clientType == ProcessClientPerson::PERSON) {
+            $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
+            $datafordelerService = new DatafordelerService($datafordelerHttpClient);
+            $data = $datafordelerService->getPersonData($processClientIdentifier);
+        }
+        elseif($clientType == ProcessClientPerson::COMPANY){
+            $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
+            $datafordelerService = new DatafordelerService($datafordelerHttpClient);
+            $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
+        }
+
         return $this->render($view, [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'canEdit' => $this->isGranted('edit', $process) && null === $process->getCompletedAt(),
             'client' => $client,
             'form' => $form->createView(),
+            'data' => $data,
             'process' => $process,
         ]);
     }

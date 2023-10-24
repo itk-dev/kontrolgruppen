@@ -12,7 +12,7 @@ namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
-
+use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
 /**
  * Class DatafordelerController.
  */
@@ -28,24 +28,9 @@ class DatafordelerController extends BaseController
      */
     public function getPersonData(string $cpr, HttpClientInterface $datafordelerHttpClient): array
     {
-        $response = $datafordelerHttpClient->request(
-            'GET',
-            'CPR/CprPersonFullComplete/1/rest/PersonFullListComplete',
-            [
-                'query' => [
-                    'pnr.personnummer.eq' => $cpr,
-                ],
-            ]
-        );
 
-        if (404 === $response->getStatusCode()) {
-            return [];
-        }
-
-        $data = $response->toArray()['Personer'][0]['Person'];
-        if ($cprAdresse = $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']) {
-            $data['Bopaelssamling'] = $this->getBopaelssamling($cprAdresse, $data['Personnumre'][0]['Personnummer']['personnummer'], $data['Navne'][0]['Navn']['adresseringsnavn'], $datafordelerHttpClient);
-        }
+        $datafordelerService = new DatafordelerService($datafordelerHttpClient);
+        $data = $datafordelerService->getPersonData($cpr);
 
         return $data;
     }

@@ -29,6 +29,7 @@ use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 use Kontrolgruppen\CoreBundle\Repository\ProcessStatusRepository;
 use Kontrolgruppen\CoreBundle\Repository\ServiceRepository;
 use Kontrolgruppen\CoreBundle\Repository\UserRepository;
+use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
 use Kontrolgruppen\CoreBundle\Service\LogManager;
 use Kontrolgruppen\CoreBundle\Service\ProcessClientManager;
 use Kontrolgruppen\CoreBundle\Service\ProcessManager;
@@ -340,14 +341,14 @@ class ProcessController extends BaseController
 
         if ($clientType == ProcessClientPerson::PERSON) {
             $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
-            $datafordelerController = new DatafordelerController($datafordelerHttpClient);
-            $data = $datafordelerController->getPersonData($processClientIdentifier, $datafordelerHttpClient);
+            $datafordelerService = new DatafordelerService($datafordelerHttpClient);
+            $data = $datafordelerService->getPersonData($processClientIdentifier);
         }
         elseif($clientType == ProcessClientPerson::COMPANY){
-            $datafordelerController = new DatafordelerController($datafordelerHttpClient);
-            $data = $datafordelerController->getVirksomhedData($processClientIdentifier, $datafordelerHttpClient);
+            $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
+            $datafordelerService = new DatafordelerService($datafordelerHttpClient);
+            $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
         }
-
         if ($this->isGranted('ROLE_ADMIN', $this->getUser())) {
             $latestJournalEntries = $logManager->attachLogEntriesToJournalEntries($latestJournalEntries);
         }
