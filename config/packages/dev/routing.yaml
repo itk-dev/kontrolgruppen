@@ -1,4 +1,4 @@
 framework:
     router:
         strict_requirements: true
-        default_uri: 'http://localhost/'
+        default_uri: '%env(DEFAULT_URI)%'
