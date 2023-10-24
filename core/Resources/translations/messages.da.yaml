@@ -617,6 +617,65 @@ process:
     is_completed: Afsluttet?
 
 visitation:
+    company:
+        employees_count: Antal ansatte
+        legal_owners: Legale ejere
+        real_owners: Reele ejere
+        creation_date: Oprettelsesdato
+        date: Dato
+        founder: Stifter
+        management: Direktion
+        board_of_directors: Bestyrelse
+        founders: Stiftere
+        accountant: Revisor
+        history: Historik
+        p_numbers: P-Numre
+        name: Navn
+        address: Adresse
+        phone: Telefon
+        mail: Mail
+        registration_history: Registrations Historik
+    person:
+        address_history: Adresse historik
+        street: Gade
+        postcode_city: Post nr og By
+        district: Kommune
+        country: Land
+        date_from_to: Dato (fra/til)
+        child: Børn
+        name: Navn
+        birthday: Fødselsdag
+        custody: Forældremyndighed
+        unknown: Ukendt
+        apartment: Bolig
+        date_from: Dato (fra)
+        residence_collection: Bopælssamling
+        relation: Relation
+        marital_status: Civilstatus
+        status: Status
+        cpr: CPR
+        date: Dato
+        cpr_history: Cpr historik
+        to: til
+        today: i dag
+        name_history: Navne historik
+        citizenship: Statsborgerskab
+        company: Virksomhed
+        cvr: CVR
+    basic_info: Stamdata
+    name: Navn
+    cpr: CPR
+    address: Adresse
+    gender: Køn
+    existing_cases: Eksisterende sager
+    search_placeholder: Søg efter eksisterende sager
+    searching_placeholder: Søger...
+    cvr: CVR
+    contact: Kontakt
+    company_type: Virksomhedsform
+    status: Status
+    relations: Relationer
+    user_not_found: Bruger ikke fundet
     data:
         empty: Ingen data
     search:

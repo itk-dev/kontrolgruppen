@@ -19,7 +19,6 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  */
 class ServiceplatformenCprService extends AbstractCprService implements CprServiceInterface
 {
-    private $dataFordelerController;
     private $httpClient;
 
     /**
@@ -28,9 +27,8 @@ class ServiceplatformenCprService extends AbstractCprService implements CprServi
      * @param DatafordelerController $dataFordelerController
      * @param HttpClientInterface $httpClient
      */
-    public function __construct(DatafordelerController $dataFordelerController, HttpClientInterface $httpClient)
+    public function __construct(HttpClientInterface $httpClient)
     {
-        $this->dataFordelerController = $dataFordelerController;
         $this->httpClient = $httpClient;
     }
 
@@ -39,12 +37,6 @@ class ServiceplatformenCprService extends AbstractCprService implements CprServi
      */
     public function find(Cpr $cpr): CprServiceResultInterface
     {
-        try {
-            $response = $this->dataFordelerController->getPersonData($cpr, $this->httpClient);
-        } catch (ServiceException $e) {
-            throw new CprException($e->getMessage(), $e->getCode(), $e);
-        }
-
-        return new ServiceplatformenCprServiceResult($response);
+        return new ServiceplatformenCprServiceResult([]);
     }
 }

@@ -18,18 +18,6 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  */
 class DatafordelerController extends BaseController
 {
-    private $datafordelerHttpClient;
-
-    /**
-     * DatafordelerController constructor.
-     *
-     * @param HttpClientInterface $datafordelerHttpClient
-     */
-    public function __construct(HttpClientInterface $datafordelerHttpClient)
-    {
-        $this->datafordelerHttpClient = $datafordelerHttpClient;
-    }
-
     /**
      * @param string              $cpr
      * @param HttpClientInterface $datafordelerHttpClient
