@@ -2,13 +2,46 @@
     <div class="row">
         <div class="col">
             <div class="bg-light p-3">
-                <div class="mb-3">
-                    {% if client.cpr %}
-                        <span class="d-block"><span class="sr-only">{{ 'sidebar.client.cpr'|trans }}</span>{{ client.cpr }}</span>
-                    {% endif %}
-                    {% if client.name %}
-                        <span class="d-block"><span class="sr-only">{{ 'sidebar.client.name'|trans }}</span>{{ client.name }}</span>
-                    {% endif %}
+                <div class="col-md-3">
+                    <div class="fixed-table">
+                        <div class="card-header text-black stam-data">
+                            <h6 class="mb-0" id="stam-data">
+                                Stamdata
+                            </h6>
+                        </div>
+                        <table class="table table-bordered">
+                            <tbody class="stam-data-body">
+                                <tr>
+                                    <td>Navn</td>
+                                    <td>{{ data.Navne[0].Navn.fornavne }} {{ data.Navne[0].Navn.efternavn }}</td>
+                                </tr>
+                                <tr>
+                                    <td>CPR</td>
+                                    <td class="cprField">{{ data.Personnumre[0].Personnummer.personnummer }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Adresse</td>
+                                    <td>{{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.vejadresseringsnavn }}
+                                        {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.husnummer }}
+                                        {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.etage }}
+                                        {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.sidedoer }}
+                                        <br>
+                                        {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.postnummer }}
+                                        {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.postdistrikt }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Køn</td>
+                                    <td>{{ data.koen }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Eksisterende sager</td>
+                                    <td></td>
+                                </tr>
+                                {# Add more rows as needed #}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
                 <div class="mb-3">

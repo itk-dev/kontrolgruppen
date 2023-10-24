@@ -1,4 +1,5 @@
 {% set client_type = process.processClient.type|default(null) %}
 {% if client_type in ['company', 'person'] %}
-    {% include 'process/_sidebar_process_info/client/' ~ client_type ~ '.html.twig' with {client: process.processClient} only %}
+    {% include 'process/_sidebar_process_info/client/' ~ client_type ~ '.html.twig' with {client: process.processClient, data: data} only %}
+    
 {% endif %}

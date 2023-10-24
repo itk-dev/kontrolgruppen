@@ -209,6 +209,7 @@ common:
         created_at: Oprettet
         created_by: Oprettet af
         updated_at: Opdateret
+        title: meta_data
         updated_by: Opdateret af
         by: af
     title: Kontrolgruppen

@@ -15,12 +15,43 @@
 
     <div class="row">
         <div class="col">
+            <div class="border mb-3" aria-labelledby="tableHeadingAdresseHistorik" data-parent="#tableAccordionAdresseHistorik">
+                <div class="card-body p-0">
+                    <table class="table mb-0 table-bordered bg-info">
+                        <thead class="data-header">
+                            <tr>
+                                <th colspan="2">{{ 'common.table.title'|trans }}</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-light">
+                            <tr>
+                                <td><b>{{ 'common.table.created_at'|trans }}:</b></td>
+                                <td>{{ process.createdAt|simple_date('short') }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>{{ 'process.table.channel'|trans }}:</b></td>
+                                <td>{{ process.channel }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>{{ 'process.table.relations'|trans }}:</b></td>
+                                <td>
+                                    {% for process_group in process.processGroups %}
+                                    <li class="list-inline-item"><a href="{{ path('process_group_index', {'process': process}) }}">{{ process_group.name }}</a</li>
+                                    {% else %}
+                                        <li class="list-inline-item">{{ 'common.no_records_found'|trans }}</li>
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
             <div class="bg-light border pt-3 pr-3 pl-3 mb-3">
                 <div class="row">
                     <div class="col-6 col-lg-3">
                         <dl class="row">
                             <dd class="col-sm-12 text-muted mb-0 pb-0">{{ 'common.table.created_at'|trans }}</dd>
-                            <dt class="col-sm-12">{{ process.createdAt|simple_date('short') }}</dt>
+                            <dt class="col-sm-12"></dt>
                         </dl>
                     </div>
                     <div class="col-6 col-lg-3">
@@ -50,7 +81,7 @@
                     <div class="col-6 col-lg-3">
                         <dl class="row">
                             <dd class="col-sm-12 text-muted mb-0 pb-0">{{ 'process.table.service'|trans }}</dd>
-                            <dt class="col-sm-12">{{ process.service }}</dt>
+                            <dt class="col-sm-12">dd{{ process.service }}</dt>
                         </dl>
                     </div>
                     <div class="col-6 col-lg-3">

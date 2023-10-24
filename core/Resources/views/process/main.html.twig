@@ -22,7 +22,75 @@
         </div>
     </div>
 {% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
 
+    <style>
+        .new-process {
+            margin-top: 20px;
+            margin-bottom: 50px;
+        }
+        .fixed-table {
+            position: fixed;
+            top: 200px;
+            right: 30px;
+            width: 20%;
+            z-index: 999;
+        }
+        .left-tables {
+            max-width: 1000px;
+        }
+        .card-header {
+            background-color:#c8defc ;
+        }
+        .card-header.active {
+            background-color: #81b4fe;
+        }
+        .btn-header{
+            color: black;
+            font-weight: bold;
+        }
+        .btn-header:hover{
+            font-weight: bold;
+        }
+        .btn-header:focus{
+            text-decoration: none;
+            box-shadow: none;
+        }
+        #stam-data{
+            font-weight: bold;
+        }
+        .stam-data{
+            background-color: #81b4fe;
+        }
+        .data-header{
+            background-color: #d0dcfc;
+        }
+        .bg-light{
+            background-color: #e8ecfc;
+        }
+        .stam-data-body{
+            background-color: #e8ecfc;
+        }
+        .card-header.collapsed .fa-chevron-down {
+            transform: rotate(90deg);
+        }
+
+        .card-header.active .fa-chevron-up {
+            transform: rotate(-90deg);
+        }
+        .empty-column {
+            color: red;
+        }
+        .child-name {
+            color: black;
+            text-decoration: underline;
+        }
+        .iconClass{
+            margin-left: 10px
+        }
+    </style>
+{% endblock %}
 {% block javascripts %}
     {{ parent() }}
 
