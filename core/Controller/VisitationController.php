@@ -210,8 +210,8 @@ class VisitationController extends DatafordelerController
     }
 
     /**
-     * Logs a visitation
-     * 
+     * Logs a visitation.
+     *
      * @Route("/visitation-log", name="log_visitation", methods={"POST"})
      *
      * @param Request $request

@@ -15,11 +15,11 @@ use Kontrolgruppen\CoreBundle\Export\Manager;
 use Kontrolgruppen\CoreBundle\Repository\BIExportRepository;
 use PhpOffice\PhpSpreadsheet\Reader\Csv;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * Class BusinessIntelligenceController.
@@ -103,7 +103,7 @@ class BIController extends BaseController
 
     /**
      * @Route("/delete/{export}", name="delete", methods={"DELETE"})
-     * 
+     *
      * @IsGranted("ROLE_ADMIN")
      *
      * @param BIExport            $export
