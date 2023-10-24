@@ -16,7 +16,10 @@ use Kontrolgruppen\CoreBundle\Form\ReminderType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
 /**
  * @Route("/process/{process}/reminder")
  */
@@ -33,14 +36,25 @@ class ProcessReminderController extends BaseController
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function index(Request $request, Process $process): Response
+    public function index(Request $request, Process $process, DatafordelerService $datafordelerService): Response
     {
         $this->denyAccessUnlessGranted('edit', $process);
+        // Get the ProcessClient Identifier from process
+        $processClientIdentifier = $process->getProcessClient()->getIdentifier();
+        // Get client type
+        $clientType = $process->getProcessClient()->getType();
 
+        if ($clientType == ProcessClientPerson::PERSON) {
+            $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
+            $data = $datafordelerService->getPersonData($processClientIdentifier);
+        } elseif ($clientType == ProcessClientPerson::COMPANY) {
+            $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
+        }
         return $this->render('@KontrolgruppenCore/reminder/index.html.twig', [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'reminders' => $process->getReminders(),
             'process' => $process,
+            'data' => $data
         ]);
     }
 
@@ -55,7 +69,7 @@ class ProcessReminderController extends BaseController
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function new(Request $request, Process $process): Response
+    public function new(Request $request, Process $process, DatafordelerService $datafordelerService): Response
     {
         $this->denyAccessUnlessGranted('edit', $process);
 
@@ -68,17 +82,29 @@ class ProcessReminderController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->em;
             $entityManager->persist($reminder);
             $entityManager->flush();
 
             return $this->redirectToRoute('reminder_index', ['process' => $process->getId()]);
+        }
+        // Get the ProcessClient Identifier from process
+        $processClientIdentifier = $process->getProcessClient()->getIdentifier();
+        // Get client type
+        $clientType = $process->getProcessClient()->getType();
+
+        if ($clientType == ProcessClientPerson::PERSON) {
+            $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
+            $data = $datafordelerService->getPersonData($processClientIdentifier);
+        } elseif ($clientType == ProcessClientPerson::COMPANY) {
+            $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
         }
 
         return $this->render('@KontrolgruppenCore/reminder/new.html.twig', [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'reminder' => $reminder,
             'process' => $process,
+            'data' => $data,
             'form' => $form->createView(),
         ]);
     }

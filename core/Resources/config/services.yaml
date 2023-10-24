@@ -48,7 +48,9 @@ services:
     Kontrolgruppen\CoreBundle\Service\LockService:
         arguments: ['@lock.factory']
 
-        
+    Kontrolgruppen\CoreBundle\Service\DatafordelerService:
+        arguments:
+            $datafordelerHttpClient: '@datafordelerHttpClient'
 
 
     Kontrolgruppen\CoreBundle\EventListener\LoggerListener:

@@ -68,7 +68,7 @@ class JournalEntryController extends BaseController
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function index(Request $request, JournalEntryRepository $journalEntryRepository, Process $process, FilterBuilderUpdaterInterface $lexikBuilderUpdater, SessionInterface $session, LogManager $logManager, FormFactoryInterface $formFactory, HttpClientInterface $datafordelerHttpClient): Response
+    public function index(Request $request, JournalEntryRepository $journalEntryRepository, Process $process, FilterBuilderUpdaterInterface $lexikBuilderUpdater, SessionInterface $session, LogManager $logManager, FormFactoryInterface $formFactory, DatafordelerService $datafordelerService): Response
     {
         $journalEntryFormView = null;
 
@@ -158,12 +158,8 @@ class JournalEntryController extends BaseController
 
         if ($clientType == ProcessClientPerson::PERSON) {
             $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
-            $datafordelerService = new DatafordelerService($datafordelerHttpClient);
             $data = $datafordelerService->getPersonData($processClientIdentifier);
-        }
-        elseif($clientType == ProcessClientPerson::COMPANY){
-            $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
-            $datafordelerService = new DatafordelerService($datafordelerHttpClient);
+        } elseif ($clientType == ProcessClientPerson::COMPANY) {
             $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
         }
         return $this->render(
@@ -194,7 +190,7 @@ class JournalEntryController extends BaseController
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function new(Request $request, Process $process, HttpClientInterface $datafordelerHttpClient): Response
+    public function new(Request $request, Process $process, DatafordelerService $datafordelerService): Response
     {
         $this->denyAccessUnlessGranted('edit', $process);
 
@@ -213,12 +209,8 @@ class JournalEntryController extends BaseController
 
         if ($clientType == ProcessClientPerson::PERSON) {
             $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
-            $datafordelerService = new DatafordelerService($datafordelerHttpClient);
             $data = $datafordelerService->getPersonData($processClientIdentifier);
-        }
-        elseif($clientType == ProcessClientPerson::COMPANY){
-            $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
-            $datafordelerService = new DatafordelerService($datafordelerHttpClient);
+        } elseif ($clientType == ProcessClientPerson::COMPANY) {
             $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
         }
         if ($form->isSubmitted() && $form->isValid()) {
@@ -260,7 +252,7 @@ class JournalEntryController extends BaseController
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function show(Request $request, JournalEntry $journalEntry, Process $process, LogManager $logManager, HttpClientInterface $datafordelerHttpClient): Response
+    public function show(Request $request, JournalEntry $journalEntry, Process $process, LogManager $logManager, DatafordelerService $datafordelerService): Response
     {
         // If opening a journal entry that does not belong to the process, redirect to index.
         if ($journalEntry->getProcess() !== $process) {
@@ -276,12 +268,8 @@ class JournalEntryController extends BaseController
 
         if ($clientType == ProcessClientPerson::PERSON) {
             $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
-            $datafordelerService = new DatafordelerService($datafordelerHttpClient);
             $data = $datafordelerService->getPersonData($processClientIdentifier);
-        }
-        elseif($clientType == ProcessClientPerson::COMPANY){
-            $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
-            $datafordelerService = new DatafordelerService($datafordelerHttpClient);
+        } elseif ($clientType == ProcessClientPerson::COMPANY) {
             $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
         }
         // Attach log entries.
@@ -318,7 +306,7 @@ class JournalEntryController extends BaseController
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function edit(Request $request, JournalEntry $journalEntry, Process $process, LogManager $logManager, HttpClientInterface $datafordelerHttpClient): Response
+    public function edit(Request $request, JournalEntry $journalEntry, Process $process, LogManager $logManager, DatafordelerService $datafordelerService): Response
     {
         $this->denyAccessUnlessGranted('edit', $process);
 
@@ -345,12 +333,8 @@ class JournalEntryController extends BaseController
 
         if ($clientType == ProcessClientPerson::PERSON) {
             $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
-            $datafordelerService = new DatafordelerService($datafordelerHttpClient);
             $data = $datafordelerService->getPersonData($processClientIdentifier);
-        }
-        elseif($clientType == ProcessClientPerson::COMPANY){
-            $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
-            $datafordelerService = new DatafordelerService($datafordelerHttpClient);
+        } elseif ($clientType == ProcessClientPerson::COMPANY) {
             $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
         }
         if ($form->isSubmitted() && $form->isValid()) {
@@ -393,7 +377,7 @@ class JournalEntryController extends BaseController
      *
      * @return Response
      */
-    public function delete(Request $request, JournalEntry $journalEntry, Process $process, HttpClientInterface $datafordelerHttpClient): Response
+    public function delete(Request $request, JournalEntry $journalEntry, Process $process, DatafordelerService $datafordelerService): Response
     {
         $this->denyAccessUnlessGranted('edit', $process);
 

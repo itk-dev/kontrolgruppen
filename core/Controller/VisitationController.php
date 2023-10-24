@@ -79,7 +79,7 @@ class VisitationController extends DatafordelerController
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Kontrolgruppen\CoreBundle\CPR\CprException
      */
-    public function results(Request $request, HttpClientInterface $datafordelerHttpClient): Response
+    public function results(Request $request, DatafordelerService $datafordelerService): Response
     {
         $cpr = $request->get('cpr');
         $cvr = $request->get('cvr');

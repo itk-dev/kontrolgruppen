@@ -36,7 +36,6 @@ class DatafordelerController extends BaseController
         } catch (\Exception $e) {
             throw new \Exception("Failed to get person data", 1);
         }
-
         return $data;
     }
 

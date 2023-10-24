@@ -75,7 +75,7 @@ class ProcessClientController extends BaseController
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function show(Request $request, Process $process, HttpClientInterface $datafordelerHttpClient): Response
+    public function show(Request $request, Process $process, DatafordelerService $datafordelerService): Response
     {
         $client = $process->getProcessClient();
 
@@ -97,12 +97,8 @@ class ProcessClientController extends BaseController
 
         if ($clientType == ProcessClientPerson::PERSON) {
             $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
-            $datafordelerService = new DatafordelerService($datafordelerHttpClient);
             $data = $datafordelerService->getPersonData($processClientIdentifier);
-        }
-        elseif($clientType == ProcessClientPerson::COMPANY){
-            $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
-            $datafordelerService = new DatafordelerService($datafordelerHttpClient);
+        } elseif ($clientType == ProcessClientPerson::COMPANY) {
             $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
         }
         return $this->render($view, [
@@ -127,7 +123,7 @@ class ProcessClientController extends BaseController
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function edit(Request $request, Process $process, HttpClientInterface $datafordelerHttpClient): Response
+    public function edit(Request $request, Process $process, DatafordelerService $datafordelerService): Response
     {
         $this->denyAccessUnlessGranted('edit', $process);
 
@@ -160,12 +156,8 @@ class ProcessClientController extends BaseController
 
         if ($clientType == ProcessClientPerson::PERSON) {
             $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
-            $datafordelerService = new DatafordelerService($datafordelerHttpClient);
             $data = $datafordelerService->getPersonData($processClientIdentifier);
-        }
-        elseif($clientType == ProcessClientPerson::COMPANY){
-            $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
-            $datafordelerService = new DatafordelerService($datafordelerHttpClient);
+        } elseif ($clientType == ProcessClientPerson::COMPANY) {
             $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
         }
 
