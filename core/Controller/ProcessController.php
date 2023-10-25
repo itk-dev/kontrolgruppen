@@ -339,10 +339,10 @@ class ProcessController extends BaseController
         // Get client type
         $clientType = $process->getProcessClient()->getType();
 
-        if ($clientType == ProcessClientPerson::PERSON) {
+        if (ProcessClientPerson::PERSON === $clientType) {
             $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
             $data = $datafordelerService->getPersonData($processClientIdentifier);
-        } elseif ($clientType == ProcessClientPerson::COMPANY) {
+        } elseif (ProcessClientPerson::COMPANY === $clientType) {
             $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
         }
         if ($this->isGranted('ROLE_ADMIN', $this->getUser())) {
@@ -390,10 +390,10 @@ class ProcessController extends BaseController
         // Get client type
         $clientType = $process->getProcessClient()->getType();
 
-        if ($clientType == ProcessClientPerson::PERSON) {
+        if (ProcessClientPerson::PERSON === $clientType) {
             $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
             $data = $datafordelerService->getPersonData($processClientIdentifier);
-        } elseif ($clientType == ProcessClientPerson::COMPANY) {
+        } elseif (ProcessClientPerson::COMPANY === $clientType) {
             $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
         }
         if ($form->isSubmitted() && $form->isValid()) {

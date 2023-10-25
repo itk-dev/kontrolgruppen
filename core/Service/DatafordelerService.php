@@ -1,18 +1,40 @@
 <?php
 
+/*
+ * This file is part of itk-dev/kontrolgruppen.
+ *
+ * (c) 2019–2021 ITK Development
+ *
+ * This source file is subject to the MIT license.
+ */
+
 namespace Kontrolgruppen\CoreBundle\Service;
 
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
+/**
+ * Datafordeler Service.
+ */
 class DatafordelerService
 {
     private $datafordelerHttpClient;
 
+    /**
+     * @param HttpClientInterface $datafordelerHttpClient
+     */
     public function __construct(HttpClientInterface $datafordelerHttpClient)
     {
         $this->datafordelerHttpClient = $datafordelerHttpClient;
     }
 
+    /**
+     * @param string $cpr
+     *
+     * @return array
+     *
+     * @throws Exception
+     * @throws TransportExceptionInterface
+     */
     public function getPersonData(string $cpr): array
     {
         $response = $this->datafordelerHttpClient->request(
@@ -32,7 +54,7 @@ class DatafordelerService
         try {
             $data = $response->toArray()['Personer'][0]['Person'];
         } catch (\Exception $e) {
-            throw new \Exception("Cpr data kan ikke findes", 1);
+            throw new \Exception('Cpr data kan ikke findes', 1);
         }
         if ($cprAdresse = $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']) {
             $data['Bopaelssamling'] = $this->getBopaelssamling($cprAdresse, $data['Personnumre'][0]['Personnummer']['personnummer'], $data['Navne'][0]['Navn']['adresseringsnavn'], $this->datafordelerHttpClient);
@@ -45,7 +67,6 @@ class DatafordelerService
      * @param array               $cprAdresse
      * @param string              $relationCpr
      * @param string              $relationFullname
-     * @param HttpClientInterface $datafordelerHttpClient
      *
      * @return array
      *
@@ -115,7 +136,6 @@ class DatafordelerService
 
     /**
      * @param string              $cvr
-     * @param HttpClientInterface $datafordelerHttpClient
      *
      * @return array
      *
