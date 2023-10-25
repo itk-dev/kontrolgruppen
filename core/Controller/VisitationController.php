@@ -19,6 +19,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 
 /**
  * @Route("/visitation")
@@ -133,6 +135,7 @@ class VisitationController extends DatafordelerController
                     [
                         'data' => $data,
                         'visitation' => $visitation,
+                        'client_type' => ProcessClientCompany::COMPANY,
                     ]
                 );
             }
@@ -183,6 +186,7 @@ class VisitationController extends DatafordelerController
                     '@KontrolgruppenCore/visitation/person_results.html.twig',
                     [
                         'data' => $data,
+                        'client_type' => ProcessClientPerson::PERSON,
                         'visitation' => $visitation,
                     ]
                 );
