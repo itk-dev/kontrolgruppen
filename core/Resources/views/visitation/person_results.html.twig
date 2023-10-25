@@ -197,6 +197,9 @@
         }
 
         $(document).ready(function() {
+
+            $('.older-than-5').hide();
+    
             // Format the CPR number and calculate the age for each cprField class
             const cprFields = document.getElementsByClassName("cprField");
             for (let i = 0; i < cprFields.length; i++) {
@@ -216,25 +219,41 @@
                     icon.removeClass('fa-sort-up').addClass('fa-sort-down');
                 }
             });
-            $(document).ready(function() {
-                $(".btn-header").click(function() {
-                    $(this).closest(".card-header").toggleClass("collapsed active");
-                    if($(this).closest(".card-header").hasClass("collapsed")){
-                        // Ajax post request to log_visitation route, with data and cpr
-                        $.ajax({
-                            url: "{{ path('log_visitation') }}",
-                            type: "POST",
-                            data: {
-                                table_name: $(this).closest(".card-header").attr("id"),
-                                cpr: "{{ data.Personnumre[0].Personnummer.personnummer }}",
-                                visitation: "{{ visitation }}",
-                            },
-                            success: function(data) {
-                                console.log(data);
-                            }
-                        });
+            $(".btn-header").click(function() {
+                $(this).closest(".card-header").toggleClass("collapsed active");
+                if($(this).closest(".card-header").hasClass("collapsed")){
+                    // Ajax post request to log_visitation route, with data and cpr
+                    $.ajax({
+                        url: "{{ path('log_visitation') }}",
+                        type: "POST",
+                        data: {
+                            table_name: $(this).closest(".card-header").attr("id"),
+                            cpr: "{{ data.Personnumre[0].Personnummer.personnummer }}",
+                            visitation: "{{ visitation }}",
+                        },
+                        success: function(data) {
+                            console.log(data);
+                        }
+                    });
+                }
+            });
+            $('.show-history').on('click', function() {
+                // Toggle the visibility of rows marked as older than 5 years
+                $(this).closest('div').find('.older-than-5').toggle();
+                $.ajax({
+                    url: "{{ path('log_visitation') }}",
+                    type: "POST",
+                    data: {
+                        table_name: $(this).closest('.card').find('.card-header').attr("id") + "History",
+                        cpr: "{{ data.Personnumre[0].Personnummer.personnummer }}",
+                        visitation: "{{ visitation }}",
+                    },
+                    success: function(data) {
+                        console.log(data);
                     }
                 });
+                // Optionally, change the button text based on current state
+                $(this).closest('tr').hide();
             });
         });
     </script>
