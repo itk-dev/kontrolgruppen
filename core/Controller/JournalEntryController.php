@@ -12,9 +12,11 @@ namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\Entity\JournalEntry;
 use Kontrolgruppen\CoreBundle\Entity\Process;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 use Kontrolgruppen\CoreBundle\Filter\JournalFilterType;
 use Kontrolgruppen\CoreBundle\Form\JournalEntryType;
 use Kontrolgruppen\CoreBundle\Repository\JournalEntryRepository;
+use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
 use Kontrolgruppen\CoreBundle\Service\LogManager;
 use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -22,10 +24,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
-use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
-use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
-use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
+
 /**
  * @Route("/process/{process}/journal")
  */
@@ -156,12 +155,13 @@ class JournalEntryController extends BaseController
         // Get client type
         $clientType = $process->getProcessClient()->getType();
 
-        if ($clientType == ProcessClientPerson::PERSON) {
+        if (ProcessClientPerson::PERSON === $clientType) {
             $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
             $data = $datafordelerService->getPersonData($processClientIdentifier);
-        } elseif ($clientType == ProcessClientPerson::COMPANY) {
+        } elseif (ProcessClientPerson::COMPANY === $clientType) {
             $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
         }
+
         return $this->render(
             '@KontrolgruppenCore/journal_entry/index.html.twig',
             [
@@ -207,10 +207,10 @@ class JournalEntryController extends BaseController
         // Get client type
         $clientType = $process->getProcessClient()->getType();
 
-        if ($clientType == ProcessClientPerson::PERSON) {
+        if (ProcessClientPerson::PERSON === $clientType) {
             $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
             $data = $datafordelerService->getPersonData($processClientIdentifier);
-        } elseif ($clientType == ProcessClientPerson::COMPANY) {
+        } elseif (ProcessClientPerson::COMPANY === $clientType) {
             $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
         }
         if ($form->isSubmitted() && $form->isValid()) {
@@ -266,10 +266,10 @@ class JournalEntryController extends BaseController
         // Get client type
         $clientType = $process->getProcessClient()->getType();
 
-        if ($clientType == ProcessClientPerson::PERSON) {
+        if (ProcessClientPerson::PERSON === $clientType) {
             $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
             $data = $datafordelerService->getPersonData($processClientIdentifier);
-        } elseif ($clientType == ProcessClientPerson::COMPANY) {
+        } elseif (ProcessClientPerson::COMPANY === $clientType) {
             $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
         }
         // Attach log entries.
@@ -331,10 +331,10 @@ class JournalEntryController extends BaseController
         // Get client type
         $clientType = $process->getProcessClient()->getType();
 
-        if ($clientType == ProcessClientPerson::PERSON) {
+        if (ProcessClientPerson::PERSON === $clientType) {
             $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
             $data = $datafordelerService->getPersonData($processClientIdentifier);
-        } elseif ($clientType == ProcessClientPerson::COMPANY) {
+        } elseif (ProcessClientPerson::COMPANY === $clientType) {
             $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
         }
         if ($form->isSubmitted() && $form->isValid()) {

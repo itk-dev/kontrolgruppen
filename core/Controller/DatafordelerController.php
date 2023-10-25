@@ -10,9 +10,10 @@
 
 namespace Kontrolgruppen\CoreBundle\Controller;
 
+use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
-use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
+
 /**
  * Class DatafordelerController.
  */
@@ -28,14 +29,14 @@ class DatafordelerController extends BaseController
      */
     public function getPersonData(string $cpr, HttpClientInterface $datafordelerHttpClient): array
     {
-
         $datafordelerService = new DatafordelerService($datafordelerHttpClient);
-        
+
         try {
             $data = $datafordelerService->getPersonData($cpr);
         } catch (\Exception $e) {
-            throw new \Exception("Failed to get person data", 1);
+            throw new \Exception('Failed to get person data', 1);
         }
+
         return $data;
     }
 

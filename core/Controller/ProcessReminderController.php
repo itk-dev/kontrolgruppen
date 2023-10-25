@@ -11,15 +11,14 @@
 namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\Entity\Process;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 use Kontrolgruppen\CoreBundle\Entity\Reminder;
 use Kontrolgruppen\CoreBundle\Form\ReminderType;
+use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
-use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
-use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
+
 /**
  * @Route("/process/{process}/reminder")
  */
@@ -44,17 +43,18 @@ class ProcessReminderController extends BaseController
         // Get client type
         $clientType = $process->getProcessClient()->getType();
 
-        if ($clientType == ProcessClientPerson::PERSON) {
+        if (ProcessClientPerson::PERSON === $clientType) {
             $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
             $data = $datafordelerService->getPersonData($processClientIdentifier);
-        } elseif ($clientType == ProcessClientPerson::COMPANY) {
+        } elseif (ProcessClientPerson::COMPANY === $clientType) {
             $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
         }
+
         return $this->render('@KontrolgruppenCore/reminder/index.html.twig', [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'reminders' => $process->getReminders(),
             'process' => $process,
-            'data' => $data
+            'data' => $data,
         ]);
     }
 
@@ -93,10 +93,10 @@ class ProcessReminderController extends BaseController
         // Get client type
         $clientType = $process->getProcessClient()->getType();
 
-        if ($clientType == ProcessClientPerson::PERSON) {
+        if (ProcessClientPerson::PERSON === $clientType) {
             $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
             $data = $datafordelerService->getPersonData($processClientIdentifier);
-        } elseif ($clientType == ProcessClientPerson::COMPANY) {
+        } elseif (ProcessClientPerson::COMPANY === $clientType) {
             $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
         }
 

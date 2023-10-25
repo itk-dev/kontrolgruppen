@@ -20,6 +20,7 @@ use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
 use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 use Kontrolgruppen\CoreBundle\Form\ProcessClientCompanyType;
 use Kontrolgruppen\CoreBundle\Form\ProcessClientPersonType;
+use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
 use Kontrolgruppen\CoreBundle\Service\MenuService;
 use Kontrolgruppen\CoreBundle\Service\ProcessClientManager;
 use Psr\Log\LoggerInterface;
@@ -29,8 +30,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
-use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
 
 /**
  * @Route("/process/{process}/client")
@@ -66,9 +65,9 @@ class ProcessClientController extends BaseController
     /**
      * @Route("/", name="client_show", methods={"GET","POST"})
      *
-     * @param Request $request
-     * @param Process $process
-     * @param HttpClientInterface $datafordelerHttpClient
+     * @param Request             $request
+     * @param Process             $process
+     * @param DatafordelerService $datafordelerService
      *
      * @return Response
      *
@@ -95,12 +94,13 @@ class ProcessClientController extends BaseController
         // Get client type
         $clientType = $process->getProcessClient()->getType();
 
-        if ($clientType == ProcessClientPerson::PERSON) {
+        if (ProcessClientPerson::PERSON === $clientType) {
             $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
             $data = $datafordelerService->getPersonData($processClientIdentifier);
-        } elseif ($clientType == ProcessClientPerson::COMPANY) {
+        } elseif (ProcessClientPerson::COMPANY === $clientType) {
             $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
         }
+
         return $this->render($view, [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'client' => $client,
@@ -154,10 +154,10 @@ class ProcessClientController extends BaseController
         // Get client type
         $clientType = $client->getType();
 
-        if ($clientType == ProcessClientPerson::PERSON) {
+        if (ProcessClientPerson::PERSON === $clientType) {
             $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
             $data = $datafordelerService->getPersonData($processClientIdentifier);
-        } elseif ($clientType == ProcessClientPerson::COMPANY) {
+        } elseif (ProcessClientPerson::COMPANY === $clientType) {
             $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
         }
 

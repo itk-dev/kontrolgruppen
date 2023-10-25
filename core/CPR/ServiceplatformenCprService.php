@@ -10,8 +10,6 @@
 
 namespace Kontrolgruppen\CoreBundle\CPR;
 
-use ItkDev\Serviceplatformen\Service\Exception\ServiceException;
-use Kontrolgruppen\CoreBundle\Controller\DatafordelerController;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
@@ -24,8 +22,7 @@ class ServiceplatformenCprService extends AbstractCprService implements CprServi
     /**
      * ServiceplatformenCprService constructor.
      *
-     * @param DatafordelerController $dataFordelerController
-     * @param HttpClientInterface $httpClient
+     * @param HttpClientInterface    $httpClient
      */
     public function __construct(HttpClientInterface $httpClient)
     {
