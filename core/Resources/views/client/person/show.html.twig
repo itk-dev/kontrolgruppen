@@ -25,10 +25,6 @@
             {# Individual tables go here #}
 
             {# Adresse historik Table #}
-            {% if process.processType == 'Udrejse' %}
-                {# Civilstatus Table #}
-                {% include '@KontrolgruppenCore/client/person_tables/civil_status.html.twig' %}
-            {% endif %}
             {% include '@KontrolgruppenCore/client/person_tables/adresse_historik.html.twig' with {'data': data} %}
             {# Bopælssamling Table #}
             {% include '@KontrolgruppenCore/client/person_tables/bopaelssamling.html.twig' %}

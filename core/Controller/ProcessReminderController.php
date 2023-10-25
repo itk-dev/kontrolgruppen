@@ -11,6 +11,7 @@
 namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\Entity\Process;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
 use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 use Kontrolgruppen\CoreBundle\Entity\Reminder;
 use Kontrolgruppen\CoreBundle\Form\ReminderType;
@@ -46,7 +47,7 @@ class ProcessReminderController extends BaseController
         if (ProcessClientPerson::PERSON === $clientType) {
             $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
             $data = $datafordelerService->getPersonData($processClientIdentifier);
-        } elseif (ProcessClientPerson::COMPANY === $clientType) {
+        } elseif (ProcessClientCompany::COMPANY === $clientType) {
             $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
         }
 
@@ -96,7 +97,7 @@ class ProcessReminderController extends BaseController
         if (ProcessClientPerson::PERSON === $clientType) {
             $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
             $data = $datafordelerService->getPersonData($processClientIdentifier);
-        } elseif (ProcessClientPerson::COMPANY === $clientType) {
+        } elseif (ProcessClientCompany::COMPANY === $clientType) {
             $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
         }
 

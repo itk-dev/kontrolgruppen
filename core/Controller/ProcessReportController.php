@@ -11,6 +11,9 @@
 namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\Entity\Process;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
+use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
 use Kontrolgruppen\CoreBundle\Service\ReportService;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -43,7 +46,7 @@ class ProcessReportController extends BaseController
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function index(Request $request, Process $process, TranslatorInterface $translator, ReportService $reportService): Response
+    public function index(Request $request, Process $process, TranslatorInterface $translator, ReportService $reportService, DatafordelerService $datafordelerService): Response
     {
         $form = $this->createFormBuilder()
             ->add('options', ChoiceType::class, [
@@ -74,10 +77,22 @@ class ProcessReportController extends BaseController
             return $response;
         }
 
+        $processClientIdentifier = $process->getProcessClient()->getIdentifier();
+        // Get client type
+        $clientType = $process->getProcessClient()->getType();
+
+        if (ProcessClientPerson::PERSON === $clientType) {
+            $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
+            $data = $datafordelerService->getPersonData($processClientIdentifier);
+        } elseif (ProcessClientCompany::COMPANY === $clientType) {
+            $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
+        }
+
         $data = [
             'process' => $process,
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'form' => $form->createView(),
+            'data' => $data,
         ];
 
         return $this->render('@KontrolgruppenCore/process_report/index.html.twig', $data);

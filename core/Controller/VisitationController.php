@@ -10,6 +10,8 @@
 
 namespace Kontrolgruppen\CoreBundle\Controller;
 
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 use Kontrolgruppen\CoreBundle\Entity\Visitation;
 use Kontrolgruppen\CoreBundle\Entity\VisitationLogEntry;
 use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
@@ -133,6 +135,7 @@ class VisitationController extends DatafordelerController
                     [
                         'data' => $data,
                         'visitation' => $visitation,
+                        'client_type' => ProcessClientCompany::COMPANY,
                     ]
                 );
             }
@@ -183,6 +186,7 @@ class VisitationController extends DatafordelerController
                     '@KontrolgruppenCore/visitation/person_results.html.twig',
                     [
                         'data' => $data,
+                        'client_type' => ProcessClientPerson::PERSON,
                         'visitation' => $visitation,
                     ]
                 );

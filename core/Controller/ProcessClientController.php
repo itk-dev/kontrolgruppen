@@ -97,7 +97,7 @@ class ProcessClientController extends BaseController
         if (ProcessClientPerson::PERSON === $clientType) {
             $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
             $data = $datafordelerService->getPersonData($processClientIdentifier);
-        } elseif (ProcessClientPerson::COMPANY === $clientType) {
+        } elseif (ProcessClientCompany::COMPANY === $clientType) {
             $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
         }
 
@@ -157,7 +157,7 @@ class ProcessClientController extends BaseController
         if (ProcessClientPerson::PERSON === $clientType) {
             $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
             $data = $datafordelerService->getPersonData($processClientIdentifier);
-        } elseif (ProcessClientPerson::COMPANY === $clientType) {
+        } elseif (ProcessClientCompany::COMPANY === $clientType) {
             $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
         }
 
