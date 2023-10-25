@@ -158,7 +158,7 @@ class JournalEntryController extends BaseController
         if (ProcessClientPerson::PERSON === $clientType) {
             $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
             $data = $datafordelerService->getPersonData($processClientIdentifier);
-        } elseif (ProcessClientPerson::COMPANY === $clientType) {
+        } elseif (ProcessClientCompany::COMPANY === $clientType) {
             $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
         }
 
@@ -210,7 +210,7 @@ class JournalEntryController extends BaseController
         if (ProcessClientPerson::PERSON === $clientType) {
             $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
             $data = $datafordelerService->getPersonData($processClientIdentifier);
-        } elseif (ProcessClientPerson::COMPANY === $clientType) {
+        } elseif (ProcessClientCompany::COMPANY === $clientType) {
             $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
         }
         if ($form->isSubmitted() && $form->isValid()) {
@@ -269,7 +269,7 @@ class JournalEntryController extends BaseController
         if (ProcessClientPerson::PERSON === $clientType) {
             $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
             $data = $datafordelerService->getPersonData($processClientIdentifier);
-        } elseif (ProcessClientPerson::COMPANY === $clientType) {
+        } elseif (ProcessClientCompany::COMPANY === $clientType) {
             $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
         }
         // Attach log entries.
@@ -334,7 +334,7 @@ class JournalEntryController extends BaseController
         if (ProcessClientPerson::PERSON === $clientType) {
             $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
             $data = $datafordelerService->getPersonData($processClientIdentifier);
-        } elseif (ProcessClientPerson::COMPANY === $clientType) {
+        } elseif (ProcessClientCompany::COMPANY === $clientType) {
             $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
         }
         if ($form->isSubmitted() && $form->isValid()) {
