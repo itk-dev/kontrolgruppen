@@ -64,9 +64,9 @@ class DatafordelerService
     }
 
     /**
-     * @param array               $cprAdresse
-     * @param string              $relationCpr
-     * @param string              $relationFullname
+     * @param array  $cprAdresse
+     * @param string $relationCpr
+     * @param string $relationFullname
      *
      * @return array
      *
@@ -135,7 +135,7 @@ class DatafordelerService
     }
 
     /**
-     * @param string              $cvr
+     * @param string $cvr
      *
      * @return array
      *
@@ -162,7 +162,6 @@ class DatafordelerService
 
     /**
      * @param string              $pnumber
-     * @param HttpClientInterface $datafordelerHttpClient
      *
      * @return array
      *

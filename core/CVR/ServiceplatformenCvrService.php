@@ -10,8 +10,6 @@
 
 namespace Kontrolgruppen\CoreBundle\CVR;
 
-use ItkDev\Serviceplatformen\Service\Exception\ServiceException;
-
 /**
  * Class ServiceplatformenCvrService.
  */
