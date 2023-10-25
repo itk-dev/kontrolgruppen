@@ -12,13 +12,13 @@ namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\Entity\Visitation;
 use Kontrolgruppen\CoreBundle\Entity\VisitationLogEntry;
+use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
-use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
 
 /**
  * @Route("/visitation")
