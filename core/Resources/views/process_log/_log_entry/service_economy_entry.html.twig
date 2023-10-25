@@ -1,7 +1,7 @@
 <ul class="list-group">
     {% if amount is defined %}
     <li class="list-group-item">
-        {{ 'process_log.revision.table.log_entry.service_economy_entry.amount'|trans }}: {{ amount|localizedcurrency('DKK') }}
+        {{ 'process_log.revision.table.log_entry.service_economy_entry.amount'|trans }}: {{ amount|format_currency('DKK') }}
     </li>
     {% endif %}
     {% if type is defined %}
@@ -16,7 +16,7 @@
     {% endif %}
     {% if repayment_amount is defined %}
     <li class="list-group-item">
-        {{ 'process_log.revision.table.log_entry.service_economy_entry.repayment_amount'|trans }}: {{ repayment_amount|localizedcurrency('DKK') }}
+        {{ 'process_log.revision.table.log_entry.service_economy_entry.repayment_amount'|trans }}: {{ repayment_amount|format_currency('DKK') }}
     </li>
     {% endif %}
     {% if periodFrom is defined %}

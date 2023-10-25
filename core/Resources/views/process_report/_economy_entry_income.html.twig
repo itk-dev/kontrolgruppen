@@ -18,7 +18,7 @@
                     -
                 {% endif %}
             </td>
-            <td>{{ economy_entry.amount|localizedcurrency('DKK') }}</td>
+            <td>{{ economy_entry.amount|format_currency('DKK') }}</td>
             <td style="text-align: right;">{{ enumTranslation(economy_entry.amountPeriod, 'EconomyEntryAmountPeriodEnumType') }}</td>
         </tr>
     {% else %}

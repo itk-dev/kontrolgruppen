@@ -19,7 +19,7 @@
                     -
                 {% endif %}
             </td>
-            <td class="text-right">{{ economy_entry.amount|localizedcurrency('DKK') }}</td>
+            <td class="text-right">{{ economy_entry.amount|format_currency('DKK') }}</td>
         </tr>
         {% else %}
             <tr>

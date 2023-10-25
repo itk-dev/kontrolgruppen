@@ -21,7 +21,7 @@
                     </td>
                     <td>{{ economy_entry.accountNumber }}</td>
                     <td>{{ economy_entry.date|simple_date('short') }}</td>
-                    <td class="text-right">{{ economy_entry.amount|localizedcurrency('DKK') }}</td>
+                    <td class="text-right">{{ economy_entry.amount|format_currency('DKK') }}</td>
                 </tr>
             {% else %}
                 <tr>
