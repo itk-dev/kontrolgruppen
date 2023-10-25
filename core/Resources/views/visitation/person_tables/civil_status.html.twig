@@ -22,7 +22,13 @@
                         {# Loop through the data for this table if applicable. Otherwise, statically add rows. #}
                         {% if data.Civilstande is defined %}
                             {% for civilstatus in data.Civilstande %}
-                            <tr>
+                            {% set currentDate = "now"|date("Y-m-d") %}
+                            {% set fiveYearsAgo = currentDate|date_modify("-5 years")|date("Y-m-d") %}
+                            {% if civilstatus.Civilstand.virkningFra < fiveYearsAgo %}
+                            <tr class="older-than-5">
+                            {% else %}
+                                <tr>
+                            {% endif %}
                                 <td>{{ civilstatus.Civilstand.Civilstandstype }}</td>
                                 {% if civilstatus.Civilstand.Aegtefaelle is defined %}
                                 <td>
@@ -47,6 +53,11 @@
 
                             </tr>
                             {% endfor %}
+                            <tr>
+                                <td colspan="4" class="text-center">
+                                    <button class="btn btn-primary show-history">{{ 'visitation.get_history'|trans }}</button>
+                                </td>
+                            </tr>
                         {% else %}
                             <tr>
                                 <td class="empty-column" colspan="4">{{ "visitation.data.empty"|trans }}</td>

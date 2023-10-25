@@ -19,7 +19,13 @@
                     <tbody class="bg-light">
                         {% if data.Statsborgerskaber is defined %}
                             {% for land in data.Statsborgerskaber %}
-                            <tr>
+                            {% set currentDate = "now"|date("Y-m-d") %}
+                            {% set fiveYearsAgo = currentDate|date_modify("-5 years")|date("Y-m-d") %}
+                            {% if land.Statsborgerskab.virkningFra < fiveYearsAgo %}
+                            <tr class="older-than-5">
+                            {% else %}
+                                <tr>
+                            {% endif %}
                                 <td>{{ land.Statsborgerskab.cprlandenavn }}</td>
                                 {% if land.Statsborgerskab.virkningTil is defined %}
                                     <td>{{ land.Statsborgerskab.virkningFra|date("d-m-Y") }} {{ 'visitation.person.to'|trans }} {{ land.Statsborgerskab.virkningTil|date("d-m-Y") }} </td>
@@ -28,6 +34,11 @@
                                 {% endif %}
                             </tr>
                             {% endfor %}
+                            <tr>
+                                <td colspan="4" class="text-center">
+                                    <button class="btn btn-primary show-history">{{ 'visitation.get_history'|trans }}</button>
+                                </td>
+                            </tr>
                         {% else %}
                             <tr>
                                 <td class="empty-column" colspan="4">{{ "visitation.data.empty"|trans }}</td>
