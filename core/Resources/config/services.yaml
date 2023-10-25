@@ -1,6 +1,5 @@
 services:
     Symfony\Component\DependencyInjection\ContainerInterface: '@service_container'
-    Symfony\Component\HttpKernel\Profiler\Profiler: '@profiler'
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
