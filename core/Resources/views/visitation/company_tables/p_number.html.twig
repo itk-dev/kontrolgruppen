@@ -3,7 +3,7 @@
         <div class="card-header text-black" id="tableHeadingVirksomhed">
             <h2 class="mb-0">
                 <button class="btn btn-block text-left text-black collapsed btn-header " type="button" data-toggle="collapse" data-target="#tableCollapseVirksomhedPNumber" aria-expanded="false" aria-controls="tableCollapseVirksomhedPNumber">
-                    {{ visitation.company.p_numbers|trans }} <i class="iconClass fas fa-sort-down"></i>
+                    {{ 'visitation.company.p_numbers'|trans }} <i class="iconClass fas fa-sort-down"></i>
                 </button>
             </h2>
         </div>
@@ -17,10 +17,10 @@
                             {{ produktionsenhed.produktionsenhed.pNummer }}
                         </td></tr>
                         <tr>
-                            <th>{{ visitation.company.name|trans }}</th>
-                            <th>{{ visitation.company.address|trans }}</th>
-                            <th>{{ visitation.company.phone|trans }}</th>
-                            <th>{{ visitation.company.mail|trans }}</th></tr>
+                            <th>{{ 'visitation.company.name'|trans }}</th>
+                            <th>{{ 'visitation.company.address'|trans }}</th>
+                            <th>{{ 'visitation.company.phone'|trans }}</th>
+                            <th>{{ 'visitation.company.mail'|trans }}</th></tr>
                         <tr>
                             <td>{{ produktionsenhed.produktionsenhedsnavn.vaerdi }}</td>
                             <td>

@@ -18,6 +18,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
 
 /**
  * @Route("/visitation")
@@ -91,7 +92,7 @@ class VisitationController extends DatafordelerController
             $this->em->flush();
 
             try {
-                $data = $this->getVirksomhedData($cvr, $datafordelerHttpClient);
+                $data = $datafordelerService->getVirksomhedData($cvr);
                 if (null === $data) {
                     return $this->render(
                         '@KontrolgruppenCore/visitation/search.html.twig',
@@ -115,7 +116,7 @@ class VisitationController extends DatafordelerController
                 foreach ($data['produktionsenheder'] as $value) {
                     try {
                         // add to data['p-numre']
-                        $data['p-numre'][] = $this->getVirksomhedDataByPNumber($value['pNummer'], $datafordelerHttpClient);
+                        $data['p-numre'][] = $datafordelerService->getVirksomhedDataByPNumber($value['pNummer']);
                     } catch (TransportExceptionInterface $e) {
                         return $this->render(
                             '@KontrolgruppenCore/visitation/search.html.twig',
@@ -150,7 +151,7 @@ class VisitationController extends DatafordelerController
 
             $cpr = preg_replace('/\D+/', '', $cpr);
             try {
-                $data = $this->getPersonData($cpr, $datafordelerHttpClient);
+                $data = $datafordelerService->getPersonData($cpr);
                 if (null === $data) {
                     return $this->render(
                         '@KontrolgruppenCore/visitation/search.html.twig',

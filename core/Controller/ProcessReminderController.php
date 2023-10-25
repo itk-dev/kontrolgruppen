@@ -158,7 +158,7 @@ class ProcessReminderController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->em;
 
             return $this->redirectToRoute('reminder_index', [
                 'id' => $reminder->getId(),
@@ -188,7 +188,7 @@ class ProcessReminderController extends BaseController
         $this->denyAccessUnlessGranted('edit', $process);
 
         if ($this->isCsrfTokenValid('delete'.$reminder->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->em;
             $entityManager->remove($reminder);
             $entityManager->flush();
         }
@@ -212,7 +212,7 @@ class ProcessReminderController extends BaseController
 
         $reminder->setFinished(true);
 
-        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager = $this->em;
         $entityManager->flush();
 
         return $this->redirectToRoute('reminder_index', [

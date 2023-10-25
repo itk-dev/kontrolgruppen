@@ -168,9 +168,9 @@ class DatafordelerService
      *
      * @throws TransportExceptionInterface
      */
-    public function getVirksomhedDataByPNumber(string $pnumber, HttpClientInterface $datafordelerHttpClient): array
+    public function getVirksomhedDataByPNumber(string $pnumber): array
     {
-        $response = $datafordelerHttpClient->request(
+        $response = $this->datafordelerHttpClient->request(
             'GET',
             'CVR/HentCVRData/1/rest/hentProduktionsenhedMedPNummer',
             [
