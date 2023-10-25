@@ -1,0 +1,57 @@
+<div class="accordion mb-3" id="tableAccordionVirksomhed">
+    <div class="card">
+        <div class="card-header text-black" id="tableHeadingVirksomhed">
+            <h2 class="mb-0">
+                <button class="btn btn-block text-left text-black collapsed btn-header " type="button" data-toggle="collapse" data-target="#tableCollapseVirksomhedPNumber" aria-expanded="false" aria-controls="tableCollapseVirksomhedPNumber">
+                    {{ 'visitation.company.p_numbers'|trans }} <i class="iconClass fas fa-sort-down"></i>
+                </button>
+            </h2>
+        </div>
+        <div id="tableCollapseVirksomhedPNumber" class="collapse" aria-labelledby="tableHeadingVirksomhed" data-parent="#tableAccordionVirksomhed">
+            <div class="card-body p-0">
+                <table class="table mb-0 table-bordered bg-info">
+                    <tbody class="bg-light">
+                        {# foreach produktionsenheder #}
+                        {% for produktionsenhed in data['p-numre'] %}
+                        <tr class="pnumber"><td colspan="4">
+                            {{ produktionsenhed.produktionsenhed.pNummer }}
+                        </td></tr>
+                        <tr>
+                            <th>{{ 'visitation.company.name'|trans }}</th>
+                            <th>{{ 'visitation.company.address'|trans }}</th>
+                            <th>{{ 'visitation.company.phone'|trans }}</th>
+                            <th>{{ 'visitation.company.mail'|trans }}</th></tr>
+                        <tr>
+                            <td>{{ produktionsenhed.produktionsenhedsnavn.vaerdi }}</td>
+                            <td>
+                                {% if produktionsenhed.beliggenhedsadresse.CVRAdresse_vejnavn is not empty %}
+                                    {{ produktionsenhed.beliggenhedsadresse.CVRAdresse_vejnavn }}
+                                {% endif %}
+                                {% if produktionsenhed.beliggenhedsadresse.CVRAdresse_husnummer is not empty %}
+                                    {{ produktionsenhed.beliggenhedsadresse.CVRAdresse_husnummer }}
+                                {% endif %}
+                                {% if produktionsenhed.beliggenhedsadresse.CVRAdresse_etagebetegnelse is not empty %}
+                                    {{ produktionsenhed.beliggenhedsadresse.CVRAdresse_etagebetegnelse }}
+                                {% endif %}
+                                {% if produktionsenhed.beliggenhedsadresse.CVRAdresse_doerbetegnelse is not empty %}
+                                    {{ produktionsenhed.beliggenhedsadresse.CVRAdresse_doerbetegnelse }},
+                                {% endif %}
+
+                                {% if produktionsenhed.beliggenhedsadresse.CVRAdresse_postnummer is not empty %}
+                                    {{ produktionsenhed.beliggenhedsadresse.CVRAdresse_postnummer }}
+                                {% endif %}
+                                {% if produktionsenhed.beliggenhedsadresse.CVRAdresse_postdistrikt is not empty %}
+                                    {{ produktionsenhed.beliggenhedsadresse.CVRAdresse_postdistrikt }}
+                                {% endif %}
+                            </td>
+                            <td>{{ produktionsenhed.telefonnummer.vaerdi }}</td>
+                            <td>{{ produktionsenhed['e-mailadresse'].vaerdi }}</td>
+                        </tr>
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
