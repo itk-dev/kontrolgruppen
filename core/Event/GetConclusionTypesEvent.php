@@ -34,7 +34,7 @@ class GetConclusionTypesEvent extends Event
     /**
      * @return array
      */
-    public function getTypes()
+    public function getTypes(): array
     {
         return $this->types;
     }
@@ -42,8 +42,10 @@ class GetConclusionTypesEvent extends Event
     /**
      * @param $types
      */
-    public function setTypes($types)
+    public function setTypes($types): self
     {
         $this->types = $types;
+
+        return $this;
     }
 }

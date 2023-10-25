@@ -12,9 +12,12 @@ namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 use Kontrolgruppen\CoreBundle\Export\Logs\ProcessLogExport;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -28,15 +31,16 @@ class ProcessLogController extends BaseController
     /**
      * @Route("/", name="process_log_index", methods={"GET","POST"})
      *
-     * @param Request $request
-     * @param Process $process
+     * @param Request               $request
+     * @param Process               $process
+     * @param DatafordelerService   $process
      *
      * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function index(Request $request, Process $process): Response
+    public function index(Request $request, Process $process, DatafordelerService $datafordelerService): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
@@ -49,12 +53,25 @@ class ProcessLogController extends BaseController
             20
         );
 
+        // Get the ProcessClient Identifier from process
+        $processClientIdentifier = $process->getProcessClient()->getIdentifier();
+        // Get client type
+        $clientType = $process->getProcessClient()->getType();
+
+        if (ProcessClientPerson::PERSON === $clientType) {
+            $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
+            $data = $datafordelerService->getPersonData($processClientIdentifier);
+        } elseif (ProcessClientCompany::COMPANY === $clientType) {
+            $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
+        }
+
         return $this->render('@KontrolgruppenCoreBundle/process_log/index.html.twig', [
             'menuItems' => $this->menuService->getProcessMenu(
                 $request->getPathInfo(),
                 $process
             ),
             'process' => $process,
+            'data' => $data,
             'logEntriesPagination' => $logEntriesPagination,
         ]);
     }
