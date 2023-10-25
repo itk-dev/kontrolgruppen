@@ -13,9 +13,9 @@ namespace Kontrolgruppen\CoreBundle\Controller;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Kontrolgruppen\CoreBundle\Entity\Process;
-use Kontrolgruppen\CoreBundle\Entity\ProcessGroup;
 use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
 use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
+use Kontrolgruppen\CoreBundle\Entity\ProcessGroup;
 use Kontrolgruppen\CoreBundle\Form\ProcessGroupType;
 use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
 use Symfony\Component\HttpFoundation\Request;
@@ -82,7 +82,6 @@ class ProcessGroupController extends BaseController
      * @param Request               $request
      * @param Process               $process
      * @param DatafordelerService   $datafordelerService
-
      *
      * @return Response
      *
@@ -168,6 +167,7 @@ class ProcessGroupController extends BaseController
         } elseif (ProcessClientCompany::COMPANY === $clientType) {
             $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
         }
+
         return $this->render('@KontrolgruppenCore/process_group/edit.html.twig', [
             'menuItems' => $this->menuService->getProcessMenu(
                 $request->getPathInfo(),

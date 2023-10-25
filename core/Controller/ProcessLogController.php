@@ -11,13 +11,13 @@
 namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\Entity\Process;
-use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
 use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
 use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
+use Kontrolgruppen\CoreBundle\Entity\ProcessLogEntry;
 use Kontrolgruppen\CoreBundle\Export\Logs\ProcessLogExport;
+use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;

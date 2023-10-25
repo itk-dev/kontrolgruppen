@@ -11,6 +11,9 @@
 namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\Entity\Process;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
+use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
 use Kontrolgruppen\CoreBundle\Service\ReportService;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -20,9 +23,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
-use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
-use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
 
 /**
  * @Route("/process/{process}/report")
@@ -92,7 +92,7 @@ class ProcessReportController extends BaseController
             'process' => $process,
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'form' => $form->createView(),
-            'data' => $data
+            'data' => $data,
         ];
 
         return $this->render('@KontrolgruppenCore/process_report/index.html.twig', $data);
