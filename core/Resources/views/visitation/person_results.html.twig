@@ -37,9 +37,9 @@
                 <div class="d-flex justify-content-between">
                 <div></div>
                 <div class="new-process">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#">
+                    <a href="{{ path('process_new', {clientType: client_type }) }}" class="dropdown-item" class="btn btn-primary">
                         {{ 'visitation.new.title'|trans }}
-                    </button>
+                    </a>
                 </div>
             </div>
         </div>

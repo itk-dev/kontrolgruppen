@@ -24,6 +24,11 @@
 
                 {# CPR historik Table #}
                 {% include '@KontrolgruppenCore/visitation/company_tables/amount_workers.html.twig' %}
+                <div class="new-process">
+                    <a href="{{ path('process_new', {clientType: client_type}) }}" class="dropdown-item" class="btn btn-primary">
+                        {{ 'visitation.new.title'|trans }}
+                    </a>
+                </div>
             </div>
         </div>
 
