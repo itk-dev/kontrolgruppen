@@ -12,7 +12,7 @@
                 <table class="table mb-0 table-bordered bg-info">
                     <tbody class="bg-light">
                         {# foreach produktionsenheder #}
-                        {% for produktionsenhed in data['p-numre'] %}
+                        {% for produktionsenhed in data.pNummer %}
                         <tr class="pnumber"><td colspan="4">
                             {{ produktionsenhed.produktionsenhed.pNummer }}
                         </td></tr>
