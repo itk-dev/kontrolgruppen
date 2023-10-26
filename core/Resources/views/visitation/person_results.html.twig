@@ -195,7 +195,10 @@
 
             return formattedCpr;
         }
-
+        function formatCprDash(cpr){
+            const formattedCpr = `${cpr.substring(0, 6)}-${cpr.substring(6)}`;
+            return formattedCpr;
+        }
         $(document).ready(function() {
 
             $('.older-than-5').hide();
@@ -206,6 +209,12 @@
                 const originalCpr = cprFields[i].textContent;
                 const formattedCprAndAge = formatCprAndCalculateAge(originalCpr);
                 cprFields[i].textContent = formattedCprAndAge;
+            }
+            const cprDashes = document.getElementsByClassName("cpr-dash");
+            for (let i = 0; i < cprDashes.length; i++) {
+                const originalCpr = cprDashes[i].textContent;
+                const formattedCpr = formatCprDash(originalCpr);
+                cprDashes[i].textContent = formattedCpr;
             }
             // const cprElement = document.getElementById("cprField");
             // console.log(formattedCprAndAge);

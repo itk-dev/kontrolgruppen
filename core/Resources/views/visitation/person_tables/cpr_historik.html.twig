@@ -25,7 +25,7 @@
                         {% else %}
                             <tr>
                         {% endif %}
-                            <td>{{ cprnummer.Personnummer.personnummer }}</td>
+                            <td class="cpr-dash">{{ cprnummer.Personnummer.personnummer }}</td>
                             {% if cprnummer.Personnummer.virkningTil is defined %}
                                 <td>{{ cprnummer.Personnummer.virkningFra|date("d-m-Y") }} {{ 'visitation.person.to'|trans }} {{ cprnummer.Personnummer.virkningTil|date("d-m-Y") }} </td>
                             {% else %}
