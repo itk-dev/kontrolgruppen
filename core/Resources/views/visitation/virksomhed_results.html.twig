@@ -42,13 +42,13 @@
                 </div>
                 <table class="table table-bordered">
                     <tbody class="stam-data-body">
-                        {% if data.virksomhedsnavn.vaerdi is not empty %}
+                        {% if data.virksomhedsnavn.vaerdi is defined %}
                             <tr>
                                 <td>{{ 'visitation.name'|trans }}</td>
                                 <td>{{ data.virksomhedsnavn.vaerdi }}</td>
                             </tr>
                         {% endif %}
-                        {% if data.virksomhed.CVRNummer is not empty %}
+                        {% if data.virksomhed.CVRNummer is defined %}
                             <tr>
                                 <td>{{ 'visitation.cvr'|trans }}</td>
                                 <td id="cvrField">{{ data.virksomhed.CVRNummer }}</td>
@@ -58,29 +58,29 @@
                             <tr>
                                 <td>{{ 'visitation.address'|trans }}</td>
                                 <td>
-                                    {% if data.beliggenhedsadresse.CVRAdresse_vejnavn is not empty %}
+                                    {% if data.beliggenhedsadresse.CVRAdresse_vejnavn is defined %}
                                         {{ data.beliggenhedsadresse.CVRAdresse_vejnavn }}
                                     {% endif %}
-                                    {% if data.beliggenhedsadresse.CVRAdresse_husnummerFra is not empty %}
+                                    {% if data.beliggenhedsadresse.CVRAdresse_husnummerFra is defined %}
                                         {{ data.beliggenhedsadresse.CVRAdresse_husnummerFra }}
                                     {% endif %}
-                                    {% if data.beliggenhedsadresse.CVRAdresse_etagebetegnelse is not empty %}
+                                    {% if data.beliggenhedsadresse.CVRAdresse_etagebetegnelse is defined %}
                                         {{ data.beliggenhedsadresse.CVRAdresse_etagebetegnelse }}
                                     {% endif %}
-                                    {% if data.beliggenhedsadresse.CVRAdresse_doerbetegnelse is not empty %}
+                                    {% if data.beliggenhedsadresse.CVRAdresse_doerbetegnelse is defined %}
                                         {{ data.beliggenhedsadresse.CVRAdresse_doerbetegnelse }},
                                     {% endif %}
 
-                                    {% if data.beliggenhedsadresse.CVRAdresse_postnummer is not empty %}
+                                    {% if data.beliggenhedsadresse.CVRAdresse_postnummer is defined %}
                                         {{ data.beliggenhedsadresse.CVRAdresse_postnummer }}
                                     {% endif %}
-                                    {% if data.beliggenhedsadresse.CVRAdresse_postdistrikt is not empty %}
+                                    {% if data.beliggenhedsadresse.CVRAdresse_postdistrikt is defined %}
                                         {{ data.beliggenhedsadresse.CVRAdresse_postdistrikt }}
                                     {% endif %}
                                 </td>
                             </tr>
                         {% endif %}
-                        {% if data['e-mailadresse'].vaerdi is not empty %}
+                        {% if data['e-mailadresse'].vaerdi is defined %}
                             <tr>
                                 <td>{{ 'visitation.contact'|trans }}</td>
                                 <td>{{ data['e-mailadresse'].vaerdi }}</td>

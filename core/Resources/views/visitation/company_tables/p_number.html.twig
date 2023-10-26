@@ -24,23 +24,23 @@
                         <tr>
                             <td>{{ produktionsenhed.produktionsenhedsnavn.vaerdi }}</td>
                             <td>
-                                {% if produktionsenhed.beliggenhedsadresse.CVRAdresse_vejnavn is not empty %}
+                                {% if produktionsenhed.beliggenhedsadresse.CVRAdresse_vejnavn is defined %}
                                     {{ produktionsenhed.beliggenhedsadresse.CVRAdresse_vejnavn }}
                                 {% endif %}
-                                {% if produktionsenhed.beliggenhedsadresse.CVRAdresse_husnummer is not empty %}
+                                {% if produktionsenhed.beliggenhedsadresse.CVRAdresse_husnummer is defined %}
                                     {{ produktionsenhed.beliggenhedsadresse.CVRAdresse_husnummer }}
                                 {% endif %}
-                                {% if produktionsenhed.beliggenhedsadresse.CVRAdresse_etagebetegnelse is not empty %}
+                                {% if produktionsenhed.beliggenhedsadresse.CVRAdresse_etagebetegnelse is defined %}
                                     {{ produktionsenhed.beliggenhedsadresse.CVRAdresse_etagebetegnelse }}
                                 {% endif %}
-                                {% if produktionsenhed.beliggenhedsadresse.CVRAdresse_doerbetegnelse is not empty %}
+                                {% if produktionsenhed.beliggenhedsadresse.CVRAdresse_doerbetegnelse is defined %}
                                     {{ produktionsenhed.beliggenhedsadresse.CVRAdresse_doerbetegnelse }},
                                 {% endif %}
 
-                                {% if produktionsenhed.beliggenhedsadresse.CVRAdresse_postnummer is not empty %}
+                                {% if produktionsenhed.beliggenhedsadresse.CVRAdresse_postnummer is defined %}
                                     {{ produktionsenhed.beliggenhedsadresse.CVRAdresse_postnummer }}
                                 {% endif %}
-                                {% if produktionsenhed.beliggenhedsadresse.CVRAdresse_postdistrikt is not empty %}
+                                {% if produktionsenhed.beliggenhedsadresse.CVRAdresse_postdistrikt is defined %}
                                     {{ produktionsenhed.beliggenhedsadresse.CVRAdresse_postdistrikt }}
                                 {% endif %}
                             </td>
