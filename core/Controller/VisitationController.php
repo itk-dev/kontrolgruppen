@@ -112,6 +112,14 @@ class VisitationController extends DatafordelerController
                         'error' => 'Forbindelse fejlet. Prøv igen',
                     ]
                 );
+            } catch (\Exception $e) {
+                return $this->render(
+                    '@KontrolgruppenCore/visitation/search.html.twig',
+                    [
+                        'client_type' => 'company',
+                        'error' => 'CVR nummer ikke genkendt, prøv igen.',
+                    ]
+                );
             }
             if (!empty($data)) {
                 // foreach $data['produktionsenheder']
