@@ -154,12 +154,15 @@ class DatafordelerService
             ]
         );
         $data = $response->toArray();
+        if (empty($data['virksomhed'])) {
+            throw new \Exception('Empty data received', 1);
+        }
         foreach ($data['produktionsenheder'] as $value) {
             try {
                 // add to data['p-numre']
                 $data['pNummer'][] = $this->getVirksomhedDataByPNumber($value['pNummer']);
             }catch (\Exception $e) {
-                    throw new \Exception('Cpr data kan ikke findes', 1);
+                throw new \Exception('Cpr data kan ikke findes', 1);
             }
         }
 
