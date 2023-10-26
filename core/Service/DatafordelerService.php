@@ -10,6 +10,7 @@
 
 namespace Kontrolgruppen\CoreBundle\Service;
 
+use Exception;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
@@ -152,12 +153,21 @@ class DatafordelerService
                 ],
             ]
         );
+        $data = $response->toArray();
+        foreach ($data['produktionsenheder'] as $value) {
+            try {
+                // add to data['p-numre']
+                $data['pNummer'][] = $this->getVirksomhedDataByPNumber($value['pNummer']);
+            }catch (\Exception $e) {
+                    throw new \Exception('Cpr data kan ikke findes', 1);
+            }
+        }
 
         if (404 === $response->getStatusCode()) {
             return [];
         }
 
-        return $response->toArray();
+        return $data;
     }
 
     /**

@@ -10,17 +10,17 @@
 
 namespace Kontrolgruppen\CoreBundle\Controller;
 
-use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
-use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 use Kontrolgruppen\CoreBundle\Entity\Visitation;
 use Kontrolgruppen\CoreBundle\Entity\VisitationLogEntry;
-use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 
 /**
  * @Route("/visitation")
@@ -115,20 +115,6 @@ class VisitationController extends DatafordelerController
             }
             if (!empty($data)) {
                 // foreach $data['produktionsenheder']
-                foreach ($data['produktionsenheder'] as $value) {
-                    try {
-                        // add to data['p-numre']
-                        $data['p-numre'][] = $datafordelerService->getVirksomhedDataByPNumber($value['pNummer']);
-                    } catch (TransportExceptionInterface $e) {
-                        return $this->render(
-                            '@KontrolgruppenCore/visitation/search.html.twig',
-                            [
-                                'client_type' => 'company',
-                                'error' => 'Forbindelse fejlet. Prøv igen',
-                            ]
-                        );
-                    }
-                }
 
                 return $this->render(
                     '@KontrolgruppenCore/visitation/virksomhed_results.html.twig',
