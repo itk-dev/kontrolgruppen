@@ -102,6 +102,7 @@
             const day = cpr.substring(0, 2);
             const month = cpr.substring(2, 4);
             const year = cpr.substring(4, 6);
+            const lastFour = cpr.substring(6, 10);
             const seventhDigit = parseInt(cpr.substring(6, 7), 10);
             const cprAgeTranslation = "{{ 'visitation.form.cpr_age'|trans }}";
             // Determine the correct century
@@ -127,7 +128,7 @@
             }
 
             // Format the CPR number
-            const formattedCpr = `${day}${month}${year}-xxxx (${age} ${cprAgeTranslation})`;
+            const formattedCpr = `${day}${month}${year}-${lastFour} (${age} ${cprAgeTranslation})`;
 
             return formattedCpr;
         }
