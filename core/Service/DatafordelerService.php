@@ -57,8 +57,18 @@ class DatafordelerService
         } catch (\Exception $e) {
             throw new \Exception('Cpr data kan ikke findes', 1);
         }
+        $adresseringsnavn = null;
+        foreach ($data['Navne'] as $navn) {
+            if (isset($navn['Navn']['adresseringsnavn'])) {
+                $adresseringsnavn = $navn['Navn']['adresseringsnavn'];
+                break;
+            }
+        }
+        if (!isset($adresseringsnavn)) {
+            throw new \Exception('Adresseringsnavn er ikke defineret', 1);
+        }
         if ($cprAdresse = $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']) {
-            $data['Bopaelssamling'] = $this->getBopaelssamling($cprAdresse, $data['Personnumre'][0]['Personnummer']['personnummer'], $data['Navne'][0]['Navn']['adresseringsnavn'], $this->datafordelerHttpClient);
+            $data['Bopaelssamling'] = $this->getBopaelssamling($cprAdresse, $data['Personnumre'][0]['Personnummer']['personnummer'], $adresseringsnavn, $this->datafordelerHttpClient);
         }
 
         return $data;

@@ -59,8 +59,12 @@
                     <tbody class="stam-data-body">
                         <tr>
                             <td>{{ 'visitation.name'|trans }}</td>
-                            <td>{{ data.Navne[0].Navn.fornavne }} {{ data.Navne[0].Navn.efternavn }}</td>
-                        </tr>
+                            
+                            {% for name in data.Navne %}
+                                {% if name.Navn.virkningTil is not defined %}
+                                    <td>{{ name.Navn.fornavne }} {{ name.Navn.efternavn }}</td>
+                                {% endif %}
+                            {% endfor %}
                         <tr>
                             <td>{{ 'visitation.cpr'|trans }}</td>
                             <td class="cprField">{{ data.Personnumre[0].Personnummer.personnummer }}</td>
