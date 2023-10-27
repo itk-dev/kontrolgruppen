@@ -17,7 +17,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-
+use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * Class ClientCompanyType.
  */
@@ -43,12 +43,16 @@ class ClientCompanyType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $identifier = $options['identifier'] ?? null; // Get the identifier
+
         $builder
             ->add('cvr', TextType::class, [
                 'label' => 'process.form.client_cvr',
                 'attr' => [
                     'class' => 'js-input-cvr no-cvr-scanning',
+                    'readonly' => $identifier !== null ? true : false,
                 ],
+                'data' => $identifier,
             ])
             ->add('search', ButtonType::class, [
                 'label' => 'process.form.search_client_cvr.search',
@@ -63,5 +67,13 @@ class ClientCompanyType extends AbstractType
                     'data-loading-text' => $this->translator->trans('process.form.search_client_cvr.loading'),
                 ],
             ]);
+    }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefined(['identifier']);
     }
 }

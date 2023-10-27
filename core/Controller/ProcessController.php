@@ -204,6 +204,7 @@ class ProcessController extends BaseController
         // Force user to select process client type before anything else.
         try {
             $client = $clientManager->createClient($request->get('clientType') ?? '');
+            $identifier = $request->get('identifier');
         } catch (\Exception $exception) {
             $this->addFlash('danger', $exception->getMessage());
 
@@ -212,8 +213,10 @@ class ProcessController extends BaseController
 
         $process->setProcessClient($client);
 
-        $form = $this->createForm(ProcessType::class, $process);
-
+        $form = $this->createForm(ProcessType::class, $process, [
+            // Add the `personnummer` option to the form.
+            'identifier' => $identifier,
+        ]);
         $this->handleTaxonomyCallback($form, $request, $process);
 
         $form->handleRequest($request);
