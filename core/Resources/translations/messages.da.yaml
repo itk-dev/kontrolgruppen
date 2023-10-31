@@ -662,6 +662,13 @@ visitation:
         citizenship: Statsborgerskab
         company: Virksomhed
         cvr: CVR
+        type: Type
+        residential_area: Boligareal
+        building_area: Bygningsareal
+        rooms: Værelser
+        toilets: Toiletter
+        buildings: Bygninger
+        go_to_ois: Tilgå OIS
     basic_info: Stamdata
     get_history: Hent al historik
     name: Navn
