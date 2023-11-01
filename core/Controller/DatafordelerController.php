@@ -13,9 +13,12 @@ namespace Kontrolgruppen\CoreBundle\Controller;
 use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class DatafordelerController.
+ * @Route("/datafordeler")
  */
 class DatafordelerController extends BaseController
 {
@@ -140,29 +143,32 @@ class DatafordelerController extends BaseController
     }
 
     /**
-     * @param string              $pnumber
+     * @Route("/getMorePNumbers", name="get_more_p_numbers")
+     *
+     * Fetches more P-Numbers with an option to limit the number of records fetched.
+     *
+     * @param Request              $request
      * @param HttpClientInterface $datafordelerHttpClient
      *
-     * @return array
+     * @return JsonResponse
      *
      * @throws TransportExceptionInterface
      */
-    protected function getVirksomhedDataByPNumber(string $pnumber, HttpClientInterface $datafordelerHttpClient): array
+    public function getMorePNumbers(Request $request, HttpClientInterface $datafordelerHttpClient): JsonResponse
     {
-        $response = $datafordelerHttpClient->request(
-            'GET',
-            'CVR/HentCVRData/1/rest/hentProduktionsenhedMedPNummer',
-            [
-                'query' => [
-                    'ppNummer' => $pnumber,
-                ],
-            ]
-        );
+        $offset = $request->query->getInt('offset', 0);
+        $limit = $request->query->getInt('limit', 5);
+        $p_numbers = json_decode($request->query->get('p_numbers'), true);
+    
+        $allData = [];
+        $datafordelerService = new DatafordelerService($datafordelerHttpClient);
 
-        if (404 === $response->getStatusCode()) {
-            return [];
+        $p_numbers = array_slice($p_numbers, $offset, $limit);
+        foreach ($p_numbers as $pnumber) {
+            $data = $datafordelerService->getVirksomhedDataByPNumber($pnumber);
+            $allData[$pnumber] = $data;
         }
-
-        return $response->toArray();
+    
+        return new JsonResponse($allData);
     }
 }

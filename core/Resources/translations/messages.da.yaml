@@ -635,6 +635,7 @@ visitation:
         phone: Telefon
         mail: Mail
         registration_history: Registrations Historik
+        p_number_history: Hent Flere
     person:
         address_history: Adresse historik
         street: Gade

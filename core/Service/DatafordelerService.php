@@ -263,7 +263,10 @@ class DatafordelerService
         if (empty($data['virksomhed'])) {
             throw new \Exception('Empty data received', 1);
         }
-        foreach ($data['produktionsenheder'] as $value) {
+        foreach ($data['produktionsenheder'] as $key => $value) {
+            if ($key >= 5) {
+                break;
+            }
             try {
                 // add to data['p-numre']
                 $data['pNummer'][] = $this->getVirksomhedDataByPNumber($value['pNummer']);

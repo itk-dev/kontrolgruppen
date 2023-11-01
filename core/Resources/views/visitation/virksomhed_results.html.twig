@@ -176,27 +176,76 @@
     <script type="text/javascript">
         $(document).ready(function() {
             const cvrElement = document.getElementById("cvrField");
+            let nameTrans = $('.translations').data('name-translation');
+            let addressTrans = $('.translations').data('address-translation');
+            let phoneTrans = $('.translations').data('phone-translation');
+            let mailTrans = $('.translations').data('mail-translation');
 
             $('.accordion .card-header').click(function() {
                 $(this).find('i').toggleClass('fa-chevron-down fa-chevron-up');
             });
-            $(document).ready(function() {
-                $(".btn-header").click(function() {
-                    $(this).closest(".card-header").toggleClass("collapsed active");
-                    if($(this).closest(".card-header").hasClass("collapsed")){
-                        // Ajax post request to log_visitation route, with data and cpr
-                        $.ajax({
-                            url: "{{ path('log_visitation') }}",
-                            type: "POST",
-                            data: {
-                                table_name: $(this).closest(".card-header").attr("id"),
-                                cvr: cvrElement.innerHTML,
-                                visitation: "{{ visitation }}",
-                            },
-                            success: function(data) {
-                                console.log(data);
-                            }
+            $(".btn-header").click(function() {
+                $(this).closest(".card-header").toggleClass("collapsed active");
+                if($(this).closest(".card-header").hasClass("collapsed")){
+                    // Ajax post request to log_visitation route, with data and cpr
+                    $.ajax({
+                        url: "{{ path('log_visitation') }}",
+                        type: "POST",
+                        data: {
+                            table_name: $(this).closest(".card-header").attr("id"),
+                            cvr: cvrElement.innerHTML,
+                            visitation: "{{ visitation }}",
+                        },
+                        success: function(data) {
+                            console.log(data);
+                        }
+                    });
+                }
+            });
+            let offset = 5;  // Start from the 6th record, as first 5 are already fetched
+            let limit = 5;   // Number of records to fetch in each request
+
+            $("#loadMoreButton").click(function() {
+                let p_numbers = [];
+                $(".allPNumbers").each(function() {
+                    p_numbers.push($(this).text().trim());
+                });
+                $.ajax({
+                    url: '/visitation/getMorePNumbers',  // Replace with your API endpoint
+                    type: 'GET',
+                    data: {
+                        offset: offset,
+                        limit: limit,
+                        p_numbers: JSON.stringify(p_numbers)
+                    },
+                    success: function(data) {
+                        // Construct the rows from your data
+                        let newRow = "";
+                        let count = 0;
+                        
+                        $.each(data, function(pNumber, produktionsenhed) {
+                            count++;
+                            newRow += `<tr class="pnumber"><td colspan="4" style="text-align: left">${produktionsenhed.produktionsenhed.pNummer}</td></tr>`;
+                            newRow += `<tr>
+                                            <th>${nameTrans}</th>
+                                            <th>${addressTrans}</th>
+                                            <th>${phoneTrans}</th>
+                                            <th>${mailTrans}</th>
+                                        </tr>`;
+                            newRow += `<tr>
+                                        <td>${produktionsenhed.produktionsenhedsnavn.vaerdi}</td>
+                                        <td>${produktionsenhed.beliggenhedsadresse.CVRAdresse_vejnavn} ${produktionsenhed.beliggenhedsadresse.CVRAdresse_husnummer}</td>
+                                        <td>${produktionsenhed.telefonnummer.vaerdi}</td>
+                                        <td>${produktionsenhed['e-mailadresse'].vaerdi}</td>
+                                    </tr>`;
                         });
+
+                        $('#pNumberTable > tbody').find('#loadMoreButtonRow').before(newRow);
+
+                        offset += limit;
+                        if (count < 5) {
+                            $('#loadMoreButtonRow').hide();
+                        }
                     }
                 });
             });
