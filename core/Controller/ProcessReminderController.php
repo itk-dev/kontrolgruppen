@@ -188,7 +188,7 @@ class ProcessReminderController extends BaseController
         }
         
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->em;
+            $this->em->flush();
 
             return $this->redirectToRoute('reminder_index', [
                 'id' => $reminder->getId(),
