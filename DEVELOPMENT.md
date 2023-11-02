@@ -21,6 +21,7 @@ docker network create frontend
 docker compose pull
 docker compose up --detach
 docker compose exec phpfpm composer install
+
 # The var folder may be owned by root. Remove it.
 rm -fr var
 docker compose exec phpfpm bin/console cache:clear

@@ -22,3 +22,11 @@ framework:
                 local_pk: '%kernel.project_dir%/%env(DATAFORDELER_PRIVATE_KEY_FILE)%'
                 local_cert: '%kernel.project_dir%/%env(DATAFORDELER_PUBLIC_KEY_FILE)%'
                 passphrase: '%env(DATAFORDELER_PUBLIC_KEY_PASSWORD)%'
+
+when@test:
+    framework:
+        profiler:
+            collect: false
+        test: true
+        session:
+            storage_factory_id: session.storage.factory.native

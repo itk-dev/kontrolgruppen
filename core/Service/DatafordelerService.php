@@ -283,7 +283,7 @@ class DatafordelerService
     }
 
     /**
-     * @param string              $pnumber
+     * @param string $pnumber
      *
      * @return array
      *

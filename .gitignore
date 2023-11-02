@@ -6,6 +6,7 @@
 /var/
 /vendor/
 /bundles/
+/docker-compose.override.yml
 ###< symfony/framework-bundle ###
 
 ###> friendsofphp/php-cs-fixer ###
@@ -47,8 +48,9 @@ yarn-error.log
 ###< phpunit/phpunit ###
 
 # Ignore Certificates
-private_key.pem
-public_key.cer
+private_key*.pem
+public_key*.cer
+/certs
 
 ###> vincentlanglet/twig-cs-fixer ###
 /.twig-cs-fixer.cache
