@@ -175,6 +175,7 @@
     {{ parent() }}
     <script type="text/javascript">
         $(document).ready(function() {
+            $('.older-than-5').hide();
             const cvrElement = document.getElementById("cvrField");
             let nameTrans = $('.translations').data('name-translation');
             let addressTrans = $('.translations').data('address-translation');
@@ -248,6 +249,24 @@
                         }
                     }
                 });
+            });
+            $('.show-history').on('click', function() {
+                // Toggle the visibility of rows marked as older than 5 years
+                $(this).closest('div').find('.older-than-5').toggle();
+                $.ajax({
+                    url: "{{ path('log_visitation') }}",
+                    type: "POST",
+                    data: {
+                        table_name: $(this).closest('.card').find('.card-header').attr("id") + "History",
+                        cpr: "{{ data.virksomhed.CVRNummer }}",
+                        visitation: "{{ visitation }}",
+                    },
+                    success: function(data) {
+                        console.log(data);
+                    }
+                });
+                // Optionally, change the button text based on current state
+                $(this).closest('tr').hide();
             });
         });
     </script>

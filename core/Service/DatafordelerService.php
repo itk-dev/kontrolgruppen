@@ -252,7 +252,7 @@ class DatafordelerService
     {
         $response = $this->datafordelerHttpClient->request(
             'GET',
-            'CVR/HentCVRData/1/rest/hentVirksomhedMedCVRNummer',
+            'CVR/HentCVRDataFortrolig/1/rest/hentVirksomhedMedCVRNummerFortrolig',
             [
                 'query' => [
                     'pCVRNummer' => $cvr,

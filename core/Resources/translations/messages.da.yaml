@@ -636,6 +636,11 @@ visitation:
         mail: Mail
         registration_history: Registrations Historik
         p_number_history: Hent Flere
+        period: Periode
+        workers: Ansatte
+        annual_work: Årsværk
+        employees: medarbejdere
+        annual_work_employees: årsværk
     person:
         address_history: Adresse historik
         street: Gade
