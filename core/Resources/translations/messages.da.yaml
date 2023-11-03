@@ -642,7 +642,7 @@ visitation:
         employees: medarbejdere
         annual_work_employees: årsværk
     person:
-        address_history: Adresse historik
+        address_history: Adressehistorik
         street: Gade
         postcode_city: Post nr og By
         district: Kommune
