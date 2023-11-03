@@ -49,6 +49,6 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - ${PWD}/docker/vhost.conf:/etc/nginx/conf.d/default.conf:ro
+      - ${PWD}/docker/vhost.test.conf:/etc/nginx/conf.d/default.conf:ro
       - ./:/app:rw
       - ./certs:/etc/nginx/certs
