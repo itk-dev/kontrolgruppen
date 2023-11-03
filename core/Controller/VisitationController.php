@@ -62,6 +62,9 @@ class VisitationController extends DatafordelerController
      */
     public function search(Request $request): Response
     {
+        if (!$request->get('clientType')) {
+            return $this->redirectToRoute('dashboard_index');
+        }
         return $this->render(
             '@KontrolgruppenCore/visitation/search.html.twig',
             [
@@ -192,6 +195,8 @@ class VisitationController extends DatafordelerController
                 '@KontrolgruppenCore/visitation/person_results.html.twig'
             );
         }
+        return $this->redirectToRoute('dashboard_index');
+
     }
 
     /**
