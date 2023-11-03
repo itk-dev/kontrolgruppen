@@ -98,7 +98,6 @@ services:
       - SQL_DATABASE=dataintegration
       - SQL_SCHEMA=dbo
       - SQL_TABLE=Udvalgte_borgerdata
-      # - SQL_DOMAIN=
 
   sqlserver:
     image: mcr.microsoft.com/mssql/server:2017-latest
@@ -111,7 +110,6 @@ services:
       - "1433"
 
   node:
-    # Node LTS (cf. https://nodejs.org/en/about/releases/)
     image: node:16
     volumes:
       - ./:/app:delegated
