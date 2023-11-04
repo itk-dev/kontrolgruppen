@@ -661,7 +661,7 @@ visitation:
         status: Status
         cpr: CPR
         date: Dato
-        cpr_history: Cpr historik
+        cpr_history: CPR-historik
         to: til
         today: i dag
         name_history: Navne historik
