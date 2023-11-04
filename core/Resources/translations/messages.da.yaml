@@ -693,7 +693,7 @@ visitation:
     data:
         empty: Ingen data
     search:
-        title: Søg Oplysinger
+        title: Søg Oplysninger
     form:
         channel: Kanal
         client_cpr: CPR-nummer
