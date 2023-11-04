@@ -161,10 +161,9 @@ class ProcessController extends BaseController
             50,
             $paginatorOptions
         );
-
         // Find Processes that have not been visited by the assigned CaseWorker.
         $caseWorker = (!empty($selectedCaseWorker->getData()))
-            ? $userRepository->find($selectedCaseWorker->getData())
+            ? $userRepository->findOneBy(['username' => $selectedCaseWorker->getData()])
             : $this->getUser();
         $foundEntries = array_column($query->getArrayResult(), 'id');
         $notVisitedProcessIds = $processManager->getUsersUnvisitedProcessIds($foundEntries, $caseWorker);
