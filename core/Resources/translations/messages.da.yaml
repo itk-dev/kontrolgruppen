@@ -664,7 +664,7 @@ visitation:
         cpr_history: CPR-historik
         to: til
         today: i dag
-        name_history: Navne historik
+        name_history: Navnehistorik
         citizenship: Statsborgerskab
         company: Virksomhed
         cvr: CVR
