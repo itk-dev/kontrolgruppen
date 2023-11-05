@@ -1,9 +1,7 @@
 {% extends '@KontrolgruppenCore/main/index.html.twig' %} {% block title %}{{ "visitation.search.title"|trans }}{% endblock %} {% block content %}
 <div class="row">
     <div class="col">
-        <h1>{{ "visitation.search.title"|trans }}</h1>
         <div class="col-md-4 mx-auto visitation-search">
-            {# IF type "PERSON" show CPR search #}
             {% if client_type == "person" %}
                 <div class="form-group">
                     <form id="cprForm" method="post" action="{{ path('result') }}">
@@ -123,7 +121,7 @@ selected process type #}
 {{ parent() }}
 <style>
     .visitation-search {
-        top: 70%;
+        margin-top: 20vh;
     }
     .error-code {
         color: red;

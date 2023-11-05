@@ -17,8 +17,9 @@
                         </tr>
                     </thead>
                     <tbody class="bg-light">
-                        {% set sorted_adresseoplysninger = data.Navne|sort((a, b) => b.Navne.virkningFra <=> a.Navne.virkningFra) %}
-                        {% for navn in sorted_adresseoplysninger %}
+                        {% set sorted_navne = data.Navne|sort((a, b) => b.Navn.virkningFra <=> a.Navn.virkningFra) %}
+
+                        {% for navn in sorted_navne %}
                         {% set currentDate = "now"|date("Y-m-d") %}
                         {% set fiveYearsAgo = currentDate|date_modify("-5 years")|date("Y-m-d") %}
                         {% if navn.Navn.virkningFra < fiveYearsAgo %}
