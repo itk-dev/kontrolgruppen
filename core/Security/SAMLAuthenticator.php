@@ -91,6 +91,13 @@ class SAMLAuthenticator extends AbstractAuthenticator
 
         $username = $this->getUsername($auth);
 
+        print_r([
+            'SAMLResponse' => $request->get('SAMLResponse'),
+            'RelayState' => $request->get('RelayState'),
+        ]);
+
+        exit;
+
         return new SelfValidatingPassport(new UserBadge($username), []);
     }
 
