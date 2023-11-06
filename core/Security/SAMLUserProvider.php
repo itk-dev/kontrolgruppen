@@ -81,6 +81,11 @@ class SAMLUserProvider implements UserProviderInterface
     {
         $user = $this->userManager->findUserByUsername($username);
 
+        if (null === $user) {
+            $user = new User();
+            $user->setUsername($username);
+        }
+
         return $user;
     }
 
