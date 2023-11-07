@@ -9,18 +9,73 @@
         </div>
         <div id="tableCollapseVirksomhedWorkers" class="collapse" aria-labelledby="tableHeadingVirksomhed" data-parent="#tableAccordionVirksomhed">
             <div class="card-body p-0">
-                <table class="table mb-0 table-bordered bg-info">
+                <table class="table mb-0 table-bordered">
                     <thead class="data-header">
                         <tr>
-                            <th>{{ 'visitation.company.legal_owners'|trans }}</th>
-                            <th>{{ 'visitation.company.real_owners'|trans }}</th>
+                            <th>{{ 'visitation.company.period'|trans }}</th>
+                            <th>{{ 'visitation.company.workers'|trans }}</th>
+                            <th>{{ 'visitation.company.annual_work'|trans }}</th>
                         </tr>
                     </thead>
                     <tbody class="bg-light">
                         {# Loop through the data for this table if applicable. Otherwise, statically add rows. #}
-                        <tr>
-                        </tr>
+                        {% if data.beskaeftigelse is defined %}
+                            {% set currentDate = "now"|date("Y-m-d") %}
+                            {% set fiveYearsAgo = currentDate|date_modify("-5 years")|date("Y-m-d") %}
+                            {% set combinedData = {} %}
+                            {% for beskaeftigelse in data.beskaeftigelse %}
+                                {% if beskaeftigelse.beskaeftigelsestalstype in ['KvartalsbeskaeftigelseAntalAarsvaerk', 'KvartalsbeskaeftigelseAntalAarsvaerkInterval'] %}
+                                {% set dateRange = beskaeftigelse.datoFra ~ ' to ' ~ beskaeftigelse.datoTil %}
+
+                                {# Check if this date range is already in the combinedData #}
+                                {% set entry = combinedData[dateRange] is defined ? combinedData[dateRange] : {
+                                    'datoFra': beskaeftigelse.datoFra,
+                                    'datoTil': beskaeftigelse.datoTil,
+                                    'antal': null,
+                                    'intervalFra': null,
+                                    'intervalTil': null
+                                } %}
+
+                                {# Populate the entry based on the type of data #}
+                                    {% if beskaeftigelse.beskaeftigelsestalstype == 'KvartalsbeskaeftigelseAntalAarsvaerk' %}
+                                        {# Set 'antal' for this dateRange #}
+                                        {% set entry = entry|merge({'antal': beskaeftigelse.antal}) %}
+
+                                    {% elseif beskaeftigelse.beskaeftigelsestalstype == 'KvartalsbeskaeftigelseAntalAarsvaerkInterval' %}
+                                        {# Set 'intervalFra' and 'intervalTil' for this dateRange #}
+                                        {% set entry = entry|merge({
+                                            'intervalFra': beskaeftigelse.intervalFra,
+                                            'intervalTil': beskaeftigelse.intervalTil
+                                        }) %}
+                                    {% endif %}
+                                    {% set combinedData = combinedData|merge({(dateRange): entry}) %}
+
+                                {% endif %}
+                            {% endfor %}
+                            {# Extract keys from your hash and sort them #}
+                            {% set keys = combinedData|keys %}
+                            {% set sortedKeys = keys|sort((a, b) => combinedData[b].datoFra <=> combinedData[a].datoFra) %}
+
+                            {# Iterate over the sorted keys to access the sorted values #}
+                            {% for key in sortedKeys %}
+                                {% set data = combinedData[key] %}
+                                <tr{{ data.datoFra < fiveYearsAgo ? ' class="older-than-5"' }}>
+                                    <td>{{ data.datoFra|date("d-m-Y") }}-{{ data.datoTil|date("d-m-Y") }}</td>
+                                    <td>{{ data.antal }} {{ 'visitation.company.employees'|trans }}</td>
+                                    <td>{{ data.intervalFra }}-{{ data.intervalTil }} {{ 'visitation.company.annual_work_employees'|trans }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td class="empty-column" colspan="4">{{ "visitation.data.empty"|trans }}</td>
+                            </tr>
+                        {% endif %}
                     </tbody>
+                    <tr>
+                        <td colspan="5" class="text-center">
+                            <button class="btn btn-primary text-center show-history">{{ 'visitation.get_history'|trans }}</button>
+                        </td>
+                    </tr>
                 </table>
             </div>
         </div>

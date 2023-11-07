@@ -7,21 +7,3 @@ cli_login:
 
 logout:
     path: /logout
-
-_wdt:
-    path: /_wdt/{token}
-    methods: GET
-    defaults:
-        _controller: Symfony\Bundle\WebProfilerBundle\Controller\ProfilerController::wdtAction
-
-_profiler:
-    path: /_profiler
-    methods: GET
-    defaults:
-        _controller: Symfony\Bundle\WebProfilerBundle\Controller\ProfilerController::indexAction
-
-_profiler_home:
-    path: /_profiler
-    methods: GET
-    defaults:
-        _controller: Symfony\Bundle\WebProfilerBundle\Controller\ProfilerController::homeAction

@@ -2,8 +2,8 @@
 
 {% block content %}
     <div class="row">
-        <div class="col-md-9 left-tables">
-            <h1>{{ 'visitation.search.title'|trans }}</h1>
+        <div class="col-md-10 left-tables">
+            <h1>{{ 'navigation.main.visitation'|trans }}</h1>
 
             <!-- Other tables aligned left -->
                 {# Individual tables go here #}
@@ -37,15 +37,18 @@
                 <div class="d-flex justify-content-between">
                 <div></div>
                 <div class="new-process">
-                    <a href="{{ path('process_new', {clientType: client_type}) }}" class="dropdown-item" class="btn btn-primary">
-                        {{ 'visitation.new.title'|trans }}
-                    </a>
+                    <form method="POST" action="{{ path('process_new', {clientType: client_type}) }}">
+                        <input type="hidden" name="identifier" value="{{ data.Personnumre[0].Personnummer.personnummer }}">
+                        <button type="submit" class="btn btn-md btn-primary mb-3" class="btn btn-primary">
+                            {{ 'visitation.new.title'|trans }}
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
 
         <!-- Stamdata Table aligned right -->
-        <div class="col-md-3">
+        <div class="col-md-2">
             <div class="fixed-table">
                 <div class="card-header text-black stam-data">
                     <h6 class="mb-0" id="stam-data">
@@ -55,31 +58,44 @@
                 <table class="table table-bordered">
                     <tbody class="stam-data-body">
                         <tr>
-                            <td>{{ 'visitation.name'|trans }}</td>
-                            <td>{{ data.Navne[0].Navn.fornavne }} {{ data.Navne[0].Navn.efternavn }}</td>
-                        </tr>
+                            <td><b>{{ 'visitation.name'|trans }}</b></td>
+                            
+                            {% for name in data.Navne %}
+                                {% if name.Navn.virkningTil is not defined %}
+                                    <td>{{ name.Navn.fornavne }} {{ name.Navn.efternavn }}</td>
+                                {% endif %}
+                            {% endfor %}
                         <tr>
-                            <td>{{ 'visitation.cpr'|trans }}</td>
+                            <td><b>{{ 'visitation.cpr'|trans }}</b></td>
                             <td class="cprField">{{ data.Personnumre[0].Personnummer.personnummer }}</td>
                         </tr>
                         <tr>
-                            <td>{{ 'visitation.address'|trans }}</td>
-                            <td>{{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.vejadresseringsnavn }}
-                                {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.husnummer }}
-                                {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.etage }}
-                                {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.sidedoer }}
+                            <td><b>{{ 'visitation.address'|trans }}</b></td>
+                            <td>
+                                {% if data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.vejadresseringsnavn is defined and data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.vejadresseringsnavn is not empty %}
+                                    {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.vejadresseringsnavn }}
+                                {% endif %}
+                                {% if data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.husnummer is defined and data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.husnummer is not empty %}
+                                    {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.husnummer }}
+                                {% endif %}
+                                {% if data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.etage is defined and data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.etage is not empty %}
+                                    {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.etage }}
+                                {% endif %}
+                                {% if data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.sidedoer is defined and data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.sidedoer is not empty %}
+                                    {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.sidedoer }}
+                                {% endif %}
                                 <br>
-                                {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.postnummer }}
-                                {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.postdistrikt }}
+                                {% if data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.postnummer is defined and data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.postnummer is not empty %}
+                                    {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.postnummer }}
+                                {% endif %}
+                                {% if data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.postdistrikt is defined and data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.postdistrikt is not empty %}
+                                    {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.postdistrikt }}
+                                {% endif %}
                             </td>
                         </tr>
                         <tr>
-                            <td>{{ 'visitation.gender'|trans }}</td>
-                            <td>{{ data.koen }}</td>
-                        </tr>
-                        <tr>
-                            <td>{{ 'visitation.existing_cases'|trans }}</td>
-                            <td></td>
+                            <td><b>{{ 'visitation.gender'|trans }}</b></td>
+                            <td>{{ data.koen|capitalize }}</td>
                         </tr>
                         {# Add more rows as needed #}
                     </tbody>
@@ -96,18 +112,26 @@
             margin-top: 20px;
             margin-bottom: 50px;
         }
-        .fixed-table {
-            position: fixed;
-            top: 120px;
-            right: 30px;
-            width: 30%;
-            z-index: 999;
+        @media (max-width: 1428px) {
+            .fixed-table {
+                position: static;
+                width: 100%;
+            }
+        }
+        @media (min-width: 1429px) {
+            .fixed-table {
+                position: fixed;
+                top: 120px;
+                right: 30px;
+                width: 25%;
+                z-index: 999;
+            }
         }
         .left-tables {
             max-width: 1000px;
         }
         .card-header {
-            background-color:#c8defc ;
+            background-color:#c8defc;
         }
         .card-header.active {
             background-color: #81b4fe;
@@ -167,6 +191,7 @@
             const month = cpr.substring(2, 4);
             const year = cpr.substring(4, 6);
             const seventhDigit = parseInt(cpr.substring(6, 7), 10);
+            const lastFour = cpr.substring(6, 10);
             const cprAgeTranslation = "{{ 'visitation.form.cpr_age'|trans }}";
             // Determine the correct century
             let fullYear;
@@ -191,18 +216,30 @@
             }
 
             // Format the CPR number
-            const formattedCpr = `${day}${month}${year}-xxxx (${age} ${cprAgeTranslation})`;
+            const formattedCpr = `${day}${month}${year}-${lastFour} (${age} ${cprAgeTranslation})`;
 
             return formattedCpr;
         }
-
+        function formatCprDash(cpr){
+            const formattedCpr = `${cpr.substring(0, 6)}-${cpr.substring(6)}`;
+            return formattedCpr;
+        }
         $(document).ready(function() {
+
+            $('.older-than-5').hide();
+    
             // Format the CPR number and calculate the age for each cprField class
             const cprFields = document.getElementsByClassName("cprField");
             for (let i = 0; i < cprFields.length; i++) {
                 const originalCpr = cprFields[i].textContent;
                 const formattedCprAndAge = formatCprAndCalculateAge(originalCpr);
                 cprFields[i].textContent = formattedCprAndAge;
+            }
+            const cprDashes = document.getElementsByClassName("cpr-dash");
+            for (let i = 0; i < cprDashes.length; i++) {
+                const originalCpr = cprDashes[i].textContent;
+                const formattedCpr = formatCprDash(originalCpr);
+                cprDashes[i].textContent = formattedCpr;
             }
             // const cprElement = document.getElementById("cprField");
             // console.log(formattedCprAndAge);
@@ -216,25 +253,41 @@
                     icon.removeClass('fa-sort-up').addClass('fa-sort-down');
                 }
             });
-            $(document).ready(function() {
-                $(".btn-header").click(function() {
-                    $(this).closest(".card-header").toggleClass("collapsed active");
-                    if($(this).closest(".card-header").hasClass("collapsed")){
-                        // Ajax post request to log_visitation route, with data and cpr
-                        $.ajax({
-                            url: "{{ path('log_visitation') }}",
-                            type: "POST",
-                            data: {
-                                table_name: $(this).closest(".card-header").attr("id"),
-                                cpr: "{{ data.Personnumre[0].Personnummer.personnummer }}",
-                                visitation: "{{ visitation }}",
-                            },
-                            success: function(data) {
-                                console.log(data);
-                            }
-                        });
+            $(".btn-header").click(function() {
+                $(this).closest(".card-header").toggleClass("collapsed active");
+                if($(this).closest(".card-header").hasClass("collapsed")){
+                    // Ajax post request to log_visitation route, with data and cpr
+                    $.ajax({
+                        url: "{{ path('log_visitation') }}",
+                        type: "POST",
+                        data: {
+                            table_name: $(this).closest(".card-header").attr("id"),
+                            cpr: "{{ data.Personnumre[0].Personnummer.personnummer }}",
+                            visitation: "{{ visitation }}",
+                        },
+                        success: function(data) {
+                            console.log(data);
+                        }
+                    });
+                }
+            });
+            $('.show-history').on('click', function() {
+                // Toggle the visibility of rows marked as older than 5 years
+                $(this).closest('div').find('.older-than-5').toggle();
+                $.ajax({
+                    url: "{{ path('log_visitation') }}",
+                    type: "POST",
+                    data: {
+                        table_name: $(this).closest('.card').find('.card-header').attr("id") + "History",
+                        cpr: "{{ data.Personnumre[0].Personnummer.personnummer }}",
+                        visitation: "{{ visitation }}",
+                    },
+                    success: function(data) {
+                        console.log(data);
                     }
                 });
+                // Optionally, change the button text based on current state
+                $(this).closest('tr').hide();
             });
         });
     </script>

@@ -10,17 +10,17 @@
 
 namespace Kontrolgruppen\CoreBundle\Controller;
 
-use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
-use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 use Kontrolgruppen\CoreBundle\Entity\Visitation;
 use Kontrolgruppen\CoreBundle\Entity\VisitationLogEntry;
-use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 
 /**
  * @Route("/visitation")
@@ -62,6 +62,9 @@ class VisitationController extends DatafordelerController
      */
     public function search(Request $request): Response
     {
+        if (!$request->get('clientType')) {
+            return $this->redirectToRoute('dashboard_index');
+        }
         return $this->render(
             '@KontrolgruppenCore/visitation/search.html.twig',
             [
@@ -74,7 +77,7 @@ class VisitationController extends DatafordelerController
      * @Route("/result", name="result", methods={"GET","POST"})
      *
      * @param Request             $request
-     * @param HttpClientInterface $datafordelerHttpClient
+     * @param DatafordelerService $datafordelerService
      *
      * @return Response
      *
@@ -112,23 +115,17 @@ class VisitationController extends DatafordelerController
                         'error' => 'Forbindelse fejlet. Prøv igen',
                     ]
                 );
+            } catch (\Exception $e) {
+                return $this->render(
+                    '@KontrolgruppenCore/visitation/search.html.twig',
+                    [
+                        'client_type' => 'company',
+                        'error' => 'CVR nummer ikke genkendt, prøv igen.',
+                    ]
+                );
             }
             if (!empty($data)) {
                 // foreach $data['produktionsenheder']
-                foreach ($data['produktionsenheder'] as $value) {
-                    try {
-                        // add to data['p-numre']
-                        $data['p-numre'][] = $datafordelerService->getVirksomhedDataByPNumber($value['pNummer']);
-                    } catch (TransportExceptionInterface $e) {
-                        return $this->render(
-                            '@KontrolgruppenCore/visitation/search.html.twig',
-                            [
-                                'client_type' => 'company',
-                                'error' => 'Forbindelse fejlet. Prøv igen',
-                            ]
-                        );
-                    }
-                }
 
                 return $this->render(
                     '@KontrolgruppenCore/visitation/virksomhed_results.html.twig',
@@ -153,7 +150,7 @@ class VisitationController extends DatafordelerController
             $this->em->flush();
 
             $cpr = preg_replace('/\D+/', '', $cpr);
-            try {
+            // try {
                 $data = $datafordelerService->getPersonData($cpr);
                 if (null === $data) {
                     return $this->render(
@@ -164,23 +161,23 @@ class VisitationController extends DatafordelerController
                         ]
                     );
                 }
-            } catch (TransportExceptionInterface $e) {
-                return $this->render(
-                    '@KontrolgruppenCore/visitation/search.html.twig',
-                    [
-                        'client_type' => 'person',
-                        'error' => 'Forbindelse fejlet. Prøv igen',
-                    ]
-                );
-            } catch (\Exception $e) {
-                return $this->render(
-                    '@KontrolgruppenCore/visitation/search.html.twig',
-                    [
-                        'client_type' => 'person',
-                        'error' => 'CPR nummer ikke genkendt, prøv igen.',
-                    ]
-                );
-            }
+            // } catch (TransportExceptionInterface $e) {
+            //     return $this->render(
+            //         '@KontrolgruppenCore/visitation/search.html.twig',
+            //         [
+            //             'client_type' => 'person',
+            //             'error' => 'Forbindelse fejlet. Prøv igen',
+            //         ]
+            //     );
+            // } catch (\Exception $e) {
+            //     return $this->render(
+            //         '@KontrolgruppenCore/visitation/search.html.twig',
+            //         [
+            //             'client_type' => 'person',
+            //             'error' => 'CPR nummer ikke genkendt, prøv igen.',
+            //         ]
+            //     );
+            // }
             if (!empty($data)) {
                 return $this->render(
                     '@KontrolgruppenCore/visitation/person_results.html.twig',
@@ -198,6 +195,8 @@ class VisitationController extends DatafordelerController
                 '@KontrolgruppenCore/visitation/person_results.html.twig'
             );
         }
+        return $this->redirectToRoute('dashboard_index');
+
     }
 
     /**

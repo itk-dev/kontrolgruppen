@@ -96,6 +96,84 @@
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
+    <script>
+        function formatCprAndCalculateAge(cpr) {
+            // Extract day, month, year, and 7th digit from the CPR number
+            const day = cpr.substring(0, 2);
+            const month = cpr.substring(2, 4);
+            const year = cpr.substring(4, 6);
+            const lastFour = cpr.substring(6, 10);
+            const seventhDigit = parseInt(cpr.substring(6, 7), 10);
+            const cprAgeTranslation = "{{ 'visitation.form.cpr_age'|trans }}";
+            // Determine the correct century
+            let fullYear;
+            if (seventhDigit >= 0 && seventhDigit <= 3) {
+                fullYear = `19${year}`;
+            } else if (seventhDigit === 4) {
+                fullYear = (parseInt(year, 10) >= 37) ? `19${year}` : `20${year}`;
+            } else if (seventhDigit >= 5 && seventhDigit <= 8) {
+                fullYear = (parseInt(year, 10) >= 58) ? `18${year}` : `20${year}`;
+            } else if (seventhDigit === 9) {
+                fullYear = (parseInt(year, 10) >= 37) ? `19${year}` : `20${year}`;
+            }
 
+            // Calculate the current age
+            const today = new Date();
+            const birthDate = new Date(`${fullYear}-${month}-${day}`);
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const monthDifference = today.getMonth() - birthDate.getMonth();
+
+            if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+
+            // Format the CPR number
+            const formattedCpr = `${day}${month}${year}-${lastFour} (${age} ${cprAgeTranslation})`;
+
+            return formattedCpr;
+        }
+        function formatCprDash(cpr){
+            const formattedCpr = `${cpr.substring(0, 6)}-${cpr.substring(6)}`;
+            return formattedCpr;
+        }
+
+        $(document).ready(function() {
+
+            $('.older-than-5').hide();
+    
+            // Format the CPR number and calculate the age for each cprField class
+            const cprFields = document.getElementsByClassName("cprField");
+            for (let i = 0; i < cprFields.length; i++) {
+                const originalCpr = cprFields[i].textContent;
+                const formattedCprAndAge = formatCprAndCalculateAge(originalCpr);
+                cprFields[i].textContent = formattedCprAndAge;
+            }
+            const cprDashes = document.getElementsByClassName("cpr-dash");
+            for (let i = 0; i < cprDashes.length; i++) {
+                const originalCpr = cprDashes[i].textContent;
+                const formattedCpr = formatCprDash(originalCpr);
+                cprDashes[i].textContent = formattedCpr;
+            }
+            // const cprElement = document.getElementById("cprField");
+            // console.log(formattedCprAndAge);
+            // const formattedCprAndAge = formatCprAndCalculateAge(originalCpr);
+
+            $('.accordion .card-header').click(function() {
+                var icon = $(this).closest(".card-header").find('.iconClass');
+                if ($(this).closest(".card-header").hasClass('collapsed')) {
+                    icon.removeClass('fa-sort-down').addClass('fa-sort-up');
+                } else {
+                    icon.removeClass('fa-sort-up').addClass('fa-sort-down');
+                }
+            });
+            $('.show-history').on('click', function() {
+                // Toggle the visibility of rows marked as older than 5 years
+                $(this).closest('tbody').find('.older-than-5').toggle();
+
+                // Optionally, change the button text based on current state
+                $(this).closest('tr').hide();
+            });
+        });
+    </script>
     {{ encore_entry_script_tags('processStatusForm') }}
 {% endblock %}

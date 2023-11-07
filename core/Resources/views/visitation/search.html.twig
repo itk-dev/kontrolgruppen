@@ -1,9 +1,7 @@
 {% extends '@KontrolgruppenCore/main/index.html.twig' %} {% block title %}{{ "visitation.search.title"|trans }}{% endblock %} {% block content %}
 <div class="row">
     <div class="col">
-        <h1>{{ "visitation.search.title"|trans }}</h1>
         <div class="col-md-4 mx-auto visitation-search">
-            {# IF type "PERSON" show CPR search #}
             {% if client_type == "person" %}
                 <div class="form-group">
                     <form id="cprForm" method="post" action="{{ path('result') }}">
@@ -77,6 +75,14 @@
 {# Set variable that triggers that services are loaded for the currently
 selected process type #}
 <script type="text/javascript">
+    function validateForm(inputSelector, buttonSelector) {
+        const inputValue = $(inputSelector).val();
+        if (inputValue && inputValue.trim() !== "") {
+            $(buttonSelector).prop('disabled', false);
+        } else {
+            $(buttonSelector).prop('disabled', true);
+        }
+    }
     $(document).ready(function () {
         const $cvrInputElement = $("#visitation_company_cvr");
         const $searchCvrButton = $("#visitation_company_search");
@@ -94,6 +100,16 @@ selected process type #}
             $('#hiddenCprInput').val(cprValue);
             $('#cprForm').submit();
         });
+
+        // Initial validation on page load
+        validateForm("#visitation_company_cvr", "#visitation_company_search");
+        validateForm("#visitation_person_cpr", "#visitation_person_search");
+
+        // Listen for input events to dynamically update button state
+        $("#visitation_company_cvr, #visitation_person_cpr").on('input', function() {
+            const correspondingButton = $(this).attr('id') === "visitation_company_cvr" ? "#visitation_company_search" : "#visitation_person_search";
+            validateForm(`#${$(this).attr('id')}`, correspondingButton);
+        });
     });
 </script>
 {# {{ encore_entry_script_tags("processForm") }} #}
@@ -105,7 +121,7 @@ selected process type #}
 {{ parent() }}
 <style>
     .visitation-search {
-        top: 70%;
+        margin-top: 20vh;
     }
     .error-code {
         color: red;

@@ -11,14 +11,11 @@
             <div class="card-body p-0">
                 <table class="table mb-0 table-bordered bg-info">
                     <thead class="data-header">
-                        <tr>
-                            <th>{{ 'visitation.company.legal_owners'|trans }}</th>
-                            <th>{{ 'visitation.company.real_owners'|trans }}</th>
-                        </tr>
                     </thead>
                     <tbody class="bg-light">
                         {# Loop through the data for this table if applicable. Otherwise, statically add rows. #}
                         <tr>
+                            <td class="empty-column" colspan="2">{{ "visitation.data.empty"|trans }}</td>
                         </tr>
                     </tbody>
                 </table>

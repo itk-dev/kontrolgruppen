@@ -10,6 +10,8 @@
 
 namespace Kontrolgruppen\CoreBundle\Service;
 
+use Kontrolgruppen\CoreBundle\BBR\BBRKoder;
+use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
@@ -17,14 +19,16 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  */
 class DatafordelerService
 {
-    private $datafordelerHttpClient;
+    private $datafordelerCprHttpClient;
+    private $datafordelerCvrHttpClient;
 
     /**
-     * @param HttpClientInterface $datafordelerHttpClient
+     * @param HttpClientInterface $datafordelerCprHttpClient
      */
-    public function __construct(HttpClientInterface $datafordelerHttpClient)
+    public function __construct(?HttpClientInterface $datafordelerCprHttpClient, ?HttpClientInterface $datafordelerCvrHttpClient)
     {
-        $this->datafordelerHttpClient = $datafordelerHttpClient;
+        $this->datafordelerCprHttpClient = $datafordelerCprHttpClient;
+        $this->datafordelerCvrHttpClient = $datafordelerCvrHttpClient;
     }
 
     /**
@@ -32,12 +36,12 @@ class DatafordelerService
      *
      * @return array
      *
-     * @throws Exception
+     * @throws \Exception
      * @throws TransportExceptionInterface
      */
     public function getPersonData(string $cpr): array
     {
-        $response = $this->datafordelerHttpClient->request(
+        $response = $this->datafordelerCprHttpClient->request(
             'GET',
             'CPR/CprPersonFullComplete/1/rest/PersonFullListComplete',
             [
@@ -56,11 +60,116 @@ class DatafordelerService
         } catch (\Exception $e) {
             throw new \Exception('Cpr data kan ikke findes', 1);
         }
+        $adresseringsnavn = null;
+        foreach ($data['Navne'] as $navn) {
+            if (isset($navn['Navn']['adresseringsnavn'])) {
+                $adresseringsnavn = $navn['Navn']['adresseringsnavn'];
+                break;
+            }
+        }
+        if (!isset($adresseringsnavn)) {
+            throw new \Exception('Adresseringsnavn er ikke defineret', 1);
+        }
         if ($cprAdresse = $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']) {
-            $data['Bopaelssamling'] = $this->getBopaelssamling($cprAdresse, $data['Personnumre'][0]['Personnummer']['personnummer'], $data['Navne'][0]['Navn']['adresseringsnavn'], $this->datafordelerHttpClient);
+            $data['Bopaelssamling'] = $this->getBopaelssamling($cprAdresse, $data['Personnumre'][0]['Personnummer']['personnummer'], $adresseringsnavn, $this->datafordelerCprHttpClient);
         }
 
+        $data['BBR'] = $this->getBBR($cprAdresse);
+
         return $data;
+    }
+
+    public function getBBR(array $cprAdresse): array
+    {
+        $query = ['struktur' => 'mini'];
+        if ($cprAdresse['vejadresseringsnavn']) {
+            $query['vejnavn'] = $cprAdresse['vejadresseringsnavn'];
+        }
+        if ($cprAdresse['husnummer']) {
+            $query['husnr'] = ltrim($cprAdresse['husnummer'], '0');
+        }
+        if ($cprAdresse['etage']) {
+            $query['etage'] = ltrim($cprAdresse['etage'], '0');
+        }
+        if ($cprAdresse['sidedoer']) {
+            $query['dør'] = $cprAdresse['sidedoer'];
+        }
+        if ($cprAdresse['postnummer']) {
+            $query['postnr'] = $cprAdresse['postnummer'];
+        }
+        if ($cprAdresse['cprKommunekode']) {
+            $query['kommunekode'] = $cprAdresse['cprKommunekode'];
+        }
+        if ($cprAdresse['cprVejkode']) {
+            $query['vejkode'] = $cprAdresse['cprVejkode'];
+        }
+
+        $client = HttpClient::create();
+        $response = $client->request(
+            'GET',
+            'https://api.dataforsyningen.dk/adresser',
+            [
+                'query' => $query,
+            ]
+        );
+
+        if (404 === $response->getStatusCode()) {
+            return [];
+        }
+
+        $data = $response->toArray();
+
+        if (!isset($data[0]['id'])) {
+            return [];
+        }
+
+        $adresseId = $data[0]['id'];
+
+        $response = $client->request(
+            'GET',
+            'https://nyt.ois.dk/api/property/GetBFEFromAddressId',
+            [
+                'query' => ['addressId' => $adresseId],
+            ]
+        );
+
+        if (404 === $response->getStatusCode()) {
+            return [];
+        }
+
+        $bfe = $response->getContent();
+
+        $response = $client->request(
+            'GET',
+            'https://nyt.ois.dk/api/property/GetPropertyFromBFE',
+            [
+                'query' => ['bfe' => $bfe],
+            ]
+        );
+
+        if (404 === $response->getStatusCode()) {
+            return [];
+        }
+
+        $data = $response->toArray();
+
+        $bbr = [];
+        foreach ($data['enhed'] as $enhed) {
+            if ($enhed['ENHDR_id_lokalId'] === $adresseId) {
+                $bbr['type'] = BBRKoder::BYG_ANVENDELSE[$enhed['enh020EnhedensAnvendelse']];
+                $bbr['boligareal'] = $enhed['enh027ArealTilBeboelse'];
+                $bbr['bygningsareal'] = array_column($data['bygning'], null, 'Id')[array_column($data['opgang'], null, 'Id')[$enhed['OPG_id_lokalId']]['BYG_id_lokalId']]['byg041BebyggetAreal'];
+                $bbr['vaerelser'] = $enhed['enh031AntalVærelser'];
+                $bbr['toiletter'] = $enhed['enh065AntalVandskylledeToiletter'];
+                $bbr['bygninger'] = \count($data['bygning']);
+                $bbr['ois_link'] = 'https://nyt.ois.dk/search/'.$bfe.'/sfe/bbr/enhed/'.$enhed['Id'];
+                $bbr['adressebetegnelse'] = $enhed['adressebetegnelse'];
+
+                return $bbr;
+            }
+        }
+
+        return [];
     }
 
     /**
@@ -78,7 +187,7 @@ class DatafordelerService
         foreach ($cprAdresse as $key => $value) {
             $query['cadr.'.$key.'.eq'] = $value;
         }
-        $response = $this->datafordelerHttpClient->request(
+        $response = $this->datafordelerCprHttpClient->request(
             'GET',
             'CPR/CprPersonFullComplete/1/rest/PersonFullCurrentListComplete',
             [
@@ -143,25 +252,40 @@ class DatafordelerService
      */
     public function getVirksomhedData(string $cvr): array
     {
-        $response = $this->datafordelerHttpClient->request(
+        $response = $this->datafordelerCvrHttpClient->request(
             'GET',
-            'CVR/HentCVRData/1/rest/hentVirksomhedMedCVRNummer',
+            'CVR/HentCVRDataFortrolig/1/rest/hentVirksomhedMedCVRNummerFortrolig',
             [
                 'query' => [
                     'pCVRNummer' => $cvr,
                 ],
             ]
         );
+        $data = $response->toArray();
+        if (empty($data['virksomhed'])) {
+            throw new \Exception('Empty data received', 1);
+        }
+        foreach ($data['produktionsenheder'] as $key => $value) {
+            if ($key >= 5) {
+                break;
+            }
+            try {
+                // add to data['p-numre']
+                $data['pNummer'][] = $this->getVirksomhedDataByPNumber($value['pNummer']);
+            } catch (\Exception $e) {
+                throw new \Exception('Cpr data kan ikke findes', 1);
+            }
+        }
 
         if (404 === $response->getStatusCode()) {
             return [];
         }
 
-        return $response->toArray();
+        return $data;
     }
 
     /**
-     * @param string              $pnumber
+     * @param string $pnumber
      *
      * @return array
      *
@@ -169,7 +293,7 @@ class DatafordelerService
      */
     public function getVirksomhedDataByPNumber(string $pnumber): array
     {
-        $response = $this->datafordelerHttpClient->request(
+        $response = $this->datafordelerCvrHttpClient->request(
             'GET',
             'CVR/HentCVRData/1/rest/hentProduktionsenhedMedPNummer',
             [

@@ -6,4 +6,4 @@ services:
     Kontrolgruppen\CoreBundle\CPR\CprServiceInterface:
         class: 'Kontrolgruppen\CoreBundle\CPR\ServiceplatformenCprService'
         arguments:
-            $httpClient: '@datafordelerHttpClient'  # Note the name change
+            $httpClient: '@datafordelerCprHttpClient'  # Note the name change

@@ -24,8 +24,9 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
-use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\CredentialsInterface;
+use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\CustomCredentials;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
+use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
 
 /**
  * Class SAMLAuthenticator.
@@ -91,7 +92,7 @@ class SAMLAuthenticator extends AbstractAuthenticator
 
         $username = $this->getUsername($auth);
 
-        return new Passport(new UserBadge($username), new CredentialsInterface([
+        return new Passport(new UserBadge($username), new CustomCredentials(fn () => true, [
             'SAMLResponse' => $request->get('SAMLResponse'),
             'RelayState' => $request->get('RelayState'),
         ]));

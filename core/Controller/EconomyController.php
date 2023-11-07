@@ -147,11 +147,11 @@ class EconomyController extends BaseController
     {
         // Decide if a type has been chosen.
         if (!$chosenType && $request->request->has('base_economy_entry')) {
-            $chosenType = $request->request->get('base_economy_entry')['type'];
+            $chosenType = $request->get('base_economy_entry')['type'];
         } elseif (!$chosenType && $request->request->has('service_economy_entry')) {
-            $chosenType = $request->request->get('service_economy_entry')['type'];
+            $chosenType = $request->get('service_economy_entry')['type'];
         } elseif (!$chosenType && $request->request->has('income_economy_entry')) {
-            $chosenType = $request->request->get('income_economy_entry')['type'];
+            $chosenType = $request->get('income_economy_entry')['type'];
         }
 
         // Add given form if a type has been chosen.

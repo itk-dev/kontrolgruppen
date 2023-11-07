@@ -18,8 +18,14 @@
                     </thead>
                     <tbody class="bg-light">
                         {% for cprnummer in data.Personnumre %}
-                        <tr>
-                            <td>{{ cprnummer.Personnummer.personnummer }}</td>
+                        {% set currentDate = "now"|date("Y-m-d") %}
+                        {% set fiveYearsAgo = currentDate|date_modify("-5 years")|date("Y-m-d") %}
+                        {% if cprnummer.Personnummer.virkningFra < fiveYearsAgo %}
+                            <tr class="older-than-5">
+                        {% else %}
+                            <tr>
+                        {% endif %}
+                            <td class="cpr-dash">{{ cprnummer.Personnummer.personnummer }}</td>
                             {% if cprnummer.Personnummer.virkningTil is defined %}
                                 <td>{{ cprnummer.Personnummer.virkningFra|date("d-m-Y") }} {{ 'visitation.person.to'|trans }} {{ cprnummer.Personnummer.virkningTil|date("d-m-Y") }} </td>
                             {% else %}
@@ -27,6 +33,11 @@
                             {% endif %}
                         </tr>
                         {% endfor %}
+                        <tr>
+                            <td colspan="2" class="text-center">
+                                <button class="btn btn-primary show-history">{{ 'visitation.get_history'|trans }}</button>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

@@ -161,10 +161,9 @@ class ProcessController extends BaseController
             50,
             $paginatorOptions
         );
-
         // Find Processes that have not been visited by the assigned CaseWorker.
         $caseWorker = (!empty($selectedCaseWorker->getData()))
-            ? $userRepository->find($selectedCaseWorker->getData())
+            ? $userRepository->findOneBy(['username' => $selectedCaseWorker->getData()])
             : $this->getUser();
         $foundEntries = array_column($query->getArrayResult(), 'id');
         $notVisitedProcessIds = $processManager->getUsersUnvisitedProcessIds($foundEntries, $caseWorker);
@@ -204,6 +203,7 @@ class ProcessController extends BaseController
         // Force user to select process client type before anything else.
         try {
             $client = $clientManager->createClient($request->get('clientType') ?? '');
+            $identifier = $request->get('identifier');
         } catch (\Exception $exception) {
             $this->addFlash('danger', $exception->getMessage());
 
@@ -212,8 +212,10 @@ class ProcessController extends BaseController
 
         $process->setProcessClient($client);
 
-        $form = $this->createForm(ProcessType::class, $process);
-
+        $form = $this->createForm(ProcessType::class, $process, [
+            // Add the `personnummer` option to the form.
+            'identifier' => $identifier,
+        ]);
         $this->handleTaxonomyCallback($form, $request, $process);
 
         $form->handleRequest($request);
@@ -318,10 +320,10 @@ class ProcessController extends BaseController
     /**
      * @Route("/{id}", name="process_show", methods={"GET", "POST"})
      *
-     * @param Request    $request
-     * @param Process    $process
-     * @param LogManager $logManager
-     * @param HttpClientInterface $datafordelerHttpClient
+     * @param Request             $request
+     * @param Process             $process
+     * @param LogManager          $logManager
+     * @param DatafordelerService $datafordelerService
      *
      * @return Response
      *

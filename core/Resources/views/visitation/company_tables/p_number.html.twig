@@ -3,19 +3,30 @@
         <div class="card-header text-black" id="tableHeadingVirksomhed">
             <h2 class="mb-0">
                 <button class="btn btn-block text-left text-black collapsed btn-header " type="button" data-toggle="collapse" data-target="#tableCollapseVirksomhedPNumber" aria-expanded="false" aria-controls="tableCollapseVirksomhedPNumber">
-                    {{ 'visitation.company.p_numbers'|trans }} <i class="iconClass fas fa-sort-down"></i>
+                    {{ 'visitation.company.p_numbers'|trans }} ({{ data.produktionsenheder|length }}) <i class="iconClass fas fa-sort-down"></i>
                 </button>
             </h2>
         </div>
         <div id="tableCollapseVirksomhedPNumber" class="collapse" aria-labelledby="tableHeadingVirksomhed" data-parent="#tableAccordionVirksomhed">
             <div class="card-body p-0">
-                <table class="table mb-0 table-bordered bg-info">
+                <table class="table mb-0 table-bordered bg-info" id="pNumberTable">
                     <tbody class="bg-light">
                         {# foreach produktionsenheder #}
-                        {% for produktionsenhed in data['p-numre'] %}
+                        {% for allPnumbers in data.produktionsenheder %}
+                        <div class="allPNumbers" style="display:none">
+                            {{ allPnumbers.pNummer }}
+                        </div>
+                        {% endfor %}
+                        {% for produktionsenhed in data.pNummer %}
                         <tr class="pnumber"><td colspan="4">
                             {{ produktionsenhed.produktionsenhed.pNummer }}
                         </td></tr>
+                        <div class="translations" style="display:none" data-name-translation="{{ 'visitation.company.name'|trans }}"
+                        data-address-translation="{{ 'visitation.company.address'|trans }}"
+                        data-phone-translation="{{ 'visitation.company.phone'|trans }}"
+                        data-mail-translation="{{ 'visitation.company.mail'|trans }}">>
+
+                        </div>
                         <tr>
                             <th>{{ 'visitation.company.name'|trans }}</th>
                             <th>{{ 'visitation.company.address'|trans }}</th>
@@ -24,31 +35,44 @@
                         <tr>
                             <td>{{ produktionsenhed.produktionsenhedsnavn.vaerdi }}</td>
                             <td>
-                                {% if produktionsenhed.beliggenhedsadresse.CVRAdresse_vejnavn is not empty %}
+                                {% if produktionsenhed.beliggenhedsadresse.CVRAdresse_vejnavn is defined %}
                                     {{ produktionsenhed.beliggenhedsadresse.CVRAdresse_vejnavn }}
                                 {% endif %}
-                                {% if produktionsenhed.beliggenhedsadresse.CVRAdresse_husnummer is not empty %}
+                                {% if produktionsenhed.beliggenhedsadresse.CVRAdresse_husnummer is defined %}
                                     {{ produktionsenhed.beliggenhedsadresse.CVRAdresse_husnummer }}
                                 {% endif %}
-                                {% if produktionsenhed.beliggenhedsadresse.CVRAdresse_etagebetegnelse is not empty %}
+                                {% if produktionsenhed.beliggenhedsadresse.CVRAdresse_etagebetegnelse is defined %}
                                     {{ produktionsenhed.beliggenhedsadresse.CVRAdresse_etagebetegnelse }}
                                 {% endif %}
-                                {% if produktionsenhed.beliggenhedsadresse.CVRAdresse_doerbetegnelse is not empty %}
+                                {% if produktionsenhed.beliggenhedsadresse.CVRAdresse_doerbetegnelse is defined %}
                                     {{ produktionsenhed.beliggenhedsadresse.CVRAdresse_doerbetegnelse }},
                                 {% endif %}
 
-                                {% if produktionsenhed.beliggenhedsadresse.CVRAdresse_postnummer is not empty %}
+                                {% if produktionsenhed.beliggenhedsadresse.CVRAdresse_postnummer is defined %}
                                     {{ produktionsenhed.beliggenhedsadresse.CVRAdresse_postnummer }}
                                 {% endif %}
-                                {% if produktionsenhed.beliggenhedsadresse.CVRAdresse_postdistrikt is not empty %}
+                                {% if produktionsenhed.beliggenhedsadresse.CVRAdresse_postdistrikt is defined %}
                                     {{ produktionsenhed.beliggenhedsadresse.CVRAdresse_postdistrikt }}
                                 {% endif %}
                             </td>
-                            <td>{{ produktionsenhed.telefonnummer.vaerdi }}</td>
-                            <td>{{ produktionsenhed['e-mailadresse'].vaerdi }}</td>
+                            <td>
+                                {% if produktionsenhed.telefonnummer.vaerdi is defined %}
+                                    {{ produktionsenhed.telefonnummer.vaerdi }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if produktionsenhed['e-mailadresse'].vaerdi is defined %}
+                                    {{ produktionsenhed['e-mailadresse'].vaerdi }}
+                                {% endif %}
+                            </td>
                         </tr>
 
                         {% endfor %}
+                        <tr id="loadMoreButtonRow">
+                            <td colspan="4" class="text-center">
+                                <button id="loadMoreButton" class="btn btn-primary text-center show-history">{{ 'visitation.company.p_number_history'|trans }}</button>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

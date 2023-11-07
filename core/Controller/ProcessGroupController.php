@@ -32,7 +32,7 @@ class ProcessGroupController extends BaseController
      *
      * @param Request               $request
      * @param Process               $process
-     * @param DatafordelerService   $process
+     * @param DatafordelerService   $datafordelerService
      *
      * @return Response
      *
@@ -81,7 +81,7 @@ class ProcessGroupController extends BaseController
      *
      * @param Request               $request
      * @param Process               $process
-     * @param DatafordelerService   $process
+     * @param DatafordelerService   $datafordelerService
      *
      * @return Response
      *
@@ -137,7 +137,7 @@ class ProcessGroupController extends BaseController
      * @param Request               $request
      * @param ProcessGroup          $processGroup
      * @param Process               $process
-     * @param DatafordelerService   $process
+     * @param DatafordelerService   $datafordelerService
      *
      * @return Response
      *

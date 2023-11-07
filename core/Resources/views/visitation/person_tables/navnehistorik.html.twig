@@ -17,16 +17,29 @@
                         </tr>
                     </thead>
                     <tbody class="bg-light">
-                        {% for navn in data.Navne %}
-                        <tr>
-                            <td>{{ navn.Navn.fornavne }} {{ navn.Navn.efternavn }}</td>
-                            {% if navn.Navn.virkningTil is defined %}
-                                <td>{{ navn.Navn.virkningFra|date("d-m-Y") }} {{ 'visitation.person.to'|trans }} {{ navn.Navn.virkningTil|date("d-m-Y") }} </td>
-                            {% else %}
-                                <td>{{ navn.Navn.virkningFra|date("d-m-Y") }} - {{ 'visitation.person.today'|trans }}</td>
-                            {% endif %}
-                        </tr>
+                        {% set sorted_navne = data.Navne|sort((a, b) => b.Navn.virkningFra <=> a.Navn.virkningFra) %}
+
+                        {% for navn in sorted_navne %}
+                        {% set currentDate = "now"|date("Y-m-d") %}
+                        {% set fiveYearsAgo = currentDate|date_modify("-5 years")|date("Y-m-d") %}
+                        {% if navn.Navn.virkningFra < fiveYearsAgo %}
+                            <tr class="older-than-5">
+                        {% else %}
+                            <tr>
+                        {% endif %}
+                                <td>{{ navn.Navn.fornavne }} {{ navn.Navn.efternavn }}</td>
+                                {% if navn.Navn.virkningTil is defined %}
+                                    <td>{{ navn.Navn.virkningFra|date("d-m-Y") }} {{ 'visitation.person.to'|trans }} {{ navn.Navn.virkningTil|date("d-m-Y") }} </td>
+                                {% else %}
+                                    <td>{{ navn.Navn.virkningFra|date("d-m-Y") }} - {{ 'visitation.person.today'|trans }}</td>
+                                {% endif %}
+                            </tr>
                         {% endfor %}
+                        <tr>
+                            <td colspan="2" class="text-center">
+                                <button class="btn btn-primary text-center show-history">{{ 'visitation.get_history'|trans }}</button>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

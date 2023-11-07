@@ -552,11 +552,11 @@ process:
         update: Gem
         status: Status
         search_client_cpr:
-            search: Søg efter eksisterende sager
+            search: Søg i eksisterende sager
             loading: Søger...
             results: Eksisterende sag(er) fundet
         search_client_cvr:
-            search: Søg efter eksisterende sager
+            search: Søg i eksisterende sager
             loading: Søger...
             results: Eksisterende sag(er) fundet
     index:
@@ -620,7 +620,7 @@ visitation:
     company:
         employees_count: Antal ansatte
         legal_owners: Legale ejere
-        real_owners: Reele ejere
+        real_owners: Reelle ejere
         creation_date: Oprettelsesdato
         date: Dato
         founder: Stifter
@@ -629,14 +629,20 @@ visitation:
         founders: Stiftere
         accountant: Revisor
         history: Historik
-        p_numbers: P-Numre
+        p_numbers: P-numre
         name: Navn
         address: Adresse
         phone: Telefon
         mail: Mail
         registration_history: Registrations Historik
+        p_number_history: Hent Flere
+        period: Periode
+        workers: Ansatte
+        annual_work: Årsværk
+        employees: medarbejdere
+        annual_work_employees: årsværk
     person:
-        address_history: Adresse historik
+        address_history: Adressehistorik
         street: Gade
         postcode_city: Post nr og By
         district: Kommune
@@ -655,20 +661,29 @@ visitation:
         status: Status
         cpr: CPR
         date: Dato
-        cpr_history: Cpr historik
+        cpr_history: CPR-historik
         to: til
         today: i dag
-        name_history: Navne historik
+        name_history: Navnehistorik
         citizenship: Statsborgerskab
         company: Virksomhed
         cvr: CVR
+        type: Type
+        residential_area: Boligareal
+        building_area: Bygningsareal
+        rooms: Værelser
+        toilets: Toiletter
+        buildings: Bygninger
+        go_to_ois: Tilgå OIS
+        no_address: Kunne ikke hente BBR data
     basic_info: Stamdata
+    get_history: Hent al historik
     name: Navn
     cpr: CPR
     address: Adresse
     gender: Køn
     existing_cases: Eksisterende sager
-    search_placeholder: Søg efter eksisterende sager
+    search_placeholder: Søg i eksisterende sager
     searching_placeholder: Søger...
     cvr: CVR
     contact: Kontakt
@@ -679,7 +694,7 @@ visitation:
     data:
         empty: Ingen data
     search:
-        title: Søg Oplysinger
+        title: Søg Oplysninger
     form:
         channel: Kanal
         client_cpr: CPR-nummer

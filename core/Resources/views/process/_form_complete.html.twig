@@ -19,7 +19,7 @@
                         {% set start_date = process.createdAt %}
                         {% set end_date = 'now' %}
                         {% set days = date(end_date).diff(date(start_date)).days + 1 %}
-                        ({{ 'process.complete.processing_time_value'|transchoice(days, {'%days%': days}) }})
+                        ({{ 'process.complete.processing_time_value'|trans({'days': days}) }})
                     </strong>
                 </div>
             </div>

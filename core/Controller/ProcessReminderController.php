@@ -28,8 +28,9 @@ class ProcessReminderController extends BaseController
     /**
      * @Route("/", name="reminder_index", methods={"GET","POST"})
      *
-     * @param Request $request
-     * @param Process $process
+     * @param Request               $request
+     * @param Process               $process
+     * @param DatafordelerService   $datafordelerService
      *
      * @return Response
      *
@@ -62,8 +63,9 @@ class ProcessReminderController extends BaseController
     /**
      * @Route("/new", name="reminder_new", methods={"GET","POST"})
      *
-     * @param Request $request
-     * @param Process $process
+     * @param Request               $request
+     * @param Process               $process
+     * @param DatafordelerService   $datafordelerService
      *
      * @return Response
      *
@@ -113,39 +115,54 @@ class ProcessReminderController extends BaseController
     /**
      * @Route("/{id}", name="reminder_show", methods={"GET"})
      *
-     * @param Request  $request
-     * @param Reminder $reminder
-     * @param Process  $process
+     * @param Request               $request
+     * @param Reminder              $reminder
+     * @param Process               $process
+     * @param DatafordelerService   $datafordelerService
      *
      * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function show(Request $request, Reminder $reminder, Process $process): Response
+    public function show(Request $request, Reminder $reminder, Process $process, DatafordelerService $datafordelerService): Response
     {
         $this->denyAccessUnlessGranted('edit', $process);
 
+        // Get the ProcessClient Identifier from process
+        $processClientIdentifier = $process->getProcessClient()->getIdentifier();
+        // Get client type
+        $clientType = $process->getProcessClient()->getType();
+
+        if (ProcessClientPerson::PERSON === $clientType) {
+            $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
+            $data = $datafordelerService->getPersonData($processClientIdentifier);
+        } elseif (ProcessClientCompany::COMPANY === $clientType) {
+            $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
+        }
         return $this->render('@KontrolgruppenCore/reminder/show.html.twig', [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'reminder' => $reminder,
             'process' => $process,
+            'data' => $data
         ]);
     }
 
     /**
      * @Route("/{id}/edit", name="reminder_edit", methods={"GET","POST"})
      *
-     * @param Request  $request
-     * @param Reminder $reminder
-     * @param Process  $process
+     * @param Request               $request
+     * @param Reminder              $reminder
+     * @param Process               $process
+     * @param DatafordelerService   $datafordelerService
+
      *
      * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function edit(Request $request, Reminder $reminder, Process $process): Response
+    public function edit(Request $request, Reminder $reminder, Process $process, DatafordelerService $datafordelerService): Response
     {
         $this->denyAccessUnlessGranted('edit', $process);
 
@@ -158,8 +175,20 @@ class ProcessReminderController extends BaseController
 
         $form->handleRequest($request);
 
+        // Get the ProcessClient Identifier from process
+        $processClientIdentifier = $process->getProcessClient()->getIdentifier();
+        // Get client type
+        $clientType = $process->getProcessClient()->getType();
+
+        if (ProcessClientPerson::PERSON === $clientType) {
+            $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
+            $data = $datafordelerService->getPersonData($processClientIdentifier);
+        } elseif (ProcessClientCompany::COMPANY === $clientType) {
+            $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
+        }
+        
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->em;
+            $this->em->flush();
 
             return $this->redirectToRoute('reminder_index', [
                 'id' => $reminder->getId(),
@@ -171,6 +200,7 @@ class ProcessReminderController extends BaseController
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'reminder' => $reminder,
             'process' => $process,
+            'data' => $data,
             'form' => $form->createView(),
         ]);
     }

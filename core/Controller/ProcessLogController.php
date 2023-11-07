@@ -33,7 +33,7 @@ class ProcessLogController extends BaseController
      *
      * @param Request               $request
      * @param Process               $process
-     * @param DatafordelerService   $process
+     * @param DatafordelerService   $datafordelerService
      *
      * @return Response
      *

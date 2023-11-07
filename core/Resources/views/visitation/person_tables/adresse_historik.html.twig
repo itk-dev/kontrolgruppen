@@ -20,32 +20,44 @@
                         </tr>
                     </thead>
                     <tbody class="bg-light">
-                        {% for adresse in data.Adresseoplysninger %}
-                        <tr>
-                            <td>
-                                {% if adresse.Adresseoplysninger.CprAdresse.vejadresseringsnavn is defined %}
-                                    {{ adresse.Adresseoplysninger.CprAdresse.vejadresseringsnavn }}
-                                {% endif %}
-                                {% if adresse.Adresseoplysninger.CprAdresse.husnummer is defined %}
-                                    {{ adresse.Adresseoplysninger.CprAdresse.husnummer }}
-                                {% endif %}
-                                {% if adresse.Adresseoplysninger.CprAdresse.etage is defined %}
-                                    {{ adresse.Adresseoplysninger.CprAdresse.etage }}
-                                {% endif %}
-                                {% if adresse.Adresseoplysninger.CprAdresse.sidedoer is defined %}
-                                    {{ adresse.Adresseoplysninger.CprAdresse.sidedoer }}
-                                {% endif %}
-                            </td>
-                            <td>{{ adresse.Adresseoplysninger.CprAdresse.postnummer }} {{ adresse.Adresseoplysninger.CprAdresse.postdistrikt }}</td>
-                            <td>{{ adresse.Adresseoplysninger.CprAdresse.cprKommunenavn }}</td>
-                            <td></td>
-                            {% if adresse.Adresseoplysninger.virkningTil is defined %}
-                                <td>{{ adresse.Adresseoplysninger.virkningFra|date("d-m-Y") }} til {{ adresse.Adresseoplysninger.virkningTil|date("d-m-Y") }} </td>
+                        {% set sorted_adresseoplysninger = data.Adresseoplysninger|sort((a, b) => b.Adresseoplysninger.virkningFra <=> a.Adresseoplysninger.virkningFra) %}
+                        {% for adresse in sorted_adresseoplysninger %}
+                            {% set currentDate = "now"|date("Y-m-d") %}
+                            {% set fiveYearsAgo = currentDate|date_modify("-5 years")|date("Y-m-d") %}
+                            {% if adresse.Adresseoplysninger.virkningFra < fiveYearsAgo %}
+                                <tr class="older-than-5">
                             {% else %}
-                                <td>{{ adresse.Adresseoplysninger.virkningFra|date("d-m-Y") }}</td>
+                                <tr>
                             {% endif %}
-                        </tr>
+                                    <td>
+                                        {% if adresse.Adresseoplysninger.CprAdresse.vejadresseringsnavn is defined %}
+                                            {{ adresse.Adresseoplysninger.CprAdresse.vejadresseringsnavn }}
+                                        {% endif %}
+                                        {% if adresse.Adresseoplysninger.CprAdresse.husnummer is defined %}
+                                            {{ adresse.Adresseoplysninger.CprAdresse.husnummer }}
+                                        {% endif %}
+                                        {% if adresse.Adresseoplysninger.CprAdresse.etage is defined %}
+                                            {{ adresse.Adresseoplysninger.CprAdresse.etage }}
+                                        {% endif %}
+                                        {% if adresse.Adresseoplysninger.CprAdresse.sidedoer is defined %}
+                                            {{ adresse.Adresseoplysninger.CprAdresse.sidedoer }}
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ adresse.Adresseoplysninger.CprAdresse.postnummer }} {{ adresse.Adresseoplysninger.CprAdresse.postdistrikt }}</td>
+                                    <td>{{ adresse.Adresseoplysninger.CprAdresse.cprKommunenavn }}</td>
+                                    <td></td>
+                                    {% if adresse.Adresseoplysninger.virkningTil is defined %}
+                                        <td>{{ adresse.Adresseoplysninger.virkningFra|date("d-m-Y") }} til {{ adresse.Adresseoplysninger.virkningTil|date("d-m-Y") }} </td>
+                                    {% else %}
+                                        <td>{{ adresse.Adresseoplysninger.virkningFra|date("d-m-Y") }}</td>
+                                    {% endif %}
+                                </tr>
                         {% endfor %}
+                        <tr>
+                            <td colspan="5" class="text-center">
+                                <button class="btn btn-primary text-center show-history">{{ 'visitation.get_history'|trans }}</button>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
