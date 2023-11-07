@@ -41,6 +41,8 @@ class GetConclusionTypesEvent extends Event
 
     /**
      * @param $types
+     *
+     * @return GetConclusionTypesEvent
      */
     public function setTypes($types): self
     {

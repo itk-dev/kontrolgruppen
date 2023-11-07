@@ -11,15 +11,15 @@
 namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\Entity\Process;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 use Kontrolgruppen\CoreBundle\Event\GetConclusionTemplateEvent;
 use Kontrolgruppen\CoreBundle\Service\ConclusionService;
+use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
-use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
-use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
 
 /**
  * @Route("/process/{process}/conclusion")
@@ -57,7 +57,7 @@ class ConclusionController extends BaseController
 
         // Get template from event.
         $event = new GetConclusionTemplateEvent($conclusion::class, 'show');
-        $template = $dispatcher->dispatch($event,GetConclusionTemplateEvent::NAME )->getTemplate();
+        $template = $dispatcher->dispatch($event, GetConclusionTemplateEvent::NAME)->getTemplate();
         // Get the ProcessClient Identifier from process
         $processClientIdentifier = $process->getProcessClient()->getIdentifier();
         // Get client type
@@ -69,12 +69,13 @@ class ConclusionController extends BaseController
         } elseif (ProcessClientCompany::COMPANY === $clientType) {
             $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
         }
+
         return $this->render($template, [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'canEdit' => $this->isGranted('edit', $process) && null === $process->getCompletedAt(),
             'conclusion' => $process->getConclusion(),
             'process' => $process,
-            'data' => $data
+            'data' => $data,
         ]);
     }
 
@@ -133,13 +134,14 @@ class ConclusionController extends BaseController
         } elseif (ProcessClientCompany::COMPANY === $clientType) {
             $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
         }
+
         return $this->render($template, [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'conclusion' => $conclusion,
             'canEdit' => $this->isGranted('edit', $process) && null === $process->getCompletedAt(),
             'form' => $form->createView(),
             'process' => $process,
-            'data' => $data
+            'data' => $data,
         ]);
     }
 }

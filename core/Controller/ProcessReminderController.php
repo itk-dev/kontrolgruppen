@@ -28,9 +28,9 @@ class ProcessReminderController extends BaseController
     /**
      * @Route("/", name="reminder_index", methods={"GET","POST"})
      *
-     * @param Request               $request
-     * @param Process               $process
-     * @param DatafordelerService   $datafordelerService
+     * @param Request             $request
+     * @param Process             $process
+     * @param DatafordelerService $datafordelerService
      *
      * @return Response
      *
@@ -63,9 +63,9 @@ class ProcessReminderController extends BaseController
     /**
      * @Route("/new", name="reminder_new", methods={"GET","POST"})
      *
-     * @param Request               $request
-     * @param Process               $process
-     * @param DatafordelerService   $datafordelerService
+     * @param Request             $request
+     * @param Process             $process
+     * @param DatafordelerService $datafordelerService
      *
      * @return Response
      *
@@ -115,10 +115,10 @@ class ProcessReminderController extends BaseController
     /**
      * @Route("/{id}", name="reminder_show", methods={"GET"})
      *
-     * @param Request               $request
-     * @param Reminder              $reminder
-     * @param Process               $process
-     * @param DatafordelerService   $datafordelerService
+     * @param Request             $request
+     * @param Reminder            $reminder
+     * @param Process             $process
+     * @param DatafordelerService $datafordelerService
      *
      * @return Response
      *
@@ -140,22 +140,22 @@ class ProcessReminderController extends BaseController
         } elseif (ProcessClientCompany::COMPANY === $clientType) {
             $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
         }
+
         return $this->render('@KontrolgruppenCore/reminder/show.html.twig', [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'reminder' => $reminder,
             'process' => $process,
-            'data' => $data
+            'data' => $data,
         ]);
     }
 
     /**
      * @Route("/{id}/edit", name="reminder_edit", methods={"GET","POST"})
      *
-     * @param Request               $request
-     * @param Reminder              $reminder
-     * @param Process               $process
-     * @param DatafordelerService   $datafordelerService
-
+     * @param Request             $request
+     * @param Reminder            $reminder
+     * @param Process             $process
+     * @param DatafordelerService $datafordelerService
      *
      * @return Response
      *
@@ -186,7 +186,7 @@ class ProcessReminderController extends BaseController
         } elseif (ProcessClientCompany::COMPANY === $clientType) {
             $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
         }
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->flush();
 

@@ -14,10 +14,10 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class ClientPersonType.
@@ -51,7 +51,7 @@ class ClientPersonType extends AbstractType
                 'label' => 'process.form.client_cpr',
                 'attr' => [
                     'class' => 'js-input-cpr no-cpr-scanning',
-                    'readonly' => $identifier !== null ? true : false,
+                    'readonly' => null !== $identifier ? true : false,
                 ],
                 'data' => $identifier,
             ])

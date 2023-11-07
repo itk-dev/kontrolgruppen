@@ -49,10 +49,10 @@ class ProcessClientController extends BaseController
     /**
      * ProcessClientController constructor.
      *
-     * @param RequestStack        $requestStack
-     * @param MenuService         $menuService
-     * @param CprServiceInterface $processClientManager
-     * @param LoggerInterface     $logger
+     * @param RequestStack           $requestStack
+     * @param MenuService            $menuService
+     * @param CprServiceInterface    $processClientManager
+     * @param LoggerInterface        $logger
      * @param EntityManagerInterface $em
      */
     public function __construct(RequestStack $requestStack, MenuService $menuService, ProcessClientManager $processClientManager, LoggerInterface $logger, EntityManagerInterface $em)
@@ -115,8 +115,9 @@ class ProcessClientController extends BaseController
     /**
      * @Route("/edit", name="client_edit", methods={"GET","POST"})
      *
-     * @param Request $request
-     * @param Process $process
+     * @param Request             $request
+     * @param Process             $process
+     * @param DatafordelerService $datafordelerService
      *
      * @return Response
      *

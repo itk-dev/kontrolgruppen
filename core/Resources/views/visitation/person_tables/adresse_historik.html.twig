@@ -22,9 +22,9 @@
                     <tbody class="bg-light">
                         {% set sorted_adresseoplysninger = data.Adresseoplysninger|sort((a, b) => b.Adresseoplysninger.virkningFra <=> a.Adresseoplysninger.virkningFra) %}
                         {% for adresse in sorted_adresseoplysninger %}
-                            {% set currentDate = "now"|date("Y-m-d") %}
-                            {% set fiveYearsAgo = currentDate|date_modify("-5 years")|date("Y-m-d") %}
-                            {% if adresse.Adresseoplysninger.virkningFra < fiveYearsAgo %}
+                            {% set current_date = "now"|date("Y-m-d") %}
+                            {% set five_years_ago = current_date|date_modify("-5 years")|date("Y-m-d") %}
+                            {% if adresse.Adresseoplysninger.virkningFra < five_years_ago %}
                                 <tr class="older-than-5">
                             {% else %}
                                 <tr>

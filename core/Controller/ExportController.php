@@ -41,11 +41,12 @@ class ExportController extends BaseController
     /**
      * ExportController constructor.
      *
-     * @param RequestStack         $requestStack
-     * @param MenuService          $menuService
-     * @param Manager              $exportManager
-     * @param FormFactoryInterface $formFactory
-     * @param Environment          $twig
+     * @param RequestStack           $requestStack
+     * @param EntityManagerInterface $em
+     * @param MenuService            $menuService
+     * @param Manager                $exportManager
+     * @param FormFactoryInterface   $formFactory
+     * @param Environment            $twig
      */
     public function __construct(RequestStack $requestStack, EntityManagerInterface $em, MenuService $menuService, Manager $exportManager, FormFactoryInterface $formFactory, Environment $twig)
     {

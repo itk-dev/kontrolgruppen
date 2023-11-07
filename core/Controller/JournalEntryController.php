@@ -62,6 +62,7 @@ class JournalEntryController extends BaseController
      * @param SessionInterface              $session
      * @param LogManager                    $logManager
      * @param FormFactoryInterface          $formFactory
+     * @param DatafordelerService           $datafordelerService
      *
      * @return Response
      *
@@ -183,8 +184,9 @@ class JournalEntryController extends BaseController
     /**
      * @Route("/new", name="journal_entry_new", methods={"GET","POST"})
      *
-     * @param Request $request
-     * @param Process $process
+     * @param Request             $request
+     * @param Process             $process
+     * @param DatafordelerService $datafordelerService
      *
      * @return Response
      *
@@ -243,10 +245,11 @@ class JournalEntryController extends BaseController
     /**
      * @Route("/{id}", name="journal_entry_show", methods={"GET"})
      *
-     * @param Request      $request
-     * @param JournalEntry $journalEntry
-     * @param Process      $process
-     * @param LogManager   $logManager
+     * @param Request             $request
+     * @param JournalEntry        $journalEntry
+     * @param Process             $process
+     * @param LogManager          $logManager
+     * @param DatafordelerService $datafordelerService
      *
      * @return Response
      *
@@ -297,10 +300,11 @@ class JournalEntryController extends BaseController
     /**
      * @Route("/{id}/edit", name="journal_entry_edit", methods={"GET","POST"})
      *
-     * @param Request      $request
-     * @param JournalEntry $journalEntry
-     * @param Process      $process
-     * @param LogManager   $logManager
+     * @param Request             $request
+     * @param JournalEntry        $journalEntry
+     * @param Process             $process
+     * @param LogManager          $logManager
+     * @param DatafordelerService $datafordelerService
      *
      * @return Response
      *
@@ -378,7 +382,7 @@ class JournalEntryController extends BaseController
      *
      * @return Response
      */
-    public function delete(Request $request, JournalEntry $journalEntry, Process $process, DatafordelerService $datafordelerService): Response
+    public function delete(Request $request, JournalEntry $journalEntry, Process $process): Response
     {
         $this->denyAccessUnlessGranted('edit', $process);
 

@@ -22,7 +22,7 @@ class ServiceplatformenCprService extends AbstractCprService implements CprServi
     /**
      * ServiceplatformenCprService constructor.
      *
-     * @param HttpClientInterface    $httpClient
+     * @param HttpClientInterface $httpClient
      */
     public function __construct(HttpClientInterface $httpClient)
     {

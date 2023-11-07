@@ -14,10 +14,11 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+
 /**
  * Class ClientCompanyType.
  */
@@ -50,7 +51,7 @@ class ClientCompanyType extends AbstractType
                 'label' => 'process.form.client_cvr',
                 'attr' => [
                     'class' => 'js-input-cvr no-cvr-scanning',
-                    'readonly' => $identifier !== null ? true : false,
+                    'readonly' => null !== $identifier ? true : false,
                 ],
                 'data' => $identifier,
             ])

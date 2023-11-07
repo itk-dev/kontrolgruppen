@@ -147,24 +147,24 @@ class DatafordelerController extends BaseController
      *
      * Fetches more P-Numbers with an option to limit the number of records fetched.
      *
-     * @param Request              $request
+     * @param Request             $request
      * @param HttpClientInterface $datafordelerCvrHttpClient
      *
      * @return JsonResponse
      *
      * @throws TransportExceptionInterface
      */
-    public function getMorePNumbers(Request $request, HttpClientInterface $datafordelerCvrHttpClient): JsonResponse
+    protected function getMorePNumbers(Request $request, HttpClientInterface $datafordelerCvrHttpClient): JsonResponse
     {
         $offset = $request->query->getInt('offset', 0);
         $limit = $request->query->getInt('limit', 5);
-        $p_numbers = json_decode($request->query->get('p_numbers'), true);
+        $pNumbers = json_decode($request->query->get('p_numbers'), true);
 
         $allData = [];
         $datafordelerService = new DatafordelerService(null, $datafordelerCvrHttpClient);
 
-        $p_numbers = \array_slice($p_numbers, $offset, $limit);
-        foreach ($p_numbers as $pnumber) {
+        $pNumbers = \array_slice($pNumbers, $offset, $limit);
+        foreach ($pNumbers as $pnumber) {
             $data = $datafordelerService->getVirksomhedDataByPNumber($pnumber);
             $allData[$pnumber] = $data;
         }

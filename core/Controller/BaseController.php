@@ -37,8 +37,8 @@ class BaseController extends AbstractController
     /**
      * BaseController constructor.
      *
-     * @param RequestStack $requestStack
-     * @param MenuService  $menuService
+     * @param RequestStack           $requestStack
+     * @param MenuService            $menuService
      * @param EntityManagerInterface $em
      */
     public function __construct(RequestStack $requestStack, MenuService $menuService, EntityManagerInterface $em)
