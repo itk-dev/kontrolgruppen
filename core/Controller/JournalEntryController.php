@@ -118,7 +118,7 @@ class JournalEntryController extends BaseController
 
             if ($request->query->has($filterForm->getName())) {
                 // manually bind values from the request
-                $filterForm->submit($request->query->get($filterForm->getName()));
+                $filterForm->submit($request->get($filterForm->getName()));
 
                 // build the query from the given form object
                 $lexikBuilderUpdater->addFilterConditions($filterForm, $qb);
