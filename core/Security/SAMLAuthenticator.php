@@ -26,7 +26,6 @@ use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
 use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
 use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\CustomCredentials;
 use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
-use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
 
 /**
  * Class SAMLAuthenticator.
@@ -42,8 +41,8 @@ class SAMLAuthenticator extends AbstractAuthenticator
     /**
      * SAMLAuthenticator constructor.
      *
-     * @param RouterInterface  $router
-     * @param array            $settings
+     * @param RouterInterface $router
+     * @param array           $settings
      */
     public function __construct(RouterInterface $router, array $settings)
     {

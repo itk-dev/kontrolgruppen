@@ -11,11 +11,11 @@
 namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\Entity\Process;
-use Kontrolgruppen\CoreBundle\Service\EconomyService;
-use Symfony\Component\HttpFoundation\Request;
 use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
 use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
+use Kontrolgruppen\CoreBundle\Service\EconomyService;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -28,10 +28,10 @@ class RevenueController extends BaseController
     /**
      * @Route("/", name="economy_revenue")
      *
-     * @param Request        $request
-     * @param Process               $process
-     * @param EconomyService        $economyService
-     * @param DatafordelerService   $datafordelerService
+     * @param Request             $request
+     * @param Process             $process
+     * @param EconomyService      $economyService
+     * @param DatafordelerService $datafordelerService
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
@@ -60,7 +60,6 @@ class RevenueController extends BaseController
         }
 
         $parameters['data'] = $data;
-
 
         return $this->render(
             '@KontrolgruppenCore/revenue/revenue.html.twig',

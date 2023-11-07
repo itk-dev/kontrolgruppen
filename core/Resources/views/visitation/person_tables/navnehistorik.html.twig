@@ -20,9 +20,9 @@
                         {% set sorted_navne = data.Navne|sort((a, b) => b.Navn.virkningFra <=> a.Navn.virkningFra) %}
 
                         {% for navn in sorted_navne %}
-                        {% set currentDate = "now"|date("Y-m-d") %}
-                        {% set fiveYearsAgo = currentDate|date_modify("-5 years")|date("Y-m-d") %}
-                        {% if navn.Navn.virkningFra < fiveYearsAgo %}
+                        {% set current_date = "now"|date("Y-m-d") %}
+                        {% set five_years_ago = current_date|date_modify("-5 years")|date("Y-m-d") %}
+                        {% if navn.Navn.virkningFra < five_years_ago %}
                             <tr class="older-than-5">
                         {% else %}
                             <tr>

@@ -30,9 +30,9 @@ class ProcessGroupController extends BaseController
     /**
      * @Route("/", name="process_group_index", methods={"GET"})
      *
-     * @param Request               $request
-     * @param Process               $process
-     * @param DatafordelerService   $datafordelerService
+     * @param Request             $request
+     * @param Process             $process
+     * @param DatafordelerService $datafordelerService
      *
      * @return Response
      *
@@ -79,9 +79,9 @@ class ProcessGroupController extends BaseController
     /**
      * @Route("/new", name="process_group_new", methods={"GET","POST"})
      *
-     * @param Request               $request
-     * @param Process               $process
-     * @param DatafordelerService   $datafordelerService
+     * @param Request             $request
+     * @param Process             $process
+     * @param DatafordelerService $datafordelerService
      *
      * @return Response
      *
@@ -134,10 +134,10 @@ class ProcessGroupController extends BaseController
     /**
      * @Route("/{id}/edit", name="process_group_edit", methods={"GET","POST"})
      *
-     * @param Request               $request
-     * @param ProcessGroup          $processGroup
-     * @param Process               $process
-     * @param DatafordelerService   $datafordelerService
+     * @param Request             $request
+     * @param ProcessGroup        $processGroup
+     * @param Process             $process
+     * @param DatafordelerService $datafordelerService
      *
      * @return Response
      *
@@ -183,9 +183,9 @@ class ProcessGroupController extends BaseController
     /**
      * @Route("/{id}", name="process_group_delete", methods={"DELETE"})
      *
-     * @param Request               $request
-     * @param ProcessGroup          $processGroup
-     * @param Process               $process
+     * @param Request      $request
+     * @param ProcessGroup $processGroup
+     * @param Process      $process
      *
      * @return Response
      */

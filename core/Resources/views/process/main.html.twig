@@ -2,17 +2,6 @@
 
 {% block sidebar_right %}
     {{ include('@KontrolgruppenCore/process/_process_global_actions_header.html.twig') }}
-
-    {# <ul class="nav nav-tabs" id="sidebar-right-tabs" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link active" id="sidebar-right-process-info-tab" data-toggle="tab" href="#sidebar-right-process-info" role="tab"
-               aria-controls="sidebar-right-process-info" aria-selected="true">{{ 'process.summary.title'|trans }}</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="sidebar-right-activity-tab" data-toggle="tab" href="#sidebar-right-activity" role="tab"
-               aria-controls="sidebar-right-activity" aria-selected="false"><span class="short-text">{{ 'dashboard.latest_activity.title_short'|trans }}</span><span class="long-text">{{ 'dashboard.latest_activity.title'|trans }}</span></a>
-        </li>
-    </ul> #}
     <div class="tab-content" id="sidebarRightTabsContent">
         <div class="tab-pane fade" id="sidebar-right-activity" role="tabpanel" aria-labelledby="sidebar-right-activity-tab">
             {{ include('@KontrolgruppenCore/process/_sidebar_activity.html.twig') }}
@@ -97,6 +86,25 @@
 {% block javascripts %}
     {{ parent() }}
     <script>
+        $('.child-name').on('click', function(event) {
+            event.preventDefault(); // Prevent the default anchor click behavior
+
+            var cprNumber = $(this).data('cpr'); // Retrieve the CPR number from the data attribute
+
+            // Create a form element
+            var form = $('<form>', {
+                'method': 'post',
+                'action': '/visitation/result',
+                'target': '_blank' // This will open the form submission in a new tab
+            }).append($('<input>', {
+                'type': 'hidden',
+                'name': 'cpr',
+                'value': cprNumber
+            }));
+
+            // Append the form to the body and submit it
+            form.appendTo('body').submit().remove();
+        });
         function formatCprAndCalculateAge(cpr) {
             // Extract day, month, year, and 7th digit from the CPR number
             const day = cpr.substring(0, 2);
@@ -140,7 +148,7 @@
         $(document).ready(function() {
 
             $('.older-than-5').hide();
-    
+
             // Format the CPR number and calculate the age for each cprField class
             const cprFields = document.getElementsByClassName("cprField");
             for (let i = 0; i < cprFields.length; i++) {

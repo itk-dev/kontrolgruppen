@@ -59,7 +59,7 @@
                     <tbody class="stam-data-body">
                         <tr>
                             <td><b>{{ 'visitation.name'|trans }}</b></td>
-                            
+
                             {% for name in data.Navne %}
                                 {% if name.Navn.virkningTil is not defined %}
                                     <td>{{ name.Navn.fornavne }} {{ name.Navn.efternavn }}</td>
@@ -185,6 +185,25 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
+        $('.child-name').on('click', function(event) {
+            event.preventDefault(); // Prevent the default anchor click behavior
+
+            var cprNumber = $(this).data('cpr'); // Retrieve the CPR number from the data attribute
+
+            // Create a form element
+            var form = $('<form>', {
+                'method': 'post',
+                'action': '/visitation/result',
+                'target': '_blank' // This will open the form submission in a new tab
+            }).append($('<input>', {
+                'type': 'hidden',
+                'name': 'cpr',
+                'value': cprNumber
+            }));
+
+            // Append the form to the body and submit it
+            form.appendTo('body').submit().remove();
+        });
         function formatCprAndCalculateAge(cpr) {
             // Extract day, month, year, and 7th digit from the CPR number
             const day = cpr.substring(0, 2);
@@ -227,7 +246,7 @@
         $(document).ready(function() {
 
             $('.older-than-5').hide();
-    
+
             // Format the CPR number and calculate the age for each cprField class
             const cprFields = document.getElementsByClassName("cprField");
             for (let i = 0; i < cprFields.length; i++) {
@@ -241,9 +260,6 @@
                 const formattedCpr = formatCprDash(originalCpr);
                 cprDashes[i].textContent = formattedCpr;
             }
-            // const cprElement = document.getElementById("cprField");
-            // console.log(formattedCprAndAge);
-            // const formattedCprAndAge = formatCprAndCalculateAge(originalCpr);
 
             $('.accordion .card-header').click(function() {
                 var icon = $(this).closest(".card-header").find('.iconClass');

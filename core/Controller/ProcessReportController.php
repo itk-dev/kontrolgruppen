@@ -36,6 +36,7 @@ class ProcessReportController extends BaseController
      * @param Process             $process
      * @param TranslatorInterface $translator
      * @param ReportService       $reportService
+     * @param DatafordelerService $datafordelerService
      *
      * @return Response
      *

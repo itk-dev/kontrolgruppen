@@ -22,9 +22,9 @@
                         {# Loop through the data for this table if applicable. Otherwise, statically add rows. #}
                         {% if data.Civilstande is defined %}
                             {% for civilstatus in data.Civilstande %}
-                            {% set currentDate = "now"|date("Y-m-d") %}
-                            {% set fiveYearsAgo = currentDate|date_modify("-5 years")|date("Y-m-d") %}
-                            {% if civilstatus.Civilstand.virkningFra < fiveYearsAgo %}
+                            {% set current_date = "now"|date("Y-m-d") %}
+                            {% set five_years_ago = current_date|date_modify("-5 years")|date("Y-m-d") %}
+                            {% if civilstatus.Civilstand.virkningFra < five_years_ago %}
                             <tr class="older-than-5">
                             {% else %}
                                 <tr>

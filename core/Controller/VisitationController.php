@@ -10,17 +10,16 @@
 
 namespace Kontrolgruppen\CoreBundle\Controller;
 
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 use Kontrolgruppen\CoreBundle\Entity\Visitation;
 use Kontrolgruppen\CoreBundle\Entity\VisitationLogEntry;
+use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
-use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
-use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
-use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 
 /**
  * @Route("/visitation")
@@ -65,6 +64,7 @@ class VisitationController extends DatafordelerController
         if (!$request->get('clientType')) {
             return $this->redirectToRoute('dashboard_index');
         }
+
         return $this->render(
             '@KontrolgruppenCore/visitation/search.html.twig',
             [
@@ -151,16 +151,16 @@ class VisitationController extends DatafordelerController
 
             $cpr = preg_replace('/\D+/', '', $cpr);
             // try {
-                $data = $datafordelerService->getPersonData($cpr);
-                if (null === $data) {
-                    return $this->render(
-                        '@KontrolgruppenCore/visitation/search.html.twig',
-                        [
-                            'client_type' => 'person',
-                            'error' => 'CPR nummer ikke genkendt, prøv igen.',
-                        ]
-                    );
-                }
+            $data = $datafordelerService->getPersonData($cpr);
+            if (null === $data) {
+                return $this->render(
+                    '@KontrolgruppenCore/visitation/search.html.twig',
+                    [
+                        'client_type' => 'person',
+                        'error' => 'CPR nummer ikke genkendt, prøv igen.',
+                    ]
+                );
+            }
             // } catch (TransportExceptionInterface $e) {
             //     return $this->render(
             //         '@KontrolgruppenCore/visitation/search.html.twig',
@@ -195,8 +195,8 @@ class VisitationController extends DatafordelerController
                 '@KontrolgruppenCore/visitation/person_results.html.twig'
             );
         }
-        return $this->redirectToRoute('dashboard_index');
 
+        return $this->redirectToRoute('dashboard_index');
     }
 
     /**

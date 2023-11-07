@@ -18,9 +18,9 @@
                     </thead>
                     <tbody class="bg-light">
                         {% for cprnummer in data.Personnumre %}
-                        {% set currentDate = "now"|date("Y-m-d") %}
-                        {% set fiveYearsAgo = currentDate|date_modify("-5 years")|date("Y-m-d") %}
-                        {% if cprnummer.Personnummer.virkningFra < fiveYearsAgo %}
+                        {% set current_date = "now"|date("Y-m-d") %}
+                        {% set five_years_ago = current_date|date_modify("-5 years")|date("Y-m-d") %}
+                        {% if cprnummer.Personnummer.virkningFra < five_years_ago %}
                             <tr class="older-than-5">
                         {% else %}
                             <tr>

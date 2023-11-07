@@ -12,9 +12,9 @@
                 <table class="table mb-0 table-bordered bg-info" id="pNumberTable">
                     <tbody class="bg-light">
                         {# foreach produktionsenheder #}
-                        {% for allPnumbers in data.produktionsenheder %}
+                        {% for all_pnumbers in data.produktionsenheder %}
                         <div class="allPNumbers" style="display:none">
-                            {{ allPnumbers.pNummer }}
+                            {{ all_pnumbers.pNummer }}
                         </div>
                         {% endfor %}
                         {% for produktionsenhed in data.pNummer %}

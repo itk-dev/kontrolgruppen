@@ -31,9 +31,9 @@ class ProcessLogController extends BaseController
     /**
      * @Route("/", name="process_log_index", methods={"GET","POST"})
      *
-     * @param Request               $request
-     * @param Process               $process
-     * @param DatafordelerService   $datafordelerService
+     * @param Request             $request
+     * @param Process             $process
+     * @param DatafordelerService $datafordelerService
      *
      * @return Response
      *

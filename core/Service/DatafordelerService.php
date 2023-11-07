@@ -24,6 +24,7 @@ class DatafordelerService
 
     /**
      * @param HttpClientInterface $datafordelerCprHttpClient
+     * @param HttpClientInterface $datafordelerCvrHttpClient
      */
     public function __construct(?HttpClientInterface $datafordelerCprHttpClient, ?HttpClientInterface $datafordelerCvrHttpClient)
     {
@@ -79,6 +80,11 @@ class DatafordelerService
         return $data;
     }
 
+    /**
+     * @param array $cprAdresse
+     *
+     * @return array
+     */
     public function getBBR(array $cprAdresse): array
     {
         $query = ['struktur' => 'mini'];
