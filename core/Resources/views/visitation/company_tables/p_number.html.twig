@@ -55,8 +55,16 @@
                                     {{ produktionsenhed.beliggenhedsadresse.CVRAdresse_postdistrikt }}
                                 {% endif %}
                             </td>
-                            <td>{{ produktionsenhed.telefonnummer.vaerdi }}</td>
-                            <td>{{ produktionsenhed['e-mailadresse'].vaerdi }}</td>
+                            <td>
+                                {% if produktionsenhed.telefonnummer.vaerdi is defined %}
+                                    {{ produktionsenhed.telefonnummer.vaerdi }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if produktionsenhed['e-mailadresse'].vaerdi is defined %}
+                                    {{ produktionsenhed['e-mailadresse'].vaerdi }}
+                                {% endif %}
+                            </td>
                         </tr>
 
                         {% endfor %}

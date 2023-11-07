@@ -47,19 +47,19 @@
                     <tbody class="stam-data-body">
                         {% if data.virksomhedsnavn.vaerdi is defined %}
                             <tr>
-                                <td>{{ 'visitation.name'|trans }}</td>
+                                <td><b>{{ 'visitation.name'|trans }}</b></td>
                                 <td>{{ data.virksomhedsnavn.vaerdi }}</td>
                             </tr>
                         {% endif %}
                         {% if data.virksomhed.CVRNummer is defined %}
                             <tr>
-                                <td>{{ 'visitation.cvr'|trans }}</td>
+                                <td><b>{{ 'visitation.cvr'|trans }}</b></td>
                                 <td id="cvrField">{{ data.virksomhed.CVRNummer }}</td>
                             </tr>
                         {% endif %}
                         {% if data.beliggenhedsadresse.adresse is not empty %}
                             <tr>
-                                <td>{{ 'visitation.address'|trans }}</td>
+                                <td><b>{{ 'visitation.address'|trans }}</b></td>
                                 <td>
                                     {% if data.beliggenhedsadresse.CVRAdresse_vejnavn is defined %}
                                         {{ data.beliggenhedsadresse.CVRAdresse_vejnavn }}
@@ -85,19 +85,19 @@
                         {% endif %}
                         {% if data['e-mailadresse'].vaerdi is defined %}
                             <tr>
-                                <td>{{ 'visitation.contact'|trans }}</td>
+                                <td><b>{{ 'visitation.contact'|trans }}</b></td>
                                 <td>{{ data['e-mailadresse'].vaerdi }}</td>
                             </tr>
                         {% endif %}
                         {% if data.virksomhedsform.vaerdi is not empty %}
                             <tr>
-                                <td>{{ 'visitation.company_type'|trans }}</td>
+                                <td><b>{{ 'visitation.company_type'|trans }}</b></td>
                                 <td>{{ data.virksomhedsform.vaerdiTekst }}</td>
                             </tr>
                         {% endif %}
                         {% if data.virksomhed.status is not empty %}
                             <tr>
-                                <td>{{ 'visitation.status'|trans }}</td>
+                                <td><b>{{ 'visitation.status'|trans }}</b></td>
                                 <td>{{ data.virksomhed.status }}</td>
                             </tr>
                         {% endif %}
@@ -111,18 +111,26 @@
 {% block stylesheets %}
     {{ parent() }}
     <style>
-        .fixed-table {
-            position: fixed;
-            top: 120px;
-            right: 30px;
-            width: 30%;
-            z-index: 999;
+        @media (max-width: 768px) {
+            .fixed-table {
+                position: static;
+                width: 100%;
+            }
+        }
+        @media (min-width: 769px) {
+            .fixed-table {
+                position: fixed;
+                top: 120px;
+                right: 30px;
+                width: 25%;
+                z-index: 999;
+            }
         }
         .left-tables {
             max-width: 900px;
         }
         .card-header {
-            background-color:#c8defc ;
+            background-color:#c8defc;
         }
         .card-header.active {
             background-color: #81b4fe;

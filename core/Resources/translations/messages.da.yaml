@@ -552,11 +552,11 @@ process:
         update: Gem
         status: Status
         search_client_cpr:
-            search: Søg efter eksisterende sager
+            search: Søg i eksisterende sager
             loading: Søger...
             results: Eksisterende sag(er) fundet
         search_client_cvr:
-            search: Søg efter eksisterende sager
+            search: Søg i eksisterende sager
             loading: Søger...
             results: Eksisterende sag(er) fundet
     index:
@@ -620,7 +620,7 @@ visitation:
     company:
         employees_count: Antal ansatte
         legal_owners: Legale ejere
-        real_owners: Reele ejere
+        real_owners: Reelle ejere
         creation_date: Oprettelsesdato
         date: Dato
         founder: Stifter
@@ -682,7 +682,7 @@ visitation:
     address: Adresse
     gender: Køn
     existing_cases: Eksisterende sager
-    search_placeholder: Søg efter eksisterende sager
+    search_placeholder: Søg i eksisterende sager
     searching_placeholder: Søger...
     cvr: CVR
     contact: Kontakt

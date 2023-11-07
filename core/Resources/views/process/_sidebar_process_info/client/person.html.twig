@@ -21,13 +21,26 @@
                                 </tr>
                                 <tr>
                                     <td>{{ 'visitation.address'|trans }}</td>
-                                    <td>{{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.vejadresseringsnavn }}
-                                        {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.husnummer }}
-                                        {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.etage }}
-                                        {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.sidedoer }}
+                                    <td>
+                                        {% if data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.vejadresseringsnavn is defined and data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.vejadresseringsnavn is not empty %}
+                                            {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.vejadresseringsnavn }}
+                                        {% endif %}
+                                        {% if data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.husnummer is defined and data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.husnummer is not empty %}
+                                            {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.husnummer }}
+                                        {% endif %}
+                                        {% if data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.etage is defined and data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.etage is not empty %}
+                                            {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.etage }}
+                                        {% endif %}
+                                        {% if data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.sidedoer is defined and data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.sidedoer is not empty %}
+                                            {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.sidedoer }}
+                                        {% endif %}
                                         <br>
-                                        {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.postnummer }}
-                                        {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.postdistrikt }}
+                                        {% if data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.postnummer is defined and data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.postnummer is not empty %}
+                                            {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.postnummer }}
+                                        {% endif %}
+                                        {% if data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.postdistrikt is defined and data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.postdistrikt is not empty %}
+                                            {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.postdistrikt }}
+                                        {% endif %}
                                     </td>
                                 </tr>
                                 <tr>
