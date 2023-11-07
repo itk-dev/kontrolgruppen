@@ -82,25 +82,25 @@ class DatafordelerService
     public function getBBR(array $cprAdresse): array
     {
         $query = ['struktur' => 'mini'];
-        if ($cprAdresse['vejadresseringsnavn']) {
+        if (isset($cprAdresse['vejadresseringsnavn'])) {
             $query['vejnavn'] = $cprAdresse['vejadresseringsnavn'];
         }
-        if ($cprAdresse['husnummer']) {
+        if (isset($cprAdresse['husnummer'])) {
             $query['husnr'] = ltrim($cprAdresse['husnummer'], '0');
         }
-        if ($cprAdresse['etage']) {
+        if (isset($cprAdresse['etage'])) {
             $query['etage'] = ltrim($cprAdresse['etage'], '0');
         }
-        if ($cprAdresse['sidedoer']) {
+        if (isset($cprAdresse['sidedoer'])) {
             $query['dør'] = $cprAdresse['sidedoer'];
         }
-        if ($cprAdresse['postnummer']) {
+        if (isset($cprAdresse['postnummer'])) {
             $query['postnr'] = $cprAdresse['postnummer'];
         }
-        if ($cprAdresse['cprKommunekode']) {
+        if (isset($cprAdresse['cprKommunekode'])) {
             $query['kommunekode'] = $cprAdresse['cprKommunekode'];
         }
-        if ($cprAdresse['cprVejkode']) {
+        if (isset($cprAdresse['cprVejkode'])) {
             $query['vejkode'] = $cprAdresse['cprVejkode'];
         }
 
