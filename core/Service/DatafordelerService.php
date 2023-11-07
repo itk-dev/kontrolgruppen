@@ -19,14 +19,16 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  */
 class DatafordelerService
 {
-    private $datafordelerHttpClient;
+    private $datafordelerCprHttpClient;
+    private $datafordelerCvrHttpClient;
 
     /**
-     * @param HttpClientInterface $datafordelerHttpClient
+     * @param HttpClientInterface $datafordelerCprHttpClient
      */
-    public function __construct(HttpClientInterface $datafordelerHttpClient)
+    public function __construct(?HttpClientInterface $datafordelerCprHttpClient, ?HttpClientInterface $datafordelerCvrHttpClient)
     {
-        $this->datafordelerHttpClient = $datafordelerHttpClient;
+        $this->datafordelerCprHttpClient = $datafordelerCprHttpClient;
+        $this->datafordelerCvrHttpClient = $datafordelerCvrHttpClient;
     }
 
     /**
@@ -39,7 +41,7 @@ class DatafordelerService
      */
     public function getPersonData(string $cpr): array
     {
-        $response = $this->datafordelerHttpClient->request(
+        $response = $this->datafordelerCprHttpClient->request(
             'GET',
             'CPR/CprPersonFullComplete/1/rest/PersonFullListComplete',
             [
@@ -69,7 +71,7 @@ class DatafordelerService
             throw new \Exception('Adresseringsnavn er ikke defineret', 1);
         }
         if ($cprAdresse = $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']) {
-            $data['Bopaelssamling'] = $this->getBopaelssamling($cprAdresse, $data['Personnumre'][0]['Personnummer']['personnummer'], $adresseringsnavn, $this->datafordelerHttpClient);
+            $data['Bopaelssamling'] = $this->getBopaelssamling($cprAdresse, $data['Personnumre'][0]['Personnummer']['personnummer'], $adresseringsnavn, $this->datafordelerCprHttpClient);
         }
 
         $data['BBR'] = $this->getBBR($cprAdresse);
@@ -185,7 +187,7 @@ class DatafordelerService
         foreach ($cprAdresse as $key => $value) {
             $query['cadr.'.$key.'.eq'] = $value;
         }
-        $response = $this->datafordelerHttpClient->request(
+        $response = $this->datafordelerCprHttpClient->request(
             'GET',
             'CPR/CprPersonFullComplete/1/rest/PersonFullCurrentListComplete',
             [
@@ -250,7 +252,7 @@ class DatafordelerService
      */
     public function getVirksomhedData(string $cvr): array
     {
-        $response = $this->datafordelerHttpClient->request(
+        $response = $this->datafordelerCvrHttpClient->request(
             'GET',
             'CVR/HentCVRDataFortrolig/1/rest/hentVirksomhedMedCVRNummerFortrolig',
             [
@@ -291,7 +293,7 @@ class DatafordelerService
      */
     public function getVirksomhedDataByPNumber(string $pnumber): array
     {
-        $response = $this->datafordelerHttpClient->request(
+        $response = $this->datafordelerCvrHttpClient->request(
             'GET',
             'CVR/HentCVRData/1/rest/hentProduktionsenhedMedPNummer',
             [

@@ -27,7 +27,6 @@ parameters:
     person_base_data_extended_service_contract: '%kernel.project_dir%/%env(PERSON_BASE_DATA_EXTENDED_SERVICE_CONTRACT)%'
     person_base_data_extended_service_endpoint: '%env(PERSON_BASE_DATA_EXTENDED_SERVICE_ENDPOINT)%'
     person_base_data_extended_service_uuid: '%env(PERSON_BASE_DATA_EXTENDED_SERVICE_UUID)%'
-    datafordeler_url: '%env(DATAFORDELER_URL)%'
 
 services:
     # default configuration for services in *this* file
