@@ -11,11 +11,11 @@
 namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/datafordeler")
@@ -24,15 +24,15 @@ class DatafordelerController extends BaseController
 {
     /**
      * @param string              $cpr
-     * @param HttpClientInterface $datafordelerHttpClient
+     * @param HttpClientInterface $datafordelerCprHttpClient
      *
      * @return array
      *
      * @throws TransportExceptionInterface
      */
-    public function getPersonData(string $cpr, HttpClientInterface $datafordelerHttpClient): array
+    public function getPersonData(string $cpr, HttpClientInterface $datafordelerCprHttpClient): array
     {
-        $datafordelerService = new DatafordelerService($datafordelerHttpClient);
+        $datafordelerService = new DatafordelerService($datafordelerCprHttpClient, null);
 
         try {
             $data = $datafordelerService->getPersonData($cpr);
@@ -47,19 +47,19 @@ class DatafordelerController extends BaseController
      * @param array               $cprAdresse
      * @param string              $relationCpr
      * @param string              $relationFullname
-     * @param HttpClientInterface $datafordelerHttpClient
+     * @param HttpClientInterface $datafordelerCprHttpClient
      *
      * @return array
      *
      * @throws TransportExceptionInterface
      */
-    protected function getBopaelssamling(array $cprAdresse, string $relationCpr, string $relationFullname, HttpClientInterface $datafordelerHttpClient): array
+    protected function getBopaelssamling(array $cprAdresse, string $relationCpr, string $relationFullname, HttpClientInterface $datafordelerCprHttpClient): array
     {
         $query = ['adropl.status.eq' => 'aktuel'];
         foreach ($cprAdresse as $key => $value) {
             $query['cadr.'.$key.'.eq'] = $value;
         }
-        $response = $datafordelerHttpClient->request(
+        $response = $datafordelerCprHttpClient->request(
             'GET',
             'CPR/CprPersonFullComplete/1/rest/PersonFullCurrentListComplete',
             [
@@ -117,15 +117,15 @@ class DatafordelerController extends BaseController
 
     /**
      * @param string              $cvr
-     * @param HttpClientInterface $datafordelerHttpClient
+     * @param HttpClientInterface $datafordelerCvrHttpClient
      *
      * @return array
      *
      * @throws TransportExceptionInterface
      */
-    protected function getVirksomhedData(string $cvr, HttpClientInterface $datafordelerHttpClient): array
+    protected function getVirksomhedData(string $cvr, HttpClientInterface $datafordelerCvrHttpClient): array
     {
-        $response = $datafordelerHttpClient->request(
+        $response = $datafordelerCvrHttpClient->request(
             'GET',
             'CVR/HentCVRData/1/rest/hentVirksomhedMedCVRNummer',
             [
@@ -148,27 +148,27 @@ class DatafordelerController extends BaseController
      * Fetches more P-Numbers with an option to limit the number of records fetched.
      *
      * @param Request              $request
-     * @param HttpClientInterface $datafordelerHttpClient
+     * @param HttpClientInterface $datafordelerCvrHttpClient
      *
      * @return JsonResponse
      *
      * @throws TransportExceptionInterface
      */
-    public function getMorePNumbers(Request $request, HttpClientInterface $datafordelerHttpClient): JsonResponse
+    public function getMorePNumbers(Request $request, HttpClientInterface $datafordelerCvrHttpClient): JsonResponse
     {
         $offset = $request->query->getInt('offset', 0);
         $limit = $request->query->getInt('limit', 5);
         $p_numbers = json_decode($request->query->get('p_numbers'), true);
-    
-        $allData = [];
-        $datafordelerService = new DatafordelerService($datafordelerHttpClient);
 
-        $p_numbers = array_slice($p_numbers, $offset, $limit);
+        $allData = [];
+        $datafordelerService = new DatafordelerService(null, $datafordelerCvrHttpClient);
+
+        $p_numbers = \array_slice($p_numbers, $offset, $limit);
         foreach ($p_numbers as $pnumber) {
             $data = $datafordelerService->getVirksomhedDataByPNumber($pnumber);
             $allData[$pnumber] = $data;
         }
-    
+
         return new JsonResponse($allData);
     }
 }

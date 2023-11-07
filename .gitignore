@@ -48,8 +48,6 @@ yarn-error.log
 ###< phpunit/phpunit ###
 
 # Ignore Certificates
-private_key*.pem
-public_key*.cer
 /certs
 
 ###> vincentlanglet/twig-cs-fixer ###

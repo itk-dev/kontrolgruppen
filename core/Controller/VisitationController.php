@@ -77,7 +77,7 @@ class VisitationController extends DatafordelerController
      * @Route("/result", name="result", methods={"GET","POST"})
      *
      * @param Request             $request
-     * @param HttpClientInterface $datafordelerHttpClient
+     * @param DatafordelerService $datafordelerService
      *
      * @return Response
      *

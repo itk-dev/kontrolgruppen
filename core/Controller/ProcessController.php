@@ -320,10 +320,10 @@ class ProcessController extends BaseController
     /**
      * @Route("/{id}", name="process_show", methods={"GET", "POST"})
      *
-     * @param Request    $request
-     * @param Process    $process
-     * @param LogManager $logManager
-     * @param HttpClientInterface $datafordelerHttpClient
+     * @param Request             $request
+     * @param Process             $process
+     * @param LogManager          $logManager
+     * @param DatafordelerService $datafordelerService
      *
      * @return Response
      *
