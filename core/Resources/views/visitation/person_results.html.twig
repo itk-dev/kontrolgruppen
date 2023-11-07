@@ -185,6 +185,25 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
+        $('.child-name').on('click', function(event) {
+            event.preventDefault(); // Prevent the default anchor click behavior
+
+            var cprNumber = $(this).data('cpr'); // Retrieve the CPR number from the data attribute
+
+            // Create a form element
+            var form = $('<form>', {
+                'method': 'post',
+                'action': '/visitation/result',
+                'target': '_blank' // This will open the form submission in a new tab
+            }).append($('<input>', {
+                'type': 'hidden',
+                'name': 'cpr',
+                'value': cprNumber
+            }));
+
+            // Append the form to the body and submit it
+            form.appendTo('body').submit().remove();
+        });
         function formatCprAndCalculateAge(cpr) {
             // Extract day, month, year, and 7th digit from the CPR number
             const day = cpr.substring(0, 2);
