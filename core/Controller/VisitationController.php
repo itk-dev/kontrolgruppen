@@ -150,7 +150,7 @@ class VisitationController extends DatafordelerController
             $this->em->flush();
 
             $cpr = preg_replace('/\D+/', '', $cpr);
-            try {
+            // try {
                 $data = $datafordelerService->getPersonData($cpr);
                 if (null === $data) {
                     return $this->render(
@@ -161,23 +161,23 @@ class VisitationController extends DatafordelerController
                         ]
                     );
                 }
-            } catch (TransportExceptionInterface $e) {
-                return $this->render(
-                    '@KontrolgruppenCore/visitation/search.html.twig',
-                    [
-                        'client_type' => 'person',
-                        'error' => 'Forbindelse fejlet. Prøv igen',
-                    ]
-                );
-            } catch (\Exception $e) {
-                return $this->render(
-                    '@KontrolgruppenCore/visitation/search.html.twig',
-                    [
-                        'client_type' => 'person',
-                        'error' => 'CPR nummer ikke genkendt, prøv igen.',
-                    ]
-                );
-            }
+            // } catch (TransportExceptionInterface $e) {
+            //     return $this->render(
+            //         '@KontrolgruppenCore/visitation/search.html.twig',
+            //         [
+            //             'client_type' => 'person',
+            //             'error' => 'Forbindelse fejlet. Prøv igen',
+            //         ]
+            //     );
+            // } catch (\Exception $e) {
+            //     return $this->render(
+            //         '@KontrolgruppenCore/visitation/search.html.twig',
+            //         [
+            //             'client_type' => 'person',
+            //             'error' => 'CPR nummer ikke genkendt, prøv igen.',
+            //         ]
+            //     );
+            // }
             if (!empty($data)) {
                 return $this->render(
                     '@KontrolgruppenCore/visitation/person_results.html.twig',
