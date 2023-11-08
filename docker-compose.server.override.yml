@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+    borgerdata:
+    image: docker.pkg.github.com/itk-dev/borgerdata/app:latest
+    networks:
+      - app
+    ports:
+      - "8081"
+    environment:
+      - NODE_ENV=development
+      - APP_PORT=8081
+      - SQL_SERVER=sqlserver
+      - SQL_PORT=1433
+      - SQL_USER=sa
+      - SQL_PASSWORD=VeryStrongPassword1
+      - SQL_DATABASE=dataintegration
+      - SQL_SCHEMA=dbo
+      - SQL_TABLE=Udvalgte_borgerdata
+      # - SQL_DOMAIN=
