@@ -12,13 +12,11 @@ namespace Kontrolgruppen\CoreBundle\Export\Reports;
 
 use Doctrine\ORM\EntityManagerInterface;
 use DoctrineBatchUtils\BatchProcessing\SimpleBatchIteratorAggregate;
-use Exception;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 use Kontrolgruppen\CoreBundle\Export\AbstractExport;
 use Kontrolgruppen\CoreBundle\Service\EconomyService;
 use Psr\Cache\CacheItemPoolInterface;
-use Traversable;
 
 /**
  * Class RevenueExport.
@@ -37,7 +35,7 @@ class RevenueExport extends AbstractExport
      * @param EconomyService         $economyService
      * @param CacheItemPoolInterface $cachePhpspreadsheet
      *
-     * @throws Exception
+     * @throws \Exception
      */
     public function __construct(EntityManagerInterface $entityManager, EconomyService $economyService, CacheItemPoolInterface $cachePhpspreadsheet)
     {
@@ -189,11 +187,11 @@ class RevenueExport extends AbstractExport
     }
 
     /**
-     * @return Traversable
+     * @return \Traversable
      *
-     * @throws Exception
+     * @throws \Exception
      */
-    private function getProcesses(): Traversable
+    private function getProcesses(): \Traversable
     {
         $queryBuilder = $this->entityManager->getRepository(Process::class)->createQueryBuilder('p')
             ->andWhere('p.originallyCompletedAt IS NOT NULL')

@@ -108,7 +108,7 @@ class UserManager implements UserManagerInterface
      */
     public function getClass()
     {
-        if (false !== strpos($this->class, ':')) {
+        if (str_contains($this->class, ':')) {
             $metadata = $this->objectManager->getClassMetadata($this->class);
             $this->class = $metadata->getName();
         }

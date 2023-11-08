@@ -28,7 +28,7 @@ class LikeFilterConditionListener implements EventSubscriberInterface
         return [
             'lexik_form_filter.apply.orm.process_filter.caseNumber' => 'onGetFilterCondition',
             // @todo Handle client identifier.
-            //'lexik_form_filter.apply.orm.process_filter.clientCPR' => 'onGetFilterCondition',
+            // 'lexik_form_filter.apply.orm.process_filter.clientCPR' => 'onGetFilterCondition',
         ];
     }
 

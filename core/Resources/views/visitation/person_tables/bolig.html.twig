@@ -1,0 +1,55 @@
+<div class="accordion mb-3" id="tableAccordionBolig">
+    <div class="card">
+        <div class="card-header text-black" id="tableHeadingBolig">
+            <h2 class="mb-0">
+                <button class="btn btn-block text-left text-black collapsed btn-header" type="button" data-toggle="collapse" data-target="#tableCollapseBolig" aria-expanded="false" aria-controls="tableCollapseBolig">
+                    {{ 'visitation.person.apartment'|trans }} <i class="iconClass fas fa-sort-down"></i>
+                </button>
+            </h2>
+        </div>
+        <div id="tableCollapseBolig" class="collapse" aria-labelledby="tableHeadingBolig" data-parent="#tableAccordionBolig">
+            <div class="card-body p-0">
+                <table class="table mb-0 table-bordered bg-info">
+                    <thead class="data-header">
+                        <tr>
+                            {% if data.BBR.adressebetegnelse is defined %}
+                                <th colspan="6">{{ data.BBR.adressebetegnelse }}</th>
+                            {% else %}
+                                <th class="empty-column" colspan="6">{{ 'visitation.person.no_address'|trans }}</th>
+                            {% endif %}
+                        </tr>
+                        <tr>
+                            <th>{{ 'visitation.person.type'|trans }}</th>
+                            <th>{{ 'visitation.person.residential_area'|trans }}</th>
+                            <th>{{ 'visitation.person.building_area'|trans }}</th>
+                            <th>{{ 'visitation.person.rooms'|trans }}</th>
+                            <th>{{ 'visitation.person.toilets'|trans }}</th>
+                            <th>{{ 'visitation.person.buildings'|trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-light">
+                        {% if data.BBR is not empty %}
+                            <tr>
+                                <td>{{ data.BBR.type ?? '' }}</td>
+                                <td>{{ data.BBR.boligareal ?? '' }}</td>
+                                <td>{{ data.BBR.bygningsareal ?? '' }}</td>
+                                <td>{{ data.BBR.vaerelser ?? '' }}</td>
+                                <td>{{ data.BBR.toiletter ?? '' }}</td>
+                                <td>{{ data.BBR.bygninger ?? '' }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center" colspan="6">
+                                    <button class="btn btn-primary text-center" onClick="window.open('{{ data.BBR.ois_link ?? '' }}');">{{ "visitation.person.go_to_ois"|trans }}</button>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td class="empty-column" colspan="6">{{ "visitation.data.empty"|trans }}</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

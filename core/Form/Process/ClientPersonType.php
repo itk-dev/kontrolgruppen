@@ -14,6 +14,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -43,12 +44,16 @@ class ClientPersonType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $identifier = $options['identifier'] ?? null; // Get the identifier
+
         $builder
             ->add('cpr', TextType::class, [
                 'label' => 'process.form.client_cpr',
                 'attr' => [
                     'class' => 'js-input-cpr no-cpr-scanning',
+                    'readonly' => null !== $identifier ? true : false,
                 ],
+                'data' => $identifier,
             ])
             ->add('search', ButtonType::class, [
                 'label' => 'process.form.search_client_cpr.search',
@@ -63,5 +68,13 @@ class ClientPersonType extends AbstractType
                     'data-loading-text' => $this->translator->trans('process.form.search_client_cpr.loading'),
                 ],
             ]);
+    }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefined(['identifier']);
     }
 }

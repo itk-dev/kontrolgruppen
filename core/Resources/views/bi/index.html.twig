@@ -17,7 +17,7 @@
             <tbody>
                 {% for export in exports %}
                     <tr>
-                        <td>{{ export.createdAt|localizeddate }}</td>
+                        <td>{{ export.createdAt|date }}</td>
                         <td>{{ export.report.title|default('–') }}</td>
                         <td>
                             <div class="btn-group">

@@ -11,8 +11,11 @@
 namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\Entity\Process;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 use Kontrolgruppen\CoreBundle\Event\GetConclusionTemplateEvent;
 use Kontrolgruppen\CoreBundle\Service\ConclusionService;
+use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,13 +32,14 @@ class ConclusionController extends BaseController
      * @param Request                  $request
      * @param Process                  $process
      * @param EventDispatcherInterface $dispatcher
+     * @param DatafordelerService      $datafordelerService
      *
      * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function show(Request $request, Process $process, EventDispatcherInterface $dispatcher): Response
+    public function show(Request $request, Process $process, EventDispatcherInterface $dispatcher, DatafordelerService $datafordelerService): Response
     {
         $conclusion = $process->getConclusion();
 
@@ -44,22 +48,34 @@ class ConclusionController extends BaseController
             $conclusionType = $process->getProcessType()->getConclusionClass();
             $conclusion = new $conclusionType();
 
-            $this->getDoctrine()->getManager()->persist($conclusion);
+            $this->em->persist($conclusion);
 
             $process->setConclusion($conclusion);
 
-            $this->getDoctrine()->getManager()->flush();
+            $this->em->flush();
         }
 
         // Get template from event.
-        $event = new GetConclusionTemplateEvent(\get_class($conclusion), 'show');
-        $template = $dispatcher->dispatch(GetConclusionTemplateEvent::NAME, $event)->getTemplate();
+        $event = new GetConclusionTemplateEvent($conclusion::class, 'show');
+        $template = $dispatcher->dispatch($event, GetConclusionTemplateEvent::NAME)->getTemplate();
+        // Get the ProcessClient Identifier from process
+        $processClientIdentifier = $process->getProcessClient()->getIdentifier();
+        // Get client type
+        $clientType = $process->getProcessClient()->getType();
+
+        if (ProcessClientPerson::PERSON === $clientType) {
+            $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
+            $data = $datafordelerService->getPersonData($processClientIdentifier);
+        } elseif (ProcessClientCompany::COMPANY === $clientType) {
+            $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
+        }
 
         return $this->render($template, [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'canEdit' => $this->isGranted('edit', $process) && null === $process->getCompletedAt(),
             'conclusion' => $process->getConclusion(),
             'process' => $process,
+            'data' => $data,
         ]);
     }
 
@@ -70,13 +86,14 @@ class ConclusionController extends BaseController
      * @param Process                  $process
      * @param ConclusionService        $conclusionService
      * @param EventDispatcherInterface $dispatcher
+     * @param DatafordelerService      $datafordelerService
      *
      * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function edit(Request $request, Process $process, ConclusionService $conclusionService, EventDispatcherInterface $dispatcher): Response
+    public function edit(Request $request, Process $process, ConclusionService $conclusionService, EventDispatcherInterface $dispatcher, DatafordelerService $datafordelerService): Response
     {
         $this->denyAccessUnlessGranted('edit', $process);
 
@@ -95,7 +112,7 @@ class ConclusionController extends BaseController
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $this->getDoctrine()->getManager()->flush();
+                $this->em->flush();
 
                 return $this->redirectToRoute('conclusion_show', [
                     'process' => $process->getId(),
@@ -104,8 +121,19 @@ class ConclusionController extends BaseController
         }
 
         // Get template from event.
-        $event = new GetConclusionTemplateEvent(\get_class($conclusion), 'edit');
-        $template = $dispatcher->dispatch(GetConclusionTemplateEvent::NAME, $event)->getTemplate();
+        $event = new GetConclusionTemplateEvent($conclusion::class, 'edit');
+        $template = $dispatcher->dispatch($event, GetConclusionTemplateEvent::NAME)->getTemplate();
+        // Get the ProcessClient Identifier from process
+        $processClientIdentifier = $process->getProcessClient()->getIdentifier();
+        // Get client type
+        $clientType = $process->getProcessClient()->getType();
+
+        if (ProcessClientPerson::PERSON === $clientType) {
+            $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
+            $data = $datafordelerService->getPersonData($processClientIdentifier);
+        } elseif (ProcessClientCompany::COMPANY === $clientType) {
+            $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
+        }
 
         return $this->render($template, [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
@@ -113,6 +141,7 @@ class ConclusionController extends BaseController
             'canEdit' => $this->isGranted('edit', $process) && null === $process->getCompletedAt(),
             'form' => $form->createView(),
             'process' => $process,
+            'data' => $data,
         ]);
     }
 }

@@ -1,8 +1,6 @@
+# see https://symfony.com/doc/current/reference/configuration/framework.html
 framework:
     secret: '%env(APP_SECRET)%'
-    #default_locale: en
-    #csrf_protection: true
-    #http_method_override: true
 
     # Enables session support. Note that the session will ONLY be started if you read or write from it.
     # Remove or comment this section to explicitly disable session support.
@@ -10,8 +8,30 @@ framework:
         handler_id: ~
         cookie_secure: auto
         cookie_samesite: lax
+        storage_factory_id: session.storage.factory.native
 
     #esi: true
     #fragments: true
     php_errors:
         log: true
+
+    http_client:
+        scoped_clients:
+            datafordelerCprHttpClient:
+                base_uri: '%env(DATAFORDELER_CPR_URL)%'
+                local_pk: '%kernel.project_dir%/certs/%env(DATAFORDELER_CPR_PRIVATE_KEY_FILE)%'
+                local_cert: '%kernel.project_dir%/certs/%env(DATAFORDELER_CPR_PUBLIC_KEY_FILE)%'
+                passphrase: '%env(DATAFORDELER_CPR_PUBLIC_KEY_PASSWORD)%'
+            datafordelerCvrHttpClient:
+                base_uri: '%env(DATAFORDELER_CVR_URL)%'
+                local_pk: '%kernel.project_dir%/certs/%env(DATAFORDELER_CVR_PRIVATE_KEY_FILE)%'
+                local_cert: '%kernel.project_dir%/certs/%env(DATAFORDELER_CVR_PUBLIC_KEY_FILE)%'
+                passphrase: '%env(DATAFORDELER_CVR_PUBLIC_KEY_PASSWORD)%'
+
+when@test:
+    framework:
+        profiler:
+            collect: false
+        test: true
+        session:
+            storage_factory_id: session.storage.factory.native

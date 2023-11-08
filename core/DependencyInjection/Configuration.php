@@ -184,14 +184,14 @@ class Configuration implements ConfigurationInterface
                 'logoutResponseSigned' => false,
 
                 /* Sign the Metadata
-                   False || True (use sp certs) || array (
-                   keyFileName => 'metadata.key',
-                   certFileName => 'metadata.crt'
-                   )
+                    False || True (use sp certs) || array (
+                    keyFileName => 'metadata.key',
+                    certFileName => 'metadata.crt'
+                    )
                 */
                 'signMetadata' => false,
 
-                /* signatures and encryptions required **/
+                /* signatures and encryptions required */
 
                 // Indicates a requirement for the <samlp:Response>, <samlp:LogoutRequest>
                 // and <samlp:LogoutResponse> elements received by this SP to be signed.
@@ -292,7 +292,7 @@ class Configuration implements ConfigurationInterface
             ->variableNode('exports')->info('List of export services')->end()
             ->scalarNode('export_directory')->info('Where to save export results')->isRequired()->end()
             ->end()
-            ;
+        ;
 
         $treeBuilder->getRootNode()
             ->children()

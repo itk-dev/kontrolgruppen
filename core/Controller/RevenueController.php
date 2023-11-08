@@ -11,6 +11,9 @@
 namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\Entity\Process;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
+use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
 use Kontrolgruppen\CoreBundle\Service\EconomyService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,16 +28,17 @@ class RevenueController extends BaseController
     /**
      * @Route("/", name="economy_revenue")
      *
-     * @param Request        $request
-     * @param Process        $process
-     * @param EconomyService $economyService
+     * @param Request             $request
+     * @param Process             $process
+     * @param EconomyService      $economyService
+     * @param DatafordelerService $datafordelerService
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function revenue(Request $request, Process $process, EconomyService $economyService)
+    public function revenue(Request $request, Process $process, EconomyService $economyService, DatafordelerService $datafordelerService)
     {
         $parameters = [];
 
@@ -42,6 +46,20 @@ class RevenueController extends BaseController
 
         $parameters['menuItems'] = $this->menuService->getProcessMenu($request->getPathInfo(), $process);
         $parameters['process'] = $process;
+
+        // Get the ProcessClient Identifier from process
+        $processClientIdentifier = $process->getProcessClient()->getIdentifier();
+        // Get client type
+        $clientType = $process->getProcessClient()->getType();
+
+        if (ProcessClientPerson::PERSON === $clientType) {
+            $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
+            $data = $datafordelerService->getPersonData($processClientIdentifier);
+        } elseif (ProcessClientCompany::COMPANY === $clientType) {
+            $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
+        }
+
+        $parameters['data'] = $data;
 
         return $this->render(
             '@KontrolgruppenCore/revenue/revenue.html.twig',

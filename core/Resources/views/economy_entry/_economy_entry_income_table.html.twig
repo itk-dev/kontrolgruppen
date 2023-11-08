@@ -23,7 +23,7 @@
                         {{ economy_entry.periodFrom ? economy_entry.periodFrom|simple_date('short') }} -
                         {{ economy_entry.periodTo ? economy_entry.periodTo|simple_date('short') }}
                     </td>
-                    <td>{{ economy_entry.amount|localizedcurrency('DKK') }}</td>
+                    <td>{{ economy_entry.amount|format_currency('DKK') }}</td>
                     <td class="w-20 text-right">{{ enumTranslation(economy_entry.amountPeriod, 'EconomyEntryAmountPeriodEnumType') }}</td>
                 </tr>
             {% else %}

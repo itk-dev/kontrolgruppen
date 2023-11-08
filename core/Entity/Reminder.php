@@ -36,6 +36,7 @@ class Reminder extends AbstractEntity implements ProcessLoggableInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Process", inversedBy="reminders")
+     *
      * @ORM\JoinColumn(nullable=false)
      */
     private $process;

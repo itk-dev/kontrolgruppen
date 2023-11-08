@@ -9,7 +9,7 @@
  */
 return [
     'backward_compatibility_checks' => false,
-    'target_php_version' => 7.4,
+    'target_php_version' => 8.2,
     'dead_code_detection' => true,
     'ignore_undeclared_functions_with_known_signatures' => false,
     'whitelist_issue_types' => [

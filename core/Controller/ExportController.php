@@ -10,6 +10,7 @@
 
 namespace Kontrolgruppen\CoreBundle\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Kontrolgruppen\CoreBundle\Export\AbstractExport;
 use Kontrolgruppen\CoreBundle\Export\Manager;
 use Kontrolgruppen\CoreBundle\Export\Reports\RevenueExport;
@@ -40,15 +41,16 @@ class ExportController extends BaseController
     /**
      * ExportController constructor.
      *
-     * @param RequestStack         $requestStack
-     * @param MenuService          $menuService
-     * @param Manager              $exportManager
-     * @param FormFactoryInterface $formFactory
-     * @param Environment          $twig
+     * @param RequestStack           $requestStack
+     * @param EntityManagerInterface $em
+     * @param MenuService            $menuService
+     * @param Manager                $exportManager
+     * @param FormFactoryInterface   $formFactory
+     * @param Environment            $twig
      */
-    public function __construct(RequestStack $requestStack, MenuService $menuService, Manager $exportManager, FormFactoryInterface $formFactory, Environment $twig)
+    public function __construct(RequestStack $requestStack, EntityManagerInterface $em, MenuService $menuService, Manager $exportManager, FormFactoryInterface $formFactory, Environment $twig)
     {
-        parent::__construct($requestStack, $menuService);
+        parent::__construct($requestStack, $menuService, $em);
         $this->exportManager = $exportManager;
         $this->formFactory = $formFactory;
         $this->twig = $twig;
@@ -114,7 +116,7 @@ class ExportController extends BaseController
         $exportClass = null;
         foreach ($this->getExports() as $r) {
             if ($this->getExportKey($r) === $exportKey) {
-                $exportClass = \get_class($r);
+                $exportClass = $r::class;
                 break;
             }
         }
@@ -170,7 +172,7 @@ class ExportController extends BaseController
                         $mock->appendChild($mock->importNode($child, true));
                     }
 
-                    if (RevenueExport::class === \get_class($export)) {
+                    if (RevenueExport::class === $export::class) {
                         $extra = $this->twig->render('@KontrolgruppenCore/export/revenue_export.show.html.twig');
                     }
 
@@ -216,7 +218,7 @@ class ExportController extends BaseController
      */
     private function getExportKey(AbstractExport $export)
     {
-        return md5(\get_class($export));
+        return md5($export::class);
     }
 
     /**

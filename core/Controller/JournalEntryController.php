@@ -12,9 +12,12 @@ namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Kontrolgruppen\CoreBundle\Entity\JournalEntry;
 use Kontrolgruppen\CoreBundle\Entity\Process;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 use Kontrolgruppen\CoreBundle\Filter\JournalFilterType;
 use Kontrolgruppen\CoreBundle\Form\JournalEntryType;
 use Kontrolgruppen\CoreBundle\Repository\JournalEntryRepository;
+use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
 use Kontrolgruppen\CoreBundle\Service\LogManager;
 use Lexik\Bundle\FormFilterBundle\Filter\FilterBuilderUpdaterInterface;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -59,13 +62,14 @@ class JournalEntryController extends BaseController
      * @param SessionInterface              $session
      * @param LogManager                    $logManager
      * @param FormFactoryInterface          $formFactory
+     * @param DatafordelerService           $datafordelerService
      *
      * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function index(Request $request, JournalEntryRepository $journalEntryRepository, Process $process, FilterBuilderUpdaterInterface $lexikBuilderUpdater, SessionInterface $session, LogManager $logManager, FormFactoryInterface $formFactory): Response
+    public function index(Request $request, JournalEntryRepository $journalEntryRepository, Process $process, FilterBuilderUpdaterInterface $lexikBuilderUpdater, SessionInterface $session, LogManager $logManager, FormFactoryInterface $formFactory, DatafordelerService $datafordelerService): Response
     {
         $journalEntryFormView = null;
 
@@ -81,7 +85,7 @@ class JournalEntryController extends BaseController
                 $journalEntryForm->handleRequest($request);
 
                 if ($journalEntryForm->isSubmitted() && $journalEntryForm->isValid()) {
-                    $entityManager = $this->getDoctrine()->getManager();
+                    $entityManager = $this->em;
                     $entityManager->persist($journalEntry);
                     $entityManager->flush();
 
@@ -115,7 +119,7 @@ class JournalEntryController extends BaseController
 
             if ($request->query->has($filterForm->getName())) {
                 // manually bind values from the request
-                $filterForm->submit($request->query->get($filterForm->getName()));
+                $filterForm->submit($request->get($filterForm->getName()));
 
                 // build the query from the given form object
                 $lexikBuilderUpdater->addFilterConditions($filterForm, $qb);
@@ -148,6 +152,17 @@ class JournalEntryController extends BaseController
             $process,
             $sortDirection
         );
+        // Get the ProcessClient Identifier from process
+        $processClientIdentifier = $process->getProcessClient()->getIdentifier();
+        // Get client type
+        $clientType = $process->getProcessClient()->getType();
+
+        if (ProcessClientPerson::PERSON === $clientType) {
+            $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
+            $data = $datafordelerService->getPersonData($processClientIdentifier);
+        } elseif (ProcessClientCompany::COMPANY === $clientType) {
+            $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
+        }
 
         return $this->render(
             '@KontrolgruppenCore/journal_entry/index.html.twig',
@@ -161,6 +176,7 @@ class JournalEntryController extends BaseController
                 'entries' => $result,
                 'journalEntryForm' => $journalEntryFormView,
                 'process' => $process,
+                'data' => $data,
             ]
         );
     }
@@ -168,15 +184,16 @@ class JournalEntryController extends BaseController
     /**
      * @Route("/new", name="journal_entry_new", methods={"GET","POST"})
      *
-     * @param Request $request
-     * @param Process $process
+     * @param Request             $request
+     * @param Process             $process
+     * @param DatafordelerService $datafordelerService
      *
      * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function new(Request $request, Process $process): Response
+    public function new(Request $request, Process $process, DatafordelerService $datafordelerService): Response
     {
         $this->denyAccessUnlessGranted('edit', $process);
 
@@ -188,9 +205,19 @@ class JournalEntryController extends BaseController
         $journalEntry->setProcess($process);
         $form = $this->createForm(JournalEntryType::class, $journalEntry);
         $form->handleRequest($request);
+        // Get the ProcessClient Identifier from process
+        $processClientIdentifier = $process->getProcessClient()->getIdentifier();
+        // Get client type
+        $clientType = $process->getProcessClient()->getType();
 
+        if (ProcessClientPerson::PERSON === $clientType) {
+            $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
+            $data = $datafordelerService->getPersonData($processClientIdentifier);
+        } elseif (ProcessClientCompany::COMPANY === $clientType) {
+            $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
+        }
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->em;
             $entityManager->persist($journalEntry);
             $entityManager->flush();
 
@@ -209,6 +236,7 @@ class JournalEntryController extends BaseController
                 ),
                 'journalEntry' => $journalEntry,
                 'process' => $process,
+                'data' => $data,
                 'form' => $form->createView(),
             ]
         );
@@ -217,17 +245,18 @@ class JournalEntryController extends BaseController
     /**
      * @Route("/{id}", name="journal_entry_show", methods={"GET"})
      *
-     * @param Request      $request
-     * @param JournalEntry $journalEntry
-     * @param Process      $process
-     * @param LogManager   $logManager
+     * @param Request             $request
+     * @param JournalEntry        $journalEntry
+     * @param Process             $process
+     * @param LogManager          $logManager
+     * @param DatafordelerService $datafordelerService
      *
      * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function show(Request $request, JournalEntry $journalEntry, Process $process, LogManager $logManager): Response
+    public function show(Request $request, JournalEntry $journalEntry, Process $process, LogManager $logManager, DatafordelerService $datafordelerService): Response
     {
         // If opening a journal entry that does not belong to the process, redirect to index.
         if ($journalEntry->getProcess() !== $process) {
@@ -236,7 +265,17 @@ class JournalEntryController extends BaseController
                 ['process' => $process->getId()]
             );
         }
+        // Get the ProcessClient Identifier from process
+        $processClientIdentifier = $process->getProcessClient()->getIdentifier();
+        // Get client type
+        $clientType = $process->getProcessClient()->getType();
 
+        if (ProcessClientPerson::PERSON === $clientType) {
+            $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
+            $data = $datafordelerService->getPersonData($processClientIdentifier);
+        } elseif (ProcessClientCompany::COMPANY === $clientType) {
+            $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
+        }
         // Attach log entries.
         // Only attach log entries if user is granted ROLE_ADMIN.
         if ($this->isGranted('ROLE_ADMIN', $this->getUser())) {
@@ -252,6 +291,7 @@ class JournalEntryController extends BaseController
                 ),
                 'canEdit' => $this->isGranted('edit', $process) && null === $process->getCompletedAt(),
                 'journalEntry' => $journalEntry,
+                'data' => $data,
                 'process' => $process,
             ]
         );
@@ -260,17 +300,18 @@ class JournalEntryController extends BaseController
     /**
      * @Route("/{id}/edit", name="journal_entry_edit", methods={"GET","POST"})
      *
-     * @param Request      $request
-     * @param JournalEntry $journalEntry
-     * @param Process      $process
-     * @param LogManager   $logManager
+     * @param Request             $request
+     * @param JournalEntry        $journalEntry
+     * @param Process             $process
+     * @param LogManager          $logManager
+     * @param DatafordelerService $datafordelerService
      *
      * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function edit(Request $request, JournalEntry $journalEntry, Process $process, LogManager $logManager): Response
+    public function edit(Request $request, JournalEntry $journalEntry, Process $process, LogManager $logManager, DatafordelerService $datafordelerService): Response
     {
         $this->denyAccessUnlessGranted('edit', $process);
 
@@ -290,9 +331,19 @@ class JournalEntryController extends BaseController
 
         $form = $this->createForm(JournalEntryType::class, $journalEntry);
         $form->handleRequest($request);
+        // Get the ProcessClient Identifier from process
+        $processClientIdentifier = $process->getProcessClient()->getIdentifier();
+        // Get client type
+        $clientType = $process->getProcessClient()->getType();
 
+        if (ProcessClientPerson::PERSON === $clientType) {
+            $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
+            $data = $datafordelerService->getPersonData($processClientIdentifier);
+        } elseif (ProcessClientCompany::COMPANY === $clientType) {
+            $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
+        }
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->em->flush();
 
             return $this->redirectToRoute('journal_entry_index', [
                 'id' => $journalEntry->getId(),
@@ -316,6 +367,7 @@ class JournalEntryController extends BaseController
                 'canEdit' => $this->isGranted('edit', $process) && null === $process->getCompletedAt(),
                 'journalEntry' => $journalEntry,
                 'process' => $process,
+                'data' => $data,
                 'form' => $form->createView(),
             ]
         );
@@ -335,8 +387,8 @@ class JournalEntryController extends BaseController
         $this->denyAccessUnlessGranted('edit', $process);
 
         // If trying to delete a journal entry that does not belong to the process, redirect to index.
-        if ($journalEntry->getProcess() !== $process ||
-            null !== $process->getCompletedAt()) {
+        if ($journalEntry->getProcess() !== $process
+            || null !== $process->getCompletedAt()) {
             return $this->redirectToRoute('journal_entry_index', ['process' => $process->getId()]);
         }
 
@@ -344,7 +396,7 @@ class JournalEntryController extends BaseController
             'delete'.$journalEntry->getId(),
             $request->request->get('_token')
         )) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->em;
             $entityManager->remove($journalEntry);
             $entityManager->flush();
         }

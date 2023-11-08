@@ -28,6 +28,7 @@ class ServiceEconomyEntry extends EconomyEntry
 {
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Service")
+     *
      * @ORM\JoinColumn(nullable=true)
      */
     private $service;

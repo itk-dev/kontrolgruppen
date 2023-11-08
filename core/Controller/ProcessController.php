@@ -29,6 +29,7 @@ use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 use Kontrolgruppen\CoreBundle\Repository\ProcessStatusRepository;
 use Kontrolgruppen\CoreBundle\Repository\ServiceRepository;
 use Kontrolgruppen\CoreBundle\Repository\UserRepository;
+use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
 use Kontrolgruppen\CoreBundle\Service\LogManager;
 use Kontrolgruppen\CoreBundle\Service\ProcessClientManager;
 use Kontrolgruppen\CoreBundle\Service\ProcessManager;
@@ -76,14 +77,14 @@ class ProcessController extends BaseController
         $selectedCaseWorker = $filterForm->get('caseWorker');
 
         if (null === $selectedCaseWorker->getData()) {
-            $filterForm->get('caseWorker')->setData($this->getUser()->getId());
+            $filterForm->get('caseWorker')->setData($this->getUser()->getUserIdentifier());
         }
 
         if ($request->query->has($filterForm->getName())) {
             $formParameters = $request->query->get($filterForm->getName());
 
             if (!isset($formParameters['caseWorker'])) {
-                $formParameters['caseWorker'] = $this->getUser()->getId();
+                $formParameters['caseWorker'] = $this->getUser()->getUserIdentifier();
             }
 
             // manually bind values from the request
@@ -159,10 +160,9 @@ class ProcessController extends BaseController
             50,
             $paginatorOptions
         );
-
         // Find Processes that have not been visited by the assigned CaseWorker.
         $caseWorker = (!empty($selectedCaseWorker->getData()))
-            ? $userRepository->find($selectedCaseWorker->getData())
+            ? $userRepository->findOneBy(['username' => $selectedCaseWorker->getData()])
             : $this->getUser();
         $foundEntries = array_column($query->getArrayResult(), 'id');
         $notVisitedProcessIds = $processManager->getUsersUnvisitedProcessIds($foundEntries, $caseWorker);
@@ -202,6 +202,7 @@ class ProcessController extends BaseController
         // Force user to select process client type before anything else.
         try {
             $client = $clientManager->createClient($request->get('clientType') ?? '');
+            $identifier = $request->get('identifier');
         } catch (\Exception $exception) {
             $this->addFlash('danger', $exception->getMessage());
 
@@ -210,15 +211,17 @@ class ProcessController extends BaseController
 
         $process->setProcessClient($client);
 
-        $form = $this->createForm(ProcessType::class, $process);
-
+        $form = $this->createForm(ProcessType::class, $process, [
+            // Add the `personnummer` option to the form.
+            'identifier' => $identifier,
+        ]);
         $this->handleTaxonomyCallback($form, $request, $process);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Get unmapped client data from request.
-            $data = $request->request->get('process');
+            $data = $request->get('process');
             $clientType = $process->getProcessClient()->getType();
             $clientData = $data[$clientType] ?? [];
             $processCreated = false;
@@ -243,7 +246,7 @@ class ProcessController extends BaseController
         }
 
         // Get latest log entries
-        $recentActivity = $this->getDoctrine()->getRepository(
+        $recentActivity = $this->em->getRepository(
             ProcessLogEntry::class
         )->getLatestEntriesByLevel(ProcessLogEntryLevelEnumType::NOTICE, 10);
 
@@ -316,22 +319,33 @@ class ProcessController extends BaseController
     /**
      * @Route("/{id}", name="process_show", methods={"GET", "POST"})
      *
-     * @param Request    $request
-     * @param Process    $process
-     * @param LogManager $logManager
+     * @param Request             $request
+     * @param Process             $process
+     * @param LogManager          $logManager
+     * @param DatafordelerService $datafordelerService
      *
      * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function show(Request $request, Process $process, LogManager $logManager): Response
+    public function show(Request $request, Process $process, LogManager $logManager, DatafordelerService $datafordelerService): Response
     {
         // Latest journal entries.
-        $latestJournalEntries = $this->getDoctrine()->getRepository(
+        $latestJournalEntries = $this->em->getRepository(
             JournalEntry::class
         )->getLatestEntries($process);
+        // Get the ProcessClient Identifier from process
+        $processClientIdentifier = $process->getProcessClient()->getIdentifier();
+        // Get client type
+        $clientType = $process->getProcessClient()->getType();
 
+        if (ProcessClientPerson::PERSON === $clientType) {
+            $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
+            $data = $datafordelerService->getPersonData($processClientIdentifier);
+        } elseif (ProcessClientCompany::COMPANY === $clientType) {
+            $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
+        }
         if ($this->isGranted('ROLE_ADMIN', $this->getUser())) {
             $latestJournalEntries = $logManager->attachLogEntriesToJournalEntries($latestJournalEntries);
         }
@@ -344,6 +358,7 @@ class ProcessController extends BaseController
                     $process
                 ),
                 'process' => $process,
+                'data' => $data,
                 'latestJournalEntries' => $latestJournalEntries,
             ]
         );
@@ -352,15 +367,16 @@ class ProcessController extends BaseController
     /**
      * @Route("/{id}/edit", name="process_edit", methods={"GET","POST"})
      *
-     * @param Request $request
-     * @param Process $process
+     * @param Request             $request
+     * @param Process             $process
+     * @param DatafordelerService $datafordelerService
      *
      * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function edit(Request $request, Process $process): Response
+    public function edit(Request $request, Process $process, DatafordelerService $datafordelerService): Response
     {
         $this->denyAccessUnlessGranted('edit', $process);
 
@@ -372,8 +388,18 @@ class ProcessController extends BaseController
         $this->handleTaxonomyCallback($form, $request, $process);
         $form->handleRequest($request);
 
+        $processClientIdentifier = $process->getProcessClient()->getIdentifier();
+        // Get client type
+        $clientType = $process->getProcessClient()->getType();
+
+        if (ProcessClientPerson::PERSON === $clientType) {
+            $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
+            $data = $datafordelerService->getPersonData($processClientIdentifier);
+        } elseif (ProcessClientCompany::COMPANY === $clientType) {
+            $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
+        }
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->em->flush();
 
             return $this->redirectToReferer(
                 'process_show',
@@ -391,6 +417,7 @@ class ProcessController extends BaseController
                     $process
                 ),
                 'process' => $process,
+                'data' => $data,
                 'form' => $form->createView(),
             ]
         );
@@ -412,7 +439,7 @@ class ProcessController extends BaseController
             'delete'.$process->getId(),
             $request->request->get('_token')
         )) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->em;
             $entityManager->remove($process);
             $entityManager->flush();
         }
@@ -453,7 +480,7 @@ class ProcessController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->em;
 
             $services = $serviceRepository->getByProcess($process);
             foreach ($services as $service) {
@@ -516,7 +543,7 @@ class ProcessController extends BaseController
             $process->setCompletedAt(null);
             $process->setLockedNetValue(null);
             $process->setLastReopened(new \DateTime());
-            $em = $this->getDoctrine()->getManager();
+            $em = $this->em;
             $em->persist($process);
             $em->flush();
 
@@ -588,8 +615,8 @@ class ProcessController extends BaseController
      */
     private function handleTaxonomyCallback(FormInterface $form, Request $request, Process $process)
     {
-        if ('GET' === $request->getMethod() &&
-            null !== ($processData = $request->query->get('process'))
+        if ('GET' === $request->getMethod()
+            && null !== ($processData = $request->query->get('process'))
             && isset($processData['processType'])) {
             $form->submit($processData);
         }

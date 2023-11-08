@@ -25,7 +25,7 @@ use Kontrolgruppen\CoreBundle\Event\Doctrine\ORM\OnReadEventArgs;
 use Kontrolgruppen\CoreBundle\Repository\ProcessRepository;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -74,9 +74,9 @@ class ProcessControllerListener implements EventSubscriberInterface
     }
 
     /**
-     * @param FilterControllerEvent $event
+     * @param ControllerEvent $event
      */
-    public function onKernelController(FilterControllerEvent $event)
+    public function onKernelController(ControllerEvent $event)
     {
         $controller = $event->getController();
 
@@ -104,7 +104,8 @@ class ProcessControllerListener implements EventSubscriberInterface
         if (\in_array(\get_class($controller[0]), $controllers)) {
             if ($event->getRequest()->isMethod('GET') && $event->getRequest()->attributes->has('process')) {
                 /** @var Process $process */
-                $process = $event->getRequest()->attributes->get('process');
+                $processId = $event->getRequest()->attributes->get('process');
+                $process = $this->processRepository->find($processId);
 
                 // If the request is coming from inside the Process route group, we dont
                 // dispatch the onRead event, as it already has been dispatched when visiting

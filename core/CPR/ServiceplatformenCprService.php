@@ -10,24 +10,23 @@
 
 namespace Kontrolgruppen\CoreBundle\CPR;
 
-use ItkDev\Serviceplatformen\Service\Exception\ServiceException;
-use ItkDev\Serviceplatformen\Service\PersonBaseDataExtendedService;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
  * Class ServiceplatformenCprService.
  */
 class ServiceplatformenCprService extends AbstractCprService implements CprServiceInterface
 {
-    private $service;
+    private $httpClient;
 
     /**
      * ServiceplatformenCprService constructor.
      *
-     * @param PersonBaseDataExtendedService $service
+     * @param HttpClientInterface $httpClient
      */
-    public function __construct(PersonBaseDataExtendedService $service)
+    public function __construct(HttpClientInterface $httpClient)
     {
-        $this->service = $service;
+        $this->httpClient = $httpClient;
     }
 
     /**
@@ -35,12 +34,6 @@ class ServiceplatformenCprService extends AbstractCprService implements CprServi
      */
     public function find(Cpr $cpr): CprServiceResultInterface
     {
-        try {
-            $response = $this->service->personLookup($cpr);
-        } catch (ServiceException $e) {
-            throw new CprException($e->getMessage(), $e->getCode(), $e);
-        }
-
-        return new ServiceplatformenCprServiceResult($response);
+        return new ServiceplatformenCprServiceResult([]);
     }
 }

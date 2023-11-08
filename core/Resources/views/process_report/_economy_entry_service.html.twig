@@ -14,14 +14,14 @@
             <td>{{ economy_entry.service }}</td>
             <td>
                 {% if economy_entry.periodFrom is not null %}
-                    {{ economy_entry.periodFrom|localizeddate('short', 'none') }} - {{ economy_entry.periodTo|localizeddate('short', 'none') }}
+                    {{ economy_entry.periodFrom|date('short', 'none') }} - {{ economy_entry.periodTo|date('short', 'none') }}
                 {% else %}
                     -
                 {% endif %}
             </td>
-            <td>{{ economy_entry.amount|localizedcurrency('DKK') }}</td>
+            <td>{{ economy_entry.amount|format_currency('DKK') }}</td>
             <td>{{ enumTranslation(economy_entry.amountPeriod, 'EconomyEntryAmountPeriodEnumType') }}</td>
-            <td  style="text-align: right;">{{ economy_entry.repaymentAmount|localizedcurrency('DKK') }}</td>
+            <td  style="text-align: right;">{{ economy_entry.repaymentAmount|format_currency('DKK') }}</td>
         </tr>
     {% else %}
         <tr>

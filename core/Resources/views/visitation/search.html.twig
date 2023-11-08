@@ -1,0 +1,137 @@
+{% extends '@KontrolgruppenCore/main/index.html.twig' %} {% block title %}{{ "visitation.search.title"|trans }}{% endblock %} {% block content %}
+<div class="row">
+    <div class="col">
+        <div class="col-md-4 mx-auto visitation-search">
+            {% if client_type == "person" %}
+                <div class="form-group">
+                    <form id="cprForm" method="post" action="{{ path('result') }}">
+                        <input type="hidden" id="hiddenCprInput" name="cpr">
+                        <!-- your existing input and button here -->
+                        <label for="visitation_person_cpr" class="required">{{ "visitation.form.client_cpr"|trans }}</label>
+                        <input
+                            type="text"
+                            id="visitation_person_cpr"
+                            name="visitation[person][cpr]"
+                            required="required"
+                            class="js-input-cpr no-cpr-scanning form-control visitation-input"
+                            placeholder="{{ 'visitation.form.cpr_placehoder'|trans }}"
+                            autocomplete="off"
+                        />
+                        {# if error exists #}
+                        {% if error is defined %}
+                            <p class="error-code">{{ error }}</p>
+                        {% endif %}
+                        <button
+                            type="submit"
+                            id="visitation_person_search"
+                            name="visitation[person][search]"
+                            class="btn-primary btn btn-search"
+                            data-search-text="{{ 'visitation.search_placeholder'|trans }}"
+                            data-loading-text="{{ 'visitation.searching_placeholder'|trans }}"
+                        >
+                            {{ "visitation.form.search_client_cpr.search"|trans }}
+                        </button>
+                    </form>
+                </div>
+            {# Else if type company #}
+            {% elseif client_type == "company" %}
+                <div class="form-group">
+                    <form id="cvrForm" method="post" action="{{ path('result') }}">
+                        <input type="hidden" id="hiddenCvrInput" name="cvr">
+                        <!-- your existing input and button here -->
+                        <label for="visitation_company_cvr" class="required">{{ "visitation.form.client_cvr"|trans }}</label>
+                        <input
+                            type="text"
+                            id="visitation_company_cvr"
+                            name="visitation[company][cvr]"
+                            required="required"
+                            class="js-input-cpr no-cpr-scanning form-control visitation-input"
+                            placeholder="{{ 'visitation.form.cvr_placeholder'|trans }}"
+                            autocomplete="off"
+                        />
+                        {# if error exists #}
+                        {% if error is defined %}
+                            <p class="error-code">{{ error }}</p>
+                        {% endif %}
+                        <button
+                            type="submit"
+                            id="visitation_company_search"
+                            name="visitation[company][search]"
+                            class="btn-primary btn btn-search"
+                            data-search-text="{{ 'visitation.search_placeholder'|trans }}"
+                            data-loading-text="{{ 'visitation.searching_placeholder'|trans }}"
+                        >
+                            {{ "visitation.form.search_client_cvr.search"|trans }}
+                        </button>
+                    </form>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %} {% block javascripts %}
+{{ parent() }}
+
+{# Set variable that triggers that services are loaded for the currently
+selected process type #}
+<script type="text/javascript">
+    function validateForm(inputSelector, buttonSelector) {
+        const inputValue = $(inputSelector).val();
+        if (inputValue && inputValue.trim() !== "") {
+            $(buttonSelector).prop('disabled', false);
+        } else {
+            $(buttonSelector).prop('disabled', true);
+        }
+    }
+    $(document).ready(function () {
+        const $cvrInputElement = $("#visitation_company_cvr");
+        const $searchCvrButton = $("#visitation_company_search");
+
+        $searchCvrButton.click(function () {
+            const cvrValue = $cvrInputElement.val();
+            $('#hiddenCvrInput').val(cvrValue);
+            $('#cvrForm').submit();
+        });
+        const $cprInputElement = $("#visitation_person_cpr");
+        const $searchCprButton = $("#visitation_person_search");
+
+        $searchCprButton.click(function () {
+            const cprValue = $cprInputElement.val();
+            $('#hiddenCprInput').val(cprValue);
+            $('#cprForm').submit();
+        });
+
+        // Initial validation on page load
+        validateForm("#visitation_company_cvr", "#visitation_company_search");
+        validateForm("#visitation_person_cpr", "#visitation_person_search");
+
+        // Listen for input events to dynamically update button state
+        $("#visitation_company_cvr, #visitation_person_cpr").on('input', function() {
+            const correspondingButton = $(this).attr('id') === "visitation_company_cvr" ? "#visitation_company_search" : "#visitation_person_search";
+            validateForm(`#${$(this).attr('id')}`, correspondingButton);
+        });
+    });
+</script>
+{# {{ encore_entry_script_tags("processForm") }} #}
+{# {{ encore_entry_script_tags("visitationFormCprSearch") }} #}
+{# {{ encore_entry_script_tags("visitationFormCvrSearch") }} #}
+{# {{ encore_entry_script_tags("processFormCvrSearch") }} #}
+{{ encore_entry_script_tags("inputCPR") }} {% endblock %}
+{% block stylesheets %}
+{{ parent() }}
+<style>
+    .visitation-search {
+        margin-top: 20vh;
+    }
+    .error-code {
+        color: red;
+    }
+    .btn-search {
+        float: right;
+        margin-top: 15px;
+    }
+    .visitation-input {
+        background-color: #d9d9d9;
+    }
+</style>
+{% endblock %}

@@ -31,5 +31,5 @@ final class RevenueFutureTypeEnumType extends AbstractEnumType
         self::PR_WEEK_X_52 => 'common.enum.revenue_future_type.pr_week_x_52',
     ];
 
-    protected static $choices = self::TRANSLATIONS;
+    protected static array $choices = self::TRANSLATIONS;
 }

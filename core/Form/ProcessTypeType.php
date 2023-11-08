@@ -56,7 +56,7 @@ class ProcessTypeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $event = new GetConclusionTypesEvent();
-        $this->dispatcher->dispatch(GetConclusionTypesEvent::NAME, $event);
+        $this->dispatcher->dispatch($event, GetConclusionTypesEvent::NAME);
 
         $conclusionTypes = $event->getTypes();
 

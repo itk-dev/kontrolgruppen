@@ -24,13 +24,16 @@ class ProcessGroup
 {
     /**
      * @ORM\Id()
+     *
      * @ORM\GeneratedValue()
+     *
      * @ORM\Column(type="integer")
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Process")
+     *
      * @ORM\JoinColumn(nullable=false)
      *
      * @Gedmo\Versioned()

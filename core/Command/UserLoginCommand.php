@@ -17,7 +17,7 @@ use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
  * Class UserLoginCommand.
@@ -29,28 +29,16 @@ class UserLoginCommand extends Command
      */
     protected static $defaultName = 'kontrolgruppen:user:login';
 
-    /** @var \App\Repository\UserRepository */
-    private $userRepository;
-
-    /** @var \Doctrine\ORM\EntityManagerInterface */
-    private $entityManager;
-
-    /** @var \Symfony\Component\Routing\RouterInterface */
-    private $router;
-
     /**
      * UserLoginCommand constructor.
      *
      * @param UserRepository         $userRepository
      * @param EntityManagerInterface $entityManager
-     * @param RouterInterface        $router
+     * @param UrlGeneratorInterface  $urlGenerator
      */
-    public function __construct(UserRepository $userRepository, EntityManagerInterface $entityManager, RouterInterface $router)
+    public function __construct(private UserRepository $userRepository, private EntityManagerInterface $entityManager, private UrlGeneratorInterface $urlGenerator)
     {
         parent::__construct();
-        $this->userRepository = $userRepository;
-        $this->entityManager = $entityManager;
-        $this->router = $router;
     }
 
     /**
@@ -91,7 +79,9 @@ class UserLoginCommand extends Command
             $parameters['destination'] = $destination;
         }
 
-        $url = $this->router->generate('cli_login', $parameters, RouterInterface::ABSOLUTE_URL);
+        $url = $this->urlGenerator->generate('cli_login', $parameters, UrlGeneratorInterface::ABSOLUTE_URL);
         $output->writeln($url);
+
+        return 0;
     }
 }

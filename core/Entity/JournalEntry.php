@@ -11,7 +11,6 @@
 namespace Kontrolgruppen\CoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Fresh\DoctrineEnumBundle\Validator\Constraints as DoctrineAssert;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
@@ -37,6 +36,7 @@ class JournalEntry extends AbstractEntity implements ProcessLoggableInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Process", inversedBy="journalEntries")
+     *
      * @ORM\JoinColumn(nullable=false)
      */
     private $process;
@@ -44,7 +44,7 @@ class JournalEntry extends AbstractEntity implements ProcessLoggableInterface
     /**
      * @ORM\Column(name="type", type="JournalEntryEnumType", nullable=false)
      *
-     * @DoctrineAssert\Enum(entity="Kontrolgruppen\CoreBundle\DBAL\Types\JournalEntryEnumType")
+     * [DoctrineAssert\EnumType(entity: Kontrolgruppen\CoreBundle\DBAL\Types\JournalEntryEnumType:class)]
      *
      * @Gedmo\Versioned()
      */

@@ -10,14 +10,14 @@
 
 namespace Kontrolgruppen\CoreBundle\Event;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * Class GetConclusionTemplateEvent.
  */
 class GetConclusionTemplateEvent extends Event
 {
-    const NAME = 'kontrolgruppen.core.get_conclusion_template';
+    public const NAME = 'kontrolgruppen.core.get_conclusion_template';
 
     private $class;
     private $template;

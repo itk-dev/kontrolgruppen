@@ -1,0 +1,31 @@
+{% extends '@KontrolgruppenCore/main/index.html.twig' %}
+
+{% block title %}{{ 'process.index.title'|trans }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-12">
+            <h1 class="float-left">{{ 'process.index.title'|trans }}</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="float-left">
+                <form method="get" action="." class="form form-inline">
+                    {# {{ form_rest(form) }} #}
+                </form>
+            </div>
+            {# Add js-process-table-results class to hide the count when leading data #}
+        </div>
+    </div>
+
+    {% include '@KontrolgruppenCore/journal_entry/_modal_quick_view.html.twig' %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {{ encore_entry_script_tags('processFilters') }}
+    {{ encore_entry_script_tags('journalQuickview') }}
+{% endblock %}

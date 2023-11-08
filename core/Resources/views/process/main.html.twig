@@ -2,17 +2,6 @@
 
 {% block sidebar_right %}
     {{ include('@KontrolgruppenCore/process/_process_global_actions_header.html.twig') }}
-
-    <ul class="nav nav-tabs" id="sidebar-right-tabs" role="tablist">
-        <li class="nav-item">
-            <a class="nav-link active" id="sidebar-right-process-info-tab" data-toggle="tab" href="#sidebar-right-process-info" role="tab"
-               aria-controls="sidebar-right-process-info" aria-selected="true">{{ 'process.summary.title'|trans }}</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" id="sidebar-right-activity-tab" data-toggle="tab" href="#sidebar-right-activity" role="tab"
-               aria-controls="sidebar-right-activity" aria-selected="false"><span class="short-text">{{ 'dashboard.latest_activity.title_short'|trans }}</span><span class="long-text">{{ 'dashboard.latest_activity.title'|trans }}</span></a>
-        </li>
-    </ul>
     <div class="tab-content" id="sidebarRightTabsContent">
         <div class="tab-pane fade" id="sidebar-right-activity" role="tabpanel" aria-labelledby="sidebar-right-activity-tab">
             {{ include('@KontrolgruppenCore/process/_sidebar_activity.html.twig') }}
@@ -22,9 +11,219 @@
         </div>
     </div>
 {% endblock %}
-
-{% block javascripts %}
+{% block stylesheets %}
     {{ parent() }}
 
+    <style>
+        .process-end .btn-warning{
+            color: white;
+        }
+        .new-process {
+            margin-top: 20px;
+            margin-bottom: 50px;
+        }
+        .fixed-table {
+            position: fixed;
+            top: 200px;
+            right: 30px;
+            width: 20%;
+            z-index: 999;
+        }
+        .left-tables {
+            max-width: 1000px;
+        }
+        .card-header {
+            background-color:#c8defc ;
+        }
+        .card-header.active {
+            background-color: #81b4fe;
+        }
+        .btn-header{
+            color: black;
+            font-weight: bold;
+        }
+        .btn-header:hover{
+            font-weight: bold;
+        }
+        .btn-header:focus{
+            text-decoration: none;
+            box-shadow: none;
+        }
+        #stam-data{
+            font-weight: bold;
+        }
+        .stam-data{
+            background-color: #81b4fe;
+        }
+        .data-header{
+            background-color: #d0dcfc;
+        }
+        .bg-light{
+            background-color: #e8ecfc;
+        }
+        .stam-data-body{
+            background-color: #e8ecfc;
+        }
+        .card-header.collapsed .fa-chevron-down {
+            transform: rotate(90deg);
+        }
+
+        .card-header.active .fa-chevron-up {
+            transform: rotate(-90deg);
+        }
+        .empty-column {
+            color: red;
+        }
+        .child-name {
+            color: black;
+            text-decoration: underline;
+        }
+        .iconClass{
+            margin-left: 10px
+        }
+    </style>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $('.child-name').on('click', function(event) {
+            event.preventDefault(); // Prevent the default anchor click behavior
+
+            var cprNumber = $(this).data('cpr'); // Retrieve the CPR number from the data attribute
+
+            // Create a form element
+            var form = $('<form>', {
+                'method': 'post',
+                'action': '/visitation/result',
+                'target': '_blank' // This will open the form submission in a new tab
+            }).append($('<input>', {
+                'type': 'hidden',
+                'name': 'cpr',
+                'value': cprNumber
+            }));
+
+            // Append the form to the body and submit it
+            form.appendTo('body').submit().remove();
+        });
+        function formatCprAndCalculateAge(cpr) {
+            // Extract day, month, year, and 7th digit from the CPR number
+            const day = cpr.substring(0, 2);
+            const month = cpr.substring(2, 4);
+            const year = cpr.substring(4, 6);
+            const lastFour = cpr.substring(6, 10);
+            const seventhDigit = parseInt(cpr.substring(6, 7), 10);
+            const cprAgeTranslation = "{{ 'visitation.form.cpr_age'|trans }}";
+            // Determine the correct century
+            let fullYear;
+            if (seventhDigit >= 0 && seventhDigit <= 3) {
+                fullYear = `19${year}`;
+            } else if (seventhDigit === 4) {
+                fullYear = (parseInt(year, 10) >= 37) ? `19${year}` : `20${year}`;
+            } else if (seventhDigit >= 5 && seventhDigit <= 8) {
+                fullYear = (parseInt(year, 10) >= 58) ? `18${year}` : `20${year}`;
+            } else if (seventhDigit === 9) {
+                fullYear = (parseInt(year, 10) >= 37) ? `19${year}` : `20${year}`;
+            }
+
+            // Calculate the current age
+            const today = new Date();
+            const birthDate = new Date(`${fullYear}-${month}-${day}`);
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const monthDifference = today.getMonth() - birthDate.getMonth();
+
+            if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+
+            // Format the CPR number
+            const formattedCpr = `${day}${month}${year}-${lastFour} (${age} ${cprAgeTranslation})`;
+
+            return formattedCpr;
+        }
+        function formatCprDash(cpr){
+            const formattedCpr = `${cpr.substring(0, 6)}-${cpr.substring(6)}`;
+            return formattedCpr;
+        }
+
+        $(document).ready(function() {
+
+            $('.older-than-5').hide();
+
+            // Format the CPR number and calculate the age for each cprField class
+            const cprFields = document.getElementsByClassName("cprField");
+            for (let i = 0; i < cprFields.length; i++) {
+                const originalCpr = cprFields[i].textContent;
+                const formattedCprAndAge = formatCprAndCalculateAge(originalCpr);
+                cprFields[i].textContent = formattedCprAndAge;
+            }
+            const cprDashes = document.getElementsByClassName("cpr-dash");
+            for (let i = 0; i < cprDashes.length; i++) {
+                const originalCpr = cprDashes[i].textContent;
+                const formattedCpr = formatCprDash(originalCpr);
+                cprDashes[i].textContent = formattedCpr;
+            }
+            // const cprElement = document.getElementById("cprField");
+            // console.log(formattedCprAndAge);
+            // const formattedCprAndAge = formatCprAndCalculateAge(originalCpr);
+
+            $('.accordion .card-header').click(function() {
+                var icon = $(this).closest(".card-header").find('.iconClass');
+                if ($(this).closest(".card-header").hasClass('collapsed')) {
+                    icon.removeClass('fa-sort-down').addClass('fa-sort-up');
+                } else {
+                    icon.removeClass('fa-sort-up').addClass('fa-sort-down');
+                }
+            });
+            $('.show-history').on('click', function() {
+                // Toggle the visibility of rows marked as older than 5 years
+                $(this).closest('tbody').find('.older-than-5').toggle();
+
+                // Optionally, change the button text based on current state
+                $(this).closest('tr').hide();
+            });
+            $("#loadMoreButton").click(function() {
+                let slicedPNumbers = p_numbers.slice(offset, offset + limit);
+                $.ajax({
+                    url: '/visitation/getMorePNumbers',  // Replace with your API endpoint
+                    type: 'GET',
+                    data: {
+                        p_numbers: JSON.stringify(slicedPNumbers)
+                    },
+                    success: function(data) {
+                        // Construct the rows from your data
+                        let newRow = "";
+                        let count = 0;
+
+                        $.each(data, function(pNumber, produktionsenhed) {
+                            count++;
+                            newRow += `<tr class="pnumber"><td colspan="4" style="text-align: left">${produktionsenhed.produktionsenhed.pNummer}</td></tr>`;
+                            newRow += `<tr>
+                                            <th>${nameTrans}</th>
+                                            <th>${addressTrans}</th>
+                                            <th>${phoneTrans}</th>
+                                            <th>${mailTrans}</th>
+                                        </tr>`;
+                            newRow += `<tr>
+                                        <td>${produktionsenhed.produktionsenhedsnavn.vaerdi}</td>
+                                        <td>${produktionsenhed.beliggenhedsadresse.CVRAdresse_vejnavn} ${produktionsenhed.beliggenhedsadresse.CVRAdresse_husnummer}</td>
+                                        <td>${produktionsenhed.telefonnummer.vaerdi}</td>
+                                        <td>${produktionsenhed['e-mailadresse'].vaerdi}</td>
+                                    </tr>`;
+                        });
+
+                        $('#pNumberTable > tbody').find('#loadMoreButtonRow').before(newRow);
+
+                        offset += limit;
+                        if (count < limit) {
+                            $('#loadMoreButtonRow').hide();
+                        }
+                        else{
+                            $('#loadMoreButtonRow').show();
+                        }
+                    }
+                });
+            });
+        });
+    </script>
     {{ encore_entry_script_tags('processStatusForm') }}
 {% endblock %}

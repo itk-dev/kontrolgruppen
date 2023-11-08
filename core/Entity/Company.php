@@ -19,7 +19,9 @@ class Company
 {
     /**
      * @ORM\Id()
+     *
      * @ORM\GeneratedValue()
+     *
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -31,6 +33,7 @@ class Company
 
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson", inversedBy="companies")
+     *
      * @ORM\JoinColumn(nullable=false)
      */
     private $processClient;

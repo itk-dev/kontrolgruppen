@@ -1,4 +1,5 @@
 <!-- markdownlint-disable MD024 -->
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
@@ -8,6 +9,17 @@ and this project adheres to [Semantic
 Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [3.0.0] - 2023-11-08
+
+### Changed
+
+- PHP Upgraded from 7.4 -> 8.2
+- Symfony upgraded from 4.4 -> 6.3
+- Design updates and bug fixes
+- Implementation of Datafordeleren
+- Implementation of BBR (Dataforsyningen & OIS)
+- Borgerservice has been phased out
 
 ## [2.0.3] - 2023-04-13
 
@@ -197,6 +209,7 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 - [KON-361](https://github.com/aakb/kontrolgruppen/pull/81): Changed datepicker
 
 [Unreleased]: https://github.com/itk-dev/kontrolgruppen/compare/2.0.3...HEAD
+[3.0.0]: https://github.com/itk-dev/kontrolgruppen/compare/2.0.3...3.0.0
 [2.0.3]: https://github.com/itk-dev/kontrolgruppen/compare/2.0.2...2.0.3
 [2.0.2]: https://github.com/itk-dev/kontrolgruppen/compare/2.0.1...2.0.2
 [2.0.1]: https://github.com/itk-dev/kontrolgruppen/compare/2.0.0...2.0.1

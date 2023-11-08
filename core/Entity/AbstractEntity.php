@@ -25,7 +25,9 @@ abstract class AbstractEntity
 
     /**
      * @ORM\Id()
+     *
      * @ORM\GeneratedValue()
+     *
      * @ORM\Column(type="integer")
      *
      * @Groups("taxonomy_read")

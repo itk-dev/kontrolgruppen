@@ -19,9 +19,13 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * Base class for clients on a process.
  *
  * @ORM\Entity()
+ *
  * @ORM\Table(name="process_client")
+ *
  * @ORM\InheritanceType("SINGLE_TABLE")
+ *
  * @ORM\DiscriminatorColumn(name="discr", type="string")
+ *
  * @ORM\DiscriminatorMap({
  *     "person"="Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson",
  *     "company"="Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany"
@@ -39,6 +43,7 @@ abstract class AbstractProcessClient extends AbstractEntity implements ProcessLo
 
     /**
      * @ORM\OneToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Process", inversedBy="processClient", cascade={"persist", "remove"})
+     *
      * @ORM\JoinColumn(nullable=false)
      */
     private $process;

@@ -12,10 +12,12 @@ namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
-use Exception;
 use Kontrolgruppen\CoreBundle\Entity\Process;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 use Kontrolgruppen\CoreBundle\Entity\ProcessGroup;
 use Kontrolgruppen\CoreBundle\Form\ProcessGroupType;
+use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,16 +30,17 @@ class ProcessGroupController extends BaseController
     /**
      * @Route("/", name="process_group_index", methods={"GET"})
      *
-     * @param Request $request
-     * @param Process $process
+     * @param Request             $request
+     * @param Process             $process
+     * @param DatafordelerService $datafordelerService
      *
      * @return Response
      *
      * @throws NoResultException
      * @throws NonUniqueResultException
-     * @throws Exception
+     * @throws \Exception
      */
-    public function index(Request $request, Process $process): Response
+    public function index(Request $request, Process $process, DatafordelerService $datafordelerService): Response
     {
         $processGroups = [];
 
@@ -50,6 +53,17 @@ class ProcessGroupController extends BaseController
                 ),
             ];
         }
+        // Get the ProcessClient Identifier from process
+        $processClientIdentifier = $process->getProcessClient()->getIdentifier();
+        // Get client type
+        $clientType = $process->getProcessClient()->getType();
+
+        if (ProcessClientPerson::PERSON === $clientType) {
+            $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
+            $data = $datafordelerService->getPersonData($processClientIdentifier);
+        } elseif (ProcessClientCompany::COMPANY === $clientType) {
+            $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
+        }
 
         return $this->render('@KontrolgruppenCore/process_group/index.html.twig', [
             'menuItems' => $this->menuService->getProcessMenu(
@@ -57,6 +71,7 @@ class ProcessGroupController extends BaseController
                 $process
             ),
             'process' => $process,
+            'data' => $data,
             'process_groups' => $processGroups,
         ]);
     }
@@ -64,15 +79,16 @@ class ProcessGroupController extends BaseController
     /**
      * @Route("/new", name="process_group_new", methods={"GET","POST"})
      *
-     * @param Request $request
-     * @param Process $process
+     * @param Request             $request
+     * @param Process             $process
+     * @param DatafordelerService $datafordelerService
      *
      * @return Response
      *
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function new(Request $request, Process $process): Response
+    public function new(Request $request, Process $process, DatafordelerService $datafordelerService): Response
     {
         $processGroup = new ProcessGroup();
         $processGroup->setPrimaryProcess($process);
@@ -84,11 +100,23 @@ class ProcessGroupController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             // We filter out the primary process from the select, so we have to add it manually.
             $processGroup->addProcess($processGroup->getPrimaryProcess());
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->em;
             $entityManager->persist($processGroup);
             $entityManager->flush();
 
             return $this->redirectToRoute('process_group_index', ['process' => $process]);
+        }
+
+        // Get the ProcessClient Identifier from process
+        $processClientIdentifier = $process->getProcessClient()->getIdentifier();
+        // Get client type
+        $clientType = $process->getProcessClient()->getType();
+
+        if (ProcessClientPerson::PERSON === $clientType) {
+            $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
+            $data = $datafordelerService->getPersonData($processClientIdentifier);
+        } elseif (ProcessClientCompany::COMPANY === $clientType) {
+            $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
         }
 
         return $this->render('@KontrolgruppenCore/process_group/new.html.twig', [
@@ -98,6 +126,7 @@ class ProcessGroupController extends BaseController
             ),
             'process_group' => $processGroup,
             'process' => $process,
+            'data' => $data,
             'form' => $form->createView(),
         ]);
     }
@@ -105,16 +134,17 @@ class ProcessGroupController extends BaseController
     /**
      * @Route("/{id}/edit", name="process_group_edit", methods={"GET","POST"})
      *
-     * @param Request      $request
-     * @param ProcessGroup $processGroup
-     * @param Process      $process
+     * @param Request             $request
+     * @param ProcessGroup        $processGroup
+     * @param Process             $process
+     * @param DatafordelerService $datafordelerService
      *
      * @return Response
      *
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function edit(Request $request, ProcessGroup $processGroup, Process $process): Response
+    public function edit(Request $request, ProcessGroup $processGroup, Process $process, DatafordelerService $datafordelerService): Response
     {
         $form = $this->createForm(ProcessGroupType::class, $processGroup);
         $form->handleRequest($request);
@@ -122,9 +152,20 @@ class ProcessGroupController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             // We filter out the primary process from the select, so we have to add it manually.
             $processGroup->addProcess($processGroup->getPrimaryProcess());
-            $this->getDoctrine()->getManager()->flush();
+            $this->em->flush();
 
             return $this->redirectToRoute('process_group_index', ['process' => $process]);
+        }
+        // Get the ProcessClient Identifier from process
+        $processClientIdentifier = $process->getProcessClient()->getIdentifier();
+        // Get client type
+        $clientType = $process->getProcessClient()->getType();
+
+        if (ProcessClientPerson::PERSON === $clientType) {
+            $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
+            $data = $datafordelerService->getPersonData($processClientIdentifier);
+        } elseif (ProcessClientCompany::COMPANY === $clientType) {
+            $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
         }
 
         return $this->render('@KontrolgruppenCore/process_group/edit.html.twig', [
@@ -135,6 +176,7 @@ class ProcessGroupController extends BaseController
             'process_group' => $processGroup,
             'form' => $form->createView(),
             'process' => $process,
+            'data' => $data,
         ]);
     }
 
@@ -150,7 +192,7 @@ class ProcessGroupController extends BaseController
     public function delete(Request $request, ProcessGroup $processGroup, Process $process): Response
     {
         if ($this->isCsrfTokenValid('delete'.$processGroup->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->em;
             $entityManager->remove($processGroup);
             $entityManager->flush();
         }

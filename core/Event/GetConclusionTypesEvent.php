@@ -10,14 +10,14 @@
 
 namespace Kontrolgruppen\CoreBundle\Event;
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 /**
  * Class GetConclusionTypesEvent.
  */
 class GetConclusionTypesEvent extends Event
 {
-    const NAME = 'kontrolgruppen.core.get_conclusion_types';
+    public const NAME = 'kontrolgruppen.core.get_conclusion_types';
 
     private $types;
 
@@ -34,16 +34,20 @@ class GetConclusionTypesEvent extends Event
     /**
      * @return array
      */
-    public function getTypes()
+    public function getTypes(): array
     {
         return $this->types;
     }
 
     /**
      * @param $types
+     *
+     * @return GetConclusionTypesEvent
      */
-    public function setTypes($types)
+    public function setTypes($types): self
     {
         $this->types = $types;
+
+        return $this;
     }
 }

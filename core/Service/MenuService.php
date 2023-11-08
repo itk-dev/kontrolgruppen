@@ -61,7 +61,7 @@ class MenuService
             $menu['dashboard'] = $this->createGlobalNavItem(
                 'dashboard',
                 'dashboard',
-                ('/' === $path),
+                '/' === $path,
                 'dashboard_index'
             );
 

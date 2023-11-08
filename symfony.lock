@@ -270,6 +270,18 @@
     "phpoffice/phpspreadsheet": {
         "version": "1.8.2"
     },
+    "phpstan/phpstan": {
+        "version": "1.9",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "1.0",
+            "ref": "d74d4d719d5f53856c9c13544aa22d44144b1819"
+        },
+        "files": [
+            "phpstan.neon"
+        ]
+    },
     "phpunit/phpunit": {
         "version": "9.2",
         "recipe": {
@@ -460,18 +472,18 @@
         "version": "v4.3.2"
     },
     "symfony/framework-bundle": {
-        "version": "4.2",
+        "version": "6.3",
         "recipe": {
             "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "4.2",
-            "ref": "0dfae0b1cd8349ae47659b35602f772b4a7e2280"
+            "branch": "main",
+            "version": "6.2",
+            "ref": "af47254c5e4cd543e6af3e4508298ffebbdaddd3"
         },
         "files": [
-            "config/bootstrap.php",
             "config/packages/cache.yaml",
             "config/packages/framework.yaml",
-            "config/packages/test/framework.yaml",
+            "config/preload.php",
+            "config/routes/framework.yaml",
             "config/services.yaml",
             "public/index.php",
             "src/Controller/.gitignore",
@@ -681,6 +693,18 @@
             "templates/base.html.twig"
         ]
     },
+    "symfony/uid": {
+        "version": "6.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "6.2",
+            "ref": "d294ad4add3e15d7eb1bae0221588ca89b38e558"
+        },
+        "files": [
+            "config/packages/uid.yaml"
+        ]
+    },
     "symfony/validator": {
         "version": "4.3",
         "recipe": {
@@ -759,8 +783,20 @@
             "config/packages/twig_extensions.yaml"
         ]
     },
+    "twig/extra-bundle": {
+        "version": "v3.7.1"
+    },
     "twig/twig": {
         "version": "v2.11.3"
+    },
+    "vincentlanglet/twig-cs-fixer": {
+        "version": "1.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "0.6",
+            "ref": "e4da12a48e8138479bd24a675321bcfd84950266"
+        }
     },
     "webimpress/safe-writer": {
         "version": "2.2.0"

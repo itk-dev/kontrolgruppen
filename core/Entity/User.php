@@ -25,7 +25,9 @@ class User implements UserInterface
 {
     /**
      * @ORM\Id
+     *
      * @ORM\Column(type="integer")
+     *
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
@@ -44,6 +46,11 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\Process", mappedBy="caseWorker")
      */
     private $processes;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Kontrolgruppen\CoreBundle\Entity\Visitation", mappedBy="caseWorker")
+     */
+    private $visitations;
 
     /**
      * @ORM\Column(type="string", nullable=true)
@@ -83,7 +90,7 @@ class User implements UserInterface
      *
      * @return string
      */
-    public function getUsername(): string
+    public function getUserIdentifier(): string
     {
         return (string) $this->username;
     }
@@ -129,22 +136,6 @@ class User implements UserInterface
     /**
      * @see UserInterface
      */
-    public function getPassword()
-    {
-        // not needed for apps that do not check user passwords
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function getSalt()
-    {
-        // not needed for apps that do not check user passwords
-    }
-
-    /**
-     * @see UserInterface
-     */
     public function eraseCredentials()
     {
         // If you store any temporary, sensitive data on the user, clear it here
@@ -169,6 +160,28 @@ class User implements UserInterface
         if (!$this->processes->contains($process)) {
             $this->processes[] = $process;
             $process->setCaseWorker($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Visitation[]
+     */
+    public function getVisitations(): Collection
+    {
+        return $this->visitations ?? new ArrayCollection();
+    }
+
+    /**
+     * @param Visitation $visitation
+     *
+     * @return User
+     */
+    public function addVisitation(Visitation $visitation): self
+    {
+        if (!$this->visitations->contains($visitation)) {
+            $this->visitations[] = $visitation;
         }
 
         return $this;
@@ -241,7 +254,7 @@ class User implements UserInterface
      */
     public function __toString()
     {
-        return (string) $this->getUsername();
+        return (string) $this->getUserIdentifier();
     }
 
     /**

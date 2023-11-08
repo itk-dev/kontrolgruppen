@@ -17,14 +17,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
-use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
+use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
+use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\CustomCredentials;
+use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 
 /**
  * Class CliLoginTokenAuthenticator.
  */
-class CliLoginTokenAuthenticator extends AbstractGuardAuthenticator
+class CliLoginTokenAuthenticator extends AbstractAuthenticator
 {
     private $em;
 
@@ -47,38 +48,25 @@ class CliLoginTokenAuthenticator extends AbstractGuardAuthenticator
      *
      * @return bool
      */
-    public function supports(Request $request)
+    public function supports(Request $request): ?bool
     {
         return 'cli_login' === $request->attributes->get('_route');
     }
 
     /**
-     * Called on every request. Return whatever credentials you want to
-     * be passed to getUser() as $credentials.
-     *
      * @param Request $request
      *
-     * @return array
-     */
-    public function getCredentials(Request $request)
-    {
-        return [
-            'cliLoginToken' => $request->query->get('cli-login-token'),
-        ];
-    }
-
-    /**
-     * @param mixed                 $credentials
-     * @param UserProviderInterface $userProvider
+     * @return Passport
      *
-     * @return User|object|UserInterface|void|null
+     * @throws AuthenticationException
+     * @throws \OneLogin\Saml2\ValidationError
      */
-    public function getUser($credentials, UserProviderInterface $userProvider)
+    public function authenticate(Request $request): Passport
     {
-        $cliLoginToken = $credentials['cliLoginToken'];
+        $cliLoginToken = $request->query->get('cli-login-token');
 
         if (null === $cliLoginToken) {
-            return;
+            throw new AuthenticationException('Invalid CLI login token.');
         }
 
         // if a User object, checkCredentials() is called
@@ -92,18 +80,7 @@ class CliLoginTokenAuthenticator extends AbstractGuardAuthenticator
             $this->em->flush();
         }
 
-        return $user;
-    }
-
-    /**
-     * @param mixed         $credentials
-     * @param UserInterface $user
-     *
-     * @return bool
-     */
-    public function checkCredentials($credentials, UserInterface $user)
-    {
-        return true;
+        return new Passport(new UserBadge($user->getUserIdentifier()), new CustomCredentials(fn () => true, ['cliLoginToken' => $cliLoginToken]));
     }
 
     /**
@@ -113,7 +90,7 @@ class CliLoginTokenAuthenticator extends AbstractGuardAuthenticator
      *
      * @return RedirectResponse|Response|null
      */
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey): ?Response
     {
         $destination = $request->get('destination') ?? '/';
 
@@ -126,26 +103,8 @@ class CliLoginTokenAuthenticator extends AbstractGuardAuthenticator
      *
      * @return Response|null
      */
-    public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
     {
         return new Response(strtr($exception->getMessageKey(), $exception->getMessageData()), Response::HTTP_FORBIDDEN);
-    }
-
-    /**
-     * Called when authentication is needed, but it's not sent.
-     *
-     * @param Request                      $request
-     * @param AuthenticationException|null $authException
-     */
-    public function start(Request $request, AuthenticationException $authException = null)
-    {
-    }
-
-    /**
-     * @return bool
-     */
-    public function supportsRememberMe()
-    {
-        return false;
     }
 }

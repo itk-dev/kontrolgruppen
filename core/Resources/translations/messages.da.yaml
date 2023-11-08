@@ -160,6 +160,7 @@ common:
         save: Gem
         show: Vis
         done: Udført
+        search: Søg
     back_to_list: Tilbage til liste
     boolean:
         'null': ''
@@ -208,6 +209,7 @@ common:
         created_at: Oprettet
         created_by: Oprettet af
         updated_at: Opdateret
+        title: Metadata
         updated_by: Opdateret af
         by: af
     title: Kontrolgruppen
@@ -488,6 +490,7 @@ navigation:
         sign_out: Log ud
         quick_links: Genveje
         new_process: Ny sag
+        visitation: Visitation
         reminders:
             number_of_reminders: '%numberOfReminders%'
 
@@ -549,11 +552,11 @@ process:
         update: Gem
         status: Status
         search_client_cpr:
-            search: Søg efter eksisterende sager
+            search: Søg i eksisterende sager
             loading: Søger...
             results: Eksisterende sag(er) fundet
         search_client_cvr:
-            search: Søg efter eksisterende sager
+            search: Søg i eksisterende sager
             loading: Søger...
             results: Eksisterende sag(er) fundet
     index:
@@ -612,6 +615,169 @@ process:
         resume: Genoptag sag
     completed_message: Sagen er afsluttet og kan ikke længere redigeres
     is_completed: Afsluttet?
+
+visitation:
+    company:
+        employees_count: Antal ansatte
+        legal_owners: Legale ejere
+        real_owners: Reelle ejere
+        creation_date: Oprettelsesdato
+        date: Dato
+        founder: Stifter
+        management: Direktion
+        board_of_directors: Bestyrelse
+        founders: Stiftere
+        accountant: Revisor
+        history: Historik
+        p_numbers: P-numre
+        name: Navn
+        address: Adresse
+        phone: Telefon
+        mail: Mail
+        registration_history: Registrations Historik
+        p_number_history: Hent Flere
+        period: Periode
+        workers: Ansatte
+        annual_work: Årsværk
+        employees: medarbejdere
+        annual_work_employees: årsværk
+    person:
+        address_history: Adressehistorik
+        street: Gade
+        postcode_city: Post nr og By
+        district: Kommune
+        country: Land
+        date_from_to: Dato (fra/til)
+        child: Børn
+        name: Navn
+        birthday: Fødselsdag
+        custody: Forældremyndighed
+        unknown: Ukendt
+        apartment: Bolig
+        date_from: Dato (fra)
+        residence_collection: Bopælssamling
+        relation: Relation
+        marital_status: Civilstatus
+        status: Status
+        cpr: CPR
+        date: Dato
+        cpr_history: CPR-historik
+        to: til
+        today: i dag
+        name_history: Navnehistorik
+        citizenship: Statsborgerskab
+        company: Virksomhed
+        cvr: CVR
+        type: Type
+        residential_area: Boligareal
+        building_area: Bygningsareal
+        rooms: Værelser
+        toilets: Toiletter
+        buildings: Bygninger
+        go_to_ois: Tilgå OIS
+        no_address: Kunne ikke hente BBR data
+    basic_info: Stamdata
+    get_history: Hent al historik
+    name: Navn
+    cpr: CPR
+    address: Adresse
+    gender: Køn
+    existing_cases: Eksisterende sager
+    search_placeholder: Søg i eksisterende sager
+    searching_placeholder: Søger...
+    cvr: CVR
+    contact: Kontakt
+    company_type: Virksomhedsform
+    status: Status
+    relations: Relationer
+    user_not_found: Bruger ikke fundet
+    data:
+        empty: Ingen data
+    search:
+        title: Søg Oplysninger
+    form:
+        channel: Kanal
+        client_cpr: CPR-nummer
+        client_cvr: CVR-nummer
+        client_type: Klienttype
+        client_type.empty: '(Vælg klienttype)'
+        client_type.company: Virksomhed
+        client_type.person: Person
+        court_decision: Rettens afgørelse
+        cpr_placehoder: Indtast CPR
+        cpr_age: år
+        cvr_placeholder: Indtast CVR
+        police_report: Er sagen politianmeldt?
+        process_status: Sagsstatus
+        process_type: Sagstype
+        service: Ydelse
+        update: Gem
+        status: Status
+        search_client_cpr:
+            search: Søg
+            loading: Søger...
+            results: Eksisterende sag(er) fundet
+        search_client_cvr:
+            search: Søg
+            loading: Søger...
+            results: Eksisterende sag(er) fundet
+    index:
+        title: Sager
+        pagination_info: '%start%–%end% af %total%'
+    menu_title: Sager
+    new:
+        title: Opret sag
+        select_client_type: Vælg klienttype
+        unique_error: Noget gik galt. Prøv venligst igen.
+    show:
+        title: Sag
+    summary:
+        title: Klient
+    table:
+        case_number: Sagsnummer
+        case_worker: Sagsbehandler
+        channel: Kanal
+        reason: Årsag
+        client_adress: Klient adresse
+        client: Klient
+        client_cpr: CPR-nummer
+        client_first_name: Fornavn
+        client_identifier: Klient
+        client_last_name: Efternavn
+        client_name: Klient navn
+        client_telephone: Klient telefonnummer
+        client_type: Klienttype
+        court_decision: Rettens afgørelse
+        id: ID
+        internal_note: Seneste interne notater
+        journal: Journal
+        note: Seneste notater
+        police_report: Er sagen politianmeldt?
+        process_status: Status
+        process_type: Type
+        processing_time: Sagens behandlingstid
+        reminders: Påmindelser
+        reminders_open: Vis påmindelser
+        service: Ydelse
+        relations: Relationer
+        filter:
+            show_all_client_types: Alle klienttyper
+            show_all_types: Alle sagstyper
+            show_all_status: Alle sagsstatusser
+            show_all_case_worker: Alle sagsbehandlere
+            status:
+                open: Åbne sager
+                completed: Afsluttet sager
+                show_all: Alle sager
+    tooltip: Liste med alle sager
+    btns:
+        create_new: Opret ny sag
+        create_report: Sagsrapport
+        complete: Afslut sag
+        resume: Genoptag sag
+    completed_message: Sagen er afsluttet og kan ikke længere redigeres
+    is_completed: Afsluttet?
+
 
 process_log:
     index:

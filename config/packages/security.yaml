@@ -16,17 +16,15 @@ security:
             security: false
 
         main:
-            anonymous: ~
+            lazy: true
 
-            guard:
-                authenticators:
-                    - Kontrolgruppen\CoreBundle\Security\SAMLAuthenticator
-                    - Kontrolgruppen\CoreBundle\Security\CliLoginTokenAuthenticator
-                entry_point: Kontrolgruppen\CoreBundle\Security\SAMLAuthenticator
+            custom_authenticators:
+                - Kontrolgruppen\CoreBundle\Security\SAMLAuthenticator
+                - Kontrolgruppen\CoreBundle\Security\CliLoginTokenAuthenticator
 
     access_control:
         - { path: ^/admin, role: ROLE_ADMIN }
-        - { path: ^/saml, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/saml, role: PUBLIC_ACCESS }
         - { path: ^/bi/, role: ROLE_BI }
         - { path: ^/, role: ROLE_USER }
 

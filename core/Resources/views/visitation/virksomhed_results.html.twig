@@ -1,0 +1,282 @@
+{% extends '@KontrolgruppenCore/main/index.html.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-8">
+            <h1>{{ 'navigation.main.visitation'|trans }}</h1>
+
+            <!-- Other tables aligned left -->
+            <div class="left-tables">
+                {# Adresse historik Table #}
+                {% include '@KontrolgruppenCore/visitation/company_tables/created_date.html.twig' with {'data': data} %}
+
+                {# Bopælssamling Table #}
+                {% include '@KontrolgruppenCore/visitation/company_tables/real_owners.html.twig' %}
+
+                {# Bolig Table #}
+                {% include '@KontrolgruppenCore/visitation/company_tables/registration_history.html.twig' %}
+
+                {# Børn Table #}
+                {% include '@KontrolgruppenCore/visitation/company_tables/history.html.twig' %}
+
+                {# Civilstatus Table #}
+                {% include '@KontrolgruppenCore/visitation/company_tables/p_number.html.twig' %}
+
+                {# CPR historik Table #}
+                {% include '@KontrolgruppenCore/visitation/company_tables/amount_workers.html.twig' %}
+                <div class="new-process">
+                    <form method="POST" action="{{ path('process_new', {clientType: client_type}) }}">
+                        <input type="hidden" name="identifier" value="{{ data.virksomhed.CVRNummer }}">
+                        <button type="submit" class="btn btn-md btn-primary mb-3" class="btn btn-primary">
+                            {{ 'visitation.new.title'|trans }}
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stamdata Table aligned right -->
+        <div class="col-md-4">
+            <div class="fixed-table">
+                <div class="card-header text-black stam-data">
+                    <h6 class="mb-0" id="stam-data">
+                        {{ 'visitation.basic_info'|trans }}
+                    </h6>
+                </div>
+                <table class="table table-bordered">
+                    <tbody class="stam-data-body">
+                        {% if data.virksomhedsnavn.vaerdi is defined %}
+                            <tr>
+                                <td><b>{{ 'visitation.name'|trans }}</b></td>
+                                <td>{{ data.virksomhedsnavn.vaerdi }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if data.virksomhed.CVRNummer is defined %}
+                            <tr>
+                                <td><b>{{ 'visitation.cvr'|trans }}</b></td>
+                                <td id="cvrField">{{ data.virksomhed.CVRNummer }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if data.beliggenhedsadresse.adresse is not empty %}
+                            <tr>
+                                <td><b>{{ 'visitation.address'|trans }}</b></td>
+                                <td>
+                                    {% if data.beliggenhedsadresse.CVRAdresse_vejnavn is defined %}
+                                        {{ data.beliggenhedsadresse.CVRAdresse_vejnavn }}
+                                    {% endif %}
+                                    {% if data.beliggenhedsadresse.CVRAdresse_husnummerFra is defined %}
+                                        {{ data.beliggenhedsadresse.CVRAdresse_husnummerFra }}
+                                    {% endif %}
+                                    {% if data.beliggenhedsadresse.CVRAdresse_etagebetegnelse is defined %}
+                                        {{ data.beliggenhedsadresse.CVRAdresse_etagebetegnelse }}
+                                    {% endif %}
+                                    {% if data.beliggenhedsadresse.CVRAdresse_doerbetegnelse is defined %}
+                                        {{ data.beliggenhedsadresse.CVRAdresse_doerbetegnelse }},
+                                    {% endif %}
+
+                                    {% if data.beliggenhedsadresse.CVRAdresse_postnummer is defined %}
+                                        {{ data.beliggenhedsadresse.CVRAdresse_postnummer }}
+                                    {% endif %}
+                                    {% if data.beliggenhedsadresse.CVRAdresse_postdistrikt is defined %}
+                                        {{ data.beliggenhedsadresse.CVRAdresse_postdistrikt }}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% if data['e-mailadresse'].vaerdi is defined %}
+                            <tr>
+                                <td><b>{{ 'visitation.contact'|trans }}</b></td>
+                                <td>{{ data['e-mailadresse'].vaerdi }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if data.virksomhedsform.vaerdi is not empty %}
+                            <tr>
+                                <td><b>{{ 'visitation.company_type'|trans }}</b></td>
+                                <td>{{ data.virksomhedsform.vaerdiTekst }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if data.virksomhed.status is not empty %}
+                            <tr>
+                                <td><b>{{ 'visitation.status'|trans }}</b></td>
+                                <td>{{ data.virksomhed.status }}</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        @media (max-width: 768px) {
+            .fixed-table {
+                position: static;
+                width: 100%;
+            }
+        }
+        @media (min-width: 769px) {
+            .fixed-table {
+                position: fixed;
+                top: 120px;
+                right: 30px;
+                width: 25%;
+                z-index: 999;
+            }
+        }
+        .left-tables {
+            max-width: 900px;
+        }
+        .card-header {
+            background-color:#c8defc;
+        }
+        .card-header.active {
+            background-color: #81b4fe;
+        }
+        .btn-header{
+            color: black;
+            font-weight: bold;
+        }
+        .btn-header:hover{
+            font-weight: bold;
+        }
+        .btn-header:focus{
+            text-decoration: none;
+            box-shadow: none;
+        }
+        #stam-data{
+            font-weight: bold;
+        }
+        .stam-data{
+            background-color: #81b4fe;
+        }
+        .data-header{
+            background-color: #d0dcfc;
+        }
+        .bg-light{
+            background-color: #e8ecfc;
+        }
+        .pnumber{
+            background-color: #e8ecfc;
+        }
+        .stam-data-body{
+            background-color: #e8ecfc;
+        }
+        .card-header.collapsed .fa-chevron-down {
+            transform: rotate(90deg);
+        }
+
+        .card-header.active .fa-chevron-up {
+            transform: rotate(-90deg);
+        }
+        .empty-column {
+            color: red;
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.older-than-5').hide();
+            const cvrElement = document.getElementById("cvrField");
+            let nameTrans = $('.translations').data('name-translation');
+            let addressTrans = $('.translations').data('address-translation');
+            let phoneTrans = $('.translations').data('phone-translation');
+            let mailTrans = $('.translations').data('mail-translation');
+
+            $('.accordion .card-header').click(function() {
+                $(this).find('i').toggleClass('fa-chevron-down fa-chevron-up');
+            });
+            $(".btn-header").click(function() {
+                $(this).closest(".card-header").toggleClass("collapsed active");
+                if($(this).closest(".card-header").hasClass("collapsed")){
+                    // Ajax post request to log_visitation route, with data and cpr
+                    $.ajax({
+                        url: "{{ path('log_visitation') }}",
+                        type: "POST",
+                        data: {
+                            table_name: $(this).closest(".card-header").attr("id"),
+                            cvr: cvrElement.innerHTML,
+                            visitation: "{{ visitation }}",
+                        },
+                        success: function(data) {
+                            console.log(data);
+                        }
+                    });
+                }
+            });
+            let offset = 5;  // Start from the 6th record, as first 5 are already fetched
+            let limit = 5;   // Number of records to fetch in each request
+            let p_numbers = [];
+            $(".allPNumbers").each(function() {
+                p_numbers.push($(this).text().trim());
+            });
+            $("#loadMoreButton").click(function() {
+
+                let slicedPNumbers = p_numbers.slice(offset, offset + limit);
+
+                $.ajax({
+                    url: '/visitation/getMorePNumbers',  // Replace with your API endpoint
+                    type: 'GET',
+                    data: {
+                        p_numbers: JSON.stringify(slicedPNumbers)
+                    },
+                    success: function(data) {
+                        // Construct the rows from your data
+                        let newRow = "";
+                        let count = 0;
+
+                        $.each(data, function(pNumber, produktionsenhed) {
+                            count++;
+                            newRow += `<tr class="pnumber"><td colspan="4" style="text-align: left">${produktionsenhed.produktionsenhed.pNummer}</td></tr>`;
+                            newRow += `<tr>
+                                            <th>${nameTrans}</th>
+                                            <th>${addressTrans}</th>
+                                            <th>${phoneTrans}</th>
+                                            <th>${mailTrans}</th>
+                                        </tr>`;
+                            newRow += `<tr>
+                                        <td>${produktionsenhed.produktionsenhedsnavn.vaerdi}</td>
+                                        <td>${produktionsenhed.beliggenhedsadresse.CVRAdresse_vejnavn} ${produktionsenhed.beliggenhedsadresse.CVRAdresse_husnummer}</td>
+                                        <td>${produktionsenhed.telefonnummer.vaerdi}</td>
+                                        <td>${produktionsenhed['e-mailadresse'].vaerdi}</td>
+                                    </tr>`;
+                        });
+
+                        $('#pNumberTable > tbody').find('#loadMoreButtonRow').before(newRow);
+
+                        offset += limit;
+                        if (count < limit) {
+                            $('#loadMoreButtonRow').hide();
+                        }
+                        else{
+                            $('#loadMoreButtonRow').show();
+                        }
+                    }
+                });
+            });
+            $('.show-history').on('click', function() {
+                // Toggle the visibility of rows marked as older than 5 years
+                $(this).closest('div').find('.older-than-5').toggle();
+                $.ajax({
+                    url: "{{ path('log_visitation') }}",
+                    type: "POST",
+                    data: {
+                        table_name: $(this).closest('.card').find('.card-header').attr("id") + "History",
+                        cpr: "{{ data.virksomhed.CVRNummer }}",
+                        visitation: "{{ visitation }}",
+                    },
+                    success: function(data) {
+                        console.log(data);
+                    }
+                });
+                // Optionally, change the button text based on current state
+                $(this).closest('tr').hide();
+            });
+        });
+    </script>
+{% endblock %}

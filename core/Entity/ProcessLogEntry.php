@@ -21,12 +21,14 @@ class ProcessLogEntry extends AbstractEntity
 {
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Process", inversedBy="logEntries")
+     *
      * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $process;
 
     /**
      * @ORM\ManyToOne(targetEntity="Gedmo\Loggable\Entity\LogEntry")
+     *
      * @ORM\JoinColumn(nullable=false)
      */
     private $logEntry;
@@ -34,7 +36,7 @@ class ProcessLogEntry extends AbstractEntity
     /**
      * @ORM\Column(name="level", type="ProcessLogEntryLevelEnumType", nullable=false)
      *
-     * @DoctrineAssert\Enum(entity="Kontrolgruppen\CoreBundle\DBAL\Types\ProcessLogEntryLevelEnumType")
+     * [DoctrineAssert\EnumType(entity: Kontrolgruppen\CoreBundle\DBAL\Types\ProcessLogEntryLevelEnumType:class)]
      */
     private $level;
 

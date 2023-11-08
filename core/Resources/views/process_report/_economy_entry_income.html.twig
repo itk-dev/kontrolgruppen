@@ -13,12 +13,12 @@
             <td>{{ economy_entry.incomeType.name }}</td>
             <td>
                 {% if economy_entry.periodFrom is not null %}
-                    {{ economy_entry.periodFrom|localizeddate('short', 'none') }} - {{ economy_entry.periodTo|localizeddate('short', 'none') }}
+                    {{ economy_entry.periodFrom|date('short', 'none') }} - {{ economy_entry.periodTo|date('short', 'none') }}
                 {% else %}
                     -
                 {% endif %}
             </td>
-            <td>{{ economy_entry.amount|localizedcurrency('DKK') }}</td>
+            <td>{{ economy_entry.amount|format_currency('DKK') }}</td>
             <td style="text-align: right;">{{ enumTranslation(economy_entry.amountPeriod, 'EconomyEntryAmountPeriodEnumType') }}</td>
         </tr>
     {% else %}

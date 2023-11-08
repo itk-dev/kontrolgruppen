@@ -25,5 +25,5 @@ final class JournalEntryEnumType extends AbstractEnumType
         self::INTERNAL_NOTE => 'common.enum.journal_entry.internal_note',
     ];
 
-    protected static $choices = self::TRANSLATIONS;
+    protected static array $choices = self::TRANSLATIONS;
 }

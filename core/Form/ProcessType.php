@@ -69,6 +69,7 @@ class ProcessType extends AbstractType
     {
         /** @var Process $process */
         $process = $builder->getData();
+        $identifier = $options['identifier'] ?? null;
         $builder
             ->add('processType', null, [
                 'choices' => $this->processTypeRepository->findByProcess($process),
@@ -84,6 +85,7 @@ class ProcessType extends AbstractType
                     case AbstractProcessClient::COMPANY:
                         $builder
                             ->add('company', ClientCompanyType::class, [
+                                'identifier' => $identifier,
                                 'label' => false,
                                 'mapped' => false,
                             ]);
@@ -92,6 +94,7 @@ class ProcessType extends AbstractType
                     case AbstractProcessClient::PERSON:
                         $builder
                             ->add('person', ClientPersonType::class, [
+                                'identifier' => $identifier,
                                 'label' => false,
                                 'mapped' => false,
                             ]);
@@ -192,5 +195,6 @@ class ProcessType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Process::class,
         ]);
+        $resolver->setDefined(['identifier']);
     }
 }

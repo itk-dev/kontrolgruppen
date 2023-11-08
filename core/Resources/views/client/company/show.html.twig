@@ -19,89 +19,28 @@
         <div class="alert alert-warning">{{ 'process.completed_message'|trans }}</div>
     {% endif %}
 
-    <h2>{{ 'client.sections.generel_info'|trans }}</h2>
-    <div class="row mb-3">
-        <div class="col-12 col-sm-6">
-            <div class="row">
-                <div class="col"><span class="text-muted">{{ 'client.table.cvr'|trans }}</span></div>
-                <div class="col">{{ client.cvr }}</div>
-            </div>
-            <div class="row">
-                <div class="col"><span class="text-muted">{{ 'client.table.name'|trans }}</span></div>
-                <div class="col">{{ client.name }}</div>
-            </div>
-            <div class="row">
-                <div class="col"><span class="text-muted">{{ 'client.table.p_number'|trans }}</span></div>
-                <div class="col">{{ client.pNumber }}</div>
-            </div>
-        </div>
-        <div class="col-12 col-sm-6">
-            <div class="row">
-                <div class="col-12 col-sm-4"><span class="text-muted">{{ 'client.table.address'|trans }}</span></div>
-                <div class="col-12 col-sm-8">
-                    <div class="row">
-                        <div class="col-12">{{ client.address }}</div>
-                        <div class="col-12">{{ client.postalCode }} {{ client.city }}</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div class="col-md-9 left-tables">
+        {# Adresse historik Table #}
+        {% include '@KontrolgruppenCore/visitation/company_tables/created_date.html.twig' with {'data': data} %}
 
-    <div class="row mb-3">
-        <div class="col-12 col-sm-3"><span class="text-muted">{{ 'client.table.notes'|trans }}</span></div>
-        <div class="col textarea">{{ client.notes }}</div>
-    </div>
+        {# Bopælssamling Table #}
+        {% include '@KontrolgruppenCore/visitation/company_tables/real_owners.html.twig' %}
 
-    <h2>{{ 'client.sections.contact_person'|trans }}</h2>
-    <div class="row mb-3">
-        <div class="col-12 col-sm-6">
-            <div class="row">
-                <div class="col"><span class="text-muted">{{ 'contact_person.name'|trans }}</span></div>
-                <div class="col">{{ client.contactPerson.name }}</div>
-            </div>
-        </div>
-        <div class="col-12 col-sm-6">
-            <div class="row">
-                {# Line up with address label and value #}
-                <div class="col-12 col-sm-4"><span class="text-muted">{{ 'contact_person.telephone'|trans }}</span></div>
-                <div class="col-12 col-sm-8">{{ client.contactPerson.telephone }}</div>
-            </div>
-        </div>
-    </div>
+        {# Bolig Table #}
+        {% include '@KontrolgruppenCore/visitation/company_tables/registration_history.html.twig' %}
 
-    <h2>{{ 'client.sections.transportation'|trans }}</h2>
-    <div class="row mb-3">
-            <div class="col-12 col-sm-6">
-            <span class="text-muted">{{ 'client.table.cars'|trans }}</span>
-            <ul class="list-group">
-                {% for car in client.cars %}
-                    <li class="list-group-item">
-                        <div>{{ car.registrationNumber }}</div>
-                        <div>{{ 'client.table.car.shared_ownership'|trans }}: {{ car.sharedOwnership|yes_no }}</div>
-                        <div>{{ car.notes|raw }}</div>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
+        {# Børn Table #}
+        {% include '@KontrolgruppenCore/visitation/company_tables/history.html.twig' %}
 
-    <h2>{{ 'client.sections.people'|trans }}</h2>
-    <div class="row mb-3">
-        <div class="col-12 col-sm-6">
-            <ul class="list-group">
-                {% for person in client.people %}
-                    <li class="list-group-item">
-                        <div>{{ 'client.table.person.cpr'|trans }}: {{ person.cpr }}</div>
-                        <div>{{ 'client.table.person.name'|trans }}: {{ person.name }}</div>
-                        <div>{{ 'client.table.person.highlighted'|trans }}: {{ person.highlighted|yes_no }}</div>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
+        {# Civilstatus Table #}
+        {% include '@KontrolgruppenCore/visitation/company_tables/p_number.html.twig' %}
 
-    {% if canEdit %}
-        <a href="{{ path('client_edit', {'process': process.id}) }}" class="btn btn-primary float-right pl-5 pr-5">{{ 'common.actions.edit'|trans }}</a>
-    {% endif %}
+        {# CPR historik Table #}
+        {% include '@KontrolgruppenCore/visitation/company_tables/amount_workers.html.twig' %}
+        <div class="d-flex justify-content-between">
+            <div></div>
+            {% if canEdit %}
+                <a href="{{ path('client_edit', {'process': process.id}) }}" class="btn btn-primary float-right pl-5 pr-5">{{ 'common.actions.edit'|trans }}</a>
+            {% endif %}
+    </div>
 {% endblock %}

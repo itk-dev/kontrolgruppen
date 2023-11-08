@@ -82,7 +82,7 @@ class ProcessManager
         )
             ->setParameter('caseWorker', $user)
             ->setParameter('processIds', $processIds)
-            ->setParameter('username', $user->getUsername());
+            ->setParameter('username', $user->getUserIdentifier());
 
         return array_column($query->getArrayResult(), 'id');
     }
@@ -111,7 +111,7 @@ class ProcessManager
             '
         )
             ->setParameter('caseWorker', $user)
-            ->setParameter('username', $user->getUsername());
+            ->setParameter('username', $user->getUserIdentifier());
 
         return $query->execute();
     }

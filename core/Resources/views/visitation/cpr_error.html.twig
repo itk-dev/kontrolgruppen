@@ -1,0 +1,16 @@
+{% extends '@KontrolgruppenCore/main/index.html.twig' %}
+
+{% block title %}{{ 'process.index.title'|trans }}{% endblock %}
+
+{% block content %}
+    <div>
+        {{ 'visitation.user_not_found'|trans }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    {{ encore_entry_script_tags('processFilters') }}
+    {{ encore_entry_script_tags('journalQuickview') }}
+{% endblock %}

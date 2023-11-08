@@ -151,7 +151,7 @@ abstract class AbstractExport implements \JsonSerializable
     /**
      * @return array|mixed
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             'title' => $this->getTitle(),

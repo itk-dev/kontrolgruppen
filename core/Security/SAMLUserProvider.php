@@ -11,7 +11,7 @@
 namespace Kontrolgruppen\CoreBundle\Security;
 
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
@@ -76,9 +76,11 @@ class SAMLUserProvider implements UserProviderInterface
      *
      * @return UserInterface|void
      */
-    public function loadUserByUsername($username)
+    public function loadUserByIdentifier(string $username): UserInterface
     {
-        throw new \RuntimeException(sprintf('Lazy programmer exception: %s not implemented!', __METHOD__));
+        $user = $this->userManager->findUserByUsername($username);
+
+        return $user;
     }
 
     /**
@@ -89,15 +91,15 @@ class SAMLUserProvider implements UserProviderInterface
     public function refreshUser(UserInterface $user)
     {
         if (!$user instanceof UserInterface) {
-            throw new UnsupportedUserException(sprintf('Expected an instance of %s, but got "%s".', UserInterface::class, \get_class($user)));
+            throw new UnsupportedUserException(sprintf('Expected an instance of %s, but got "%s".', UserInterface::class, $user::class));
         }
 
-        if (!$this->supportsClass(\get_class($user))) {
-            throw new UnsupportedUserException(sprintf('Expected an instance of %s, but got "%s".', $this->userManager->getClass(), \get_class($user)));
+        if (!$this->supportsClass($user::class)) {
+            throw new UnsupportedUserException(sprintf('Expected an instance of %s, but got "%s".', $this->userManager->getClass(), $user::class));
         }
 
         if (null === $reloadedUser = $this->userManager->findUserBy(['id' => $user->getId()])) {
-            throw new UsernameNotFoundException(sprintf('User with ID "%s" could not be reloaded.', $user->getId()));
+            throw new UserNotFoundException(sprintf('User with ID "%s" could not be reloaded.', $user->getId()));
         }
 
         return $reloadedUser;

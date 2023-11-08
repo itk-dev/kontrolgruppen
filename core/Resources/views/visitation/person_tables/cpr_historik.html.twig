@@ -1,0 +1,46 @@
+<div class="accordion mb-3" id="tableAccordionCprHistorik">
+    <div class="card">
+        <div class="card-header text-black" id="tableHeadingCprHistorik">
+            <h2 class="mb-0">
+                <button class="btn btn-block text-left text-black collapsed btn-header" type="button" data-toggle="collapse" data-target="#tableCollapseCprHistorik" aria-expanded="false" aria-controls="tableCollapseCprHistorik">
+                    {{ 'visitation.person.cpr_history'|trans }} <i class="iconClass fas fa-sort-down"></i>
+                </button>
+            </h2>
+        </div>
+        <div id="tableCollapseCprHistorik" class="collapse" aria-labelledby="tableHeadingCprHistorik" data-parent="#tableAccordionCprHistorik">
+            <div class="card-body p-0">
+                <table class="table mb-0 table-bordered bg-info">
+                    <thead class="data-header">
+                        <tr>
+                            <th>{{ 'visitation.person.cpr'|trans }}</th>
+                            <th>{{ 'visitation.person.date_from_to'|trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-light">
+                        {% for cprnummer in data.Personnumre %}
+                        {% set current_date = "now"|date("Y-m-d") %}
+                        {% set five_years_ago = current_date|date_modify("-5 years")|date("Y-m-d") %}
+                        {% if cprnummer.Personnummer.virkningFra < five_years_ago %}
+                            <tr class="older-than-5">
+                        {% else %}
+                            <tr>
+                        {% endif %}
+                            <td class="cpr-dash">{{ cprnummer.Personnummer.personnummer }}</td>
+                            {% if cprnummer.Personnummer.virkningTil is defined %}
+                                <td>{{ cprnummer.Personnummer.virkningFra|date("d-m-Y") }} {{ 'visitation.person.to'|trans }} {{ cprnummer.Personnummer.virkningTil|date("d-m-Y") }} </td>
+                            {% else %}
+                                <td>{{ cprnummer.Personnummer.virkningFra|date("d-m-Y") }} - {{ 'visitation.person.today'|trans }}</td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <td colspan="2" class="text-center">
+                                <button class="btn btn-primary show-history">{{ 'visitation.get_history'|trans }}</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

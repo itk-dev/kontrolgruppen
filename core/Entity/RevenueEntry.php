@@ -21,12 +21,14 @@ class RevenueEntry extends AbstractEntity
 {
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Process", inversedBy="revenueEntries")
+     *
      * @ORM\JoinColumn(nullable=false)
      */
     private $process;
 
     /**
      * @ORM\ManyToOne(targetEntity="Kontrolgruppen\CoreBundle\Entity\Service", inversedBy="revenueEntries")
+     *
      * @ORM\JoinColumn(nullable=false)
      */
     private $service;

@@ -16,27 +16,24 @@ use OneLogin\Saml2\IdPMetadataParser;
 use OneLogin\Saml2\Response;
 use OneLogin\Saml2\Settings;
 use OneLogin\Saml2\Utils;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Core\Security;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
-use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
+use Symfony\Component\Security\Http\Authenticator\AbstractAuthenticator;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
+use Symfony\Component\Security\Http\Authenticator\Passport\Credentials\CustomCredentials;
+use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 
 /**
  * Class SAMLAuthenticator.
  */
-class SAMLAuthenticator extends AbstractGuardAuthenticator
+class SAMLAuthenticator extends AbstractAuthenticator
 {
     /** @var \Symfony\Component\Routing\RouterInterface */
     private $router;
-
-    /** @var SessionInterface */
-    private $session;
 
     /** @var array */
     private $settings;
@@ -44,28 +41,13 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
     /**
      * SAMLAuthenticator constructor.
      *
-     * @param RouterInterface  $router
-     * @param SessionInterface $session
-     * @param array            $settings
+     * @param RouterInterface $router
+     * @param array           $settings
      */
-    public function __construct(RouterInterface $router, SessionInterface $session, array $settings)
+    public function __construct(RouterInterface $router, array $settings)
     {
         $this->router = $router;
-        $this->session = $session;
         $this->settings = $settings;
-    }
-
-    /**
-     * @param Request                      $request
-     * @param AuthenticationException|null $authException
-     *
-     * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    public function start(Request $request, AuthenticationException $authException = null)
-    {
-        $url = $this->router->generate('saml_login');
-
-        return new RedirectResponse($url);
     }
 
     /**
@@ -73,7 +55,7 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
      *
      * @return bool
      */
-    public function supports(Request $request)
+    public function supports(Request $request): ?bool
     {
         return $this->router->generate('saml_acs') === $request->getPathInfo()
             && !empty($request->get('SAMLResponse'));
@@ -82,26 +64,12 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
     /**
      * @param Request $request
      *
-     * @return array|mixed
-     */
-    public function getCredentials(Request $request)
-    {
-        return [
-            'SAMLResponse' => $request->get('SAMLResponse'),
-            'RelayState' => $request->get('RelayState'),
-        ];
-    }
-
-    /**
-     * @param mixed                 $credentials
-     * @param UserProviderInterface $userProvider
+     * @return Passport
      *
-     * @return UserInterface|null
-     *
-     * @throws Error
+     * @throws AuthenticationException
      * @throws \OneLogin\Saml2\ValidationError
      */
-    public function getUser($credentials, UserProviderInterface $userProvider)
+    public function authenticate(Request $request): Passport
     {
         $auth = $this->getAuth();
 
@@ -121,37 +89,23 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
             throw new AuthenticationException('Not authenticated');
         }
 
-        if (!$userProvider instanceof SAMLUserProvider) {
-            throw new \RuntimeException(sprintf('Invalid user provider: %s is not an instance of %s', \get_class($userProvider), SAMLUserProvider::class));
-        }
-
         $username = $this->getUsername($auth);
-        $displayName = $this->getDisplayName($auth);
 
-        return $userProvider->getUser($username, $displayName, $credentials);
-    }
-
-    /**
-     * @param mixed         $credentials
-     * @param UserInterface $user
-     *
-     * @return bool
-     */
-    public function checkCredentials($credentials, UserInterface $user)
-    {
-        return true;
+        return new Passport(new UserBadge($username), new CustomCredentials(fn () => true, [
+            'SAMLResponse' => $request->get('SAMLResponse'),
+            'RelayState' => $request->get('RelayState'),
+        ]));
     }
 
     /**
      * @param Request                 $request
      * @param AuthenticationException $exception
      *
-     * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response|null
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?\Symfony\Component\HttpFoundation\Response
     {
-        // Pass on the exception.
-        $this->session->set(Security::AUTHENTICATION_ERROR, $exception);
+        $request->getSession()->set(Security::AUTHENTICATION_ERROR, $exception);
         $url = $this->router->generate('saml_failure');
 
         return new RedirectResponse($url);
@@ -164,18 +118,10 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
      *
      * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response|null
      */
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey): ?\Symfony\Component\HttpFoundation\Response
     {
         // @TODO: Redirect to originally requested url.
         return new RedirectResponse('/');
-    }
-
-    /**
-     * @return bool
-     */
-    public function supportsRememberMe()
-    {
-        return false;
     }
 
     /**
@@ -296,28 +242,6 @@ class SAMLAuthenticator extends AbstractGuardAuthenticator
         }
 
         throw new AuthenticationException('Cannot get username');
-    }
-
-    /**
-     * Returns the name of the user for displaying purposes.
-     *
-     * @param Auth $auth
-     *
-     * @return string
-     */
-    private function getDisplayName(Auth $auth): string
-    {
-        if (isset($this->settings['display_name_attribute_name'])) {
-            $attribute = $auth->getAttribute($this->settings['display_name_attribute_name']);
-            if (!empty($attribute)) {
-                $displayName = reset($attribute);
-                if (!empty($displayName)) {
-                    return $displayName;
-                }
-            }
-        }
-
-        return '';
     }
 
     /**

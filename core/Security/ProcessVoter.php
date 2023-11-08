@@ -22,9 +22,9 @@ use Symfony\Component\Security\Core\Security;
 class ProcessVoter extends Voter
 {
     // these strings are just invented: you can use anything
-    const VIEW = 'view';
-    const EDIT = 'edit';
-    const DELETE = 'delete';
+    public const VIEW = 'view';
+    public const EDIT = 'edit';
+    public const DELETE = 'delete';
 
     private $security;
 
@@ -41,7 +41,7 @@ class ProcessVoter extends Voter
     /**
      * {@inheritdoc}
      */
-    protected function supports($attribute, $subject)
+    protected function supports(string $attribute, mixed $subject): bool
     {
         // if the attribute isn't one we support, return false
         if (!\in_array($attribute, [self::VIEW, self::EDIT, self::DELETE])) {
@@ -59,7 +59,7 @@ class ProcessVoter extends Voter
     /**
      * {@inheritdoc}
      */
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();
 

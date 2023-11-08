@@ -10,6 +10,7 @@
 
 namespace Kontrolgruppen\CoreBundle\Controller;
 
+use Doctrine\ORM\EntityManagerInterface;
 use http\Exception\RuntimeException;
 use Kontrolgruppen\CoreBundle\CPR\CprException;
 use Kontrolgruppen\CoreBundle\CPR\CprServiceInterface;
@@ -19,6 +20,7 @@ use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
 use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 use Kontrolgruppen\CoreBundle\Form\ProcessClientCompanyType;
 use Kontrolgruppen\CoreBundle\Form\ProcessClientPersonType;
+use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
 use Kontrolgruppen\CoreBundle\Service\MenuService;
 use Kontrolgruppen\CoreBundle\Service\ProcessClientManager;
 use Psr\Log\LoggerInterface;
@@ -47,14 +49,15 @@ class ProcessClientController extends BaseController
     /**
      * ProcessClientController constructor.
      *
-     * @param RequestStack        $requestStack
-     * @param MenuService         $menuService
-     * @param CprServiceInterface $processClientManager
-     * @param LoggerInterface     $logger
+     * @param RequestStack           $requestStack
+     * @param MenuService            $menuService
+     * @param CprServiceInterface    $processClientManager
+     * @param LoggerInterface        $logger
+     * @param EntityManagerInterface $em
      */
-    public function __construct(RequestStack $requestStack, MenuService $menuService, ProcessClientManager $processClientManager, LoggerInterface $logger)
+    public function __construct(RequestStack $requestStack, MenuService $menuService, ProcessClientManager $processClientManager, LoggerInterface $logger, EntityManagerInterface $em)
     {
-        parent::__construct($requestStack, $menuService);
+        parent::__construct($requestStack, $menuService, $em);
         $this->processClientManager = $processClientManager;
         $this->logger = $logger;
     }
@@ -62,15 +65,16 @@ class ProcessClientController extends BaseController
     /**
      * @Route("/", name="client_show", methods={"GET","POST"})
      *
-     * @param Request $request
-     * @param Process $process
+     * @param Request             $request
+     * @param Process             $process
+     * @param DatafordelerService $datafordelerService
      *
      * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function show(Request $request, Process $process): Response
+    public function show(Request $request, Process $process, DatafordelerService $datafordelerService): Response
     {
         $client = $process->getProcessClient();
 
@@ -85,11 +89,24 @@ class ProcessClientController extends BaseController
 
         $view = $this->getView($client, 'show');
 
+        // Get the ProcessClient Identifier from process
+        $processClientIdentifier = $process->getProcessClient()->getIdentifier();
+        // Get client type
+        $clientType = $process->getProcessClient()->getType();
+
+        if (ProcessClientPerson::PERSON === $clientType) {
+            $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
+            $data = $datafordelerService->getPersonData($processClientIdentifier);
+        } elseif (ProcessClientCompany::COMPANY === $clientType) {
+            $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
+        }
+
         return $this->render($view, [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'client' => $client,
             'canEdit' => $this->isGranted('edit', $process) && null === $process->getCompletedAt(),
             'changeProcessStatusForm' => $changeProcessStatusForm->createView(),
+            'data' => $data,
             'process' => $process,
             'newClientInfoAvailable' => $newInfoAvailable,
         ]);
@@ -98,15 +115,16 @@ class ProcessClientController extends BaseController
     /**
      * @Route("/edit", name="client_edit", methods={"GET","POST"})
      *
-     * @param Request $request
-     * @param Process $process
+     * @param Request             $request
+     * @param Process             $process
+     * @param DatafordelerService $datafordelerService
      *
      * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function edit(Request $request, Process $process): Response
+    public function edit(Request $request, Process $process, DatafordelerService $datafordelerService): Response
     {
         $this->denyAccessUnlessGranted('edit', $process);
 
@@ -123,7 +141,7 @@ class ProcessClientController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->em->flush();
 
             return $this->redirectToRoute('client_show', [
                 'process' => $process->getId(),
@@ -132,11 +150,24 @@ class ProcessClientController extends BaseController
 
         $view = $this->getView($client, 'edit');
 
+        // Get the ProcessClient Identifier from process
+        $processClientIdentifier = $client->getIdentifier();
+        // Get client type
+        $clientType = $client->getType();
+
+        if (ProcessClientPerson::PERSON === $clientType) {
+            $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
+            $data = $datafordelerService->getPersonData($processClientIdentifier);
+        } elseif (ProcessClientCompany::COMPANY === $clientType) {
+            $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
+        }
+
         return $this->render($view, [
             'menuItems' => $this->menuService->getProcessMenu($request->getPathInfo(), $process),
             'canEdit' => $this->isGranted('edit', $process) && null === $process->getCompletedAt(),
             'client' => $client,
             'form' => $form->createView(),
+            'data' => $data,
             'process' => $process,
         ]);
     }
@@ -164,8 +195,8 @@ class ProcessClientController extends BaseController
             $this->logger->error($e);
         }
 
-        $this->getDoctrine()->getManager()->persist($client);
-        $this->getDoctrine()->getManager()->flush();
+        $this->em->persist($client);
+        $this->em->flush();
 
         return $this->redirectToRoute('client_show', ['process' => $process]);
     }
@@ -217,6 +248,6 @@ class ProcessClientController extends BaseController
             return $this->createForm(ProcessClientPersonType::class, $client);
         }
 
-        throw new RuntimeException(sprintf('Unknown client type: %s', \get_class($client)));
+        throw new RuntimeException(sprintf('Unknown client type: %s', $client::class));
     }
 }

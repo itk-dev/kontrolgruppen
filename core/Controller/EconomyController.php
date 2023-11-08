@@ -15,6 +15,8 @@ use Kontrolgruppen\CoreBundle\Entity\BaseEconomyEntry;
 use Kontrolgruppen\CoreBundle\Entity\EconomyEntry;
 use Kontrolgruppen\CoreBundle\Entity\IncomeEconomyEntry;
 use Kontrolgruppen\CoreBundle\Entity\Process;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
+use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 use Kontrolgruppen\CoreBundle\Entity\ServiceEconomyEntry;
 use Kontrolgruppen\CoreBundle\Form\BaseEconomyEntryType;
 use Kontrolgruppen\CoreBundle\Form\EconomyEntryType;
@@ -22,6 +24,7 @@ use Kontrolgruppen\CoreBundle\Form\IncomeEconomyEntryType;
 use Kontrolgruppen\CoreBundle\Form\RevenueType;
 use Kontrolgruppen\CoreBundle\Form\ServiceEconomyEntryType;
 use Kontrolgruppen\CoreBundle\Repository\EconomyEntryRepository;
+use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -39,13 +42,14 @@ class EconomyController extends BaseController
      * @param Request                $request
      * @param Process                $process
      * @param EconomyEntryRepository $economyEntryRepository
+     * @param DatafordelerService    $datafordelerService
      *
      * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
      *
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Doctrine\ORM\NoResultException
      */
-    public function show(Request $request, Process $process, EconomyEntryRepository $economyEntryRepository)
+    public function show(Request $request, Process $process, EconomyEntryRepository $economyEntryRepository, DatafordelerService $datafordelerService)
     {
         $parameters = [];
 
@@ -76,6 +80,18 @@ class EconomyController extends BaseController
         $parameters['menuItems'] = $this->menuService->getProcessMenu($request->getPathInfo(), $process);
         $parameters['process'] = $process;
 
+        $processClientIdentifier = $process->getProcessClient()->getIdentifier();
+        // Get client type
+        $clientType = $process->getProcessClient()->getType();
+
+        if (ProcessClientPerson::PERSON === $clientType) {
+            $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
+            $data = $datafordelerService->getPersonData($processClientIdentifier);
+        } elseif (ProcessClientCompany::COMPANY === $clientType) {
+            $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
+        }
+        $parameters['data'] = $data;
+
         $parameters['economyEntriesService'] = $economyEntryRepository->findBy(['process' => $process, 'type' => EconomyEntryEnumType::SERVICE]);
         $parameters['economyEntriesIncome'] = $economyEntryRepository->findBy(['process' => $process, 'type' => EconomyEntryEnumType::INCOME]);
         $parameters['economyEntriesAccount'] = $economyEntryRepository->findBy(['process' => $process, 'type' => EconomyEntryEnumType::ACCOUNT]);
@@ -100,7 +116,7 @@ class EconomyController extends BaseController
 
         if ($revenueForm->isSubmitted()) {
             if ($revenueForm->isValid()) {
-                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager = $this->em;
                 $entityManager->flush();
             } else {
                 $errors = $revenueForm->getErrors();
@@ -131,11 +147,11 @@ class EconomyController extends BaseController
     {
         // Decide if a type has been chosen.
         if (!$chosenType && $request->request->has('base_economy_entry')) {
-            $chosenType = $request->request->get('base_economy_entry')['type'];
+            $chosenType = $request->get('base_economy_entry')['type'];
         } elseif (!$chosenType && $request->request->has('service_economy_entry')) {
-            $chosenType = $request->request->get('service_economy_entry')['type'];
+            $chosenType = $request->get('service_economy_entry')['type'];
         } elseif (!$chosenType && $request->request->has('income_economy_entry')) {
-            $chosenType = $request->request->get('income_economy_entry')['type'];
+            $chosenType = $request->get('income_economy_entry')['type'];
         }
 
         // Add given form if a type has been chosen.
@@ -157,7 +173,7 @@ class EconomyController extends BaseController
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager = $this->em;
                 $economyEntry->setProcess($process);
                 $entityManager->persist($economyEntry);
                 $entityManager->flush();
