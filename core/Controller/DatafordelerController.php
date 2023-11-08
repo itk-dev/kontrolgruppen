@@ -44,6 +44,33 @@ class DatafordelerController extends BaseController
     }
 
     /**
+     * @Route("/getMorePNumbers", name="get_more_p_numbers")
+     *
+     * Fetches more P-Numbers with an option to limit the number of records fetched.
+     *
+     * @param Request             $request
+     * @param HttpClientInterface $datafordelerCvrHttpClient
+     *
+     * @return JsonResponse
+     *
+     * @throws TransportExceptionInterface
+     */
+    public function getMorePNumbers(Request $request, HttpClientInterface $datafordelerCvrHttpClient): JsonResponse
+    {
+        $pNumbers = json_decode($request->query->get('p_numbers'), true);
+
+        $allData = [];
+        $datafordelerService = new DatafordelerService(null, $datafordelerCvrHttpClient);
+
+        foreach ($pNumbers as $pnumber) {
+            $data = $datafordelerService->getVirksomhedDataByPNumber($pnumber);
+            $allData[$pnumber] = $data;
+        }
+
+        return new JsonResponse($allData);
+    }
+
+    /**
      * @param array               $cprAdresse
      * @param string              $relationCpr
      * @param string              $relationFullname
@@ -140,35 +167,5 @@ class DatafordelerController extends BaseController
         }
 
         return $response->toArray();
-    }
-
-    /**
-     * @Route("/getMorePNumbers", name="get_more_p_numbers")
-     *
-     * Fetches more P-Numbers with an option to limit the number of records fetched.
-     *
-     * @param Request             $request
-     * @param HttpClientInterface $datafordelerCvrHttpClient
-     *
-     * @return JsonResponse
-     *
-     * @throws TransportExceptionInterface
-     */
-    protected function getMorePNumbers(Request $request, HttpClientInterface $datafordelerCvrHttpClient): JsonResponse
-    {
-        $offset = $request->query->getInt('offset', 0);
-        $limit = $request->query->getInt('limit', 5);
-        $pNumbers = json_decode($request->query->get('p_numbers'), true);
-
-        $allData = [];
-        $datafordelerService = new DatafordelerService(null, $datafordelerCvrHttpClient);
-
-        $pNumbers = \array_slice($pNumbers, $offset, $limit);
-        foreach ($pNumbers as $pnumber) {
-            $data = $datafordelerService->getVirksomhedDataByPNumber($pnumber);
-            $allData[$pnumber] = $data;
-        }
-
-        return new JsonResponse($allData);
     }
 }
