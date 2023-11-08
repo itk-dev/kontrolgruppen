@@ -181,6 +181,48 @@
                 // Optionally, change the button text based on current state
                 $(this).closest('tr').hide();
             });
+            $("#loadMoreButton").click(function() {
+                let slicedPNumbers = p_numbers.slice(offset, offset + limit);
+                $.ajax({
+                    url: '/visitation/getMorePNumbers',  // Replace with your API endpoint
+                    type: 'GET',
+                    data: {
+                        p_numbers: JSON.stringify(slicedPNumbers)
+                    },
+                    success: function(data) {
+                        // Construct the rows from your data
+                        let newRow = "";
+                        let count = 0;
+
+                        $.each(data, function(pNumber, produktionsenhed) {
+                            count++;
+                            newRow += `<tr class="pnumber"><td colspan="4" style="text-align: left">${produktionsenhed.produktionsenhed.pNummer}</td></tr>`;
+                            newRow += `<tr>
+                                            <th>${nameTrans}</th>
+                                            <th>${addressTrans}</th>
+                                            <th>${phoneTrans}</th>
+                                            <th>${mailTrans}</th>
+                                        </tr>`;
+                            newRow += `<tr>
+                                        <td>${produktionsenhed.produktionsenhedsnavn.vaerdi}</td>
+                                        <td>${produktionsenhed.beliggenhedsadresse.CVRAdresse_vejnavn} ${produktionsenhed.beliggenhedsadresse.CVRAdresse_husnummer}</td>
+                                        <td>${produktionsenhed.telefonnummer.vaerdi}</td>
+                                        <td>${produktionsenhed['e-mailadresse'].vaerdi}</td>
+                                    </tr>`;
+                        });
+
+                        $('#pNumberTable > tbody').find('#loadMoreButtonRow').before(newRow);
+
+                        offset += limit;
+                        if (count < limit) {
+                            $('#loadMoreButtonRow').hide();
+                        }
+                        else{
+                            $('#loadMoreButtonRow').show();
+                        }
+                    }
+                });
+            });
         });
     </script>
     {{ encore_entry_script_tags('processStatusForm') }}

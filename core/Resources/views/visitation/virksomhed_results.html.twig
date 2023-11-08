@@ -211,19 +211,19 @@
             });
             let offset = 5;  // Start from the 6th record, as first 5 are already fetched
             let limit = 5;   // Number of records to fetch in each request
-
+            let p_numbers = [];
+            $(".allPNumbers").each(function() {
+                p_numbers.push($(this).text().trim());
+            });
             $("#loadMoreButton").click(function() {
-                let p_numbers = [];
-                $(".allPNumbers").each(function() {
-                    p_numbers.push($(this).text().trim());
-                });
+
+                let slicedPNumbers = p_numbers.slice(offset, offset + limit);
+
                 $.ajax({
                     url: '/visitation/getMorePNumbers',  // Replace with your API endpoint
                     type: 'GET',
                     data: {
-                        offset: offset,
-                        limit: limit,
-                        p_numbers: JSON.stringify(p_numbers)
+                        p_numbers: JSON.stringify(slicedPNumbers)
                     },
                     success: function(data) {
                         // Construct the rows from your data
@@ -250,8 +250,11 @@
                         $('#pNumberTable > tbody').find('#loadMoreButtonRow').before(newRow);
 
                         offset += limit;
-                        if (count < 5) {
+                        if (count < limit) {
                             $('#loadMoreButtonRow').hide();
+                        }
+                        else{
+                            $('#loadMoreButtonRow').show();
                         }
                     }
                 });
