@@ -3,9 +3,8 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-    <nav class="navbar navbar-dark fixed-top bg-dark p-0 shadow navbar-expand-lg">
+    <nav class="navbar navbar-dark fixed-top bg-dark p-0 shadow navbar-expand-lg" id="topbar">
         <a class="navbar-brand col-auto col-sm-3 col-md-2 col-lg-2 mr-0" href="/">
-            <i class="fas fa-house-damage text-white mr-sm-3" title="{{ site_name }}"></i>
             <span class="d-none d-md-inline">{{ site_name }}</span>
         </a>
         {% block navigation_main %}
@@ -103,7 +102,7 @@
             <div class="d-flex w-100 flex-column flex-lg-row">
 
                 {% if globalMenuItems|default(false) %}
-                    <nav class="d-none d-lg-flex bg-dark">
+                    <nav class="d-none d-lg-flex bg-dark" id ="leftbar">
                         {% block globalmenu_sidebar %}
                             <div class="globalmenu">
                                 <ul class="nav flex-column">
@@ -180,4 +179,19 @@
     {{ parent() }}
 
     {{ encore_entry_script_tags('globalSearch') }}
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+<style>
+    #topbar{
+        background-color: #343a40!important;
+    }
+    #leftbar{
+        background-color: #212529!important;
+    }
+    .rounded-pill{
+        border-radius: 0.2rem!important;
+    }
+</style>
+
 {% endblock %}

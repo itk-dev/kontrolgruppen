@@ -75,16 +75,15 @@ class ProcessController extends BaseController
         $queryBuilder = null;
 
         $selectedCaseWorker = $filterForm->get('caseWorker');
-
         if (null === $selectedCaseWorker->getData()) {
-            $filterForm->get('caseWorker')->setData($this->getUser()->getUserIdentifier());
+            $filterForm->get('caseWorker')->setData($this->getUser()->getId());
         }
 
         if ($request->query->has($filterForm->getName())) {
-            $formParameters = $request->query->get($filterForm->getName());
+            $formParameters = $request->get($filterForm->getName());
 
             if (!isset($formParameters['caseWorker'])) {
-                $formParameters['caseWorker'] = $this->getUser()->getUserIdentifier();
+                $formParameters['caseWorker'] = $this->getUser()->getId();
             }
 
             // manually bind values from the request
@@ -161,9 +160,7 @@ class ProcessController extends BaseController
             $paginatorOptions
         );
         // Find Processes that have not been visited by the assigned CaseWorker.
-        $caseWorker = (!empty($selectedCaseWorker->getData()))
-            ? $userRepository->findOneBy(['username' => $selectedCaseWorker->getData()])
-            : $this->getUser();
+        $caseWorker = (!empty($selectedCaseWorker->getData())) ? $userRepository->find($selectedCaseWorker->getData()) : $this->getUser();
         $foundEntries = array_column($query->getArrayResult(), 'id');
         $notVisitedProcessIds = $processManager->getUsersUnvisitedProcessIds($foundEntries, $caseWorker);
 
