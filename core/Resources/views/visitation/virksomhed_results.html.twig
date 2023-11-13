@@ -3,7 +3,7 @@
 {% block content %}
     <div class="row">
         <div class="col-md-8">
-            <h1>{{ 'navigation.main.visitation'|trans }}</h1>
+            <h1 class="headerVisitation">{{ 'navigation.main.visitation'|trans }}</h1>
 
             <!-- Other tables aligned left -->
             <div class="left-tables">
@@ -173,6 +173,10 @@
         }
         .empty-column {
             color: red;
+        }
+        .headerVisitation{
+            font-size: 25px !important;
+            margin-top: 79px;
         }
     </style>
 {% endblock %}
