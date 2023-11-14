@@ -182,6 +182,7 @@ class VisitationController extends DatafordelerController
                 return $this->render(
                     '@KontrolgruppenCore/visitation/person_results.html.twig',
                     [
+                        'user' => $this->getUser(),
                         'data' => $data,
                         'client_type' => ProcessClientPerson::PERSON,
                         'visitation' => $visitation,

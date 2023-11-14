@@ -27,6 +27,7 @@
                 <div class="new-process">
                     <form method="POST" action="{{ path('process_new', {clientType: client_type}) }}">
                         <input type="hidden" name="identifier" value="{{ data.virksomhed.CVRNummer }}">
+                        <input type="hidden" name="case_worker" value="{{ user }}">
                         <button type="submit" class="btn btn-md btn-primary mb-3" class="btn btn-primary">
                             {{ 'visitation.new.title'|trans }}
                         </button>

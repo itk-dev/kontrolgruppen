@@ -184,6 +184,7 @@ class ProcessController extends BaseController
      * @param Request              $request
      * @param ProcessManager       $processManager
      * @param ProcessClientManager $clientManager
+     * @param UserRepository       $userRepository
      *
      * @return Response
      *
@@ -191,7 +192,7 @@ class ProcessController extends BaseController
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Kontrolgruppen\CoreBundle\CPR\CprException
      */
-    public function new(Request $request, ProcessManager $processManager, ProcessClientManager $clientManager): Response
+    public function new(Request $request, ProcessManager $processManager, ProcessClientManager $clientManager, UserRepository $userRepository): Response
     {
         $process = new Process();
         $this->denyAccessUnlessGranted('edit', $process);
@@ -200,13 +201,16 @@ class ProcessController extends BaseController
         try {
             $client = $clientManager->createClient($request->get('clientType') ?? '');
             $identifier = $request->get('identifier');
+            $case_worker = $request->get('case_worker');
         } catch (\Exception $exception) {
             $this->addFlash('danger', $exception->getMessage());
 
             return $this->render('process/select-client-type.html.twig');
         }
 
+        $case_worker = $userRepository->findOneBy(['username' => $case_worker]);
         $process->setProcessClient($client);
+        $process->setCaseWorker($case_worker);
 
         $form = $this->createForm(ProcessType::class, $process, [
             // Add the `personnummer` option to the form.
