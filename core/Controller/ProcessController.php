@@ -456,13 +456,14 @@ class ProcessController extends BaseController
      * @param ServiceRepository       $serviceRepository
      * @param ProcessStatusRepository $processStatusRepository
      * @param ProcessManager          $processManager
+     * @param DatafordelerService     $datafordelerService
      *
      * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function complete(Request $request, Process $process, ServiceRepository $serviceRepository, ProcessStatusRepository $processStatusRepository, ProcessManager $processManager): Response
+    public function complete(Request $request, Process $process, ServiceRepository $serviceRepository, ProcessStatusRepository $processStatusRepository, ProcessManager $processManager, DatafordelerService $datafordelerService): Response
     {
         $this->denyAccessUnlessGranted('edit', $process);
 
@@ -479,7 +480,16 @@ class ProcessController extends BaseController
             'available_statuses' => $availableStatuses,
         ]);
         $form->handleRequest($request);
+        $processClientIdentifier = $process->getProcessClient()->getIdentifier();
+        // Get client type
+        $clientType = $process->getProcessClient()->getType();
 
+        if (ProcessClientPerson::PERSON === $clientType) {
+            $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
+            $data = $datafordelerService->getPersonData($processClientIdentifier);
+        } elseif (ProcessClientCompany::COMPANY === $clientType) {
+            $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
+        }
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->em;
 
@@ -514,6 +524,7 @@ class ProcessController extends BaseController
                 ),
                 'process' => $process,
                 'form' => $form->createView(),
+                'data' => $data,
             ]
         );
     }
