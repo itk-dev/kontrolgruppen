@@ -58,7 +58,7 @@ class QuickLinkController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->em;
             $entityManager->persist($quickLink);
             $entityManager->flush();
 
@@ -108,7 +108,7 @@ class QuickLinkController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->em->flush();
 
             return $this->redirectToRoute('quick_link_index', [
                 'id' => $quickLink->getId(),
@@ -133,7 +133,7 @@ class QuickLinkController extends BaseController
     public function delete(Request $request, QuickLink $quickLink): Response
     {
         if ($this->isCsrfTokenValid('delete'.$quickLink->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->em;
             $entityManager->remove($quickLink);
             $entityManager->flush();
         }
