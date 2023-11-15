@@ -131,6 +131,7 @@ class VisitationController extends DatafordelerController
                     '@KontrolgruppenCore/visitation/virksomhed_results.html.twig',
                     [
                         'data' => $data,
+                        'user' => $this->getUser(),
                         'visitation' => $visitation,
                         'client_type' => ProcessClientCompany::COMPANY,
                     ]
