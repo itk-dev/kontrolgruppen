@@ -185,6 +185,7 @@ class ProcessController extends BaseController
      * @param ProcessManager       $processManager
      * @param ProcessClientManager $clientManager
      * @param UserRepository       $userRepository
+     * @param DatafordelerService  $datafordelerService
      *
      * @return Response
      *
@@ -192,7 +193,7 @@ class ProcessController extends BaseController
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Kontrolgruppen\CoreBundle\CPR\CprException
      */
-    public function new(Request $request, ProcessManager $processManager, ProcessClientManager $clientManager, UserRepository $userRepository): Response
+    public function new(Request $request, ProcessManager $processManager, ProcessClientManager $clientManager, UserRepository $userRepository, DatafordelerService $datafordelerService): Response
     {
         $process = new Process();
         $this->denyAccessUnlessGranted('edit', $process);
@@ -200,13 +201,13 @@ class ProcessController extends BaseController
         // Force user to select process client type before anything else.
         try {
             $client = $clientManager->createClient($request->get('clientType') ?? '');
-            $identifier = $request->get('identifier');
-            $case_worker = $request->get('case_worker');
+            // Force user to select process client type before anything else.
         } catch (\Exception $exception) {
             $this->addFlash('danger', $exception->getMessage());
-
-            return $this->render('process/select-client-type.html.twig');
         }
+        $case_worker = $request->get('case_worker');
+        $identifier = $request->get('identifier');
+
 
         $case_worker = $userRepository->findOneBy(['username' => $case_worker]);
         $process->setProcessClient($client);
@@ -231,6 +232,24 @@ class ProcessController extends BaseController
                 // Populate the client to catch errors in (or missing) client data.
                 $clientManager->populateClient($client);
                 $process = $processManager->newProcess($process, $client);
+                // Get the ProcessClient Identifier from process
+                $processClientIdentifier = $process->getProcessClient()->getIdentifier();
+                // Get client type
+                $clientType = $process->getProcessClient()->getType();
+                if (ProcessClientPerson::PERSON === $clientType) {
+                    $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
+                    $dataFordelerData = $datafordelerService->getPersonData($processClientIdentifier);
+                } elseif (ProcessClientCompany::COMPANY === $clientType) {
+                    $dataFordelerData = $datafordelerService->getVirksomhedData($processClientIdentifier);
+                    $client->setAddress($dataFordelerData['beliggenhedsadresse']['CVRAdresse_vejnavn'] . " " . $dataFordelerData['beliggenhedsadresse']['CVRAdresse_husnummerFra'] ?? null);
+                    $client->setPostalCode($dataFordelerData['beliggenhedsadresse']['CVRAdresse_postnummer'] ?? null);
+                    $client->setCity($dataFordelerData['beliggenhedsadresse']['CVRAdresse_postdistrikt'] ?? null);
+
+                    // SAVE DATA
+                    $this->em->persist($client);
+                    $this->em->flush();
+                }
+
                 $processCreated = true;
             } catch (\Exception $exception) {
                 $identifierName = ProcessClientPerson::TYPE === $clientType ? 'cpr' : 'cvr';
