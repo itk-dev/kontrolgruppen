@@ -32,13 +32,13 @@
                                 <td>{{ civilstatus.Civilstand.Civilstandstype }}</td>
                                 {% if civilstatus.Civilstand.Aegtefaelle is defined %}
                                 <td>
-                                    <form target="_blank" id="cprForm{{ loop.index }}" method="post" action="{{ path('result') }}">
-                                        <input type="hidden" name="cpr" value="{{ civilstatus.Civilstand.Aegtefaelle.aegtefaellePersonnummer }}">
-                                        <a href="#" class="child-name" onclick="document.getElementById('cprForm{{ loop.index }}').submit();">
-                                            {{ civilstatus.Civilstand.Aegtefaelle.Navn.fornavne }}
-                                            {{ civilstatus.Civilstand.Aegtefaelle.Navn.efternavn }}
-                                        </a>
-                                    </form>
+                                    <a href="#" class="person-cpr" data-cpr="{{ civilstatus.Civilstand.Aegtefaelle.aegtefaellePersonnummer }}">
+                                        {% if civilstatus.Civilstand.Aegtefaelle.Navn.fornavne is not empty and civilstatus.Civilstand.Aegtefaelle.Navn.efternavn is not empty %}
+                                            {{ civilstatus.Civilstand.Aegtefaelle.Navn.fornavne }} {{ civilstatus.Civilstand.Aegtefaelle.Navn.efternavn }}
+                                        {% else %}
+                                            {{ 'visitation.data.empty'|trans }}
+                                        {% endif %}
+                                    </a>
                                 </td>
                                 <td class="cprField">{{ civilstatus.Civilstand.Aegtefaelle.aegtefaellePersonnummer }}</td>
                                 {% else %}

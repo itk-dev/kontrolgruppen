@@ -33,7 +33,7 @@
             max-width: 1000px;
         }
         .card-header {
-            background-color:#c8defc ;
+            background-color:#c8defc;
         }
         .card-header.active {
             background-color: #81b4fe;
@@ -74,7 +74,7 @@
         .empty-column {
             color: red;
         }
-        .child-name {
+        .person-cpr {
             color: black;
             text-decoration: underline;
         }
@@ -86,7 +86,7 @@
 {% block javascripts %}
     {{ parent() }}
     <script>
-        $('.child-name').on('click', function(event) {
+        $('.person-cpr').on('click', function(event) {
             event.preventDefault(); // Prevent the default anchor click behavior
 
             var cprNumber = $(this).data('cpr'); // Retrieve the CPR number from the data attribute

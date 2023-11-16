@@ -22,8 +22,7 @@
                             {% for barn in data.Boern %}
                             <tr>
                                 <td>
-                                    <!-- No inline onclick, add class for jQuery selector and data attribute for CPR -->
-                                    <a href="#" class="child-name" data-cpr="{{ barn.Barnoplysning.Barn.barnPersonnummer }}">
+                                    <a href="#" class="person-cpr" data-cpr="{{ barn.Barnoplysning.Barn.barnPersonnummer }}">
                                         {% if barn.Barnoplysning.Barn.Navn.fornavne is not empty and barn.Barnoplysning.Barn.Navn.efternavn is not empty %}
                                             {{ barn.Barnoplysning.Barn.Navn.fornavne }} {{ barn.Barnoplysning.Barn.Navn.efternavn }}
                                         {% else %}
