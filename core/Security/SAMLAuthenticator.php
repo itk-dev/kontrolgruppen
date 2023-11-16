@@ -73,10 +73,6 @@ class SAMLAuthenticator extends AbstractAuthenticator
     {
         $auth = $this->getAuth();
 
-        $roles = $this->getRoles($request->get('SAMLResponse'));
-        print_r($roles);
-        exit;
-
         $requestID = $_SESSION['AuthNRequestID'] ?? null;
         $auth->processResponse($requestID);
         if (isset($requestID)) {
@@ -94,6 +90,25 @@ class SAMLAuthenticator extends AbstractAuthenticator
         }
 
         $username = $this->getUsername($auth);
+
+
+        
+        $user = $this->userManager->findUserByUsername($username);
+
+        if (null === $user) {
+            $user = $this->userManager->createUser();
+            $user->setUsername($username);
+        }
+
+        if (empty($user->getName())) {
+            $user->setName($displayName);
+        }
+
+        $roles = $this->saml->getRoles($credentials['SAMLResponse']);
+        $user->setRoles($roles);
+
+        $this->userManager->updateUser($user);
+
 
         return new Passport(new UserBadge($username), new CustomCredentials(fn () => true, [
             'SAMLResponse' => $request->get('SAMLResponse'),
