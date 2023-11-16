@@ -73,6 +73,10 @@ class SAMLAuthenticator extends AbstractAuthenticator
     {
         $auth = $this->getAuth();
 
+        $roles = $this->getRoles($request->get('SAMLResponse'));
+        print_r($roles);
+        exit;
+
         $requestID = $_SESSION['AuthNRequestID'] ?? null;
         $auth->processResponse($requestID);
         if (isset($requestID)) {
