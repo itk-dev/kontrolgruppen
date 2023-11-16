@@ -11,6 +11,7 @@
 namespace Kontrolgruppen\CoreBundle\Security;
 
 use Doctrine\Persistence\ObjectManager;
+use Kontrolgruppen\CoreBundle\Entity\User;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -37,7 +38,7 @@ class UserManager implements UserManagerInterface
     }
 
     /**
-     * @return mixed|UserInterface
+     * @return User|UserInterface
      */
     public function createUser()
     {
@@ -58,7 +59,7 @@ class UserManager implements UserManagerInterface
     /**
      * @param array $criteria
      *
-     * @return UserInterface|null
+     * @return UserInterface|User|null
      */
     public function findUserBy(array $criteria)
     {
@@ -68,7 +69,7 @@ class UserManager implements UserManagerInterface
     /**
      * @param string $username
      *
-     * @return UserInterface|null
+     * @return UserInterface|User|null
      */
     public function findUserByUsername($username)
     {
