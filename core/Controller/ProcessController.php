@@ -75,16 +75,15 @@ class ProcessController extends BaseController
         $queryBuilder = null;
 
         $selectedCaseWorker = $filterForm->get('caseWorker');
-
         if (null === $selectedCaseWorker->getData()) {
-            $filterForm->get('caseWorker')->setData($this->getUser()->getUserIdentifier());
+            $filterForm->get('caseWorker')->setData($this->getUser()->getId());
         }
 
         if ($request->query->has($filterForm->getName())) {
-            $formParameters = $request->query->get($filterForm->getName());
+            $formParameters = $request->get($filterForm->getName());
 
             if (!isset($formParameters['caseWorker'])) {
-                $formParameters['caseWorker'] = $this->getUser()->getUserIdentifier();
+                $formParameters['caseWorker'] = $this->getUser()->getId();
             }
 
             // manually bind values from the request
@@ -161,9 +160,7 @@ class ProcessController extends BaseController
             $paginatorOptions
         );
         // Find Processes that have not been visited by the assigned CaseWorker.
-        $caseWorker = (!empty($selectedCaseWorker->getData()))
-            ? $userRepository->findOneBy(['username' => $selectedCaseWorker->getData()])
-            : $this->getUser();
+        $caseWorker = (!empty($selectedCaseWorker->getData())) ? $userRepository->find($selectedCaseWorker->getData()) : $this->getUser();
         $foundEntries = array_column($query->getArrayResult(), 'id');
         $notVisitedProcessIds = $processManager->getUsersUnvisitedProcessIds($foundEntries, $caseWorker);
 
@@ -187,6 +184,8 @@ class ProcessController extends BaseController
      * @param Request              $request
      * @param ProcessManager       $processManager
      * @param ProcessClientManager $clientManager
+     * @param UserRepository       $userRepository
+     * @param DatafordelerService  $datafordelerService
      *
      * @return Response
      *
@@ -194,7 +193,7 @@ class ProcessController extends BaseController
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Kontrolgruppen\CoreBundle\CPR\CprException
      */
-    public function new(Request $request, ProcessManager $processManager, ProcessClientManager $clientManager): Response
+    public function new(Request $request, ProcessManager $processManager, ProcessClientManager $clientManager, UserRepository $userRepository, DatafordelerService $datafordelerService): Response
     {
         $process = new Process();
         $this->denyAccessUnlessGranted('edit', $process);
@@ -202,14 +201,17 @@ class ProcessController extends BaseController
         // Force user to select process client type before anything else.
         try {
             $client = $clientManager->createClient($request->get('clientType') ?? '');
-            $identifier = $request->get('identifier');
+            // Force user to select process client type before anything else.
         } catch (\Exception $exception) {
             $this->addFlash('danger', $exception->getMessage());
-
-            return $this->render('process/select-client-type.html.twig');
         }
+        $case_worker = $request->get('case_worker');
+        $identifier = $request->get('identifier');
 
+
+        $case_worker = $userRepository->findOneBy(['username' => $case_worker]);
         $process->setProcessClient($client);
+        $process->setCaseWorker($case_worker);
 
         $form = $this->createForm(ProcessType::class, $process, [
             // Add the `personnummer` option to the form.
@@ -230,6 +232,24 @@ class ProcessController extends BaseController
                 // Populate the client to catch errors in (or missing) client data.
                 $clientManager->populateClient($client);
                 $process = $processManager->newProcess($process, $client);
+                // Get the ProcessClient Identifier from process
+                $processClientIdentifier = $process->getProcessClient()->getIdentifier();
+                // Get client type
+                $clientType = $process->getProcessClient()->getType();
+                if (ProcessClientPerson::PERSON === $clientType) {
+                    $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
+                    $dataFordelerData = $datafordelerService->getPersonData($processClientIdentifier);
+                } elseif (ProcessClientCompany::COMPANY === $clientType) {
+                    $dataFordelerData = $datafordelerService->getVirksomhedData($processClientIdentifier);
+                    $client->setAddress($dataFordelerData['beliggenhedsadresse']['CVRAdresse_vejnavn'] . " " . $dataFordelerData['beliggenhedsadresse']['CVRAdresse_husnummerFra'] ?? null);
+                    $client->setPostalCode($dataFordelerData['beliggenhedsadresse']['CVRAdresse_postnummer'] ?? null);
+                    $client->setCity($dataFordelerData['beliggenhedsadresse']['CVRAdresse_postdistrikt'] ?? null);
+
+                    // SAVE DATA
+                    $this->em->persist($client);
+                    $this->em->flush();
+                }
+
                 $processCreated = true;
             } catch (\Exception $exception) {
                 $identifierName = ProcessClientPerson::TYPE === $clientType ? 'cpr' : 'cvr';
@@ -455,13 +475,14 @@ class ProcessController extends BaseController
      * @param ServiceRepository       $serviceRepository
      * @param ProcessStatusRepository $processStatusRepository
      * @param ProcessManager          $processManager
+     * @param DatafordelerService     $datafordelerService
      *
      * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function complete(Request $request, Process $process, ServiceRepository $serviceRepository, ProcessStatusRepository $processStatusRepository, ProcessManager $processManager): Response
+    public function complete(Request $request, Process $process, ServiceRepository $serviceRepository, ProcessStatusRepository $processStatusRepository, ProcessManager $processManager, DatafordelerService $datafordelerService): Response
     {
         $this->denyAccessUnlessGranted('edit', $process);
 
@@ -478,7 +499,16 @@ class ProcessController extends BaseController
             'available_statuses' => $availableStatuses,
         ]);
         $form->handleRequest($request);
+        $processClientIdentifier = $process->getProcessClient()->getIdentifier();
+        // Get client type
+        $clientType = $process->getProcessClient()->getType();
 
+        if (ProcessClientPerson::PERSON === $clientType) {
+            $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
+            $data = $datafordelerService->getPersonData($processClientIdentifier);
+        } elseif (ProcessClientCompany::COMPANY === $clientType) {
+            $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
+        }
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->em;
 
@@ -513,6 +543,7 @@ class ProcessController extends BaseController
                 ),
                 'process' => $process,
                 'form' => $form->createView(),
+                'data' => $data,
             ]
         );
     }

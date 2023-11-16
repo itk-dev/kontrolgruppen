@@ -13,7 +13,7 @@
                 </div>
                 <div class="col-12 col-sm-6">
                     <strong>
-                        {{ process.createdAt|date('short', 'none', null, null, 'd. MMMM yyyy') }} – {{ 'now'|date('short', 'none', null, null, 'd. MMMM yyyy') }}
+                        {{ process.createdAt|date('d-m-Y') }} – {{ 'now'|date('d-m-Y') }}
 
                         {# @see https://stackoverflow.com/questions/15657687/twig-date-difference #}
                         {% set start_date = process.createdAt %}

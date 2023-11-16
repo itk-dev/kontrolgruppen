@@ -58,7 +58,7 @@ class AccountController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->em;
             $entityManager->persist($account);
             $entityManager->flush();
 
@@ -108,7 +108,7 @@ class AccountController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->em->flush();
 
             return $this->redirectToRoute('account_index', [
                 'id' => $account->getId(),
@@ -133,7 +133,7 @@ class AccountController extends BaseController
     public function delete(Request $request, Account $account): Response
     {
         if ($this->isCsrfTokenValid('delete'.$account->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->em;
             $entityManager->remove($account);
             $entityManager->flush();
         }

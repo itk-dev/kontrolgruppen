@@ -58,7 +58,7 @@ class IncomeTypeController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->em;
             $entityManager->persist($incomeType);
             $entityManager->flush();
 
@@ -108,7 +108,7 @@ class IncomeTypeController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->em->flush();
 
             return $this->redirectToRoute('income_type_index', [
                 'id' => $incomeType->getId(),
@@ -133,7 +133,7 @@ class IncomeTypeController extends BaseController
     public function delete(Request $request, IncomeType $incomeType): Response
     {
         if ($this->isCsrfTokenValid('delete'.$incomeType->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->em;
             $entityManager->remove($incomeType);
             $entityManager->flush();
         }
