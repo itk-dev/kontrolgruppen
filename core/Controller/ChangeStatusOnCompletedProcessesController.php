@@ -58,7 +58,7 @@ class ChangeStatusOnCompletedProcessesController extends BaseController
                 return $this->redirectToRoute('change_status_on_completed_processes');
             }
 
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->em;
 
             foreach ($affectedProcesses as $affectedProcess) {
                 $affectedProcess->setProcessStatus($processStatus);

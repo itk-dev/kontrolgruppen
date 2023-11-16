@@ -58,7 +58,7 @@ class ProcessTypeController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->em;
             $entityManager->persist($processType);
             $entityManager->flush();
 
@@ -108,7 +108,7 @@ class ProcessTypeController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->em->flush();
 
             return $this->redirectToRoute('process_type_index', [
                 'id' => $processType->getId(),
@@ -133,7 +133,7 @@ class ProcessTypeController extends BaseController
     public function delete(Request $request, ProcessType $processType): Response
     {
         if ($this->isCsrfTokenValid('delete'.$processType->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->em;
             $entityManager->remove($processType);
             $entityManager->flush();
         }

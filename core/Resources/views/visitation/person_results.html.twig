@@ -38,7 +38,8 @@
                 <div></div>
                 <div class="new-process">
                     <form method="POST" action="{{ path('process_new', {clientType: client_type}) }}">
-                        <input type="hidden" name="identifier" value="{{ data.Personnumre[0].Personnummer.personnummer[:6] ~ '-' ~ data.Personnumre[0].Personnummer.personnummer[6:] }}">
+                        <input type="hidden" name="identifier" value="{{ data.stamdata.cpr[:6] ~ '-' ~ data.stamdata.cpr[6:] }}">
+                        <input type="hidden" name="case_worker" value="{{ user }}">
                         <button type="submit" class="btn btn-md btn-primary mb-3" class="btn btn-primary">
                             {{ 'visitation.new.title'|trans }}
                         </button>
@@ -59,45 +60,23 @@
                     <tbody class="stam-data-body">
                         <tr>
                             <td><b>{{ 'visitation.name'|trans }}</b></td>
-
-                            {% for name in data.Navne %}
-                                {% if name.Navn.virkningTil is not defined %}
-                                    <td>{{ name.Navn.fornavne }} {{ name.Navn.efternavn }}</td>
-                                {% endif %}
-                            {% endfor %}
+                            <td>{{ data.stamdata.navn }}</td>
                         <tr>
                             <td><b>{{ 'visitation.cpr'|trans }}</b></td>
-                            <td class="cprField">{{ data.Personnumre[0].Personnummer.personnummer }}</td>
+                            <td class="cprField">{{ data.stamdata.cpr }}</td>
                         </tr>
                         <tr>
                             <td><b>{{ 'visitation.address'|trans }}</b></td>
                             <td>
-                                {% if data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.vejadresseringsnavn is defined and data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.vejadresseringsnavn is not empty %}
-                                    {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.vejadresseringsnavn }}
-                                {% endif %}
-                                {% if data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.husnummer is defined and data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.husnummer is not empty %}
-                                    {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.husnummer }}
-                                {% endif %}
-                                {% if data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.etage is defined and data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.etage is not empty %}
-                                    {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.etage }}
-                                {% endif %}
-                                {% if data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.sidedoer is defined and data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.sidedoer is not empty %}
-                                    {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.sidedoer }}
-                                {% endif %}
-                                <br>
-                                {% if data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.postnummer is defined and data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.postnummer is not empty %}
-                                    {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.postnummer }}
-                                {% endif %}
-                                {% if data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.postdistrikt is defined and data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.postdistrikt is not empty %}
-                                    {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.postdistrikt }}
-                                {% endif %}
+                                {{ data.stamdata.adresse }}
+                                <br/>
+                                {{ data.stamdata.by }}
                             </td>
                         </tr>
                         <tr>
                             <td><b>{{ 'visitation.gender'|trans }}</b></td>
-                            <td>{{ data.koen|capitalize }}</td>
+                            <td>{{ data.stamdata.koen|capitalize }}</td>
                         </tr>
-                        {# Add more rows as needed #}
                     </tbody>
                 </table>
             </div>
@@ -172,7 +151,7 @@
         .empty-column {
             color: red;
         }
-        .child-name {
+        .person-cpr {
             color: black;
             text-decoration: underline;
         }
@@ -189,7 +168,7 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
-        $('.child-name').on('click', function(event) {
+        $('.person-cpr').on('click', function(event) {
             event.preventDefault(); // Prevent the default anchor click behavior
 
             var cprNumber = $(this).data('cpr'); // Retrieve the CPR number from the data attribute
@@ -282,7 +261,7 @@
                         type: "POST",
                         data: {
                             table_name: $(this).closest(".card-header").attr("id"),
-                            cpr: "{{ data.Personnumre[0].Personnummer.personnummer }}",
+                            cpr: "{{ data.stamdata.cpr }}",
                             visitation: "{{ visitation }}",
                         },
                         success: function(data) {
@@ -299,7 +278,7 @@
                     type: "POST",
                     data: {
                         table_name: $(this).closest('.card').find('.card-header').attr("id") + "History",
-                        cpr: "{{ data.Personnumre[0].Personnummer.personnummer }}",
+                        cpr: "{{ data.stamdata.cpr }}",
                         visitation: "{{ visitation }}",
                     },
                     success: function(data) {

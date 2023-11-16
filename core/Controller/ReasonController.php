@@ -58,7 +58,7 @@ class ReasonController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->em;
             $entityManager->persist($reason);
             $entityManager->flush();
 
@@ -108,7 +108,7 @@ class ReasonController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->em->flush();
 
             return $this->redirectToRoute('reason_index', [
                 'id' => $reason->getId(),
@@ -133,7 +133,7 @@ class ReasonController extends BaseController
     public function delete(Request $request, Reason $reason): Response
     {
         if ($this->isCsrfTokenValid('delete'.$reason->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->em;
             $entityManager->remove($reason);
             $entityManager->flush();
         }

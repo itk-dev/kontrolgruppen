@@ -3,9 +3,9 @@
 {% block title %}{{ 'process.new.title'|trans }}{% endblock %}
 
 {% block content %}
-    <div class="row">
+    <div class="row form-process-start">
         <div class="col col-md-4">
-            <h1>{{ 'process.new.title'|trans }}</h1>
+            <h1 class="headerVisitation">{{ 'process.new.title'|trans }}</h1>
 
             {{ include('@KontrolgruppenCore/process/_form.html.twig') }}
         </div>
@@ -24,4 +24,20 @@
     {{ encore_entry_script_tags('processFormCvrSearch') }}
 
     {{ encore_entry_script_tags('inputCPR') }}
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .headerVisitation{
+            font-size: 25px !important;
+            margin-top: 79px;
+        }
+        .form-process-start{
+            margin-left:50px;
+        }
+        #process{
+            margin-top: 50px;
+        }
+    </style>
+
 {% endblock %}

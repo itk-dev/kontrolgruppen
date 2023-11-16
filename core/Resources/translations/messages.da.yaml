@@ -149,7 +149,7 @@ client:
 
 common:
     actions:
-        back: Gå tilbage
+        back: Tilbage
         close: Luk
         create: Opret ny
         confirm:

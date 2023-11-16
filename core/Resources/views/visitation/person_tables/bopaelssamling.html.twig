@@ -23,10 +23,13 @@
                             {% for bopaelssamling in data.Bopaelssamling %}
                             <tr>
                                 <td>
-                                    <form target="_blank" id="cprForm{{ loop.index }}" method="post" action="{{ path('result') }}">
-                                        <input type="hidden" name="cpr" value="{{ bopaelssamling.CPR }}">
-                                        <a href="#" class="child-name" onclick="document.getElementById('cprForm{{ loop.index }}').submit();">{{ bopaelssamling.Navn }}</a>
-                                    </form>
+                                    <a href="#" class="person-cpr" data-cpr="{{ bopaelssamling.CPR }}">
+                                        {% if bopaelssamling.Navn is not empty %}
+                                            {{ bopaelssamling.Navn }}
+                                        {% else %}
+                                            {{ 'visitation.data.empty'|trans }}
+                                        {% endif %}
+                                    </a>
                                 </td>
                                 <td>{{ bopaelssamling.DatoFra|date("d-m-Y") }}</td>
                                 <td>{{ bopaelssamling.Relation }}</td>

@@ -12,46 +12,24 @@
                         <table class="table table-bordered">
                             <tbody class="stam-data-body">
                                 <tr>
-                                    <td>{{ 'visitation.name'|trans }}</td>
-                                    <td>{{ data.Navne[0].Navn.fornavne }} {{ data.Navne[0].Navn.efternavn }}</td>
+                                    <td><b>{{ 'visitation.name'|trans }}</b></td>
+                                    <td>{{ data.stamdata.navn }}</td>
+                                <tr>
+                                    <td><b>{{ 'visitation.cpr'|trans }}</b></td>
+                                    <td class="cprField">{{ data.stamdata.cpr }}</td>
                                 </tr>
                                 <tr>
-                                    <td>{{ 'visitation.cpr'|trans }}</td>
-                                    <td class="cprField">{{ data.Personnumre[0].Personnummer.personnummer }}</td>
-                                </tr>
-                                <tr>
-                                    <td>{{ 'visitation.address'|trans }}</td>
+                                    <td><b>{{ 'visitation.address'|trans }}</b></td>
                                     <td>
-                                        {% if data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.vejadresseringsnavn is defined and data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.vejadresseringsnavn is not empty %}
-                                            {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.vejadresseringsnavn }}
-                                        {% endif %}
-                                        {% if data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.husnummer is defined and data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.husnummer is not empty %}
-                                            {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.husnummer }}
-                                        {% endif %}
-                                        {% if data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.etage is defined and data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.etage is not empty %}
-                                            {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.etage }}
-                                        {% endif %}
-                                        {% if data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.sidedoer is defined and data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.sidedoer is not empty %}
-                                            {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.sidedoer }}
-                                        {% endif %}
-                                        <br>
-                                        {% if data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.postnummer is defined and data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.postnummer is not empty %}
-                                            {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.postnummer }}
-                                        {% endif %}
-                                        {% if data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.postdistrikt is defined and data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.postdistrikt is not empty %}
-                                            {{ data.Adresseoplysninger[0].Adresseoplysninger.CprAdresse.postdistrikt }}
-                                        {% endif %}
+                                        {{ data.stamdata.adresse }}
+                                        <br/>
+                                        {{ data.stamdata.by }}
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>{{ 'visitation.gender'|trans }}</td>
-                                    <td>{{ data.koen }}</td>
+                                    <td><b>{{ 'visitation.gender'|trans }}</b></td>
+                                    <td>{{ data.stamdata.koen|capitalize }}</td>
                                 </tr>
-                                <tr>
-                                    <td>{{ 'visitation.existing_cases'|trans }}</td>
-                                    <td></td>
-                                </tr>
-                                {# Add more rows as needed #}
                             </tbody>
                         </table>
                     </div>

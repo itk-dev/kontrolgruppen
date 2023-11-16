@@ -73,7 +73,7 @@ class EconomyEntryController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->em->flush();
 
             return $this->redirectToRoute(
                 'economy_show',
@@ -118,7 +118,7 @@ class EconomyEntryController extends BaseController
         }
 
         if ($this->isCsrfTokenValid('delete'.$economyEntry->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->em;
             $entityManager->remove($economyEntry);
             $entityManager->flush();
         }
