@@ -10,6 +10,7 @@
 
 namespace Kontrolgruppen\CoreBundle\Security;
 
+use Kontrolgruppen\CoreBundle\Entity\User;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -20,7 +21,7 @@ interface UserManagerInterface
     /**
      * Creates an empty user instance.
      *
-     * @return UserInterface
+     * @return User|UserInterface
      */
     public function createUser();
 
@@ -36,7 +37,7 @@ interface UserManagerInterface
      *
      * @param array $criteria
      *
-     * @return UserInterface|null
+     * @return UserInterface|User|null
      */
     public function findUserBy(array $criteria);
 
@@ -45,7 +46,7 @@ interface UserManagerInterface
      *
      * @param string $username
      *
-     * @return UserInterface|null
+     * @return UserInterface|User|null
      */
     public function findUserByUsername($username);
 
