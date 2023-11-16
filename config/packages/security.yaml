@@ -21,6 +21,10 @@ security:
             custom_authenticators:
                 - Kontrolgruppen\CoreBundle\Security\SAMLAuthenticator
                 - Kontrolgruppen\CoreBundle\Security\CliLoginTokenAuthenticator
+            form_login:
+                login_path:          /saml/login
+                default_target_path: /saml/login
+                always_use_default_target_path: true
 
     access_control:
         - { path: ^/admin, role: ROLE_ADMIN }
