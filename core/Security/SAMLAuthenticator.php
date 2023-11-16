@@ -35,6 +35,9 @@ class SAMLAuthenticator extends AbstractAuthenticator
     /** @var \Symfony\Component\Routing\RouterInterface */
     private $router;
 
+    /** @var UserManagerInterface */
+    private $userManager;
+
     /** @var array */
     private $settings;
 
@@ -44,9 +47,10 @@ class SAMLAuthenticator extends AbstractAuthenticator
      * @param RouterInterface $router
      * @param array           $settings
      */
-    public function __construct(RouterInterface $router, array $settings)
+    public function __construct(RouterInterface $router, UserManagerInterface $userManager, array $settings)
     {
         $this->router = $router;
+        $this->userManager = $userManager;
         $this->settings = $settings;
     }
 
@@ -90,11 +94,42 @@ class SAMLAuthenticator extends AbstractAuthenticator
         }
 
         $username = $this->getUsername($auth);
+        $displayName = $this->getDisplayName($auth);
+        $roles = $this->getRoles($request->get('SAMLResponse'));
+
+        $user = $this->userManager->findUserByUsername($username) ?? $this->userManager->createUser();
+        $user->setUsername($username);
+        $user->setName($displayName);
+        $user->setRoles($roles);
+
+        $this->userManager->updateUser($user);
 
         return new Passport(new UserBadge($username), new CustomCredentials(fn () => true, [
             'SAMLResponse' => $request->get('SAMLResponse'),
             'RelayState' => $request->get('RelayState'),
         ]));
+    }
+
+    /**
+     * Returns the name of the user for displaying purposes.
+     *
+     * @param Auth $auth
+     *
+     * @return string
+     */
+    private function getDisplayName(Auth $auth): string
+    {
+        if (isset($this->settings['display_name_attribute_name'])) {
+            $attribute = $auth->getAttribute($this->settings['display_name_attribute_name']);
+            if (!empty($attribute)) {
+                $displayName = reset($attribute);
+                if (!empty($displayName)) {
+                    return $displayName;
+                }
+            }
+        }
+
+        return '';
     }
 
     /**
