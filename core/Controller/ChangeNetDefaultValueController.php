@@ -49,7 +49,7 @@ class ChangeNetDefaultValueController extends BaseController
             $service = $formData['service'];
             $newNetValue = $formData['value'];
 
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->em;
 
             $existingLockedNetValues = $lockedNetValueRepository->findBy([
                 'service' => $service,

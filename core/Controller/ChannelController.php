@@ -58,7 +58,7 @@ class ChannelController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->em;
             $entityManager->persist($channel);
             $entityManager->flush();
 
@@ -108,7 +108,7 @@ class ChannelController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->em->flush();
 
             return $this->redirectToRoute('channel_index', [
                 'id' => $channel->getId(),
@@ -133,7 +133,7 @@ class ChannelController extends BaseController
     public function delete(Request $request, Channel $channel): Response
     {
         if ($this->isCsrfTokenValid('delete'.$channel->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->em;
             $entityManager->remove($channel);
             $entityManager->flush();
         }

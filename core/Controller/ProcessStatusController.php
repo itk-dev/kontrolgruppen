@@ -58,7 +58,7 @@ class ProcessStatusController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->em;
             $entityManager->persist($processStatus);
             $entityManager->flush();
 
@@ -108,7 +108,7 @@ class ProcessStatusController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->em->flush();
 
             return $this->redirectToRoute('process_status_index', [
                 'id' => $processStatus->getId(),
@@ -133,7 +133,7 @@ class ProcessStatusController extends BaseController
     public function delete(Request $request, ProcessStatus $processStatus): Response
     {
         if ($this->isCsrfTokenValid('delete'.$processStatus->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->em;
             $entityManager->remove($processStatus);
             $entityManager->flush();
         }

@@ -61,23 +61,43 @@ class DatafordelerService
         } catch (\Exception $e) {
             throw new \Exception('Cpr data kan ikke findes', 1);
         }
-        $adresseringsnavn = null;
+
+        $data['stamdata'] = $this->getStamdata($data);
+
+        $adresseringsnavn = '';
         foreach ($data['Navne'] as $navn) {
             if (isset($navn['Navn']['adresseringsnavn'])) {
                 $adresseringsnavn = $navn['Navn']['adresseringsnavn'];
                 break;
             }
         }
-        if (!isset($adresseringsnavn)) {
-            throw new \Exception('Adresseringsnavn er ikke defineret', 1);
-        }
         if ($cprAdresse = $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']) {
-            $data['Bopaelssamling'] = $this->getBopaelssamling($cprAdresse, $data['Personnumre'][0]['Personnummer']['personnummer'], $adresseringsnavn, $this->datafordelerCprHttpClient);
+            $data['Bopaelssamling'] = $this->getBopaelssamling($cprAdresse, $data['Personnumre'][0]['Personnummer']['personnummer'], $adresseringsnavn);
         }
 
         $data['BBR'] = $this->getBBR($cprAdresse);
 
         return $data;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return array
+     */
+    public function getStamdata(array $data): array
+    {
+        return [
+            'navn' => $this->getFullnameFromNameObject($data['Navne'][0]['Navn']),
+            'cpr' => $data['Personnumre'][0]['Personnummer']['personnummer'] ?? '',
+            'adresse' => $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']['vejadresseringsnavn'] ?? ''.' '.
+                $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']['husnummer'] ?? ''.' '.
+                $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']['etage'] ?? ''.' '.
+                $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']['sidedoer'] ?? '',
+            'by' => $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']['postnummer'] ?? ''.' '.
+                $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']['postdistrikt'] ?? ''.' ',
+            'koen' => $data['koen'] ?? 'Ukendt',
+        ];
     }
 
     /**
@@ -213,9 +233,11 @@ class DatafordelerService
             }
 
             $relation = 'Andet';
-            foreach ($person['Person']['Foraelderoplysninger'] as $fop) {
-                if ($fop['Foraelderoplysning']['Foraelder']['Navn']['adresseringsnavn'] === $relationFullname) {
-                    $relation = 'Barn';
+            if (isset($person['Person']['Foraelderoplysninger'])) {
+                foreach ($person['Person']['Foraelderoplysninger'] as $fop) {
+                    if ($fop['Foraelderoplysning']['Foraelder']['Navn']['adresseringsnavn'] === $relationFullname) {
+                        $relation = 'Barn';
+                    }
                 }
             }
             foreach ($person['Person']['Civilstande'] as $civ) {
@@ -242,9 +264,9 @@ class DatafordelerService
      */
     public function getFullnameFromNameObject(array $navn): string
     {
-        $fornavne = $navn['fornavne'];
+        $fornavne = $navn['fornavne'] ?? '';
         $mellemnavn = $navn['mellemnavn'] ?? '';
-        $efternavn = $navn['efternavn'];
+        $efternavn = $navn['efternavn'] ?? '';
 
         return implode(' ', [$fornavne, $mellemnavn, $efternavn]);
     }

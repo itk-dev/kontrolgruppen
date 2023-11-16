@@ -60,7 +60,7 @@ class ForwardedToAuthorityController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->em;
             $entityManager->persist($forwardedToAuthority);
             $entityManager->flush();
 
@@ -112,7 +112,7 @@ class ForwardedToAuthorityController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->em->flush();
 
             return $this->redirectToRoute('forwarded_to_authority_index');
         }
@@ -137,7 +137,7 @@ class ForwardedToAuthorityController extends BaseController
         $this->denyAccessUnlessGranted('ROLE_ADMIN');
 
         if ($this->isCsrfTokenValid('delete'.$forwardedToAuthority->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager = $this->em;
             $entityManager->remove($forwardedToAuthority);
             $entityManager->flush();
         }

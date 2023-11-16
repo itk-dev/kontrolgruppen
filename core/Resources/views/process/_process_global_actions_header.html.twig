@@ -7,15 +7,12 @@
                     <a href="{{ path('reminder_new', {'process': process.id}) }}" class="btn btn-warning text-truncate">{{ 'reminder.btns.create'|trans }}</a>
                 {% endif %}
             {% endif %}
-            <a href="{{ path('process_report_index', {'process': process.id}) }}" class="btn btn-sm btn-outline-secondary text-truncate"><i
-                    class="fas {{ iconClass('report') }} mr-2"></i>{{ 'process.btns.create_report'|trans }}</a>
+            <a href="{{ path('process_report_index', {'process': process.id}) }}" class="btn btn-secondary text-truncate ml-2">{{ 'process.btns.create_report'|trans }}</a>
             {% if is_granted('edit', process) %}
                 {% if not process.completedAt %}
-                    <a href="{{ path('process_complete', {'id': process.id}) }}" class="btn btn-sm btn-outline-danger text-truncate"><i
-                            class="fas {{ iconClass('process-complete') }} mr-2"></i>{{ 'process.btns.complete'|trans }}</a>
+                    <a href="{{ path('process_complete', {'id': process.id}) }}" class="btn btn-success text-truncate ml-2">{{ 'process.btns.complete'|trans }}</a>
                 {% else %}
-                    <a href="{{ path('process_resume', {'id': process.id}) }}" class="btn btn-sm btn-outline-danger text-truncate"><i
-                            class="fas {{ iconClass('process-resume') }} mr-2"></i>{{ 'process.btns.resume'|trans }}</a>
+                    <a href="{{ path('process_resume', {'id': process.id}) }}" class="btn btn-success text-truncate ml-2">{{ 'process.btns.resume'|trans }}</a>
                 {% endif %}
             {% endif %}
         </div>
