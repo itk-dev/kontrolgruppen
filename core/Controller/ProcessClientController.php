@@ -15,9 +15,9 @@ use http\Exception\RuntimeException;
 use Kontrolgruppen\CoreBundle\CPR\CprException;
 use Kontrolgruppen\CoreBundle\CPR\CprServiceInterface;
 use Kontrolgruppen\CoreBundle\Entity\AbstractProcessClient;
-use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\Car;
 use Kontrolgruppen\CoreBundle\Entity\ContactPerson;
+use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
 use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
 use Kontrolgruppen\CoreBundle\Form\ProcessClientCompanyType;
@@ -206,8 +206,8 @@ class ProcessClientController extends BaseController
     /**
      * @Route("/update_client", name="client_update_info", methods={"POST"})
      *
-     * @param Request             $request
-     * @param Process             $process
+     * @param Request $request
+     * @param Process $process
      *
      * @return Response
      */
@@ -231,14 +231,14 @@ class ProcessClientController extends BaseController
 
         if (ProcessClientPerson::PERSON === $clientType) {
             $client->setTelephone($request->get('telephone'));
-            $car = New Car();
+            $car = new Car();
             $car->setRegistrationNumber($request->get('registrationNumber'));
             $client->addCar($car);
             $this->em->flush();
             $this->em->persist($client);
             $this->em->flush();
         } elseif (ProcessClientCompany::COMPANY === $clientType) {
-            $contactPerson = New ContactPerson();
+            $contactPerson = new ContactPerson();
             $contactPerson->setName($request->get('contactPersonName'));
             $contactPerson->setTelephone($request->get('contactPersonPhone'));
             $client->setContactPerson($contactPerson);
@@ -247,7 +247,6 @@ class ProcessClientController extends BaseController
             $this->em->persist($client);
             $this->em->flush();
         }
-
 
         return $this->redirectToRoute('client_show', [
             'process' => $process->getId(),

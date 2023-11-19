@@ -205,13 +205,12 @@ class ProcessController extends BaseController
         } catch (\Exception $exception) {
             $this->addFlash('danger', $exception->getMessage());
         }
-        $case_worker = $request->get('case_worker');
+        $caseWorker = $request->get('case_worker');
         $identifier = $request->get('identifier');
 
-
-        $case_worker = $userRepository->findOneBy(['username' => $case_worker]);
+        $caseWorker = $userRepository->findOneBy(['username' => $caseWorker]);
         $process->setProcessClient($client);
-        $process->setCaseWorker($case_worker);
+        $process->setCaseWorker($caseWorker);
 
         $form = $this->createForm(ProcessType::class, $process, [
             // Add the `personnummer` option to the form.
@@ -241,7 +240,7 @@ class ProcessController extends BaseController
                     $dataFordelerData = $datafordelerService->getPersonData($processClientIdentifier);
                 } elseif (ProcessClientCompany::COMPANY === $clientType) {
                     $dataFordelerData = $datafordelerService->getVirksomhedData($processClientIdentifier);
-                    $client->setAddress($dataFordelerData['beliggenhedsadresse']['CVRAdresse_vejnavn'] . " " . $dataFordelerData['beliggenhedsadresse']['CVRAdresse_husnummerFra'] ?? null);
+                    $client->setAddress($dataFordelerData['beliggenhedsadresse']['CVRAdresse_vejnavn'].' '.$dataFordelerData['beliggenhedsadresse']['CVRAdresse_husnummerFra'] ?? null);
                     $client->setPostalCode($dataFordelerData['beliggenhedsadresse']['CVRAdresse_postnummer'] ?? null);
                     $client->setCity($dataFordelerData['beliggenhedsadresse']['CVRAdresse_postdistrikt'] ?? null);
 
