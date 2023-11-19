@@ -30,7 +30,8 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 - Dash has been added to CPR when creating a case
 - OIS SSL bug will not longer break the visitation
 - There is no longer duplicate buttons in case page
-- Controllers use `EntityManagerInterface` from `BaseController` instead of using `Doctrine`
+- Controllers use `EntityManagerInterface` from `BaseController` instead of\
+using `Doctrine`
 - Cases can be ended without breaking
 - Filters works in dashboard
 - Filters works in client journal

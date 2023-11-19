@@ -14,10 +14,12 @@ Nothing has been changed
 
 - Run migrations
 - Run composer install
-- Create a `certs` folder in the root of the project and add Datafordeler certificates in the folder (ask @ahma0942 for certificates)
-- The following environment keys has been introduced (ask @ahma0942 for URLs & Public key passwords):
+- Create a `certs` folder in the root of the project and add Datafordeler\
+certificates in the folder (ask @ahma0942 for certificates)
+- The following environment keys has been introduced (ask @ahma0942 for URLs &\
+Public key passwords):
 
-  ```
+  ```Text
   DATAFORDELER_CPR_URL=''
   DATAFORDELER_CPR_PRIVATE_KEY_FILE=''
   DATAFORDELER_CPR_PUBLIC_KEY_FILE=''
