@@ -76,11 +76,7 @@
 
             {# CPR historik Table #}
             {% include '@KontrolgruppenCore/visitation/company_tables/amount_workers.html.twig' %}
-            <div class="d-flex justify-content-between">
-                <div></div>
-                {% if canEdit %}
-                    <a href="{{ path('client_edit', {'process': process.id}) }}" class="btn btn-primary float-right pl-5 pr-5">{{ 'common.actions.edit'|trans }}</a>
-                {% endif %}
+
         </div>
     </div>
 {% endblock %}

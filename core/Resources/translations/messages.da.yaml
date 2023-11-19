@@ -638,7 +638,7 @@ visitation:
         address: Adresse
         phone: Telefon
         mail: Mail
-        registration_history: Registrations Historik
+        registration_history: Registreringshistorik
         p_number_history: Hent Flere
         period: Periode
         workers: Ansatte

@@ -24,6 +24,8 @@
 
                 {# CPR historik Table #}
                 {% include '@KontrolgruppenCore/visitation/company_tables/amount_workers.html.twig' %}
+                <div class="d-flex justify-content-between">
+                <div></div>
                 <div class="new-process">
                     <form method="POST" action="{{ path('process_new', {clientType: client_type}) }}">
                         <input type="hidden" name="identifier" value="{{ data.virksomhed.CVRNummer }}">
@@ -245,10 +247,10 @@
                                             <th>${mailTrans}</th>
                                         </tr>`;
                             newRow += `<tr>
-                                        <td>${produktionsenhed.produktionsenhedsnavn.vaerdi}</td>
-                                        <td>${produktionsenhed.beliggenhedsadresse.CVRAdresse_vejnavn} ${produktionsenhed.beliggenhedsadresse.CVRAdresse_husnummer}</td>
-                                        <td>${produktionsenhed.telefonnummer.vaerdi}</td>
-                                        <td>${produktionsenhed['e-mailadresse'].vaerdi}</td>
+                                        <td>${produktionsenhed.produktionsenhed.pNummer || ''}</td>
+                                        <td>${produktionsenhed.beliggenhedsadresse.CVRAdresse_vejnavn || ''} ${produktionsenhed.beliggenhedsadresse.CVRAdresse_husnummer || ''}</td>
+                                        <td>${produktionsenhed.telefonnummer.vaerdi || ''}</td>
+                                        <td>${produktionsenhed['e-mailadresse'].vaerdi || ''}</td>
                                     </tr>`;
                         });
 
