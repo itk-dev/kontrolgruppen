@@ -151,7 +151,6 @@ class DatafordelerService
 
         $adresseId = $data[0]['id'];
 
-        $client = HttpClient::create(['verify_peer' => false, 'verify_host' => false]);
         $response = $client->request(
             'GET',
             'https://nyt.ois.dk/api/property/GetBFEFromAddressId',
@@ -160,7 +159,11 @@ class DatafordelerService
             ]
         );
 
-        if (404 === $response->getStatusCode()) {
+        try {
+            if (404 === $response->getStatusCode()) {
+                return [];
+            }
+        } catch (\Exception $e) {
             return [];
         }
 
@@ -174,7 +177,11 @@ class DatafordelerService
             ]
         );
 
-        if (404 === $response->getStatusCode()) {
+        try {
+            if (404 === $response->getStatusCode()) {
+                return [];
+            }
+        } catch (\Exception $e) {
             return [];
         }
 
