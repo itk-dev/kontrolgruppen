@@ -44,8 +44,9 @@ class SAMLAuthenticator extends AbstractAuthenticator
     /**
      * SAMLAuthenticator constructor.
      *
-     * @param RouterInterface $router
-     * @param array           $settings
+     * @param RouterInterface      $router
+     * @param UserManagerInterface $userManager
+     * @param array                $settings
      */
     public function __construct(RouterInterface $router, UserManagerInterface $userManager, array $settings)
     {
@@ -108,28 +109,6 @@ class SAMLAuthenticator extends AbstractAuthenticator
             'SAMLResponse' => $request->get('SAMLResponse'),
             'RelayState' => $request->get('RelayState'),
         ]));
-    }
-
-    /**
-     * Returns the name of the user for displaying purposes.
-     *
-     * @param Auth $auth
-     *
-     * @return string
-     */
-    private function getDisplayName(Auth $auth): string
-    {
-        if (isset($this->settings['display_name_attribute_name'])) {
-            $attribute = $auth->getAttribute($this->settings['display_name_attribute_name']);
-            if (!empty($attribute)) {
-                $displayName = reset($attribute);
-                if (!empty($displayName)) {
-                    return $displayName;
-                }
-            }
-        }
-
-        return '';
     }
 
     /**
@@ -257,6 +236,28 @@ class SAMLAuthenticator extends AbstractAuthenticator
         }
 
         return $roles;
+    }
+
+    /**
+     * Returns the name of the user for displaying purposes.
+     *
+     * @param Auth $auth
+     *
+     * @return string
+     */
+    private function getDisplayName(Auth $auth): string
+    {
+        if (isset($this->settings['display_name_attribute_name'])) {
+            $attribute = $auth->getAttribute($this->settings['display_name_attribute_name']);
+            if (!empty($attribute)) {
+                $displayName = reset($attribute);
+                if (!empty($displayName)) {
+                    return $displayName;
+                }
+            }
+        }
+
+        return '';
     }
 
     /**
