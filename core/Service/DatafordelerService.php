@@ -159,7 +159,11 @@ class DatafordelerService
             ]
         );
 
-        if (404 === $response->getStatusCode()) {
+        try {
+            if (404 === $response->getStatusCode()) {
+                return [];
+            }
+        } catch (\Exception $e) {
             return [];
         }
 
@@ -173,7 +177,11 @@ class DatafordelerService
             ]
         );
 
-        if (404 === $response->getStatusCode()) {
+        try {
+            if (404 === $response->getStatusCode()) {
+                return [];
+            }
+        } catch (\Exception $e) {
             return [];
         }
 
