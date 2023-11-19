@@ -15,6 +15,8 @@ use http\Exception\RuntimeException;
 use Kontrolgruppen\CoreBundle\CPR\CprException;
 use Kontrolgruppen\CoreBundle\CPR\CprServiceInterface;
 use Kontrolgruppen\CoreBundle\Entity\AbstractProcessClient;
+use Kontrolgruppen\CoreBundle\Entity\Car;
+use Kontrolgruppen\CoreBundle\Entity\ContactPerson;
 use Kontrolgruppen\CoreBundle\Entity\Process;
 use Kontrolgruppen\CoreBundle\Entity\ProcessClientCompany;
 use Kontrolgruppen\CoreBundle\Entity\ProcessClientPerson;
@@ -199,6 +201,56 @@ class ProcessClientController extends BaseController
         $this->em->flush();
 
         return $this->redirectToRoute('client_show', ['process' => $process]);
+    }
+
+    /**
+     * @Route("/update_client", name="client_update_info", methods={"POST"})
+     *
+     * @param Request $request
+     * @param Process $process
+     *
+     * @return Response
+     */
+    public function updateClient(Request $request, Process $process): Response
+    {
+        $this->denyAccessUnlessGranted('edit', $process);
+
+        // Redirect to show if process is completed.
+        if (null !== $process->getCompletedAt()) {
+            return $this->redirectToRoute('client_show', [
+                'process' => $process->getId(),
+            ]);
+        }
+
+        $client = $process->getProcessClient();
+
+        // Get the ProcessClient Identifier from process
+        $processClientIdentifier = $client->getIdentifier();
+        // Get client type
+        $clientType = $client->getType();
+
+        if (ProcessClientPerson::PERSON === $clientType) {
+            $client->setTelephone($request->get('telephone'));
+            $car = new Car();
+            $car->setRegistrationNumber($request->get('registrationNumber'));
+            $client->addCar($car);
+            $this->em->flush();
+            $this->em->persist($client);
+            $this->em->flush();
+        } elseif (ProcessClientCompany::COMPANY === $clientType) {
+            $contactPerson = new ContactPerson();
+            $contactPerson->setName($request->get('contactPersonName'));
+            $contactPerson->setTelephone($request->get('contactPersonPhone'));
+            $client->setContactPerson($contactPerson);
+            $client->setPNumber($request->get('pNumber'));
+            $this->em->flush();
+            $this->em->persist($client);
+            $this->em->flush();
+        }
+
+        return $this->redirectToRoute('client_show', [
+            'process' => $process->getId(),
+        ]);
     }
 
     /**

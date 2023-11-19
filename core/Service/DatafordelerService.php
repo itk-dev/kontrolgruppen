@@ -90,12 +90,12 @@ class DatafordelerService
         return [
             'navn' => $this->getFullnameFromNameObject($data['Navne'][0]['Navn']),
             'cpr' => $data['Personnumre'][0]['Personnummer']['personnummer'] ?? '',
-            'adresse' => $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']['vejadresseringsnavn'] ?? ''.' '.
-                $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']['husnummer'] ?? ''.' '.
-                $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']['etage'] ?? ''.' '.
+            'adresse' => $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']['vejadresseringsnavn'] ?? ' '.
+                $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']['husnummer'] ?? ' '.
+                $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']['etage'] ?? ' '.
                 $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']['sidedoer'] ?? '',
-            'by' => $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']['postnummer'] ?? ''.' '.
-                $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']['postdistrikt'] ?? ''.' ',
+            'by' => $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']['postnummer'] ?? ' '.
+                $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']['postdistrikt'] ?? ' ',
             'koen' => $data['koen'] ?? 'Ukendt',
         ];
     }
@@ -159,7 +159,11 @@ class DatafordelerService
             ]
         );
 
-        if (404 === $response->getStatusCode()) {
+        try {
+            if (404 === $response->getStatusCode()) {
+                return [];
+            }
+        } catch (\Exception $e) {
             return [];
         }
 
@@ -173,7 +177,11 @@ class DatafordelerService
             ]
         );
 
-        if (404 === $response->getStatusCode()) {
+        try {
+            if (404 === $response->getStatusCode()) {
+                return [];
+            }
+        } catch (\Exception $e) {
             return [];
         }
 

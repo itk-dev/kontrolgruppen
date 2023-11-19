@@ -215,6 +215,10 @@ common:
     title: Kontrolgruppen
     loading: Henter data ...
     empty_field_value: Feltet er ikke udfyldt
+    enter_name: Indtast navn
+    enter_p_number: Tilknyt relateret p-nummer
+    enter_phone: Indtast telefonnummer
+    enter_register: Indtast nummerplade
 
 conclusion:
     edit:
@@ -634,7 +638,7 @@ visitation:
         address: Adresse
         phone: Telefon
         mail: Mail
-        registration_history: Registrations Historik
+        registration_history: Registreringshistorik
         p_number_history: Hent Flere
         period: Periode
         workers: Ansatte
@@ -1169,6 +1173,7 @@ sidebar:
         cpr: CPR nummer
         name: Navn
         car_shared_ownership: Fælles ejet
+        plate: Nummerplade
 
 weighted_conclusion:
     form:
