@@ -31,7 +31,7 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 - OIS SSL bug will not longer break the visitation
 - There is no longer duplicate buttons in case page
 - Controllers use `EntityManagerInterface` from `BaseController` instead of\
-using `Doctrine`
+  using `Doctrine`
 - Cases can be ended without breaking
 - Filters works in dashboard
 - Filters works in client journal
@@ -234,7 +234,7 @@ using `Doctrine`
 
 - [KON-361](https://github.com/aakb/kontrolgruppen/pull/81): Changed datepicker
 
-[Unreleased]: https://github.com/itk-dev/kontrolgruppen/compare/2.0.3...HEAD
+[Unreleased]: https://github.com/itk-dev/kontrolgruppen/compare/3.1.0...HEAD
 [3.1.0]: https://github.com/itk-dev/kontrolgruppen/compare/3.0.0...3.1.0
 [3.0.0]: https://github.com/itk-dev/kontrolgruppen/compare/2.0.3...3.0.0
 [2.0.3]: https://github.com/itk-dev/kontrolgruppen/compare/2.0.2...2.0.3
