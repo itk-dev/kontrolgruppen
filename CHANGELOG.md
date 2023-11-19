@@ -47,10 +47,6 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 - Implementation of BBR (Dataforsyningen & OIS)
 - Borgerservice has been phased out
 
-#### Hotfix - 2023-11-16
-
-- SAML Fixed after Symfony upgrade
-
 ## [2.0.3] - 2023-04-13
 
 ### Changed
