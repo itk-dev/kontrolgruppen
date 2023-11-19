@@ -13,34 +13,108 @@
         {% endif %}
     {% endif %}
 
-    <h1>{{ 'client.show.title'|trans }}</h1>
+    <h1 class="mt-5">{{ 'client.show.title'|trans }}</h1>
 
     {% if process.completedAt %}
         <div class="alert alert-warning">{{ 'process.completed_message'|trans }}</div>
     {% endif %}
+    {% if canEdit %}
+    <hr class="mt-2">
+    <div class="row col-md-12">
+        <div class="col-md-12 mb-5">
+            <form method="POST" action="{{ path('client_update_info', {'process': process}) }}">
+                <div class="form-group col-md-6">
+                    <div class="form-group">
+                        <label for="pNumber">{{ 'visitation.company.p_numbers'|trans }}</label>
+                        <select name="pNumber" id="pNumber" class="form-control" placeholder="{{ 'common.enter_p_numbers'|trans }}">
+                            {% for all_pnumbers in data.produktionsenheder %}
+                                <option value="{{ all_pnumbers.pNummer|e }}" {% if client.pNumber is not empty and client.pNumber == all_pnumbers.pNummer %}selected{% endif %}>{{ all_pnumbers.pNummer|e }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group col-md-12">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>{{ 'client.sections.contact_person'|trans }}</label>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" id="contactPersonName" name="contactPersonName" class="form-control" placeholder="{{ 'common.enter_name'|trans }}" value="{{ client.contactPerson.name ? client.contactPerson.name : '' }}">
+                        </div>
+                        <div class="col-md-6">
+                            <input type="text" id="contactPersonPhone" name="contactPersonPhone" class="form-control" placeholder="{{ 'common.enter_phone'|trans }}" value="{{ client.contactPerson.telephone ? client.contactPerson.telephone : '' }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <button type="submit" id="submit-button" class="btn btn-primary mt-4 float-right">{{ 'common.actions.save'|trans }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <hr class="mt-2">
 
-    <div class="col-md-9 left-tables">
-        {# Adresse historik Table #}
-        {% include '@KontrolgruppenCore/visitation/company_tables/created_date.html.twig' with {'data': data} %}
+    {% endif %}
+    <div class="row col-md-12">
+        <div class="col-md-12 left-tables mt-2">
+            {# Adresse historik Table #}
+            {% include '@KontrolgruppenCore/visitation/company_tables/created_date.html.twig' with {'data': data} %}
 
-        {# Bopælssamling Table #}
-        {% include '@KontrolgruppenCore/visitation/company_tables/real_owners.html.twig' %}
+            {# Bopælssamling Table #}
+            {% include '@KontrolgruppenCore/visitation/company_tables/real_owners.html.twig' %}
 
-        {# Bolig Table #}
-        {% include '@KontrolgruppenCore/visitation/company_tables/registration_history.html.twig' %}
+            {# Bolig Table #}
+            {% include '@KontrolgruppenCore/visitation/company_tables/registration_history.html.twig' %}
 
-        {# Børn Table #}
-        {% include '@KontrolgruppenCore/visitation/company_tables/history.html.twig' %}
+            {# Børn Table #}
+            {% include '@KontrolgruppenCore/visitation/company_tables/history.html.twig' %}
 
-        {# Civilstatus Table #}
-        {% include '@KontrolgruppenCore/visitation/company_tables/p_number.html.twig' %}
+            {# Civilstatus Table #}
+            {% include '@KontrolgruppenCore/visitation/company_tables/p_number.html.twig' %}
 
-        {# CPR historik Table #}
-        {% include '@KontrolgruppenCore/visitation/company_tables/amount_workers.html.twig' %}
-        <div class="d-flex justify-content-between">
-            <div></div>
-            {% if canEdit %}
-                <a href="{{ path('client_edit', {'process': process.id}) }}" class="btn btn-primary float-right pl-5 pr-5">{{ 'common.actions.edit'|trans }}</a>
-            {% endif %}
+            {# CPR historik Table #}
+            {% include '@KontrolgruppenCore/visitation/company_tables/amount_workers.html.twig' %}
+
+        </div>
     </div>
 {% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function() {
+            // Function to check the state of inputs and toggle the button's disabled state
+            function toggleSubmitButtonState() {
+                var ispNumber = $('#pNumber').val() === '';
+                var isContactPersonName = $('#contactPersonName').val() === '';
+
+                // If either input is empty, disable the button, else enable it
+                $('#submit-button').prop('disabled', ispNumber || isContactPersonName);
+            }
+
+            // Call the function to set the initial state of the button
+            toggleSubmitButtonState();
+
+            // Bind the input fields to the keyup event to check their state every time the user types
+            $('#pNumber, #contactPersonName').on('keyup', toggleSubmitButtonState);
+        });
+    </script>
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .form-button-top-left {
+            position: absolute;
+            top: 0;
+            left: 150%;
+            margin-top: 1rem; /* Adjust as needed */
+            margin-left: 1rem; /* Adjust as needed */
+        }
+        .parent-relative {
+            position: relative;
+        }
+        hr{
+            border-top: 1px solid #000000;
+        }
+    </style>
+{% endblock %}
+

@@ -13,13 +13,40 @@
         {% endif %}
     {% endif %}
 
-    <h1>{{ 'client.show.title'|trans }}</h1>
+    <h1 class="mt-5">{{ 'client.show.title'|trans }}</h1>
 
     {% if process.completedAt %}
         <div class="alert alert-warning">{{ 'process.completed_message'|trans }}</div>
     {% endif %}
 
-    <div class="col-md-9 left-tables">
+    {% if canEdit %}
+    <hr class="mt-2">
+    <div class="row col-md-12">
+        <div class="col-md-12 mb-5">
+            <form method="POST" action="{{ path('client_update_info', {'process': process}) }}">
+                <div class="form-group col-md-6">
+                    <label for="telephone">{{ 'sidebar.client.telephone'|trans }}</label>
+                    <input type="text" id="telephone" name="telephone" class="form-control" placeholder="{{ 'common.enter_phone'|trans }}"  value="{{ client.telephone ? client.telephone : '' }}">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="registrationNumber">{{ 'sidebar.client.plate'|trans }}</label>
+                    {% if client.cars is defined and client.cars|length > 0 %}
+                        <input type="text" id="registrationNumber" name="registrationNumber" class="form-control" placeholder="{{ 'common.enter_register'|trans }}" value="{{ client.cars.last().registrationNumber ? client.cars.last().registrationNumber : '' }}">
+                    {% else %}
+                        <input type="text" id="registrationNumber" name="registrationNumber" class="form-control" placeholder="{{ 'common.enter_register'|trans }}"  value="">
+                    {% endif %}
+                </div>
+                <div class="col-md-12">
+                    <button type="submit" id="submit-button" class="btn btn-primary mt-4 float-right">{{ 'common.actions.save'|trans }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <hr class="mt-2">
+
+    {% endif %}
+    <div class="row col-md-12">
+        <div class="col-md-12 left-tables mt-2">
 
         <!-- Other tables aligned left -->
             {# Individual tables go here #}
@@ -49,11 +76,6 @@
 
             {# Virksomhed Table #}
             {% include '@KontrolgruppenCore/visitation/person_tables/virksomhed.html.twig' %}
-            <div class="d-flex justify-content-between">
-            <div></div>
-            {% if canEdit %}
-                <a href="{{ path('client_edit', {'process': process.id}) }}" class="btn btn-primary float-right pl-5 pr-5">{{ 'common.actions.edit'|trans }}</a>
-            {% endif %}
         </div>
     </div>
     {# <h2>{{ 'client.sections.generel_info'|trans }}</h2>
@@ -150,4 +172,43 @@
     </div> #}
 
 
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function() {
+            // Function to check the state of inputs and toggle the button's disabled state
+            function toggleSubmitButtonState() {
+                var isTelephoneEmpty = $('#telephone').val() === '';
+                var isRegistrationNumberEmpty = $('#registrationNumber').val() === '';
+
+                // If either input is empty, disable the button, else enable it
+                $('#submit-button').prop('disabled', isTelephoneEmpty || isRegistrationNumberEmpty);
+            }
+
+            // Call the function to set the initial state of the button
+            toggleSubmitButtonState();
+
+            // Bind the input fields to the keyup event to check their state every time the user types
+            $('#telephone, #registrationNumber').on('keyup', toggleSubmitButtonState);
+        });
+    </script>
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .form-button-top-left {
+            position: absolute;
+            top: 0;
+            left: 150%;
+            margin-top: 1rem; /* Adjust as needed */
+            margin-left: 1rem; /* Adjust as needed */
+        }
+        .parent-relative {
+            position: relative;
+        }
+        hr{
+            border-top: 1px solid #000000;
+        }
+    </style>
 {% endblock %}

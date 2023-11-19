@@ -10,6 +10,32 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [3.1.0] - 2023-11-08
+
+### Changed
+
+#### Features
+
+- Name updates in database if changed in azure when user logs in with SAML
+- Case worker will be added automatically when case is created
+- Existing case columns removed
+- Texts has been updated
+
+#### Bugfixes
+
+- SAML working
+- Clicking on spouse will not show wrong person if there is a child in the list
+- Routing works from base url
+- Roles updates in database from Azure when logging in with SAML
+- Dash has been added to CPR when creating a case
+- OIS SSL bug will not longer break the visitation
+- There is no longer duplicate buttons in case page
+- Controllers use `EntityManagerInterface` from `BaseController` instead of\
+  using `Doctrine`
+- Cases can be ended without breaking
+- Filters works in dashboard
+- Filters works in client journal
+
 ## [3.0.0] - 2023-11-08
 
 ### Changed
@@ -212,7 +238,8 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 - [KON-361](https://github.com/aakb/kontrolgruppen/pull/81): Changed datepicker
 
-[Unreleased]: https://github.com/itk-dev/kontrolgruppen/compare/2.0.3...HEAD
+[Unreleased]: https://github.com/itk-dev/kontrolgruppen/compare/3.1.0...HEAD
+[3.1.0]: https://github.com/itk-dev/kontrolgruppen/compare/3.0.0...3.1.0
 [3.0.0]: https://github.com/itk-dev/kontrolgruppen/compare/2.0.3...3.0.0
 [2.0.3]: https://github.com/itk-dev/kontrolgruppen/compare/2.0.2...2.0.3
 [2.0.2]: https://github.com/itk-dev/kontrolgruppen/compare/2.0.1...2.0.2
