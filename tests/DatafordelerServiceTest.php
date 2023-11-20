@@ -17,7 +17,7 @@ final class DatafordelerServiceTest extends TestCase
 {
     private static DatafordelerService $datafordelerService;
 
-    public static function setUpBeforeClass(): void
+    protected function setUp(): void
     {
         $mockResponseCPR = [
             new MockResponse(file_get_contents(__DIR__.'/testdata/cpr-test.json'), [
@@ -68,5 +68,12 @@ final class DatafordelerServiceTest extends TestCase
             'by' => '9000 Aalborg',
             'koen' => 'kvinde',
         ], $data['stamdata']);
+    }
+
+    public function testGetBopaelssamling(): void
+    {
+        $data = self::$datafordelerService->getPersonData('0712614382');
+        self::assertTrue(isset($data['Bopaelssamling']));
+        self::assertSame(json_decode(file_get_contents(__DIR__.'/assertdata/bopaelssamling.json'), true), $data['Bopaelssamling']);
     }
 }
