@@ -196,7 +196,12 @@
             let mailTrans = $('.translations').data('mail-translation');
 
             $('.accordion .card-header').click(function() {
-                $(this).find('i').toggleClass('fa-chevron-down fa-chevron-up');
+                var icon = $(this).closest(".card-header").find('.iconClass');
+                if ($(this).closest(".card-header").hasClass('collapsed')) {
+                    icon.removeClass('fa-sort-down').addClass('fa-sort-up');
+                } else {
+                    icon.removeClass('fa-sort-up').addClass('fa-sort-down');
+                }
             });
             $(".btn-header").click(function() {
                 $(this).closest(".card-header").toggleClass("collapsed active");
