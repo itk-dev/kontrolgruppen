@@ -187,6 +187,16 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
+        function debounce(func, wait) {
+            var timeout;
+            return function() {
+                var context = this, args = arguments;
+                clearTimeout(timeout);
+                timeout = setTimeout(function() {
+                    func.apply(context, args);
+                }, wait);
+            };
+        }
         $(document).ready(function() {
             $('.older-than-5').hide();
             const cvrElement = document.getElementById("cvrField");
@@ -196,22 +206,29 @@
             let mailTrans = $('.translations').data('mail-translation');
 
             $('.accordion .card-header').click(function() {
-                var icon = $(this).closest(".card-header").find('.iconClass');
-                if ($(this).closest(".card-header").hasClass('collapsed')) {
+                // add a 0.5 second delay to allow the animation to complete
+
+            });
+            var handleToggle = debounce(function() {
+                var btn = $(this);
+                var cardHeader = btn.closest(".card-header");
+                var icon = cardHeader.find('.iconClass');
+
+                cardHeader.toggleClass("collapsed active");
+
+                if (cardHeader.hasClass('collapsed')) {
                     icon.removeClass('fa-sort-down').addClass('fa-sort-up');
                 } else {
                     icon.removeClass('fa-sort-up').addClass('fa-sort-down');
                 }
-            });
-            $(".btn-header").click(function() {
-                $(this).closest(".card-header").toggleClass("collapsed active");
-                if($(this).closest(".card-header").hasClass("collapsed")){
-                    // Ajax post request to log_visitation route, with data and cpr
+
+                if (cardHeader.hasClass("collapsed")) {
+                    // Ajax post request
                     $.ajax({
                         url: "{{ path('log_visitation') }}",
                         type: "POST",
                         data: {
-                            table_name: $(this).closest(".card-header").attr("id"),
+                            table_name: cardHeader.attr("id"),
                             cvr: cvrElement.innerHTML,
                             visitation: "{{ visitation }}",
                         },
@@ -220,7 +237,9 @@
                         }
                     });
                 }
-            });
+            }, 300); // 300 milliseconds debounce time
+
+            $(".btn-header").click(handleToggle);
             let offset = 5;  // Start from the 6th record, as first 5 are already fetched
             let limit = 5;   // Number of records to fetch in each request
             let p_numbers = [];
