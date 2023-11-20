@@ -168,6 +168,16 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
+        function debounce(func, wait) {
+            var timeout;
+            return function() {
+                var context = this, args = arguments;
+                clearTimeout(timeout);
+                timeout = setTimeout(function() {
+                    func.apply(context, args);
+                }, wait);
+            };
+        }
         $('.person-cpr').on('click', function(event) {
             event.preventDefault(); // Prevent the default anchor click behavior
 
@@ -244,24 +254,27 @@
                 cprDashes[i].textContent = formattedCpr;
             }
 
-            $('.accordion .card-header').click(function() {
-                var icon = $(this).closest(".card-header").find('.iconClass');
-                if ($(this).closest(".card-header").hasClass('collapsed')) {
+            var handleToggle = debounce(function() {
+                var btn = $(this);
+                var cardHeader = btn.closest(".card-header");
+                var icon = cardHeader.find('.iconClass');
+
+                cardHeader.toggleClass("collapsed active");
+
+                if (cardHeader.hasClass('collapsed')) {
                     icon.removeClass('fa-sort-down').addClass('fa-sort-up');
                 } else {
                     icon.removeClass('fa-sort-up').addClass('fa-sort-down');
                 }
-            });
-            $(".btn-header").click(function() {
-                $(this).closest(".card-header").toggleClass("collapsed active");
-                if($(this).closest(".card-header").hasClass("collapsed")){
-                    // Ajax post request to log_visitation route, with data and cpr
+
+                if (cardHeader.hasClass("collapsed")) {
+                    // Ajax post request
                     $.ajax({
                         url: "{{ path('log_visitation') }}",
                         type: "POST",
                         data: {
-                            table_name: $(this).closest(".card-header").attr("id"),
-                            cpr: "{{ data.stamdata.cpr }}",
+                            table_name: cardHeader.attr("id"),
+                            cvr: cvrElement.innerHTML,
                             visitation: "{{ visitation }}",
                         },
                         success: function(data) {
@@ -269,7 +282,9 @@
                         }
                     });
                 }
-            });
+            }, 300); // 300 milliseconds debounce time
+
+            $(".btn-header").click(handleToggle);
             $('.show-history').on('click', function() {
                 // Toggle the visibility of rows marked as older than 5 years
                 $(this).closest('div').find('.older-than-5').toggle();
