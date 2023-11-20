@@ -2,13 +2,19 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Listen for XDebug on Docker",
+            "name": "XDebug - Docker",
             "type": "php",
             "request": "launch",
             "port": 9003,
             "pathMappings": {
                 "/app/": "${workspaceFolder}/"
             }
+        },
+        {
+            "name": "XDebug - CLI",
+            "type": "php",
+            "request": "launch",
+            "port": 9003,
         }
     ]
 }

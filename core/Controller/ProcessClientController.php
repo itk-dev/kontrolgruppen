@@ -300,6 +300,6 @@ class ProcessClientController extends BaseController
             return $this->createForm(ProcessClientPersonType::class, $client);
         }
 
-        throw new RuntimeException(sprintf('Unknown client type: %s', $client::class));
+        throw new \RuntimeException(sprintf('Unknown client type: %s', $client::class));
     }
 }
