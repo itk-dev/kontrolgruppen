@@ -27,7 +27,7 @@ class DatafordelerService
      * @param HttpClientInterface $datafordelerCprHttpClient
      * @param HttpClientInterface $datafordelerCvrHttpClient
      */
-    public function __construct(?HttpClientInterface $datafordelerCprHttpClient, ?HttpClientInterface $datafordelerCvrHttpClient, ?HttpClientInterface $httpClient = null)
+    public function __construct(?HttpClientInterface $datafordelerCprHttpClient, ?HttpClientInterface $datafordelerCvrHttpClient, HttpClientInterface $httpClient = null)
     {
         $this->datafordelerCprHttpClient = $datafordelerCprHttpClient;
         $this->datafordelerCvrHttpClient = $datafordelerCvrHttpClient;
