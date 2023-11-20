@@ -63,6 +63,7 @@ class KontrolgruppenCoreExtension extends Extension implements PrependExtensionI
     public function prepend(ContainerBuilder $container)
     {
         $container->setParameter('site_name', '%env(SITE_NAME)%');
+        $container->setParameter('env', '%env(APP_ENV)%');
 
         $container->loadFromExtension(
             'twig',
@@ -73,6 +74,7 @@ class KontrolgruppenCoreExtension extends Extension implements PrependExtensionI
                 ],
                 'globals' => [
                     'site_name' => '%site_name%',
+                    'env' => '%env%',
                 ],
             ]
         );
