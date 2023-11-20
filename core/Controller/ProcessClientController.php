@@ -11,6 +11,7 @@
 namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
+use http\Exception\RuntimeException;
 use Kontrolgruppen\CoreBundle\CPR\CprException;
 use Kontrolgruppen\CoreBundle\CPR\CprServiceInterface;
 use Kontrolgruppen\CoreBundle\Entity\AbstractProcessClient;
