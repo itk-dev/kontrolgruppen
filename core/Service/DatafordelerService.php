@@ -21,15 +21,17 @@ class DatafordelerService
 {
     private $datafordelerCprHttpClient;
     private $datafordelerCvrHttpClient;
+    private $httpClient;
 
     /**
      * @param HttpClientInterface $datafordelerCprHttpClient
      * @param HttpClientInterface $datafordelerCvrHttpClient
      */
-    public function __construct(?HttpClientInterface $datafordelerCprHttpClient, ?HttpClientInterface $datafordelerCvrHttpClient)
+    public function __construct(?HttpClientInterface $datafordelerCprHttpClient, ?HttpClientInterface $datafordelerCvrHttpClient, HttpClientInterface $httpClient = null)
     {
         $this->datafordelerCprHttpClient = $datafordelerCprHttpClient;
         $this->datafordelerCvrHttpClient = $datafordelerCvrHttpClient;
+        $this->httpClient = $httpClient ?? HttpClient::create();
     }
 
     /**
@@ -87,15 +89,23 @@ class DatafordelerService
      */
     public function getStamdata(array $data): array
     {
+        $adress = [
+            $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']['vejadresseringsnavn'] ?? null,
+            $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']['husnummer'] ?? null,
+            $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']['etage'] ?? null,
+            $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']['sidedoer'] ?? null,
+        ];
+
+        $city = [
+            $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']['postnummer'] ?? null,
+            $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']['postdistrikt'] ?? null,
+        ];
+
         return [
             'navn' => $this->getFullnameFromNameObject($data['Navne'][0]['Navn']),
             'cpr' => $data['Personnumre'][0]['Personnummer']['personnummer'] ?? '',
-            'adresse' => $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']['vejadresseringsnavn'] ?? ' '.
-                $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']['husnummer'] ?? ' '.
-                $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']['etage'] ?? ' '.
-                $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']['sidedoer'] ?? '',
-            'by' => $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']['postnummer'] ?? ' '.
-                $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']['postdistrikt'] ?? ' ',
+            'adresse' => implode(' ', array_filter($adress)),
+            'by' => implode(' ', array_filter($city)),
             'koen' => $data['koen'] ?? 'Ukendt',
         ];
     }
@@ -130,8 +140,7 @@ class DatafordelerService
             $query['vejkode'] = $cprAdresse['cprVejkode'];
         }
 
-        $client = HttpClient::create();
-        $response = $client->request(
+        $response = $this->httpClient->request(
             'GET',
             'https://api.dataforsyningen.dk/adresser',
             [
@@ -151,7 +160,7 @@ class DatafordelerService
 
         $adresseId = $data[0]['id'];
 
-        $response = $client->request(
+        $response = $this->httpClient->request(
             'GET',
             'https://nyt.ois.dk/api/property/GetBFEFromAddressId',
             [
@@ -169,7 +178,7 @@ class DatafordelerService
 
         $bfe = $response->getContent();
 
-        $response = $client->request(
+        $response = $this->httpClient->request(
             'GET',
             'https://nyt.ois.dk/api/property/GetPropertyFromBFE',
             [
@@ -272,11 +281,11 @@ class DatafordelerService
      */
     public function getFullnameFromNameObject(array $navn): string
     {
-        $fornavne = $navn['fornavne'] ?? '';
-        $mellemnavn = $navn['mellemnavn'] ?? '';
-        $efternavn = $navn['efternavn'] ?? '';
+        $fornavne = $navn['fornavne'] ?? null;
+        $mellemnavn = $navn['mellemnavn'] ?? null;
+        $efternavn = $navn['efternavn'] ?? null;
 
-        return implode(' ', [$fornavne, $mellemnavn, $efternavn]);
+        return implode(' ', array_filter([$fornavne, $mellemnavn, $efternavn]));
     }
 
     /**

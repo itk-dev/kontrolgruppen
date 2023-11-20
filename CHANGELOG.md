@@ -10,7 +10,15 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
-## [3.1.0] - 2023-11-08
+## [3.1.1] - 2023-11-20
+
+### Changed
+
+#### Bugfixes
+
+- Showing full names and full address without extra spaces in visitation
+
+## [3.1.0] - 2023-11-20
 
 ### Changed
 
@@ -234,7 +242,8 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 - [KON-361](https://github.com/aakb/kontrolgruppen/pull/81): Changed datepicker
 
-[Unreleased]: https://github.com/itk-dev/kontrolgruppen/compare/3.1.0...HEAD
+[Unreleased]: https://github.com/itk-dev/kontrolgruppen/compare/3.1.1...HEAD
+[3.1.1]: https://github.com/itk-dev/kontrolgruppen/compare/3.1.0...3.1.1
 [3.1.0]: https://github.com/itk-dev/kontrolgruppen/compare/3.0.0...3.1.0
 [3.0.0]: https://github.com/itk-dev/kontrolgruppen/compare/2.0.3...3.0.0
 [2.0.3]: https://github.com/itk-dev/kontrolgruppen/compare/2.0.2...2.0.3

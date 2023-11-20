@@ -11,7 +11,6 @@
 namespace Kontrolgruppen\CoreBundle\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
-use http\Exception\RuntimeException;
 use Kontrolgruppen\CoreBundle\CPR\CprException;
 use Kontrolgruppen\CoreBundle\CPR\CprServiceInterface;
 use Kontrolgruppen\CoreBundle\Entity\AbstractProcessClient;
@@ -300,6 +299,6 @@ class ProcessClientController extends BaseController
             return $this->createForm(ProcessClientPersonType::class, $client);
         }
 
-        throw new RuntimeException(sprintf('Unknown client type: %s', $client::class));
+        throw new \RuntimeException(sprintf('Unknown client type: %s', $client::class));
     }
 }
