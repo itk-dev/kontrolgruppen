@@ -238,11 +238,13 @@ class ProcessController extends BaseController
                 if (ProcessClientPerson::PERSON === $clientType) {
                     $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
                     $dataFordelerData = $datafordelerService->getPersonData($processClientIdentifier);
+                    $client->setName($dataFordelerData['stamdata']['navn'] ?? null);
                 } elseif (ProcessClientCompany::COMPANY === $clientType) {
                     $dataFordelerData = $datafordelerService->getVirksomhedData($processClientIdentifier);
                     $client->setAddress($dataFordelerData['beliggenhedsadresse']['CVRAdresse_vejnavn'].' '.$dataFordelerData['beliggenhedsadresse']['CVRAdresse_husnummerFra'] ?? null);
                     $client->setPostalCode($dataFordelerData['beliggenhedsadresse']['CVRAdresse_postnummer'] ?? null);
                     $client->setCity($dataFordelerData['beliggenhedsadresse']['CVRAdresse_postdistrikt'] ?? null);
+                    $client->setName($dataFordelerData['virksomhedsnavn']['vaerdi'] ?? null);
 
                     // SAVE DATA
                     $this->em->persist($client);
@@ -410,12 +412,16 @@ class ProcessController extends BaseController
         $processClientIdentifier = $process->getProcessClient()->getIdentifier();
         // Get client type
         $clientType = $process->getProcessClient()->getType();
+        $client = $process->getProcessClient();
 
         if (ProcessClientPerson::PERSON === $clientType) {
             $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
             $data = $datafordelerService->getPersonData($processClientIdentifier);
+            $client->setName($data['stamdata']['navn'] ?? null);
+
         } elseif (ProcessClientCompany::COMPANY === $clientType) {
             $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
+            $client->setName($data['virksomhedsnavn']['vaerdi'] ?? null);
         }
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->flush();
