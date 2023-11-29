@@ -66,6 +66,21 @@
                                         <td>{{ data.virksomhed.status }}</td>
                                     </tr>
                                 {% endif %}
+                                <tr>
+                                    <td>
+                                        {{ 'visitation.relations'|trans }}
+                                    </td>
+                                    <td>
+                                        {% for process_group in process.getProcessGroupsByAssociation(process.id) %}    
+                                            <li style="  list-style-type: none; /* Remove bullets */
+                                            padding: 0; /* Remove padding */
+                                            margin: 0; /* Remove margins */
+                                             " onClick="window.open('/process/{{ process_group.processId }}');">
+                                            <span style="border-bottom: 2px solid">{{ process_group.processName }}</span>
+                                            </li>
+                                        {% endfor %}
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
