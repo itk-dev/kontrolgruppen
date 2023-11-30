@@ -183,7 +183,7 @@
                 var isRegistrationNumberEmpty = $('#registrationNumber').val() === '';
 
                 // If either input is empty, disable the button, else enable it
-                $('#submit-button').prop('disabled', isTelephoneEmpty || isRegistrationNumberEmpty);
+                $('#submit-button').prop('disabled', isTelephoneEmpty && isRegistrationNumberEmpty);
             }
 
             // Call the function to set the initial state of the button
