@@ -176,6 +176,16 @@
 {% block javascripts %}
     {{ parent() }}
     <script>
+        function debounce(func, wait) {
+            var timeout;
+            return function() {
+                var context = this, args = arguments;
+                clearTimeout(timeout);
+                timeout = setTimeout(function() {
+                    func.apply(context, args);
+                }, wait);
+            };
+        }
         $(document).ready(function() {
             // Function to check the state of inputs and toggle the button's disabled state
             function toggleSubmitButtonState() {
@@ -188,7 +198,21 @@
 
             // Call the function to set the initial state of the button
             toggleSubmitButtonState();
+            $(".btn-header").click(handleToggle);
+            var handleToggle = debounce(function() {
+                var btn = $(this);
+                var cardHeader = btn.closest(".card-header");
+                var icon = cardHeader.find('.iconClass');
 
+                cardHeader.toggleClass("collapsed active");
+
+                if (cardHeader.hasClass('collapsed')) {
+                    icon.removeClass('fa-sort-down').addClass('fa-sort-up');
+                } else {
+                    icon.removeClass('fa-sort-up').addClass('fa-sort-down');
+                }
+            }, 300); // 300 milliseconds debounce time
+            $(".btn-header").click(handleToggle);
             // Bind the input fields to the keyup event to check their state every time the user types
             $('#telephone, #registrationNumber').on('keyup', toggleSubmitButtonState);
         });
