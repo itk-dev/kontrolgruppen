@@ -15,7 +15,6 @@
                             <th>{{ 'visitation.person.street'|trans }}</th>
                             <th>{{ 'visitation.person.postcode_city'|trans }}</th>
                             <th>{{ 'visitation.person.district'|trans }}</th>
-                            <th>{{ 'visitation.person.country'|trans }}</th>
                             <th>{{ 'visitation.person.date_from_to'|trans }}</th>
                         </tr>
                     </thead>
@@ -45,7 +44,6 @@
                                     </td>
                                     <td>{{ adresse.Adresseoplysninger.CprAdresse.postnummer }} {{ adresse.Adresseoplysninger.CprAdresse.postdistrikt }}</td>
                                     <td>{{ adresse.Adresseoplysninger.CprAdresse.cprKommunenavn }}</td>
-                                    <td></td>
                                     {% if adresse.Adresseoplysninger.virkningTil is defined %}
                                         <td>{{ adresse.Adresseoplysninger.virkningFra|date("d-m-Y") }} til {{ adresse.Adresseoplysninger.virkningTil|date("d-m-Y") }} </td>
                                     {% else %}
