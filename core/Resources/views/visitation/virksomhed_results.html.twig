@@ -247,6 +247,9 @@
             $(".allPNumbers").each(function() {
                 p_numbers.push($(this).text().trim());
             });
+            if(p_numbers.length <= 5){
+                $('#loadMoreButtonRow').hide();
+            }
             $("#loadMoreButton").click(function() {
 
                 let slicedPNumbers = p_numbers.slice(offset, offset + limit);
