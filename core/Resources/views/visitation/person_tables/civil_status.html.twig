@@ -24,8 +24,12 @@
                             {% for civilstatus in data.Civilstande %}
                             {% set current_date = "now"|date("Y-m-d") %}
                             {% set five_years_ago = current_date|date_modify("-5 years")|date("Y-m-d") %}
-                            {% if civilstatus.Civilstand.virkningFra < five_years_ago %}
-                            <tr class="older-than-5">
+                            {% if (civilstatus.Civilstand.virkningTil is defined)  %}
+                                {% if (civilstatus.Civilstand.virkningTil  < five_years_ago)  %}
+                                    <tr class="older-than-5">
+                                {% else %}
+                                    <tr>
+                                {% endif %}
                             {% else %}
                                 <tr>
                             {% endif %}
