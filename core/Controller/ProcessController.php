@@ -239,6 +239,8 @@ class ProcessController extends BaseController
                     $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
                     $dataFordelerData = $datafordelerService->getPersonData($processClientIdentifier);
                     $client->setName($dataFordelerData['stamdata']['navn'] ?? null);
+                    $this->em->persist($client);
+                    $this->em->flush();
                 } elseif (ProcessClientCompany::COMPANY === $clientType) {
                     $dataFordelerData = $datafordelerService->getVirksomhedData($processClientIdentifier);
                     $client->setAddress($dataFordelerData['beliggenhedsadresse']['CVRAdresse_vejnavn'].' '.$dataFordelerData['beliggenhedsadresse']['CVRAdresse_husnummerFra'] ?? null);
