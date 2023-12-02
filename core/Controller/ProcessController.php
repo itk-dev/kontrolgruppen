@@ -195,6 +195,7 @@ class ProcessController extends BaseController
      */
     public function new(Request $request, ProcessManager $processManager, ProcessClientManager $clientManager, UserRepository $userRepository, DatafordelerService $datafordelerService): Response
     {
+        $session = $request->getSession();
         $process = new Process();
         $this->denyAccessUnlessGranted('edit', $process);
 
@@ -207,19 +208,40 @@ class ProcessController extends BaseController
         }
         $caseWorker = $request->get('case_worker');
         $identifier = $request->get('identifier');
+        if($identifier != null) $session->set('identifier', $identifier);
+
+        if ($session->has('identifier') and $session->get('identifier') != null) {
+            $identifier = $session->get('identifier');
+        } else {
+            $identifier = null;
+        }
 
         $caseWorker = $userRepository->findOneBy(['username' => $caseWorker]);
         $process->setProcessClient($client);
         $process->setCaseWorker($caseWorker);
-
+        $pNumbers = [];
+        $virksomhedData = $datafordelerService->getVirksomhedData($identifier);
+        // Extracting pNumbers from the response
+        if (!empty($virksomhedData['produktionsenheder'])) {
+            foreach ($virksomhedData['produktionsenheder'] as $produktionsenhed) {
+                $pNumbers[] = $produktionsenhed['pNummer'];
+            }
+        }
+        $session->set('pNumbers', $pNumbers);
+        if ($session->has('pNumbers')) {
+            $pNumbers = $session->get('pNumbers');
+        } else {
+            $pNumbers = [];
+        }
         $form = $this->createForm(ProcessType::class, $process, [
             // Add the `personnummer` option to the form.
             'identifier' => $identifier,
+            'pNumbers' => $pNumbers,
         ]);
+
         $this->handleTaxonomyCallback($form, $request, $process);
 
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             // Get unmapped client data from request.
             $data = $request->get('process');
@@ -654,7 +676,7 @@ class ProcessController extends BaseController
     private function handleTaxonomyCallback(FormInterface $form, Request $request, Process $process)
     {
         if ('GET' === $request->getMethod()
-            && null !== ($processData = $request->query->get('process'))
+            && null !== ($processData = $request->get('process'))
             && isset($processData['processType'])) {
             $form->submit($processData);
         }

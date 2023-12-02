@@ -549,6 +549,8 @@ process:
         client_type.company: Virksomhed
         client_type.person: Person
         court_decision: Rettens afgørelse
+        p_number: P-nummer
+        p_number_placeholder: Vælg relateret p-nummer
         police_report: Er sagen politianmeldt?
         process_status: Sagsstatus
         process_type: Sagstype
