@@ -18,6 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 /**
  * Class ClientCompanyType.
@@ -45,6 +46,7 @@ class ClientCompanyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $identifier = $options['identifier'] ?? null; // Get the identifier
+        $pNumbers = $options['pNumbers'] ?? [];
 
         $builder
             ->add('cvr', TextType::class, [
@@ -67,6 +69,12 @@ class ClientCompanyType extends AbstractType
                     'data-search-text' => $this->translator->trans('process.form.search_client_cvr.search'),
                     'data-loading-text' => $this->translator->trans('process.form.search_client_cvr.loading'),
                 ],
+            ])
+            ->add('pNumber', ChoiceType::class, [
+                'label' => 'process.form.p_number',
+                'choices' => array_combine($pNumbers, $pNumbers),
+                'placeholder' => 'process.form.p_number_placeholder',
+                'required' => false,
             ]);
     }
 
@@ -75,6 +83,7 @@ class ClientCompanyType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefined(['identifier']);
+        // $resolver->setDefined(['identifier']);
+        $resolver->setDefined(['identifier','pNumbers']);
     }
 }
