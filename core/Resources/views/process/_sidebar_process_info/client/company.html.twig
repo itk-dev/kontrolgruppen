@@ -3,7 +3,7 @@
         <div class="col">
             <div class="bg-light">
                 <div class="col-md-3">
-                    <div class="fixed-table">
+                    <div>
                         <div class="card-header text-black stam-data">
                             <h6 class="mb-0" id="stam-data">
                                 {{ 'visitation.basic_info'|trans }}
@@ -75,7 +75,7 @@
                                             <li style="  list-style-type: none; /* Remove bullets */
                                             padding: 0; /* Remove padding */
                                             margin: 0; /* Remove margins */
-                                             " onClick="window.open('/process/{{ process_group.processId }}');">
+                                            " onClick="window.open('/process/{{ process_group.processId }}');">
                                             <span style="border-bottom: 2px solid">{{ process_group.processName }}</span>
                                             </li>
                                         {% endfor %}
