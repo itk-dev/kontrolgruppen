@@ -193,6 +193,10 @@
         $(document).ready(function() {
 
             $('.older-than-5').hide();
+            let nameTrans = $('.translations').data('name-translation');
+            let addressTrans = $('.translations').data('address-translation');
+            let phoneTrans = $('.translations').data('phone-translation');
+            let mailTrans = $('.translations').data('mail-translation');
 
             // Format the CPR number and calculate the age for each cprField class
             const cprFields = document.getElementsByClassName("cprField");
@@ -226,6 +230,15 @@
                 // Optionally, change the button text based on current state
                 $(this).closest('tr').hide();
             });
+            let offset = 5;  // Start from the 6th record, as first 5 are already fetched
+            let limit = 5;   // Number of records to fetch in each request
+            let p_numbers = [];
+            $(".allPNumbers").each(function() {
+                p_numbers.push($(this).text().trim());
+            });
+            if(p_numbers.length <= 5){
+                $('#loadMoreButtonRow').hide();
+            }
             $("#loadMoreButton").click(function() {
                 let slicedPNumbers = p_numbers.slice(offset, offset + limit);
                 $.ajax({
