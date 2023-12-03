@@ -10,6 +10,28 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [3.2.0] - 2023-11-20
+
+### Changed
+
+#### Features
+
+- Show PNumbers on create case page for company clients
+- Open existing cases in new tab.
+- Show phone number for person clients
+- Form in edit client page updated
+- Show relations in metadata table for company clients
+- Print function in multiple pages.
+- Multiple design fixes
+  
+#### Bugfixes
+
+- Correct icons are showed in tables, depending on folded/unfolded
+- Correct table opens when unfolding a table
+- Journal entry opens in the dashboard
+- Don't show Load more button in P Numbers, if company has less than 5
+- Able to add channels and benefits when creating a case
+
 ## [3.1.1] - 2023-11-20
 
 ### Changed
@@ -242,7 +264,8 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 - [KON-361](https://github.com/aakb/kontrolgruppen/pull/81): Changed datepicker
 
-[Unreleased]: https://github.com/itk-dev/kontrolgruppen/compare/3.1.1...HEAD
+[Unreleased]: https://github.com/itk-dev/kontrolgruppen/compare/3.2.0...HEAD
+[3.2.0]: https://github.com/itk-dev/kontrolgruppen/compare/3.1.1...3.2.0
 [3.1.1]: https://github.com/itk-dev/kontrolgruppen/compare/3.1.0...3.1.1
 [3.1.0]: https://github.com/itk-dev/kontrolgruppen/compare/3.0.0...3.1.0
 [3.0.0]: https://github.com/itk-dev/kontrolgruppen/compare/2.0.3...3.0.0
