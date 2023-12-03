@@ -208,7 +208,9 @@ class ProcessController extends BaseController
         }
         $caseWorker = $request->get('case_worker');
         $identifier = $request->get('identifier');
-        if($identifier != null) $session->set('identifier', $identifier);
+        if (null !== $identifier) {
+            $session->set('identifier', $identifier);
+        }
 
         if ($session->has('identifier') and $session->get('identifier') != null) {
             $identifier = $session->get('identifier');
@@ -273,6 +275,9 @@ class ProcessController extends BaseController
                     // SAVE DATA
                     $this->em->persist($client);
                     $this->em->flush();
+                    // remove identifier and pNumbers from session
+                    $session->remove('identifier');
+                    $session->remove('pNumbers');
                 }
 
                 $processCreated = true;
@@ -442,7 +447,6 @@ class ProcessController extends BaseController
             $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
             $data = $datafordelerService->getPersonData($processClientIdentifier);
             $client->setName($data['stamdata']['navn'] ?? null);
-
         } elseif (ProcessClientCompany::COMPANY === $clientType) {
             $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
             $client->setName($data['virksomhedsnavn']['vaerdi'] ?? null);
