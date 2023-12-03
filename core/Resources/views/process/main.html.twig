@@ -108,6 +108,21 @@
             border-top-left-radius: 3px !important;
             border-bottom-left-radius: 3px !important;
         }
+        @media print {
+            button, .btn {
+                display: none;
+            }
+
+            /* Specifically display buttons with the 'btn-header' class */
+            .btn-header {
+                display: inline-block; /* or 'block', depending on your layout */
+            }
+
+            .no-print {
+                display: none;
+            }
+
+        }
     </style>
 {% endblock %}
 {% block javascripts %}
@@ -172,16 +187,7 @@
             return formattedCpr;
         }
         function printPage() {
-            var printContents = document.documentElement.innerHTML;
-            var printWindow = window.open('', '_blank');
-            printWindow.document.write('<html><head><title>Print</title>');
-
-            printWindow.document.write('<link rel="stylesheet" media="print">');
-            printWindow.document.write('</head><body>');
-            printWindow.document.write(printContents);
-            printWindow.document.write('</body></html>');
-            printWindow.document.close();
-            printWindow.print();
+            window.print();
         }
 
         $(document).ready(function() {
