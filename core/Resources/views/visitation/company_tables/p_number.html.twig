@@ -1,13 +1,13 @@
-<div class="accordion mb-3" id="tableAccordionVirksomhed">
+<div class="accordion mb-3" id="tableAccordionPNumber">
     <div class="card">
-        <div class="card-header text-black" id="tableHeadingVirksomhed">
+        <div class="card-header text-black" id="tableHeadingPNumber">
             <h2 class="mb-0">
-                <button class="btn btn-block text-left text-black collapsed btn-header " type="button" data-toggle="collapse" data-target="#tableCollapseVirksomhedPNumber" aria-expanded="false" aria-controls="tableCollapseVirksomhedPNumber">
+                <button class="btn btn-block text-left text-black collapsed btn-header " type="button" data-toggle="collapse" data-target="#tableCollapsePNumber" aria-expanded="false" aria-controls="tableCollapsePNumber">
                     {{ 'visitation.company.p_numbers'|trans }} ({{ data.produktionsenheder|length }}) <i class="iconClass fas fa-sort-down"></i>
                 </button>
             </h2>
         </div>
-        <div id="tableCollapseVirksomhedPNumber" class="collapse" aria-labelledby="tableHeadingVirksomhed" data-parent="#tableAccordionVirksomhed">
+        <div id="tableCollapsePNumber" class="collapse" aria-labelledby="tableHeadingPNumber" data-parent="#tableAccordionPNumber">
             <div class="card-body p-0">
                 <table class="table mb-0 table-bordered bg-info" id="pNumberTable">
                     <tbody class="bg-light">

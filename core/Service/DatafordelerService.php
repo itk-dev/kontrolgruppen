@@ -26,6 +26,7 @@ class DatafordelerService
     /**
      * @param HttpClientInterface $datafordelerCprHttpClient
      * @param HttpClientInterface $datafordelerCvrHttpClient
+     * @param HttpClientInterface $httpClient
      */
     public function __construct(?HttpClientInterface $datafordelerCprHttpClient, ?HttpClientInterface $datafordelerCvrHttpClient, HttpClientInterface $httpClient = null)
     {
@@ -101,8 +102,17 @@ class DatafordelerService
             $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']['postdistrikt'] ?? null,
         ];
 
+        $navnObject = null;
+        foreach ($data['Navne'] as $navn) {
+            $navnObject = $navn['Navn'];
+
+            if (!isset($navnObject['virkningTil'])) {
+                break;
+            }
+        }
+
         return [
-            'navn' => $this->getFullnameFromNameObject($data['Navne'][0]['Navn']),
+            'navn' => $this->getFullnameFromNameObject($navnObject),
             'cpr' => $data['Personnumre'][0]['Personnummer']['personnummer'] ?? '',
             'adresse' => implode(' ', array_filter($adress)),
             'by' => implode(' ', array_filter($city)),

@@ -3,9 +3,8 @@
 {% block title %}{{ 'process_group.index.title'|trans }}{% endblock %}
 
 {% block content %}
-    <h1>{{ 'process_group.index.title'|trans }}</h1>
-
-    <div class="card-deck">
+    <h1 class="float-left">{{ 'process_group.index.title'|trans }}</h1>
+    <div class="card-deck col-md-12">
 
       {% for process_group_array in process_groups %}
         {% set process_group = process_group_array.processGroup %}

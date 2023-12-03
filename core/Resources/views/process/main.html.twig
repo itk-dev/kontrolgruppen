@@ -1,15 +1,19 @@
 {% extends '@KontrolgruppenCore/main/index.html.twig' %}
 
 {% block sidebar_right %}
-    {{ include('@KontrolgruppenCore/process/_process_global_actions_header.html.twig') }}
-    <div class="tab-content" id="sidebarRightTabsContent">
-        <div class="tab-pane fade" id="sidebar-right-activity" role="tabpanel" aria-labelledby="sidebar-right-activity-tab">
-            {{ include('@KontrolgruppenCore/process/_sidebar_activity.html.twig') }}
-        </div>
-        <div class="tab-pane fade show active" id="sidebar-right-process-info" role="tabpanel" aria-labelledby="sidebar-right-process-info-tab">
-            {{ include('@KontrolgruppenCore/process/_sidebar_process_info.html.twig') }}
+    <div class="col-md-12 sticky-sidebar">
+
+        {{ include('@KontrolgruppenCore/process/_process_global_actions_header.html.twig') }}
+        <div class="tab-content" id="sidebarRightTabsContent">
+            <div class="tab-pane fade" id="sidebar-right-activity" role="tabpanel" aria-labelledby="sidebar-right-activity-tab">
+                {{ include('@KontrolgruppenCore/process/_sidebar_activity.html.twig') }}
+            </div>
+            <div class="tab-pane fade show active" id="sidebar-right-process-info" role="tabpanel" aria-labelledby="sidebar-right-process-info-tab">
+                {{ include('@KontrolgruppenCore/process/_sidebar_process_info.html.twig') }}
+            </div>
         </div>
     </div>
+
 {% endblock %}
 {% block stylesheets %}
     {{ parent() }}
@@ -21,13 +25,6 @@
         .new-process {
             margin-top: 20px;
             margin-bottom: 50px;
-        }
-        .fixed-table {
-            position: fixed;
-            top: 200px;
-            right: 30px;
-            width: 20%;
-            z-index: 999;
         }
         .left-tables {
             max-width: 1000px;
@@ -55,11 +52,8 @@
         .stam-data{
             background-color: #81b4fe;
         }
-        .data-header{
-            background-color: #d0dcfc;
-        }
-        .bg-light{
-            background-color: #e8ecfc;
+        tbody .bg-light{
+            background-color: #E2EEFF!important;
         }
         .stam-data-body{
             background-color: #e8ecfc;
@@ -80,6 +74,55 @@
         }
         .iconClass{
             margin-left: 10px
+        }
+        .table-bordered td, .table-bordered th {
+            border: 1px solid #ffffff !important;
+        }
+        thead.data-header{
+            background-color: #C9DDFB !important;
+        }
+        .meta-data-card{
+            margin-top: 12px;
+        }
+        h1.float-left{
+            margin-top: 50px;
+            font-size: 25px !important;
+        }
+        .clear {
+            clear: both;
+        }
+        @media print {
+            .no-print {
+                display: none;
+            }
+            /* Other print-specific styles here */
+        }
+        .rounded-corners{
+            border-bottom-right-radius: 3px !important;
+            border-top-right-radius: 3px !important;
+            border-top-left-radius: 3px !important;
+            border-bottom-left-radius: 3px !important;
+        }
+        .sticky-sidebar {
+    position: sticky;
+    top: 0; /* Adjust based on the height of your header/navbar */
+    max-height: 100vh;
+    overflow-y: auto; /* Allows internal scrolling */
+    z-index: 10; /* Adjust if needed */
+}
+        @media print {
+            button, .btn {
+                display: none;
+            }
+
+            /* Specifically display buttons with the 'btn-header' class */
+            .btn-header {
+                display: inline-block; /* or 'block', depending on your layout */
+            }
+
+            .no-print {
+                display: none;
+            }
         }
     </style>
 {% endblock %}
@@ -144,10 +187,17 @@
             const formattedCpr = `${cpr.substring(0, 6)}-${cpr.substring(6)}`;
             return formattedCpr;
         }
+        function printPage() {
+            window.print();
+        }
 
         $(document).ready(function() {
 
             $('.older-than-5').hide();
+            let nameTrans = $('.translations').data('name-translation');
+            let addressTrans = $('.translations').data('address-translation');
+            let phoneTrans = $('.translations').data('phone-translation');
+            let mailTrans = $('.translations').data('mail-translation');
 
             // Format the CPR number and calculate the age for each cprField class
             const cprFields = document.getElementsByClassName("cprField");
@@ -181,6 +231,15 @@
                 // Optionally, change the button text based on current state
                 $(this).closest('tr').hide();
             });
+            let offset = 5;  // Start from the 6th record, as first 5 are already fetched
+            let limit = 5;   // Number of records to fetch in each request
+            let p_numbers = [];
+            $(".allPNumbers").each(function() {
+                p_numbers.push($(this).text().trim());
+            });
+            if(p_numbers.length <= 5){
+                $('#loadMoreButtonRow').hide();
+            }
             $("#loadMoreButton").click(function() {
                 let slicedPNumbers = p_numbers.slice(offset, offset + limit);
                 $.ajax({

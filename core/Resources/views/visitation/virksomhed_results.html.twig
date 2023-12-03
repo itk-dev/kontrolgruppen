@@ -123,7 +123,7 @@
         @media (min-width: 769px) {
             .fixed-table {
                 position: fixed;
-                top: 120px;
+                top: 180px;
                 right: 30px;
                 width: 25%;
                 z-index: 999;
@@ -155,11 +155,11 @@
         .stam-data{
             background-color: #81b4fe;
         }
-        .data-header{
-            background-color: #d0dcfc;
+        thead.data-header{
+            background-color: #C9DDFB !important;
         }
-        .bg-light{
-            background-color: #e8ecfc;
+        tbody .bg-light{
+            background-color: #E2EEFF!important;
         }
         .pnumber{
             background-color: #e8ecfc;
@@ -181,12 +181,25 @@
             font-size: 25px !important;
             margin-top: 79px;
         }
+        .table-bordered td, .table-bordered th {
+            border: 1px solid #ffffff !important;
+        }
     </style>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
+        function debounce(func, wait) {
+            var timeout;
+            return function() {
+                var context = this, args = arguments;
+                clearTimeout(timeout);
+                timeout = setTimeout(function() {
+                    func.apply(context, args);
+                }, wait);
+            };
+        }
         $(document).ready(function() {
             $('.older-than-5').hide();
             const cvrElement = document.getElementById("cvrField");
@@ -196,17 +209,29 @@
             let mailTrans = $('.translations').data('mail-translation');
 
             $('.accordion .card-header').click(function() {
-                $(this).find('i').toggleClass('fa-chevron-down fa-chevron-up');
+                // add a 0.5 second delay to allow the animation to complete
+
             });
-            $(".btn-header").click(function() {
-                $(this).closest(".card-header").toggleClass("collapsed active");
-                if($(this).closest(".card-header").hasClass("collapsed")){
-                    // Ajax post request to log_visitation route, with data and cpr
+            var handleToggle = debounce(function() {
+                var btn = $(this);
+                var cardHeader = btn.closest(".card-header");
+                var icon = cardHeader.find('.iconClass');
+
+                cardHeader.toggleClass("collapsed active");
+
+                if (cardHeader.hasClass('collapsed')) {
+                    icon.removeClass('fa-sort-down').addClass('fa-sort-up');
+                } else {
+                    icon.removeClass('fa-sort-up').addClass('fa-sort-down');
+                }
+
+                if (cardHeader.hasClass("collapsed")) {
+                    // Ajax post request
                     $.ajax({
                         url: "{{ path('log_visitation') }}",
                         type: "POST",
                         data: {
-                            table_name: $(this).closest(".card-header").attr("id"),
+                            table_name: cardHeader.attr("id"),
                             cvr: cvrElement.innerHTML,
                             visitation: "{{ visitation }}",
                         },
@@ -215,13 +240,18 @@
                         }
                     });
                 }
-            });
+            }, 300); // 300 milliseconds debounce time
+
+            $(".btn-header").click(handleToggle);
             let offset = 5;  // Start from the 6th record, as first 5 are already fetched
             let limit = 5;   // Number of records to fetch in each request
             let p_numbers = [];
             $(".allPNumbers").each(function() {
                 p_numbers.push($(this).text().trim());
             });
+            if(p_numbers.length <= 5){
+                $('#loadMoreButtonRow').hide();
+            }
             $("#loadMoreButton").click(function() {
 
                 let slicedPNumbers = p_numbers.slice(offset, offset + limit);
