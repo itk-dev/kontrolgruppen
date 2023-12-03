@@ -5,7 +5,11 @@
 {% block body %}
     <nav class="navbar navbar-dark fixed-top bg-dark p-0 shadow navbar-expand-lg" id="topbar">
         <a class="navbar-brand col-auto col-sm-3 col-md-2 col-lg-2 mr-0" href="/">
-            <span class="d-none d-md-inline">{{ site_name }}</span>
+            <span class="d-none d-md-inline">{{ site_name }}
+                {% if env == 'dev' %}
+                    <small>3.1.1^</small>
+                {% endif %}
+            </span>
         </a>
         {% block navigation_main %}
             <form class="kontrolgruppen-global-search col-6 col-lg-3 col-xl-4 form">

@@ -2,37 +2,39 @@
     <div class="row">
         <div class="col">
             <div class="bg-light">
-                <div class="col-md-3">
-                    <div class="fixed-table">
-                        <div class="card-header text-black stam-data">
-                            <h6 class="mb-0" id="stam-data">
-                                {{ 'visitation.basic_info'|trans }}
-                            </h6>
-                        </div>
-                        <table class="table table-bordered">
-                            <tbody class="stam-data-body">
-                                <tr>
-                                    <td><b>{{ 'visitation.name'|trans }}</b></td>
-                                    <td>{{ data.stamdata.navn }}</td>
-                                <tr>
-                                    <td><b>{{ 'visitation.cpr'|trans }}</b></td>
-                                    <td class="cprField">{{ data.stamdata.cpr }}</td>
-                                </tr>
-                                <tr>
-                                    <td><b>{{ 'visitation.address'|trans }}</b></td>
-                                    <td>
-                                        {{ data.stamdata.adresse }}
-                                        <br/>
-                                        {{ data.stamdata.by }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><b>{{ 'visitation.gender'|trans }}</b></td>
-                                    <td>{{ data.stamdata.koen|capitalize }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <div>
+                    <div class="card-header text-black stam-data">
+                        <h6 class="mb-0" id="stam-data">
+                            {{ 'visitation.basic_info'|trans }}
+                        </h6>
                     </div>
+                    <table class="table table-bordered">
+                        <tbody class="stam-data-body">
+                            <tr>
+                                <td><b>{{ 'visitation.name'|trans }}</b></td>
+                                <td>{{ data.stamdata.navn }}</td>
+                            <tr>
+                                <td><b>{{ 'visitation.cpr'|trans }}</b></td>
+                                <td class="cprField">{{ data.stamdata.cpr }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>{{ 'visitation.address'|trans }}</b></td>
+                                <td>
+                                    {{ data.stamdata.adresse }}
+                                    <br/>
+                                    {{ data.stamdata.by }}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>{{ 'visitation.gender'|trans }}</b></td>
+                                <td>{{ data.stamdata.koen|capitalize }}</td>
+                            </tr>
+                            <tr>
+                                <td><b>{{ 'client.form.telephone'|trans }}</b></td>
+                                <td>{{ client.telephone }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

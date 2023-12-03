@@ -8,7 +8,7 @@
         <div class="card card-body">
             <ul>
                 {% for process in processes %}
-                    <li><a href="{{ path('process_show', {'id': process.id}) }}">{{ process.caseNumber }}</a></li>
+                    <li><a href="{{ path('process_show', {'id': process.id}) }}" target="_blank">{{ process.caseNumber }}</a></li>
                 {% else %}
                     <li>{{ 'common.no_records_found'|trans }}</li>
                 {% endfor %}

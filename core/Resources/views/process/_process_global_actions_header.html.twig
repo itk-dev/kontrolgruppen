@@ -4,15 +4,15 @@
         <div class="btn-group process-end" role="group" aria-label="Process actions">
             {% if is_granted('edit', process) %}
                 {% if not process.completedAt %}
-                    <a href="{{ path('reminder_new', {'process': process.id}) }}" class="btn btn-warning text-truncate">{{ 'reminder.btns.create'|trans }}</a>
+                    <a href="{{ path('reminder_new', {'process': process.id}) }}" class="btn btn-warning text-truncate rounded-corners">{{ 'reminder.btns.create'|trans }}</a>
                 {% endif %}
             {% endif %}
-            <a href="{{ path('process_report_index', {'process': process.id}) }}" class="btn btn-secondary text-truncate ml-2">{{ 'process.btns.create_report'|trans }}</a>
+            <button onclick="printPage();" class="btn btn-secondary text-truncate rounded-corners ml-2">{{ 'process.btns.create_report'|trans }}</button>
             {% if is_granted('edit', process) %}
                 {% if not process.completedAt %}
-                    <a href="{{ path('process_complete', {'id': process.id}) }}" class="btn btn-success text-truncate ml-2">{{ 'process.btns.complete'|trans }}</a>
+                    <a href="{{ path('process_complete', {'id': process.id}) }}" class="btn btn-success text-truncate rounded-corners ml-2">{{ 'process.btns.complete'|trans }}</a>
                 {% else %}
-                    <a href="{{ path('process_resume', {'id': process.id}) }}" class="btn btn-success text-truncate ml-2">{{ 'process.btns.resume'|trans }}</a>
+                    <a href="{{ path('process_resume', {'id': process.id}) }}" class="btn btn-success text-truncate rounded-corners ml-2">{{ 'process.btns.resume'|trans }}</a>
                 {% endif %}
             {% endif %}
         </div>
