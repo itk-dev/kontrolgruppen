@@ -23,7 +23,7 @@
                         {% set current_date = "now"|date("Y-m-d") %}
                         {% set five_years_ago = current_date|date_modify("-5 years")|date("Y-m-d") %}
                         {% if (navn.Navn.virkningTil is defined)  %}
-                            {% if (navn.Navn.virkningTil  < five_years_ago)  %}
+                            {% if (navn.Navn.virkningTil < five_years_ago)  %}
                                 <tr class="older-than-5">
                             {% else %}
                                 <tr>
