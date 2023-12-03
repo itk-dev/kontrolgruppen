@@ -8,15 +8,23 @@
  * This source file is subject to the MIT license.
  */
 
+namespace Kontrolgruppen\CoreBundle\Tests;
+
 use Kontrolgruppen\CoreBundle\Service\DatafordelerService;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpClient\Response\MockResponse;
 
+/**
+ * Class DatafordelerServiceTest.
+ */
 final class DatafordelerServiceTest extends TestCase
 {
     private static DatafordelerService $datafordelerService;
 
+    /**
+     * {@inheritdoc}
+     */
     protected function setUp(): void
     {
         $mockResponseCPR = [
@@ -57,6 +65,9 @@ final class DatafordelerServiceTest extends TestCase
         self::$datafordelerService = new DatafordelerService($mockHttpClientCPR, $mockHttpClientCVR, $mockHttpClientBBR);
     }
 
+    /**
+     * @depends testGetStamdata
+     */
     public function testGetStamdata(): void
     {
         $data = self::$datafordelerService->getPersonData('0712614382');
@@ -70,6 +81,9 @@ final class DatafordelerServiceTest extends TestCase
         ], $data['stamdata']);
     }
 
+    /**
+     * @depends testGetStamdata
+     */
     public function testGetBopaelssamling(): void
     {
         $data = self::$datafordelerService->getPersonData('0712614382');

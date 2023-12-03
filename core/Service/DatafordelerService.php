@@ -26,6 +26,7 @@ class DatafordelerService
     /**
      * @param HttpClientInterface $datafordelerCprHttpClient
      * @param HttpClientInterface $datafordelerCvrHttpClient
+     * @param HttpClientInterface $httpClient
      */
     public function __construct(?HttpClientInterface $datafordelerCprHttpClient, ?HttpClientInterface $datafordelerCvrHttpClient, HttpClientInterface $httpClient = null)
     {

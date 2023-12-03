@@ -84,6 +84,6 @@ class ClientCompanyType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         // $resolver->setDefined(['identifier']);
-        $resolver->setDefined(['identifier','pNumbers']);
+        $resolver->setDefined(['identifier', 'pNumbers']);
     }
 }

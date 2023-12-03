@@ -949,32 +949,32 @@ class Process extends AbstractEntity
 
     /**
      * @param int $processId
-     * 
+     *
      * @return array
      */
-    public function getProcessGroupsByAssociation(int $processId): array{
+    public function getProcessGroupsByAssociation(int $processId): array
+    {
         $processGroups = [];
 
 
         foreach ($this->getProcessGroups() as $processGroup) {
-            foreach($processGroup->getProcesses() as $process){
-                if($process->getId() != $processId){
-                    if($process->getProcessClient()->getName() != null || $process->getProcessClient()->getName() != ""){
+            foreach ($processGroup->getProcesses() as $process) {
+                if ($process->getId() != $processId) {
+                    if ($process->getProcessClient()->getName() != null || $process->getProcessClient()->getName() != "") {
                         $processGroups[] = [
                             'processId' => $process->getId(),
                             'processName' => $process->getProcessClient()->getName(),
                         ];
-                    }
-                    else{
+                    } else {
                         $processGroups[] = [
                             'processId' => $process->getId(),
                             'processName' => $process->getCaseNumber(),
                         ];
                     }
-
                 }
             }
         }
+        
         return $processGroups;
     }
 }
