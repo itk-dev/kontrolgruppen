@@ -222,11 +222,13 @@ class ProcessController extends BaseController
         $process->setProcessClient($client);
         $process->setCaseWorker($caseWorker);
         $pNumbers = [];
-        $virksomhedData = $datafordelerService->getVirksomhedData($identifier);
-        // Extracting pNumbers from the response
-        if (!empty($virksomhedData['produktionsenheder'])) {
-            foreach ($virksomhedData['produktionsenheder'] as $produktionsenhed) {
-                $pNumbers[] = $produktionsenhed['pNummer'];
+        if (ProcessClientCompany::COMPANY === $request->get('clientType')) {
+            $virksomhedData = $datafordelerService->getVirksomhedData($identifier);
+            // Extracting pNumbers from the response
+            if (!empty($virksomhedData['produktionsenheder'])) {
+                foreach ($virksomhedData['produktionsenheder'] as $produktionsenhed) {
+                    $pNumbers[] = $produktionsenhed['pNummer'];
+                }
             }
         }
         $session->set('pNumbers', $pNumbers);
