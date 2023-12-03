@@ -17,7 +17,8 @@
                 <div class="form-group col-md-6">
                     <div class="form-group">
                         <label for="pNumber">{{ 'visitation.company.p_numbers'|trans }}</label>
-                        <select name="pNumber" id="pNumber" class="form-control" placeholder="{{ 'common.enter_p_numbers'|trans }}">
+                        <select name="pNumber" id="pNumber" class="form-control">
+                            <option value="" {% if client.pNumber == "" %}selected{% endif %}>{{ 'process.form.p_number_placeholder'|trans }}</option>
                             {% for all_pnumbers in data.produktionsenheder %}
                                 <option value="{{ all_pnumbers.pNummer|e }}" {% if client.pNumber is not empty and client.pNumber == all_pnumbers.pNummer %}selected{% endif %}>{{ all_pnumbers.pNummer|e }}</option>
                             {% endfor %}
