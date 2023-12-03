@@ -212,7 +212,7 @@ class ProcessController extends BaseController
             $session->set('identifier', $identifier);
         }
 
-        if ($session->has('identifier') and $session->get('identifier') != null) {
+        if ($session->has('identifier') && null !== $session->get('identifier')) {
             $identifier = $session->get('identifier');
         } else {
             $identifier = null;

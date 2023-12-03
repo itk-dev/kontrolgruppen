@@ -102,7 +102,6 @@ class DatafordelerService
             $data['Adresseoplysninger'][0]['Adresseoplysninger']['CprAdresse']['postdistrikt'] ?? null,
         ];
 
-        
         $navnObject = null;
         foreach ($data['Navne'] as $navn) {
             $navnObject = $navn['Navn'];

@@ -956,11 +956,10 @@ class Process extends AbstractEntity
     {
         $processGroups = [];
 
-
         foreach ($this->getProcessGroups() as $processGroup) {
             foreach ($processGroup->getProcesses() as $process) {
-                if ($process->getId() != $processId) {
-                    if ($process->getProcessClient()->getName() != null || $process->getProcessClient()->getName() != "") {
+                if ($process->getId() !== $processId) {
+                    if (null !== $process->getProcessClient()->getName() && '' !== $process->getProcessClient()->getName()) {
                         $processGroups[] = [
                             'processId' => $process->getId(),
                             'processName' => $process->getProcessClient()->getName(),
@@ -974,7 +973,7 @@ class Process extends AbstractEntity
                 }
             }
         }
-        
+
         return $processGroups;
     }
 }
