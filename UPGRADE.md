@@ -6,6 +6,10 @@ All upgrade notes for this project will be documented in this file.
 
 ## [Unreleased]
 
+## [3.2.1] - 2023-12-04
+
+Nothing has been changed
+
 ## [3.2.0] - 2023-12-03
 
 Nothing has been changed
@@ -41,7 +45,8 @@ Nothing has been changed
   DEFAULT_URI=''
   ```
 
-[Unreleased]: https://github.com/itk-dev/kontrolgruppen/compare/3.2.0...HEAD
+[Unreleased]: https://github.com/itk-dev/kontrolgruppen/compare/3.2.1...HEAD
+[3.2.1]: https://github.com/itk-dev/kontrolgruppen/compare/3.2.0...3.2.1
 [3.2.0]: https://github.com/itk-dev/kontrolgruppen/compare/3.1.1...3.2.0
 [3.1.1]: https://github.com/itk-dev/kontrolgruppen/compare/3.1.0...3.1.1
 [3.1.0]: https://github.com/itk-dev/kontrolgruppen/compare/3.0.0...3.1.0

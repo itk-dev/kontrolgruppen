@@ -10,6 +10,16 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [3.2.1] - 2023-12-04
+
+### Changed
+  
+#### Bugfixes
+
+- Docker compose server file added
+- Being able to reopen a case
+- Show correct day when concluding a case.
+
 ## [3.2.0] - 2023-12-03
 
 ### Changed
@@ -264,7 +274,8 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 - [KON-361](https://github.com/aakb/kontrolgruppen/pull/81): Changed datepicker
 
-[Unreleased]: https://github.com/itk-dev/kontrolgruppen/compare/3.2.0...HEAD
+[Unreleased]: https://github.com/itk-dev/kontrolgruppen/compare/3.2.1...HEAD
+[3.2.1]: https://github.com/itk-dev/kontrolgruppen/compare/3.2.0...3.2.1
 [3.2.0]: https://github.com/itk-dev/kontrolgruppen/compare/3.1.1...3.2.0
 [3.1.1]: https://github.com/itk-dev/kontrolgruppen/compare/3.1.0...3.1.1
 [3.1.0]: https://github.com/itk-dev/kontrolgruppen/compare/3.0.0...3.1.0
