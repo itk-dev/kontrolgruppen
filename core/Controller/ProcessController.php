@@ -589,13 +589,14 @@ class ProcessController extends BaseController
      * @param Request                 $request
      * @param Process                 $process
      * @param ProcessStatusRepository $processStatusRepository
+     * @param DatafordelerService     $datafordelerService
      *
      * @return Response
      *
      * @throws \Doctrine\ORM\NoResultException
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function resume(Request $request, Process $process, ProcessStatusRepository $processStatusRepository): Response
+    public function resume(Request $request, Process $process, ProcessStatusRepository $processStatusRepository, DatafordelerService $datafordelerService): Response
     {
         $this->denyAccessUnlessGranted('edit', $process);
 
@@ -604,6 +605,16 @@ class ProcessController extends BaseController
         ]);
 
         $form->handleRequest($request);
+        $processClientIdentifier = $process->getProcessClient()->getIdentifier();
+        // Get client type
+        $clientType = $process->getProcessClient()->getType();
+
+        if (ProcessClientPerson::PERSON === $clientType) {
+            $processClientIdentifier = preg_replace('/\D+/', '', $processClientIdentifier);
+            $data = $datafordelerService->getPersonData($processClientIdentifier);
+        } elseif (ProcessClientCompany::COMPANY === $clientType) {
+            $data = $datafordelerService->getVirksomhedData($processClientIdentifier);
+        }
 
         if ($form->isSubmitted() && $form->isValid()) {
             $process->setCompletedAt(null);
@@ -624,6 +635,7 @@ class ProcessController extends BaseController
                     $process
                 ),
                 'process' => $process,
+                'data' => $data,
                 'form' => $form->createView(),
             ]
         );

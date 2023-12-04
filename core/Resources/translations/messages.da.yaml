@@ -514,14 +514,8 @@ process:
         performed_company_check: Har der været udført virksomhedskontrol?
         police_report: Sagen er politianmeldt
         processing_time: Sagens behandlingstid
-        processing_time_value: 'En dag|%days% dage'
+        processing_time_value: '%days% dage'
         # # @see https://symfony.com/doc/current/translation/message_format.html#pluralization
-        # processing_time_value: >
-        #   {days, plural,
-        #       =0 {Nul dage}
-        #       one {én dag}
-        #       other {%days% dage}
-        #   }
         status: Status ved sagens afslutning
         submit: Godkend afslutning af sag
         title: Afslut sag %case_number%
