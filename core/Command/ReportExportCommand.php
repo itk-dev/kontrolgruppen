@@ -148,5 +148,7 @@ class ReportExportCommand extends Command
                 $output->writeln(sprintf('Result written to file: %s', $result->getFilename()));
             }
         }
+
+        return 0;
     }
 }
