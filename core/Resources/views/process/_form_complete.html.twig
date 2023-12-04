@@ -15,11 +15,10 @@
                     <strong>
                         {{ process.createdAt|date('d-m-Y') }} – {{ 'now'|date('d-m-Y') }}
 
-                        {# @see https://stackoverflow.com/questions/15657687/twig-date-difference #}
                         {% set start_date = process.createdAt %}
                         {% set end_date = 'now' %}
                         {% set days = date(end_date).diff(date(start_date)).days + 1 %}
-                        ({{ 'process.complete.processing_time_value'|trans({'days': days}) }})
+                        ({{ 'process.complete.processing_time_value'|trans({'%days%': days}) }})
                     </strong>
                 </div>
             </div>
